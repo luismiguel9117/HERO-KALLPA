@@ -108,16 +108,15 @@ class Kallpa3DScene {
 
     // Ajustar posición inicial en el viewport (lado derecho en desktop para dejar aire al texto)
     if (window.innerWidth > 990) {
-      this.canGroup.position.set(1.4, 0.1, 0);
+      this.canGroup.position.set(2.15, -0.15, 0);
     } else {
-      this.canGroup.position.set(0, -0.3, 0);
+      this.canGroup.position.set(0.4, -0.4, 0);
     }
 
     // Verificar si el generador de la lata de Lata-3d- está disponible
     if (typeof window.createHighDetailCan === 'function') {
       const texLoader = new THREE.TextureLoader();
       
-      // Rutas adaptables para Shopify assets o local
       const labelUrl = this.container.dataset.canLabel || 'assets/can-kalpa-label.png';
       const normalUrl = this.container.dataset.canNormal || 'assets/can-normal.png';
       const rmaoUrl = this.container.dataset.canRmao || 'assets/can-rmao.png';
@@ -126,12 +125,15 @@ class Kallpa3DScene {
 
       const checkAndBuild = () => {
         this.canInstance = window.createHighDetailCan(textures);
-        this.canInstance.root.scale.set(1.5, 1.5, 1.5);
-        this.canInstance.root.rotation.y = -Math.PI * 0.25; // Ángulo frontal atractivo
+        // Escala imponente y ángulo exacto de la referencia del usuario
+        this.canInstance.root.scale.set(2.45, 2.45, 2.45);
+        this.canInstance.root.rotation.set(0.12, -0.68, -0.32); // Inclinación diagonal hacia la izquierda
         this.canGroup.add(this.canInstance.root);
 
-        // Añadir anillos cinemáticos sutiles de energía alrededor de la lata
-        this.createEnergyRings();
+        // Luz de contorno dorado intenso en el flanco izquierdo de la lata (flare)
+        const goldRimLight = new THREE.DirectionalLight(0xffb719, 4.5);
+        goldRimLight.position.set(0.8, 1.5, -1.8);
+        this.scene.add(goldRimLight);
       };
 
       // Cargar textura principal
@@ -351,6 +353,22 @@ class Kallpa3DScene {
     }
 
     this.renderer.render(this.scene, this.camera);
+  }
+
+  transitionSlide(slideIndex) {
+    if (!this.canInstance) return;
+    if (typeof gsap !== 'undefined') {
+      gsap.to(this.canInstance.root.rotation, {
+        y: -0.68 + (slideIndex * 0.4),
+        z: -0.32 + (slideIndex * 0.05),
+        duration: 1.0,
+        ease: "power2.out"
+      });
+      gsap.fromTo(this.canInstance.root.position,
+        { y: -1.05 },
+        { y: -1.0, duration: 0.8, ease: "back.out(1.4)" }
+      );
+    }
   }
 
   destroy() {

@@ -387,3 +387,391 @@ body {
   z-index: 2;
   pointer-events: none;
 }
+
+/* ==========================================================================
+   KALPA ANNOUNCEMENT BAR & KALPA HEADER (Pixel-Perfect con Mockup)
+   ========================================================================== */
+.kalpa-announcement-bar {
+  background-color: #f5ba2c;
+  color: #000000;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.55rem 1rem;
+  letter-spacing: -0.01em;
+}
+
+.kalpa-announcement-bar a {
+  color: #000000;
+  text-decoration: underline;
+  font-weight: 700;
+  transition: opacity 0.2s;
+}
+
+.kalpa-announcement-bar a:hover {
+  opacity: 0.75;
+}
+
+.kalpa-navbar {
+  background-color: #000000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  height: 72px;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.kalpa-navbar__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.kalpa-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: -0.03em;
+}
+
+.kalpa-logo svg {
+  color: #f5ba2c;
+}
+
+.kalpa-nav-menu {
+  display: none;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (min-width: 860px) {
+  .kalpa-nav-menu {
+    display: flex;
+  }
+}
+
+.kalpa-nav-item {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  position: relative;
+  padding: 0.4rem 0;
+  transition: color 0.2s;
+}
+
+.kalpa-nav-item:hover, .kalpa-nav-item.is-active {
+  color: #f5ba2c;
+}
+
+.kalpa-nav-item.is-active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #f5ba2c;
+  border-radius: 2px;
+}
+
+.kalpa-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.kalpa-nav-icon {
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.kalpa-nav-icon:hover {
+  color: #f5ba2c;
+  transform: scale(1.1);
+}
+
+.kalpa-cart-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 100px;
+  padding: 0.35rem 0.85rem;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.kalpa-cart-capsule:hover {
+  border-color: #f5ba2c;
+  color: #f5ba2c;
+}
+
+/* ==========================================================================
+   HERO CAROUSEL KALPA VRAEM (Pixel-Perfect con Mockup)
+   ========================================================================== */
+.kalpa-hero-carousel {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 110px);
+  max-height: 850px;
+  background: radial-gradient(ellipse at 70% 50%, #9e1417 0%, #6e0b0e 45%, #3d0406 100%);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* Marca de Agua con Patrón Textil Andino */
+.kalpa-hero__pattern {
+  position: absolute;
+  inset: 0;
+  background-image: url('kalpa-pattern.png');
+  background-repeat: repeat;
+  background-size: 380px;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Resplandor Solar Dorado detrás de la Lata */
+.kalpa-hero__glow {
+  position: absolute;
+  top: 50%;
+  right: 18%;
+  transform: translate(50%, -50%);
+  width: 580px;
+  height: 580px;
+  background: radial-gradient(circle, rgba(255, 185, 30, 0.85) 0%, rgba(255, 110, 0, 0.4) 35%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(45px);
+  pointer-events: none;
+  z-index: 2;
+  animation: kalpaGlowPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes kalpaGlowPulse {
+  0% { transform: translate(50%, -50%) scale(0.95); opacity: 0.8; }
+  100% { transform: translate(50%, -50%) scale(1.1); opacity: 1; }
+}
+
+/* Granos de Café Flotantes con Desenfoque de Profundidad de Campo (Bokeh) */
+.floating-beans-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.coffee-bean-floating {
+  position: absolute;
+  background-image: url('coffee-bean.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  will-change: transform;
+}
+
+.bean--1 {
+  width: 90px;
+  height: 120px;
+  top: 12%;
+  left: -20px;
+  filter: blur(6px);
+  transform: rotate(-35deg);
+  opacity: 0.75;
+}
+
+.bean--2 {
+  width: 140px;
+  height: 180px;
+  bottom: -40px;
+  left: 8%;
+  filter: blur(10px);
+  transform: rotate(45deg);
+  opacity: 0.85;
+}
+
+.bean--3 {
+  width: 65px;
+  height: 90px;
+  top: 48%;
+  right: 42%;
+  filter: blur(1px);
+  transform: rotate(25deg);
+  opacity: 0.95;
+}
+
+.bean--4 {
+  width: 130px;
+  height: 170px;
+  bottom: -30px;
+  right: 12%;
+  filter: blur(8px);
+  transform: rotate(-25deg);
+  opacity: 0.85;
+}
+
+.bean--5 {
+  width: 80px;
+  height: 105px;
+  bottom: -15px;
+  right: 44%;
+  filter: blur(4px);
+  transform: rotate(15deg);
+  opacity: 0.8;
+}
+
+/* Contenedor del Carrusel y Diapositivas */
+.kalpa-carousel-slides {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+.kalpa-slide {
+  display: none;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-cinematic);
+}
+
+.kalpa-slide.is-active {
+  display: flex;
+  opacity: 1;
+}
+
+.kalpa-hero__left-content {
+  max-width: 580px;
+}
+
+.kalpa-hero__lead-title {
+  font-size: clamp(2.75rem, 6vw, 4.75rem);
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin: 0;
+  display: block;
+  font-style: italic;
+}
+
+.kalpa-hero__giant-title {
+  font-size: clamp(4.25rem, 9.5vw, 8.25rem);
+  font-weight: 900;
+  color: #f7bf19;
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  margin: 0 0 1.5rem 0;
+  display: block;
+  font-style: italic;
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.kalpa-hero__paragraph {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 2.25rem;
+  max-width: 500px;
+}
+
+.btn-pruebala {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 2.5rem;
+  border-radius: 100px;
+  border: 1.8px solid #f7bf19;
+  background: transparent;
+  color: #f7bf19;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.35s var(--ease-spring);
+}
+
+.btn-pruebala:hover {
+  background: #f7bf19;
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(247, 191, 25, 0.35);
+}
+
+/* Controles del Carrusel (Flechas y Bullets) */
+.kalpa-carousel-nav {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  z-index: 20;
+}
+
+.carousel-btn-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.carousel-btn-arrow:hover {
+  border-color: #f7bf19;
+  color: #f7bf19;
+  transform: scale(1.08);
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.carousel-dot.is-active {
+  width: 28px;
+  border-radius: 10px;
+  background: #f7bf19;
+}
