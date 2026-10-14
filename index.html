@@ -512,22 +512,39 @@
   </div>
 
   <!-- ==================== PANEL DE CALIBRACIÓN 3D LOCAL ==================== -->
-  <div class="dev-control-panel">
+  <div class="dev-control-panel" style="width: 260px;">
     <h5>⚡ Calibrador 3D Kallpa</h5>
+    <div class="dev-control-row">
+      <span>Altura Y:</span>
+      <input type="range" min="-1.5" max="0.5" step="0.05" value="-0.55" id="slider-pos-y" oninput="updateDevCanPosY(this.value)">
+      <span id="val-pos-y" style="font-size: 0.75rem; min-width: 38px;">-0.55</span>
+    </div>
+    <div class="dev-control-row">
+      <span>Posición X:</span>
+      <input type="range" min="0.0" max="3.5" step="0.05" value="1.85" id="slider-pos-x" oninput="updateDevCanPosX(this.value)">
+      <span id="val-pos-x" style="font-size: 0.75rem; min-width: 38px;">1.85</span>
+    </div>
+    <div class="dev-control-row">
+      <span>Giro Logo Y:</span>
+      <input type="range" min="-3.14" max="3.14" step="0.05" value="0.00" id="slider-rot-y" oninput="updateDevCanRotY(this.value)">
+      <span id="val-rot-y" style="font-size: 0.75rem; min-width: 38px;">0.00</span>
+    </div>
+    <div class="dev-control-row">
+      <span>Inclinación Z:</span>
+      <input type="range" min="-0.60" max="0.60" step="0.02" value="-0.22" id="slider-rot-z" oninput="updateDevCanRotZ(this.value)">
+      <span id="val-rot-z" style="font-size: 0.75rem; min-width: 38px;">-0.22</span>
+    </div>
+    <div class="dev-control-row">
+      <span>Tamaño Lata:</span>
+      <input type="range" min="1.8" max="3.6" step="0.05" value="2.65" id="slider-scale" oninput="updateDevCanScale(this.value)">
+      <span id="val-scale" style="font-size: 0.75rem; min-width: 38px;">2.65</span>
+    </div>
     <div class="dev-control-row">
       <span>Color Energía:</span>
       <input type="color" id="dev-color-1" value="#fdb515" onchange="updateDevEnergyColor(this.value)">
     </div>
-    <div class="dev-control-row">
-      <span>Partículas 3D:</span>
-      <select onchange="updateDevParticles(this.value)">
-        <option value="600">600 (Bajo)</option>
-        <option value="1200" selected>1200 (Óptimo)</option>
-        <option value="2400">2400 (Ultra)</option>
-      </select>
-    </div>
-    <div style="font-size: 0.7rem; color: #889; margin-top: 8px;">
-      * Mueve el mouse sobre la pantalla para probar parallax 3D y chispas 2D.
+    <div style="font-size: 0.7rem; color: #889; margin-top: 8px; line-height: 1.3;">
+      * Calibra la lata en tiempo real. Abre la consola si deseas copiar los valores exactos.
     </div>
   </div>
 
@@ -539,21 +556,52 @@
   <script src="assets/theme.js"></script>
 
   <script>
+    function updateDevCanPosY(val) {
+      val = parseFloat(val);
+      document.getElementById('val-pos-y').textContent = val.toFixed(2);
+      if (window.kallpa3D) {
+        window.kallpa3D.basePosY = val;
+        if (window.kallpa3D.canGroup) window.kallpa3D.canGroup.position.y = val;
+      }
+    }
+    function updateDevCanPosX(val) {
+      val = parseFloat(val);
+      document.getElementById('val-pos-x').textContent = val.toFixed(2);
+      if (window.kallpa3D) {
+        window.kallpa3D.basePosX = val;
+        if (window.kallpa3D.canGroup) window.kallpa3D.canGroup.position.x = val;
+      }
+    }
+    function updateDevCanRotY(val) {
+      val = parseFloat(val);
+      document.getElementById('val-rot-y').textContent = val.toFixed(2);
+      if (window.kallpa3D) {
+        window.kallpa3D.baseRotY = val;
+        if (window.kallpa3D.canGroup) window.kallpa3D.canGroup.rotation.y = val;
+      }
+    }
+    function updateDevCanRotZ(val) {
+      val = parseFloat(val);
+      document.getElementById('val-rot-z').textContent = val.toFixed(2);
+      if (window.kallpa3D) {
+        window.kallpa3D.baseRotZ = val;
+        if (window.kallpa3D.canGroup) window.kallpa3D.canGroup.rotation.z = val;
+      }
+    }
+    function updateDevCanScale(val) {
+      val = parseFloat(val);
+      document.getElementById('val-scale').textContent = val.toFixed(2);
+      if (window.kallpa3D && window.kallpa3D.canGroup) {
+        const factor = val / 165.35;
+        window.kallpa3D.canGroup.scale.setScalar(factor);
+      }
+    }
     function updateDevEnergyColor(color) {
       if (window.kallpa3D) {
         window.kallpa3D.options.energyColor = color;
         if (window.kallpa3D.coreMesh) {
           window.kallpa3D.coreMesh.material.color.set(color);
           window.kallpa3D.coreMesh.material.emissive.set(color);
-        }
-      }
-    }
-    function updateDevParticles(count) {
-      if (window.kallpa3D) {
-        window.kallpa3D.options.particleCount = parseInt(count);
-        if (window.kallpa3D.particles) {
-          window.kallpa3D.scene.remove(window.kallpa3D.particles);
-          window.kallpa3D.createEnergyParticles();
         }
       }
     }

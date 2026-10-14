@@ -38,6 +38,13 @@ class Kallpa3DScene {
     this.isVisible = true;
     this.rafId = null;
 
+    // Posición y orientación base calibradas para encuadre publicitario Hero
+    this.basePosX = (typeof window !== 'undefined' && window.innerWidth > 990) ? 1.85 : 0.35;
+    this.basePosY = -0.55;
+    this.baseRotX = 0.06;
+    this.baseRotY = 0.0;
+    this.baseRotZ = -0.22;
+
     this.init();
   }
 
@@ -227,21 +234,24 @@ class Kallpa3DScene {
             this.alumMesh.name = "Can_AluminumParts";
             this.alumMesh.castShadow = true;
 
+            // Centrar el pivote del FBX exactamente en su punto medio (Y = 82.67)
+            const centerY = 82.67;
+            this.bodyMesh.position.y = -centerY;
+            this.alumMesh.position.y = -centerY;
+
             this.canGroup = new THREE.Group();
             this.canGroup.name = "Can_Model_Root";
             this.canGroup.add(this.bodyMesh);
             this.canGroup.add(this.alumMesh);
 
-            // Escala de la lata (altura ~165.35 -> escala normalizada a producto prominente)
-            const scaleFactor = 2.45 * (2.0 / 165.35);
+            // Altura de lata calibrada (2.65 unidades Three.js) para encajar con espacio superior holgado
+            const targetCanHeight = 2.65;
+            const scaleFactor = targetCanHeight / 165.35;
             this.canGroup.scale.setScalar(scaleFactor);
 
-            // Posición y orientación exacta de la referencia visual
-            const isDesktop = window.innerWidth > 990;
-            this.canGroup.position.set(isDesktop ? 2.15 : 0.4, -0.2, 0);
-            
-            // Inclinación diagonal exacta: hacia la izquierda con etiqueta al frente
-            this.canGroup.rotation.set(0.12, -0.68, -0.32);
+            // Posición y rotación iniciales
+            this.canGroup.position.set(this.basePosX, this.basePosY, 0);
+            this.canGroup.rotation.set(this.baseRotX, this.baseRotY, this.baseRotZ);
 
             this.scene.add(this.canGroup);
             this.applyMaterials();
@@ -297,17 +307,31 @@ class Kallpa3DScene {
 
   transitionSlide(slideIndex) {
     if (!this.canGroup) return;
+
+    // Variaciones elegantes según el slide, manteniendo el logo frontal KALPA visible
+    const slideAngles = [
+      { rotY: 0.0,   rotZ: -0.22, posY: -0.55 }, // Slide 1: CAFÉ DE VRAEM (Frontal con inclinación hero)
+      { rotY: 0.22,  rotZ: -0.16, posY: -0.55 }, // Slide 2: COLD BREW (Leve giro de perfil)
+      { rotY: -0.20, rotZ: -0.24, posY: -0.55 }  // Slide 3: ENERGÍA PURA (Giro dinámico inverso)
+    ];
+
+    const target = slideAngles[slideIndex % slideAngles.length];
+
     if (typeof gsap !== 'undefined') {
-      gsap.to(this.canGroup.rotation, {
-        y: -0.68 + (slideIndex * 0.35),
-        z: -0.32 + (slideIndex * 0.04),
-        duration: 1.1,
+      gsap.to(this, {
+        baseRotY: target.rotY,
+        baseRotZ: target.rotZ,
+        duration: 1.0,
         ease: "power2.out"
       });
-      gsap.fromTo(this.canGroup.position,
-        { y: -0.25 },
-        { y: -0.20, duration: 0.7, ease: "back.out(1.5)" }
+      gsap.fromTo(this,
+        { basePosY: target.posY - 0.06 },
+        { basePosY: target.posY, duration: 0.75, ease: "back.out(1.4)" }
       );
+    } else {
+      this.baseRotY = target.rotY;
+      this.baseRotZ = target.rotZ;
+      this.basePosY = target.posY;
     }
   }
 
@@ -330,8 +354,8 @@ class Kallpa3DScene {
         onUpdate: (self) => {
           const progress = self.progress;
           if (this.canGroup) {
-            this.canGroup.rotation.y = -0.68 + progress * Math.PI * 1.8;
-            this.canGroup.position.y = -0.2 - progress * 1.6;
+            this.canGroup.rotation.y = 0.28 + progress * Math.PI * 1.8;
+            this.canGroup.position.y = -0.45 - progress * 1.6;
           }
         }
       });
@@ -364,7 +388,8 @@ class Kallpa3DScene {
     this.renderer.setSize(width, height);
 
     if (this.canGroup) {
-      this.canGroup.position.x = width > 990 ? 2.15 : 0.4;
+      this.basePosX = width > 990 ? 1.85 : 0.35;
+      this.canGroup.position.x = this.basePosX;
     }
   }
 
@@ -381,10 +406,13 @@ class Kallpa3DScene {
     this.camera.position.y = -this.mouse.y * 0.35;
     this.camera.lookAt(0, 0, 0);
 
-    // Micro-flotación orgánica
+    // Micro-flotación orgánica y viva (sin rotación descontrolada)
     if (this.canGroup) {
-      this.canGroup.position.y = -0.2 + Math.sin(elapsedTime * 1.6) * 0.06;
-      this.canGroup.rotation.y += 0.003;
+      this.canGroup.position.y = this.basePosY + Math.sin(elapsedTime * 1.5) * 0.035;
+      this.canGroup.position.x = this.basePosX + Math.cos(elapsedTime * 1.1) * 0.015;
+      this.canGroup.rotation.y = this.baseRotY + Math.sin(elapsedTime * 0.8) * 0.025 + (this.mouse.x * 0.12);
+      this.canGroup.rotation.z = this.baseRotZ + Math.cos(elapsedTime * 1.1) * 0.015 + (this.mouse.y * 0.05);
+      this.canGroup.rotation.x = this.baseRotX + Math.sin(elapsedTime * 0.9) * 0.015;
     }
 
     this.renderer.render(this.scene, this.camera);
