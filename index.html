@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visor 3D • KALPA Café Cold Brew (Estudio Publicitario)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-studio: #e3e6ea;
+      --panel-bg: rgba(255, 255, 255, 0.85);
+      --panel-border: rgba(0, 0, 0, 0.08);
+      --panel-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+      --accent: #111827;
+      --accent-gold: #d97706;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+    }
+
+    body.dark-mode {
+      --bg-studio: #0d1117;
+      --panel-bg: rgba(18, 24, 38, 0.85);
+      --panel-border: rgba(255, 255, 255, 0.1);
+      --panel-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-studio);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-main);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      transition: background-color 0.3s ease;
+    }
+
+    #canvas-container {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    /* Top Bar Header */
+    .top-bar {
+      position: absolute;
+      top: 22px;
+      left: 26px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      pointer-events: none;
+    }
+
+    .brand-pill {
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-pill span {
+      color: #f59e0b;
+    }
+
+    .title-group h1 {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+
+    .title-group p {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    /* Floating UI Controls Panel */
+    .control-panel {
+      position: absolute;
+      top: 22px;
+      right: 26px;
+      width: 330px;
+      max-height: calc(100vh - 44px);
+      background: var(--panel-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--panel-border);
+      border-radius: 18px;
+      padding: 22px;
+      z-index: 10;
+      box-shadow: var(--panel-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      transition: all 0.3s ease;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    select, input[type="color"] {
+      width: 100%;
+      background: rgba(125, 140, 160, 0.1);
+      border: 1px solid rgba(125, 140, 160, 0.2);
+      border-radius: 9px;
+      padding: 9px 12px;
+      color: var(--text-main);
+      font-size: 13px;
+      font-family: inherit;
+      font-weight: 600;
+      outline: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    select:focus, select:hover {
+      border-color: #0f172a;
+      background: rgba(125, 140, 160, 0.15);
+    }
+
+    /* Grid for reference camera angles (0, 45, 90, 180, Top, Bottom) */
+    .angles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .btn-angle {
+      background: rgba(125, 140, 160, 0.1);
+      border: 1px solid rgba(125, 140, 160, 0.2);
+      border-radius: 8px;
+      padding: 7px 4px;
+      color: var(--text-main);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+
+    .btn-angle:hover {
+      background: rgba(15, 23, 42, 0.08);
+      border-color: rgba(15, 23, 42, 0.3);
+    }
+
+    .btn-angle.active {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    body.dark-mode .btn-angle.active {
+      background: #f8fafc;
+      color: #0f172a;
+      border-color: #f8fafc;
+    }
+
+    /* Range sliders */
+    input[type="range"] {
+      width: 100%;
+      height: 5px;
+      border-radius: 3px;
+      background: rgba(125, 140, 160, 0.25);
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #0f172a;
+      box-shadow: 0 0 6px rgba(0,0,0,0.3);
+      cursor: pointer;
+    }
+
+    body.dark-mode input[type="range"]::-webkit-slider-thumb {
+      background: #f8fafc;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .btn {
+      background: rgba(125, 140, 160, 0.1);
+      border: 1px solid rgba(125, 140, 160, 0.2);
+      border-radius: 9px;
+      padding: 9px 12px;
+      color: var(--text-main);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background: rgba(125, 140, 160, 0.18);
+    }
+
+    .btn.active {
+      background: #0f172a;
+      color: #fff;
+      border-color: #0f172a;
+    }
+
+    body.dark-mode .btn.active {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    /* Bottom helper hint */
+    .bottom-hint {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 999px;
+      padding: 8px 22px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      backdrop-filter: blur(12px);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: var(--panel-shadow);
+    }
+
+    .bottom-hint kbd {
+      background: rgba(125, 140, 160, 0.18);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 10px;
+      color: var(--text-main);
+    }
+
+    /* Loading overlay */
+    #loader-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--bg-studio);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      transition: opacity 0.4s ease;
+    }
+
+    #loader-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .spinner {
+      width: 46px;
+      height: 46px;
+      border: 3px solid rgba(0, 0, 0, 0.1);
+      border-top-color: #0f172a;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 18px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loader-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: 0.5px;
+    }
+  </style>
+
+  <script async src="https://unpkg.com/es-module-shims@1.8.2/dist/es-module-shims.js"></script>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div id="loader-overlay">
+    <div class="spinner"></div>
+    <div class="loader-text" id="loader-status">Cargando Render de Estudio KALPA...</div>
+  </div>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="brand-pill">⚡ KALPA <span>355 mL</span></div>
+    <div class="title-group">
+      <h1>Café Cold Brew • Edición Original</h1>
+      <p id="model-stats">Estudio Fotográfico Comercial 3D</p>
+    </div>
+  </div>
+
+  <!-- 3D Canvas -->
+  <div id="canvas-container"></div>
+
+  <!-- Floating Controls -->
+  <div class="control-panel">
+    <!-- Camera angles exactly as in the user's reference image -->
+    <div class="control-group">
+      <div class="section-title">📐 Ángulos de la Referencia</div>
+      <div class="angles-grid">
+        <button class="btn-angle active" data-angle="0">0° Frente</button>
+        <button class="btn-angle" data-angle="45">45° Ángulo</button>
+        <button class="btn-angle" data-angle="90">90° Lateral</button>
+        <button class="btn-angle" data-angle="180">180° Nutri</button>
+        <button class="btn-angle" data-angle="top">🔝 Tapa</button>
+        <button class="btn-angle" data-angle="bottom">⬇️ Base</button>
+      </div>
+    </div>
+
+    <!-- Rim circular smoothing toggle -->
+    <div class="control-group">
+      <div class="section-title">⭕ Borde Superior</div>
+      <button class="btn active" id="btn-toggle-rim" style="width: 100%;">
+        ✨ Borde Redondeado Suave
+      </button>
+    </div>
+
+    <!-- Lighting & Studio Environment -->
+    <div class="control-group">
+      <div class="section-title">💡 Iluminación de Estudio</div>
+      <label for="bg-color">Entorno de Fondo</label>
+      <select id="bg-color">
+        <option value="#ffffff" selected>Blanco Puro (Estudio)</option>
+        <option value="#e3e6ea">Gris Estudio (Referencia)</option>
+        <option value="#0d1117">Estudio Oscuro (Dark)</option>
+        <option value="#1e2430">Gris Acero</option>
+      </select>
+
+      <label>Brillo de Luces: <span id="val-light">1.2</span></label>
+      <input type="range" id="param-light" min="0.5" max="2.5" step="0.1" value="1.2">
+    </div>
+
+    <!-- Material Properties -->
+    <div class="control-group">
+      <div class="section-title">🎨 Acabado de la Lata</div>
+      <label>Lustre Satinado (Roughness): <span id="val-rough">0.36</span></label>
+      <input type="range" id="param-rough" min="0.1" max="0.8" step="0.02" value="0.36">
+
+      <label>Tinte del Cuerpo (Obvia aluminio)</label>
+      <input type="color" id="can-color" value="#ffffff">
+    </div>
+
+    <!-- Tools -->
+    <div class="control-group">
+      <div class="section-title">⚙️ Herramientas</div>
+      <div class="btn-grid">
+        <button class="btn" id="btn-autorotate">🔄 Auto-Giro</button>
+        <button class="btn" id="btn-wireframe">🕸️ Malla</button>
+      </div>
+      <button class="btn" id="btn-screenshot" style="width: 100%;">📸 Descargar Render HD</button>
+    </div>
+  </div>
+
+  <!-- Bottom Hint -->
+  <div class="bottom-hint">
+    <span><kbd>Click Izq</kbd> Rotar 360°</span>
+    <span>•</span>
+    <span><kbd>Click Der</kbd> Desplazar</span>
+    <span>•</span>
+    <span><kbd>Rueda</kbd> Zoom</span>
+  </div>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
+    import { smoothCanBody, buildRealisticCanRimAndBase } from './CanRefinerPro.js';
+
+    // UI elements
+    const container = document.getElementById('canvas-container');
+    const loaderOverlay = document.getElementById('loader-overlay');
+    const modelStats = document.getElementById('model-stats');
+    const btnToggleRim = document.getElementById('btn-toggle-rim');
+    const angleButtons = document.querySelectorAll('.btn-angle');
+
+    let scene, camera, renderer, controls;
+    let currentModel = null;
+    let bodyMesh = null;
+    let alumMesh = null;
+    let rawBodyGeometry = null;
+    let smoothBodyGeometry = null;
+    let rawAlumGeometry = null;
+    let smoothAlumGeometry = null;
+    let loadedTextures = {};
+    let isRimCircular = true;
+    let autoRotate = false;
+    let wireframeMode = false;
+    let targetCanRotationY = 0;
+    let shadowPlane = null;
+
+    // Lights
+    let softboxLeft, softboxRight, rimLight, topRimLight, hemiLight;
+
+    const matParams = {
+      metalness: 0.18,
+      roughness: 0.36,
+      clearcoat: 0.12,
+      color: 0xffffff
+    };
+
+    function init() {
+      // 1. Scene - Fondo Blanco Puro de Estudio Comercial
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xffffff);
+
+      // 2. Camera: clean perspective with optimal depth precision (far: 50.0)
+      camera = new THREE.PerspectiveCamera(32, window.innerWidth / window.innerHeight, 0.1, 50.0);
+      camera.position.set(0, 1.05, 3.8);
+
+      // 3. Renderer with high color fidelity
+      renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, powerPreference: "high-performance" });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.15;
+      container.appendChild(renderer.domElement);
+
+      // 4. Orbit Controls (Permite rotar libremente e inspeccionar frente, tapa y base)
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.minDistance = 0.8;
+      controls.maxDistance = 8.0;
+      controls.minPolarAngle = 0.01;
+      controls.maxPolarAngle = Math.PI - 0.01;
+      controls.target.set(0, 1.0, 0);
+      controls.update();
+
+      setCameraAngle('0');
+
+      // 5. Commercial Studio Product Lighting
+      hemiLight = new THREE.HemisphereLight(0xffffff, 0xd0d5dd, 1.1);
+      hemiLight.position.set(0, 20, 0);
+      scene.add(hemiLight);
+
+      // Main Left Strip Softbox
+      softboxLeft = new THREE.DirectionalLight(0xffffff, 1.8);
+      softboxLeft.position.set(-3.2, 2.5, 3.2);
+      softboxLeft.castShadow = true;
+      softboxLeft.shadow.mapSize.width = 2048;
+      softboxLeft.shadow.mapSize.height = 2048;
+      softboxLeft.shadow.bias = -0.0001;
+      scene.add(softboxLeft);
+
+      // Fill Right Strip Softbox
+      softboxRight = new THREE.DirectionalLight(0xf5f7fb, 1.2);
+      softboxRight.position.set(3.2, 2.0, 2.8);
+      scene.add(softboxRight);
+
+      // Back Rim Light
+      rimLight = new THREE.DirectionalLight(0xffffff, 1.3);
+      rimLight.position.set(0, 3.5, -4.0);
+      scene.add(rimLight);
+
+      // Top Down Light (Tapa de aluminio)
+      topRimLight = new THREE.DirectionalLight(0xffffff, 1.5);
+      topRimLight.position.set(0.2, 5.0, 0.8);
+      scene.add(topRimLight);
+
+      // Base Bounce Light: Ilumina el bisel inferior de aluminio desde el suelo blanco (elimina sombras negras)
+      const baseBounceLight = new THREE.DirectionalLight(0xffffff, 1.4);
+      baseBounceLight.position.set(0, -1.5, 2.2);
+      scene.add(baseBounceLight);
+
+      const baseBackBounce = new THREE.DirectionalLight(0xffffff, 1.1);
+      baseBackBounce.position.set(0, -1.5, -2.2);
+      scene.add(baseBackBounce);
+
+      // 6. Studio Floor Contact Shadow
+      createStudioContactShadow();
+
+      // 7. Load Textures & FBX
+      preloadTextures().then(() => {
+        loadFBXModel('Models/SM_BeerCan_A.fbx');
+      });
+
+      // 8. Event Listeners
+      window.addEventListener('resize', onWindowResize);
+      setupUIEventListeners();
+
+      // 9. Loop
+      animate();
+    }
+
+    function createStudioContactShadow() {
+      // High resolution smooth circular contact shadow
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+      const grad = ctx.createRadialGradient(256, 256, 60, 256, 256, 250);
+      grad.addColorStop(0, 'rgba(0, 0, 0, 0.38)');
+      grad.addColorStop(0.35, 'rgba(0, 0, 0, 0.22)');
+      grad.addColorStop(0.70, 'rgba(0, 0, 0, 0.06)');
+      grad.addColorStop(1, 'rgba(0, 0, 0, 0.0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 512, 512);
+
+      const shadowTex = new THREE.CanvasTexture(canvas);
+      shadowPlane = new THREE.Mesh(
+        new THREE.PlaneGeometry(2.6, 2.6),
+        new THREE.MeshBasicMaterial({
+          map: shadowTex,
+          transparent: true,
+          opacity: 0.65,
+          depthWrite: false,
+          polygonOffset: true,
+          polygonOffsetFactor: 1,
+          polygonOffsetUnits: 1
+        })
+      );
+      shadowPlane.rotation.x = -Math.PI / 2;
+      shadowPlane.position.y = -0.003;
+      scene.add(shadowPlane);
+    }
+
+    async function preloadTextures() {
+      const texLoader = new THREE.TextureLoader();
+      const files = {
+        kalpaBase: 'Materials/Ready/T_BeerCan_Kalpa.png',
+        readyBase: 'Materials/Ready/T_BeerCan_BaseColor.png',
+        readyNormal: 'Materials/Ready/T_BeerCan_Normal.png',
+        readyRMAO: 'Materials/Ready/T_BeerCan_RMAO.png'
+      };
+
+      const loadPromises = Object.entries(files).map(([key, url]) => {
+        return new Promise((resolve) => {
+          texLoader.load(
+            url,
+            (tex) => {
+              if (key.includes('Base')) tex.colorSpace = THREE.SRGBColorSpace;
+              tex.wrapS = THREE.RepeatWrapping;
+              tex.wrapT = THREE.RepeatWrapping;
+              loadedTextures[key] = tex;
+              resolve();
+            },
+            undefined,
+            () => resolve()
+          );
+        });
+      });
+
+      await Promise.all(loadPromises);
+    }
+
+    function splitCanGeometry(sourceGeo, meshMatrix) {
+      const geo = sourceGeo.index ? sourceGeo.toNonIndexed() : sourceGeo.clone();
+      if (meshMatrix) {
+        geo.applyMatrix4(meshMatrix);
+      }
+      const pos = geo.attributes.position;
+      const uv = geo.attributes.uv;
+
+      const bPos = [], bUV = [];
+      const aPos = [], aUV = [];
+
+      for (let i = 0; i < pos.count; i += 3) {
+        const y1 = pos.getY(i), y2 = pos.getY(i + 1), y3 = pos.getY(i + 2);
+        const avgY = (y1 + y2 + y3) / 3;
+
+        // Triangles of body and neck (printed with Kalpa label): between 7.95 and 162.05
+        const isBody = (avgY > 7.95 && avgY < 162.05);
+        const targetP = isBody ? bPos : aPos;
+        const targetU = isBody ? bUV : aUV;
+
+        for (let c = 0; c < 3; c++) {
+          const idx = i + c;
+          targetP.push(pos.getX(idx), pos.getY(idx), pos.getZ(idx));
+          if (uv) targetU.push(uv.getX(idx), uv.getY(idx));
+        }
+      }
+
+      const bodyGeo = new THREE.BufferGeometry();
+      bodyGeo.setAttribute('position', new THREE.Float32BufferAttribute(bPos, 3));
+      if (uv) bodyGeo.setAttribute('uv', new THREE.Float32BufferAttribute(bUV, 2));
+      bodyGeo.computeVertexNormals();
+
+      const alumGeo = new THREE.BufferGeometry();
+      alumGeo.setAttribute('position', new THREE.Float32BufferAttribute(aPos, 3));
+      if (uv) alumGeo.setAttribute('uv', new THREE.Float32BufferAttribute(aUV, 2));
+      alumGeo.computeVertexNormals();
+
+      return { bodyGeo, alumGeo };
+    }
+
+    function loadFBXModel(path) {
+      loaderOverlay.classList.remove('hidden');
+
+      if (currentModel) {
+        scene.remove(currentModel);
+        currentModel = null;
+        bodyMesh = null;
+        alumMesh = null;
+        rawBodyGeometry = null;
+        smoothBodyGeometry = null;
+        rawAlumGeometry = null;
+        smoothAlumGeometry = null;
+      }
+
+      const fbxLoader = new FBXLoader();
+      fbxLoader.load(
+        path,
+        (fbx) => {
+          let originalChildMesh = null;
+          fbx.traverse((child) => {
+            if (child.isMesh && !originalChildMesh) {
+              originalChildMesh = child;
+            }
+          });
+
+          if (originalChildMesh) {
+            originalChildMesh.updateMatrix();
+            const { bodyGeo, alumGeo } = splitCanGeometry(originalChildMesh.geometry, originalChildMesh.matrix);
+            
+            rawBodyGeometry = bodyGeo.clone();
+            smoothBodyGeometry = smoothCanBody(rawBodyGeometry);
+
+            rawAlumGeometry = alumGeo.clone();
+            smoothAlumGeometry = buildRealisticCanRimAndBase(rawAlumGeometry);
+
+            bodyMesh = new THREE.Mesh(isRimCircular ? smoothBodyGeometry : rawBodyGeometry);
+            bodyMesh.name = "Can_BodyPrint";
+            bodyMesh.castShadow = true;
+            bodyMesh.receiveShadow = false;
+
+            alumMesh = new THREE.Mesh(isRimCircular ? smoothAlumGeometry : rawAlumGeometry);
+            alumMesh.name = "Can_AluminumParts";
+            alumMesh.castShadow = true;
+            alumMesh.receiveShadow = false;
+
+            const canGroup = new THREE.Group();
+            canGroup.name = "Can_Model_Root";
+            canGroup.add(bodyMesh);
+            canGroup.add(alumMesh);
+
+            // Altura total de la lata ~165.35 units -> escalar a 2.0 unidades estándar
+            const scaleFactor = 2.0 / 165.35;
+            canGroup.scale.setScalar(scaleFactor);
+            canGroup.position.set(0, 0, 0); // Base apoyada en el suelo Y=0, centrada en X=0, Z=0
+            canGroup.rotation.y = 0;
+            targetCanRotationY = 0;
+
+            currentModel = canGroup;
+            scene.add(canGroup);
+
+            applyMaterials();
+          }
+
+          setTimeout(() => {
+            loaderOverlay.classList.add('hidden');
+          }, 150);
+        },
+        undefined,
+        (err) => console.error(err)
+      );
+    }
+
+    function applyMaterials() {
+      const baseTex = loadedTextures.kalpaBase || loadedTextures.readyBase;
+      const normalTex = loadedTextures.readyNormal;
+      const rmaoTex = loadedTextures.readyRMAO;
+
+      // 1. Printed Can Body (Premium Semi-Matte Silk Finish)
+      if (bodyMesh) {
+        bodyMesh.material = new THREE.MeshPhysicalMaterial({
+          color: new THREE.Color(matParams.color),
+          metalness: matParams.metalness,
+          roughness: matParams.roughness,
+          clearcoat: matParams.clearcoat,
+          clearcoatRoughness: 0.25,
+          map: baseTex || null,
+          normalMap: normalTex || null,
+          normalScale: new THREE.Vector2(0.8, 0.8),
+          side: THREE.FrontSide,
+          transparent: false,
+          depthWrite: true,
+          wireframe: wireframeMode
+        });
+      }
+
+      // 2. Pure Aluminum Sections (Top Lid & Base Chime - Never Tinted)
+      if (alumMesh) {
+        alumMesh.material = new THREE.MeshStandardMaterial({
+          color: new THREE.Color(0xffffff),
+          metalness: 0.96,
+          roughness: 0.20,
+          map: loadedTextures.readyBase || null,
+          normalMap: normalTex || null,
+          side: THREE.DoubleSide,
+          transparent: false,
+          depthWrite: true,
+          wireframe: wireframeMode
+        });
+      }
+    }
+
+    function updateMaterialParams() {
+      if (bodyMesh && bodyMesh.material) {
+        bodyMesh.material.color.set(matParams.color);
+        bodyMesh.material.roughness = matParams.roughness;
+        bodyMesh.material.wireframe = wireframeMode;
+        bodyMesh.material.needsUpdate = true;
+      }
+      if (alumMesh && alumMesh.material) {
+        alumMesh.material.color.set(0xffffff);
+        alumMesh.material.wireframe = wireframeMode;
+        alumMesh.material.needsUpdate = true;
+      }
+    }
+
+    // Set exact reference camera angle
+    function setCameraAngle(angle) {
+      if (!controls) return;
+      autoRotate = false;
+      document.getElementById('btn-autorotate').classList.remove('active');
+
+      if (angle === '0') {
+        // Front view (KALPA logo, Original, 0 Calories)
+        targetCanRotationY = 0;
+        camera.position.set(0, 1.05, 3.8);
+        controls.target.set(0, 1.0, 0);
+      } else if (angle === '45') {
+        // 45 degree three-quarter angle
+        targetCanRotationY = Math.PI * 0.25;
+        camera.position.set(0, 1.05, 3.8);
+        controls.target.set(0, 1.0, 0);
+      } else if (angle === '90') {
+        // Right side view (pure dark Andean pattern)
+        targetCanRotationY = Math.PI * 0.5;
+        camera.position.set(0, 1.05, 3.8);
+        controls.target.set(0, 1.0, 0);
+      } else if (angle === '180') {
+        // Back view (Nutrition facts table and barcode)
+        targetCanRotationY = Math.PI;
+        camera.position.set(0, 1.05, 3.8);
+        controls.target.set(0, 1.0, 0);
+      } else if (angle === 'top') {
+        // Top view looking directly down onto the aluminum lid & tab
+        targetCanRotationY = 0;
+        camera.position.set(0, 3.3, 0.001);
+        controls.target.set(0, 1.95, 0);
+      } else if (angle === 'bottom') {
+        // Bottom view looking onto concave aluminum base
+        targetCanRotationY = 0;
+        camera.position.set(0, -1.2, 0.001);
+        controls.target.set(0, 0.05, 0);
+      }
+
+      if (currentModel) {
+        currentModel.rotation.y = targetCanRotationY;
+      }
+      controls.update();
+    }
+
+    function setupUIEventListeners() {
+      // Reference Angles buttons
+      angleButtons.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          angleButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          setCameraAngle(btn.getAttribute('data-angle'));
+        });
+      });
+
+      // Rim and body smoothing toggle
+      btnToggleRim.addEventListener('click', () => {
+        isRimCircular = !isRimCircular;
+        btnToggleRim.classList.toggle('active', isRimCircular);
+        btnToggleRim.textContent = isRimCircular ? '✨ Borde Redondeado Suave' : '⚠️ Borde Original Facetado';
+        if (bodyMesh && smoothBodyGeometry && rawBodyGeometry) {
+          bodyMesh.geometry = isRimCircular ? smoothBodyGeometry : rawBodyGeometry;
+        }
+        if (alumMesh && smoothAlumGeometry && rawAlumGeometry) {
+          alumMesh.geometry = isRimCircular ? smoothAlumGeometry : rawAlumGeometry;
+        }
+      });
+
+      // Background color selector
+      const bgSelect = document.getElementById('bg-color');
+      bgSelect.addEventListener('change', (e) => {
+        const val = e.target.value;
+        scene.background = new THREE.Color(val);
+        if (val === '#0d1117' || val === '#1e2430') {
+          document.body.classList.add('dark-mode');
+        } else {
+          document.body.classList.remove('dark-mode');
+        }
+      });
+
+      // Light Intensity slider
+      const lightInput = document.getElementById('param-light');
+      const lightVal = document.getElementById('val-light');
+      lightInput.addEventListener('input', (e) => {
+        const val = parseFloat(e.target.value);
+        lightVal.textContent = val.toFixed(1);
+        softboxLeft.intensity = 1.8 * val;
+        softboxRight.intensity = 1.2 * val;
+        rimLight.intensity = 1.3 * val;
+        topRimLight.intensity = 1.4 * val;
+        hemiLight.intensity = 0.95 * val;
+      });
+
+      // Roughness slider (adjust silk / matte look of the can)
+      const roughInput = document.getElementById('param-rough');
+      const roughVal = document.getElementById('val-rough');
+      roughInput.addEventListener('input', (e) => {
+        matParams.roughness = parseFloat(e.target.value);
+        roughVal.textContent = matParams.roughness.toFixed(2);
+        updateMaterialParams();
+      });
+
+      // Color picker (affects only printed can body)
+      const colorInput = document.getElementById('can-color');
+      colorInput.addEventListener('input', (e) => {
+        matParams.color = e.target.value;
+        updateMaterialParams();
+      });
+
+      // Auto rotate
+      const btnRotate = document.getElementById('btn-autorotate');
+      btnRotate.addEventListener('click', () => {
+        autoRotate = !autoRotate;
+        btnRotate.classList.toggle('active', autoRotate);
+      });
+
+      // Wireframe
+      const btnWire = document.getElementById('btn-wireframe');
+      btnWire.addEventListener('click', () => {
+        wireframeMode = !wireframeMode;
+        btnWire.classList.toggle('active', wireframeMode);
+        updateMaterialParams();
+      });
+
+      // Screenshot
+      document.getElementById('btn-screenshot').addEventListener('click', () => {
+        renderer.render(scene, camera);
+        const dataURL = renderer.domElement.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = `kalpa-coldbrew-render-${Date.now()}.png`;
+        link.href = dataURL;
+        link.click();
+      });
+    }
+
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      if (autoRotate && currentModel) {
+        currentModel.rotation.y += 0.007;
+      }
+
+      if (shadowPlane) {
+        shadowPlane.visible = (camera.position.y > 0.05);
+      }
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    init();
+  </script>
+</body>
+</html>
