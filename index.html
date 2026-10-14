@@ -13,6 +13,16 @@
   <!-- Core Styles -->
   <link rel="stylesheet" href="assets/theme.css">
 
+  <!-- Three.js ES Modules & Addons Importmap (Idéntico a Lata-3d-) -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+
   <style>
     /* Panel flotante de calibración 3D para pruebas de desarrollo local */
     .dev-control-panel {
@@ -135,7 +145,12 @@
          class="hero-3d-viewport"
          data-energy-color="#fdb515"
          data-secondary-color="#ff9100"
-         data-particle-count="800">
+         data-particle-count="800"
+         data-fbx-path="assets/SM_BeerCan_A.fbx"
+         data-can-label="assets/can-kalpa-label.png"
+         data-can-base="assets/can-base.png"
+         data-can-normal="assets/can-normal.png"
+         data-can-rmao="assets/can-rmao.png">
     </div>
 
     <!-- Canvas 2D de micro-partículas -->
@@ -517,12 +532,9 @@
   </div>
 
   <!-- Scripts -->
-  <script src="assets/three.min.js"></script>
-  <script src="assets/GLTFLoader.js"></script>
   <script src="assets/gsap.min.js"></script>
   <script src="assets/ScrollTrigger.min.js"></script>
-  <script src="assets/can-model.js"></script>
-  <script src="assets/hero-3d-scene.js"></script>
+  <script type="module" src="assets/hero-3d-scene.js"></script>
   <script src="assets/hero-2d-canvas.js"></script>
   <script src="assets/theme.js"></script>
 

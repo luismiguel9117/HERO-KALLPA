@@ -27,13 +27,18 @@
     <!-- Estilos Principales -->
     {{ 'theme.css' | asset_url | stylesheet_tag }}
 
-    <!-- Librerías de Animación y 3D (Cargadas con Defer para Rendimiento 100 en Core Web Vitals) -->
-    <script src="{{ 'three.min.js' | asset_url }}" defer></script>
-    <script src="{{ 'GLTFLoader.js' | asset_url }}" defer></script>
+    <!-- Three.js ES Modules & Addons Importmap (Idéntico a Lata-3d-) -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
     <script src="{{ 'gsap.min.js' | asset_url }}" defer></script>
     <script src="{{ 'ScrollTrigger.min.js' | asset_url }}" defer></script>
-    <script src="{{ 'can-model.js' | asset_url }}" defer></script>
-    <script src="{{ 'hero-3d-scene.js' | asset_url }}" defer></script>
+    <script type="module" src="{{ 'hero-3d-scene.js' | asset_url }}"></script>
     <script src="{{ 'hero-2d-canvas.js' | asset_url }}" defer></script>
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
   </head>
