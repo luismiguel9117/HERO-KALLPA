@@ -533,7 +533,11 @@ body {
   width: 100%;
   min-height: calc(100vh - 110px);
   max-height: 850px;
-  background: radial-gradient(ellipse at 70% 50%, #9e1417 0%, #6e0b0e 45%, #3d0406 100%);
+  background-color: #5c0709;
+  background-image: url('kalpa-hero-bg.png');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
   overflow: hidden;
   display: flex;
   align-items: center;
