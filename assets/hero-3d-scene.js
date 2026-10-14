@@ -6,6 +6,7 @@
 
 import * as THREE from 'three';
 import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { smoothCanBody, buildRealisticCanRimAndBase } from './CanRefinerPro.js';
 
 class Kallpa3DScene {
@@ -77,6 +78,11 @@ class Kallpa3DScene {
     this.renderer.domElement.style.display = 'block';
     this.container.appendChild(this.renderer.domElement);
 
+    // Entorno HDR de estudio para reflejos metálicos brillantes en el aluminio (de Lata-3d-)
+    const pmremGenerator = new THREE.PMREMGenerator(this.renderer);
+    pmremGenerator.compileEquirectangularShader();
+    this.scene.environment = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
+
     // 4. Iluminación Comercial de Estudio Fotográfico (Idéntica a Lata-3d-)
     const hemiLight = new THREE.HemisphereLight(0xffffff, 0xd0d5dd, 1.2);
     hemiLight.position.set(0, 20, 0);
@@ -92,9 +98,9 @@ class Kallpa3DScene {
     softboxRight.position.set(3.5, 2.0, 3.0);
     this.scene.add(softboxRight);
 
-    // Luz de Borde Superior para la Tapa de Aluminio
-    const topRimLight = new THREE.DirectionalLight(0xffffff, 1.8);
-    topRimLight.position.set(0.5, 5.0, 1.0);
+    // Luz de Borde Superior para la Tapa de Aluminio brillante
+    const topRimLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    topRimLight.position.set(0.2, 5.0, 0.8);
     this.scene.add(topRimLight);
 
     // Halo Dorado de Contorno
@@ -102,10 +108,14 @@ class Kallpa3DScene {
     goldRim.position.set(-1.5, 1.5, -2.5);
     this.scene.add(goldRim);
 
-    // Luz de Rebote Inferior (Ilumina el bisel inferior de aluminio)
-    const baseBounceLight = new THREE.DirectionalLight(0xffffff, 1.4);
-    baseBounceLight.position.set(0, -2.0, 2.5);
+    // Luz de Rebote Inferior (Ilumina el bisel y base de aluminio)
+    const baseBounceLight = new THREE.DirectionalLight(0xffffff, 2.0);
+    baseBounceLight.position.set(0, -1.5, 2.2);
     this.scene.add(baseBounceLight);
+
+    const baseBackBounce = new THREE.DirectionalLight(0xffffff, 1.8);
+    baseBackBounce.position.set(0, -1.5, -2.2);
+    this.scene.add(baseBackBounce);
 
     // 5. Cargar Texturas Oficiales
     await this.preloadTextures();
@@ -291,12 +301,13 @@ class Kallpa3DScene {
       });
     }
 
-    // 2. Partes de Aluminio Puro (Tapa superior, anilla y borde)
+    // 2. Partes de Aluminio Puro (Tapa superior, anilla, borde y base - Brillo Metálico Plateado)
     if (this.alumMesh) {
       this.alumMesh.material = new THREE.MeshStandardMaterial({
         color: new THREE.Color(0xffffff),
-        metalness: 0.96,
-        roughness: 0.20,
+        metalness: 0.90,
+        roughness: 0.16,
+        envMapIntensity: 2.2,
         map: this.loadedTextures.readyBase || null,
         normalMap: normalTex || null,
         side: THREE.DoubleSide,
