@@ -68,18 +68,28 @@ HERO-KALLPA/
 
 ---
 
-## 3. Guía de Modelos 3D (.GLB / .GLTF)
+## 3. Integración de la Lata 3D (`Lata-3d-`) y Flujo de Merge
 
-El Hero 3D admite modelos tridimensionales reales en formato **GLB** (recomendado por estar comprimido en binario).
+El elemento 3D principal del Hero es la **Lata de Aluminio Ultra-HD KALPA (128 segmentos radiales)** vinculada al repositorio oficial:
+👉 `https://github.com/luismiguel9117/Lata-3d-.git`
 
-### ¿Cómo cargar tu propio modelo 3D en Shopify?
+### 3.1 Arquitectura de Sincronización y Merge
+Para permitir actualizaciones continuas sin romper la estructura de Shopify, la lata está vinculada mediante **Git Subtree** en la carpeta `lata-3d/` y con el remote `lata-repo`.
+
+### 3.2 ¿Cómo actualizar la lata cuando haya cambios en `Lata-3d-`?
+Simplemente ejecuta en tu consola:
+```bash
+npm run merge:can
+```
+Este comando ejecuta automáticamente:
+1. `git subtree pull --prefix=lata-3d lata-repo main --squash` (Realiza el merge trayendo los últimos cambios del repositorio de la lata).
+2. `node scripts/sync-can-assets.js` (Copia las texturas actualizadas `T_BeerCan_Kalpa.png`, normales y RMAO a `assets/`).
+
+### 3.3 Cargar Otros Modelos GLB / GLTF Externos
+Si además deseas cargar modelos GLB adicionales desde el admin de Shopify:
 1. En tu panel de Shopify, ve a **Contenido > Archivos** (`Content > Files`).
-2. Sube tu archivo `.glb` (por ejemplo `envase-kallpa.glb`).
-3. Copia el enlace CDN generado por Shopify (`https://cdn.shopify.com/s/files/.../envase-kallpa.glb`).
-4. Ve a **Tienda Online > Personalizar** (Theme Editor), selecciona la sección **⚡ Hero 3D Kallpa** y pega la URL en el campo **URL del Modelo GLB / GLTF**.
-5. ¡Listo! El motor `hero-3d-scene.js` detectará la URL, cargará el modelo con `THREE.GLTFLoader`, le aplicará la iluminación cinematográfica y lo conectará a la rotación de GSAP ScrollTrigger.
-
-> 💡 **Fallback Inteligente:** Si no ingresas ningún archivo `.glb`, el motor genera automáticamente el **Núcleo de Energía Kallpa** (esfera de icosaedro radiante con anillos orbitales y 1,200 partículas estelares).
+2. Sube tu archivo `.glb`.
+3. Pega la URL en el Theme Editor en el campo **URL del Modelo GLB / GLTF**.
 
 ---
 
