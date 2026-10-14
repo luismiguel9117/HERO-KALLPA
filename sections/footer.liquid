@@ -1,0 +1,138 @@
+{%- comment -%}
+  SECCIÓN: footer.liquid
+  Footer de Alto Impacto para HERO-KALLPA
+{%- endcomment -%}
+
+<footer class="kallpa-footer">
+  <div class="page-width">
+    
+    <div class="kallpa-footer__top">
+      <div class="kallpa-footer__brand">
+        <a href="/" class="kallpa-header__logo">
+          <span class="logo-bold">HERO</span><span class="logo-accent">KALLPA</span>
+          <span class="logo-sub">3D PERFORMANCE NUTRITION</span>
+        </a>
+        <p class="kallpa-footer__mission">
+          Fusionamos sabiduría botánica andina con biotecnología molecular moderna para expandir los límites del rendimiento humano.
+        </p>
+      </div>
+
+      <div class="kallpa-footer__newsletter">
+        <h4 class="newsletter-title">ACCESO A DROPS EXCLUSIVOS</h4>
+        <p class="newsletter-desc">Recibe lanzamientos de lotes numerados y protocolos de energía.</p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); alert('¡Bienvenido al círculo Hero Kallpa!');">
+          <input type="email" placeholder="Tu correo electrónico..." required class="newsletter-input">
+          <button type="submit" class="btn-kallpa btn-kallpa--primary" style="padding: 0.8rem 1.6rem; font-size: 0.85rem;">
+            <span>Suscribirme</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="kallpa-footer__bottom">
+      <div class="footer-copy">
+        © {{ 'now' | date: "%Y" }} HERO-KALLPA LABS. Todos los derechos reservados. Diseñado para Shopify OS 2.0.
+      </div>
+      <div class="footer-links">
+        <a href="#hero-section">Privacidad</a>
+        <a href="#hero-section">Términos de Servicio</a>
+        <a href="#hero-section">Certificados COA</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<style>
+  .kallpa-footer {
+    background-color: #050608;
+    border-top: 1px solid var(--border-subtle);
+    padding: 6rem 0 3rem;
+  }
+  .kallpa-footer__top {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  @media (min-width: 860px) {
+    .kallpa-footer__top {
+      grid-template-columns: 1.2fr 1fr;
+    }
+  }
+  .kallpa-footer__mission {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-top: 1.25rem;
+    max-width: 440px;
+    line-height: 1.6;
+  }
+  .newsletter-title {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    color: var(--accent-gold);
+    margin-bottom: 0.5rem;
+  }
+  .newsletter-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+  }
+  .newsletter-form {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .newsletter-input {
+    flex: 1;
+    min-width: 220px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--btn-radius);
+    padding: 0.8rem 1.4rem;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .newsletter-input:focus {
+    border-color: var(--border-focus);
+  }
+  .kallpa-footer__bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-top: 2.5rem;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  @media (min-width: 768px) {
+    .kallpa-footer__bottom {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+  }
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover {
+    color: var(--accent-gold);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Footer Kallpa",
+  "settings": []
+}
+{% endschema %}

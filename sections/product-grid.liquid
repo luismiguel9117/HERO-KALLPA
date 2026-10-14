@@ -1,0 +1,157 @@
+{%- comment -%}
+  SECCIÓN: product-grid.liquid
+  Colección Destacada con Filtros y Render de Tarjetas con Quick Add
+{%- endcomment -%}
+
+<section class="kallpa-collection-section" id="products-section">
+  <div class="page-width">
+    
+    <div class="kallpa-collection__header">
+      <div class="kallpa-kicker">
+        <span class="pulse-dot"></span>
+        <span>LINEA DE ALTO IMPACTO</span>
+      </div>
+      <h2 class="font-heading kallpa-collection__title">
+        ARSENAL DE <span class="gradient-text-gold">RENDIMIENTO</span>
+      </h2>
+      <p class="kallpa-collection__desc">
+        Formulaciones de grado bioactivo para antes, durante y después del entrenamiento.
+      </p>
+    </div>
+
+    <div class="kallpa-grid-container">
+      {%- if section.settings.collection != blank and section.settings.collection.products_count > 0 -%}
+        {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+          {% render 'card-product', card_product: product %}
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Muestra demo para cuando no hay productos creados en Shopify aún -->
+        <div class="kallpa-product-card">
+          <div class="kallpa-product-card__media">
+            <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" alt="Kallpa Core Elixir" class="kallpa-product-card__image">
+            <span class="kallpa-product-card__badge">EDICIÓN SOLAR</span>
+          </div>
+          <div class="kallpa-product-card__info">
+            <div class="kallpa-product-card__rating">
+              <span style="color: var(--accent-gold);">★★★★★</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">(4.9/5)</span>
+            </div>
+            <h3 class="kallpa-product-card__title"><a href="#showcase-section">KALLPA ELIXIR VOLT-3D</a></h3>
+            <div class="kallpa-product-card__price-row">
+              <span class="kallpa-product-card__price">$68.00 USD</span>
+              <span class="kallpa-product-card__compare-price">$85.00 USD</span>
+            </div>
+            <button type="button" class="btn-kallpa btn-kallpa--secondary kallpa-product-card__btn" onclick="addToCartKallpa(101)">
+              <span>Añadir al Carrito</span>
+              {% render 'icon-energy' %}
+            </button>
+          </div>
+        </div>
+
+        <div class="kallpa-product-card">
+          <div class="kallpa-product-card__media">
+            <img src="https://images.unsplash.com/photo-1579722821273-0f6c7d44362f?auto=format&fit=crop&w=600&q=80" alt="Kallpa Adaptogen Powder" class="kallpa-product-card__image">
+            <span class="kallpa-product-card__badge" style="color: var(--accent-cyan); border-color: var(--accent-cyan);">ADAPTÓGENOS</span>
+          </div>
+          <div class="kallpa-product-card__info">
+            <div class="kallpa-product-card__rating">
+              <span style="color: var(--accent-gold);">★★★★★</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">(5.0/5)</span>
+            </div>
+            <h3 class="kallpa-product-card__title"><a href="#showcase-section">KALLPA NANO-ASHWA 66</a></h3>
+            <div class="kallpa-product-card__price-row">
+              <span class="kallpa-product-card__price">$54.00 USD</span>
+            </div>
+            <button type="button" class="btn-kallpa btn-kallpa--secondary kallpa-product-card__btn" onclick="addToCartKallpa(102)">
+              <span>Añadir al Carrito</span>
+              {% render 'icon-energy' %}
+            </button>
+          </div>
+        </div>
+
+        <div class="kallpa-product-card">
+          <div class="kallpa-product-card__media">
+            <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80" alt="Kallpa Hydration Matrix" class="kallpa-product-card__image">
+            <span class="kallpa-product-card__badge">ELECTROLITOS</span>
+          </div>
+          <div class="kallpa-product-card__info">
+            <div class="kallpa-product-card__rating">
+              <span style="color: var(--accent-gold);">★★★★★</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">(4.8/5)</span>
+            </div>
+            <h3 class="kallpa-product-card__title"><a href="#showcase-section">ELECTRO-MATRIX K+ SALT</a></h3>
+            <div class="kallpa-product-card__price-row">
+              <span class="kallpa-product-card__price">$42.00 USD</span>
+            </div>
+            <button type="button" class="btn-kallpa btn-kallpa--secondary kallpa-product-card__btn" onclick="addToCartKallpa(103)">
+              <span>Añadir al Carrito</span>
+              {% render 'icon-energy' %}
+            </button>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .kallpa-collection-section {
+    padding: 7rem 0;
+    background-color: var(--bg-primary);
+  }
+  .kallpa-collection__header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 3.5rem;
+  }
+  .kallpa-collection__title {
+    margin: 1.25rem 0 1rem;
+  }
+  .kallpa-collection__desc {
+    color: var(--text-muted);
+    font-size: var(--font-body);
+  }
+  .kallpa-grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  @media (min-width: 640px) {
+    .kallpa-grid-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .kallpa-grid-container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Colección Destacada",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Productos a Mostrar",
+      "default": 3
+    }
+  ],
+  "presets": [
+    {
+      "name": "Colección Destacada Kallpa"
+    }
+  ]
+}
+{% endschema %}

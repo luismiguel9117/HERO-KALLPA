@@ -1,0 +1,253 @@
+{%- comment -%}
+  SECCIÓN: kallpa-3d-product-showcase.liquid
+  Inspección 3D Interactiva del Envase / Producto con Hotspots
+{%- endcomment -%}
+
+<section class="kallpa-showcase-section" id="showcase-section">
+  <div class="page-width">
+    
+    <div class="kallpa-showcase__grid">
+      <!-- Columna Izquierda: Especificaciones Técnicas -->
+      <div class="kallpa-showcase__info">
+        <div class="kallpa-kicker">
+          <span class="pulse-dot"></span>
+          <span>ANATOMÍA DEL PRODUCTO</span>
+        </div>
+        <h2 class="font-heading kallpa-showcase__title">
+          DISEÑADO HASTA EL <br>
+          <span class="gradient-text-cyan">ÚLTIMO MILÍMETRO</span>
+        </h2>
+        <p class="kallpa-showcase__desc">
+          El envase de grado aeroespacial protege la integridad bioactiva de cada dosis contra los rayos UV y la degradación por calor, asegurando 100% de potencia activa hasta la última toma.
+        </p>
+
+        <div class="kallpa-showcase__specs">
+          <div class="spec-item">
+            <div class="spec-icon">{% render 'icon-check' %}</div>
+            <div>
+              <h4 class="spec-title">Cierre Hermético Criogénico</h4>
+              <p class="spec-desc">Evita la oxidación de los adaptógenos y la pérdida de terpenos activos.</p>
+            </div>
+          </div>
+
+          <div class="spec-item">
+            <div class="spec-icon">{% render 'icon-check' %}</div>
+            <div>
+              <h4 class="spec-title">Aluminio Infinito 100% Reciclable</h4>
+              <p class="spec-desc">Cero plásticos de un solo uso. Máxima ligereza y resistencia térmica.</p>
+            </div>
+          </div>
+
+          <div class="spec-item">
+            <div class="spec-icon">{% render 'icon-check' %}</div>
+            <div>
+              <h4 class="spec-title">Dosificación Ergonómica K-Cap</h4>
+              <p class="spec-desc">Medición exacta de 15g por servicio con un solo giro.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 2.5rem;">
+          <a href="#products-section" class="btn-kallpa btn-kallpa--primary">
+            <span>Ver Edición Limitada</span>
+            {% render 'icon-arrow' %}
+          </a>
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Render 3D Interactivo con Hotspots -->
+      <div class="kallpa-showcase__visual">
+        <div class="kallpa-3d-card">
+          <div class="kallpa-3d-card__glow"></div>
+          <div class="kallpa-3d-card__badge">RENDER 3D INTERACTIVO</div>
+          
+          <!-- Mockup / Visual 3D -->
+          <div class="kallpa-3d-card__render">
+            <div class="kallpa-orb-halo"></div>
+            <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=700&q=80" 
+                 alt="Kallpa 3D Product" 
+                 class="kallpa-3d-img">
+          </div>
+
+          <!-- Hotspots Interactivos -->
+          <div class="hotspot hotspot--1">
+            <span class="hotspot-pulse"></span>
+            <div class="hotspot-tooltip">Tapa Criogénica K-Cap</div>
+          </div>
+
+          <div class="hotspot hotspot--2">
+            <span class="hotspot-pulse"></span>
+            <div class="hotspot-tooltip">Matriz de Nano-Micelas 99.4%</div>
+          </div>
+
+          <div class="hotspot hotspot--3">
+            <span class="hotspot-pulse"></span>
+            <div class="hotspot-tooltip">Sello de Pureza Andina</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .kallpa-showcase-section {
+    padding: 8rem 0;
+    background-color: #080a0e;
+    position: relative;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .kallpa-showcase__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  @media (min-width: 990px) {
+    .kallpa-showcase__grid {
+      grid-template-columns: 1.1fr 1fr;
+    }
+  }
+  .kallpa-showcase__title {
+    margin: 1.5rem 0 1.25rem;
+  }
+  .kallpa-showcase__desc {
+    color: var(--text-muted);
+    font-size: var(--font-body);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+  }
+  .kallpa-showcase__specs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+  .spec-item {
+    display: flex;
+    gap: 1.25rem;
+  }
+  .spec-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: hsla(var(--color-energy-cyan-h), 80%, 50%, 0.1);
+    border: 1px solid var(--accent-cyan);
+    color: var(--accent-cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .spec-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: var(--text-main);
+  }
+  .spec-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  /* Tarjeta 3D Visual */
+  .kallpa-3d-card {
+    position: relative;
+    border-radius: 24px;
+    background: radial-gradient(circle at 50% 50%, #161a24 0%, #0c0e14 100%);
+    border: 1px solid var(--border-subtle);
+    padding: 3rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 520px;
+    overflow: hidden;
+  }
+  .kallpa-3d-card__badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    color: var(--accent-gold);
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.35rem 0.8rem;
+    border-radius: 100px;
+    border: 1px solid var(--border-subtle);
+  }
+  .kallpa-orb-halo {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, hsla(var(--color-energy-gold-h), 90%, 50%, 0.25) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(20px);
+    pointer-events: none;
+  }
+  .kallpa-3d-img {
+    position: relative;
+    z-index: 2;
+    max-width: 320px;
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+    transition: transform 0.6s var(--ease-spring);
+  }
+  .kallpa-3d-card:hover .kallpa-3d-img {
+    transform: scale(1.05) translateY(-6px);
+  }
+
+  /* Hotspots */
+  .hotspot {
+    position: absolute;
+    z-index: 10;
+    cursor: pointer;
+  }
+  .hotspot-pulse {
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent-gold);
+    box-shadow: 0 0 15px var(--accent-gold);
+    animation: pulseBeacon 1.5s infinite;
+  }
+  .hotspot-tooltip {
+    position: absolute;
+    left: 24px;
+    top: -5px;
+    background: rgba(10, 12, 16, 0.9);
+    border: 1px solid var(--border-focus);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+    color: var(--text-main);
+    opacity: 0;
+    transform: translateX(-5px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+  }
+  .hotspot:hover .hotspot-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .hotspot--1 { top: 22%; left: 45%; }
+  .hotspot--2 { top: 52%; right: 28%; }
+  .hotspot--3 { bottom: 25%; left: 32%; }
+</style>
+
+{% schema %}
+{
+  "name": "Showcase 3D de Producto",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Showcase 3D de Producto"
+    }
+  ]
+}
+{% endschema %}

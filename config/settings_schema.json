@@ -1,0 +1,77 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "HERO-KALLPA",
+    "theme_version": "1.0.0",
+    "theme_author": "Kallpa Performance Team",
+    "theme_documentation_url": "https://github.com/luismiguel9117/HERO-KALLPA",
+    "theme_support_url": "https://github.com/luismiguel9117/HERO-KALLPA"
+  },
+  {
+    "name": "Colores de Marca",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Fondo Principal Obsidian",
+        "default": "#0c0e12"
+      },
+      {
+        "type": "color",
+        "id": "color_energy_gold",
+        "label": "Energía Oro Solar Kallpa",
+        "default": "#fdb515"
+      },
+      {
+        "type": "color",
+        "id": "color_energy_cyan",
+        "label": "Energía Cyan Vitality",
+        "default": "#17f2c6"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Texto Principal",
+        "default": "#f2f5f8"
+      }
+    ]
+  },
+  {
+    "name": "Motor 3D & Rendimiento",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_3d_engine",
+        "label": "Activar Motor 3D WebGL (Three.js)",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_2d_particles",
+        "label": "Activar Chispas y Estela 2D",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_scroll_trigger",
+        "label": "Activar Rotación de Cámara con GSAP ScrollTrigger",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Carrito y Checkout",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Tipo de Carrito",
+        "options": [
+          { "value": "drawer", "label": "Drawer AJAX Deslizante (Recomendado)" },
+          { "value": "page", "label": "Página Estándar" }
+        ],
+        "default": "drawer"
+      }
+    ]
+  }
+]

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HERO-KALLPA | 3D WebGL Performance (Local Live Preview)</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Core Styles -->
+  <link rel="stylesheet" href="assets/theme.css">
+
+  <style>
+    /* Panel flotante de calibración 3D para pruebas de desarrollo local */
+    .dev-control-panel {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      background: rgba(14, 17, 24, 0.85);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border-focus);
+      border-radius: 14px;
+      padding: 16px 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      color: #fff;
+      font-size: 0.8rem;
+      max-width: 280px;
+    }
+    .dev-control-panel h5 {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dev-control-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .dev-control-row select, .dev-control-row input[type="color"] {
+      background: #202430;
+      border: 1px solid var(--border-subtle);
+      color: #fff;
+      border-radius: 6px;
+      padding: 2px 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== 1. HEADER GLASSMORPHIC ==================== -->
+  <header class="kallpa-header" id="kallpa-header">
+    <div class="page-width kallpa-header__container">
+      <div class="kallpa-header__left">
+        <a href="#hero-section" class="kallpa-header__logo">
+          <div><span class="logo-bold">HERO</span><span class="logo-accent">KALLPA</span></div>
+          <span class="logo-sub">3D PERFORMANCE NUTRITION</span>
+        </a>
+      </div>
+
+      <nav class="kallpa-header__nav">
+        <a href="#hero-section" class="nav-link">Inicio</a>
+        <a href="#features-section" class="nav-link">Tecnología</a>
+        <a href="#showcase-section" class="nav-link">Fórmula 3D</a>
+        <a href="#products-section" class="nav-link">Colección</a>
+      </nav>
+
+      <div class="kallpa-header__actions">
+        <button type="button" class="kallpa-header__cart-btn" onclick="openKallpaCart()" aria-label="Abrir Carrito">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="cart-count-badge" id="kallpa-cart-count">0</span>
+        </button>
+
+        <a href="#products-section" class="btn-kallpa btn-kallpa--primary kallpa-header__cta">
+          <span>Comprar</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== 2. SECCIÓN HERO 3D (THREE.JS + GSAP) ==================== -->
+  <section class="kallpa-hero-section" id="hero-section">
+    <!-- Viewport 3D WebGL -->
+    <div id="kallpa-hero-3d" 
+         class="hero-3d-viewport"
+         data-energy-color="#fdb515"
+         data-secondary-color="#17f2c6"
+         data-particle-count="1200">
+    </div>
+
+    <!-- Canvas 2D de Chispas -->
+    <canvas id="kallpa-hero-2d" class="hero-2d-canvas"></canvas>
+
+    <div class="kallpa-hero__vignette"></div>
+
+    <div class="page-width kallpa-hero__container">
+      <div class="kallpa-hero__content">
+        
+        <div class="hero-block">
+          <div class="kallpa-kicker">
+            <span class="pulse-dot"></span>
+            <span>KALLPA 3D ENERGY PERFORMANCE</span>
+          </div>
+        </div>
+
+        <div class="hero-block">
+          <h1 class="font-hero kallpa-hero__title">
+            POTENCIA PURA<br>
+            <span class="gradient-text-gold">ENERGÍA VITAL 3D</span>
+          </h1>
+        </div>
+
+        <div class="hero-block">
+          <div class="kallpa-hero__desc">
+            Desata tu máxima fuerza celular. Formulado con extractos adaptógenos de los Andes y cafeína orgánica de liberación sostenida sin caídas.
+          </div>
+        </div>
+
+        <div class="hero-block">
+          <div class="kallpa-hero__btns">
+            <a href="#products-section" class="btn-kallpa btn-kallpa--primary">
+              <span>Desatar Energía</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+            <a href="#showcase-section" class="btn-kallpa btn-kallpa--secondary">
+              <span>Explorar Fórmula 3D</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-block">
+          <div class="kallpa-hero__stats-row">
+            <div class="stat-pill">
+              <span class="stat-value" data-counter-target="99.4" data-counter-suffix="%">0</span>
+              <span class="stat-label">Bio-Disponibilidad</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-pill">
+              <span class="stat-value" data-counter-target="0" data-counter-suffix="g">0</span>
+              <span class="stat-label">Azúcar Añadida</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-pill">
+              <span class="stat-value" data-counter-target="350" data-counter-suffix="mg">0</span>
+              <span class="stat-label">Electrolitos K+</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="kallpa-hero__scroll-hint">
+      <span class="scroll-text">SCROLL PARA EXPLORAR 3D</span>
+      <div class="scroll-bar">
+        <div class="scroll-thumb"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 3. TICKER MARQUEE ==================== -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <div class="ticker-item"><span class="highlight">⚡ KALLPA VITALITY</span><span>•</span><span>RENDIMIENTO CELULAR 3D</span><span>•</span><span class="highlight">EXTRACTOS ANDINOS</span><span>•</span><span>CERO CAÍDA DE ENERGÍA</span><span>•</span><span class="highlight">60 FPS PERFORMANCE</span><span>•</span></div>
+      <div class="ticker-item"><span class="highlight">⚡ KALLPA VITALITY</span><span>•</span><span>RENDIMIENTO CELULAR 3D</span><span>•</span><span class="highlight">EXTRACTOS ANDINOS</span><span>•</span><span>CERO CAÍDA DE ENERGÍA</span><span>•</span><span class="highlight">60 FPS PERFORMANCE</span><span>•</span></div>
+      <div class="ticker-item"><span class="highlight">⚡ KALLPA VITALITY</span><span>•</span><span>RENDIMIENTO CELULAR 3D</span><span>•</span><span class="highlight">EXTRACTOS ANDINOS</span><span>•</span><span>CERO CAÍDA DE ENERGÍA</span><span>•</span><span class="highlight">60 FPS PERFORMANCE</span><span>•</span></div>
+    </div>
+  </div>
+
+  <!-- ==================== 4. BENTO GRID 2D CON MOUSE GLOW ==================== -->
+  <section class="kallpa-features-section" id="features-section">
+    <div class="page-width">
+      <div class="kallpa-features__header">
+        <div class="kallpa-kicker">
+          <span class="pulse-dot"></span>
+          <span>ARQUITECTURA BIOLÓGICA</span>
+        </div>
+        <h2 class="font-heading kallpa-features__title">
+          INGENIERÍA DE <span class="gradient-text-gold">MÁXIMO PODER</span>
+        </h2>
+        <p class="kallpa-features__subtitle">
+          Diseñado para atletas de élite y mentes enfocadas. Cada compuesto ha sido optimizado a nivel molecular.
+        </p>
+      </div>
+
+      <div class="bento-grid">
+        <div class="bento-card bento-col-span-2">
+          <div class="bento-card__badge">TECNOLOGÍA CORE</div>
+          <h3 class="bento-card__title">Extracción Nano-Micelar Kallpa</h3>
+          <p class="bento-card__desc">
+            Moléculas de absorción inmediata que atraviesan la barrera celular en menos de 9 minutos, entregando energía constante sin taquicardia ni picos de cortisol.
+          </p>
+          <div class="bento-card__stats">
+            <div>
+              <div class="stat-value" data-counter-target="99.4" data-counter-suffix="%">99.4%</div>
+              <div class="stat-label">Absorción Inmediata</div>
+            </div>
+            <div style="width: 1px; height: 35px; background: var(--border-subtle);"></div>
+            <div>
+              <div class="stat-value" data-counter-target="9" data-counter-suffix=" MIN">9 MIN</div>
+              <div class="stat-label">Inicio de Acción</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <div class="bento-card__badge" style="color: var(--accent-cyan); border-color: hsla(var(--color-energy-cyan-h), 80%, 50%, 0.4);">ADAPTÓGENOS</div>
+          <h3 class="bento-card__title">Maca Negra & Ashwagandha KSM-66</h3>
+          <p class="bento-card__desc">
+            Resistencia física prolongada y balance neural ante situaciones de estrés o esfuerzo máximo.
+          </p>
+        </div>
+
+        <div class="bento-card">
+          <div class="bento-card__badge">HIDRATACIÓN PROFUNDA</div>
+          <h3 class="bento-card__title">Matriz de Electrolitos K+</h3>
+          <p class="bento-card__desc">
+            Magnesio quelado y sodio rosa de los Andes para prevenir calambres y mantener la hidratación celular activa.
+          </p>
+        </div>
+
+        <div class="bento-card bento-col-span-2">
+          <div class="bento-card__badge" style="color: var(--accent-cyan); border-color: hsla(var(--color-energy-cyan-h), 80%, 50%, 0.4);">LIBERACIÓN SOSTENIDA</div>
+          <h3 class="bento-card__title">Cafeína Orgánica Multifásica (6 Horas)</h3>
+          <p class="bento-card__desc">
+            Combinación sinérgica de té matcha ceremonial y café verde que disipa la fatiga y promueve enfoque mental limpio sin crash vespertino.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 5. ANATOMÍA 3D CON HOTSPOTS ==================== -->
+  <section class="kallpa-showcase-section" id="showcase-section">
+    <div class="page-width">
+      <div class="kallpa-showcase__grid">
+        <div class="kallpa-showcase__info">
+          <div class="kallpa-kicker">
+            <span class="pulse-dot"></span>
+            <span>ANATOMÍA DEL PRODUCTO</span>
+          </div>
+          <h2 class="font-heading kallpa-showcase__title">
+            DISEÑADO HASTA EL <br>
+            <span class="gradient-text-cyan">ÚLTIMO MILÍMETRO</span>
+          </h2>
+          <p class="kallpa-showcase__desc">
+            El envase de grado aeroespacial protege la integridad bioactiva de cada dosis contra los rayos UV y la degradación por calor, asegurando 100% de potencia activa hasta la última toma.
+          </p>
+
+          <div class="kallpa-showcase__specs">
+            <div class="spec-item">
+              <div class="spec-icon">✓</div>
+              <div>
+                <h4 class="spec-title">Cierre Hermético Criogénico</h4>
+                <p class="spec-desc">Evita la oxidación de los adaptógenos y la pérdida de terpenos activos.</p>
+              </div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-icon">✓</div>
+              <div>
+                <h4 class="spec-title">Aluminio Infinito 100% Reciclable</h4>
+                <p class="spec-desc">Cero plásticos de un solo uso. Máxima ligereza y resistencia térmica.</p>
+              </div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-icon">✓</div>
+              <div>
+                <h4 class="spec-title">Dosificación Ergonómica K-Cap</h4>
+                <p class="spec-desc">Medición exacta de 15g por servicio con un solo giro.</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 2.5rem;">
+            <a href="#products-section" class="btn-kallpa btn-kallpa--primary">
+              <span>Ver Edición Limitada</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="kallpa-showcase__visual">
+          <div class="kallpa-3d-card">
+            <div class="kallpa-orb-halo"></div>
+            <div class="kallpa-3d-card__badge">RENDER 3D INTERACTIVO</div>
+            <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=700&q=80" alt="Kallpa 3D Product" class="kallpa-3d-img">
+            
+            <div class="hotspot hotspot--1">
+              <span class="hotspot-pulse"></span>
+              <div class="hotspot-tooltip">Tapa Criogénica K-Cap</div>
+            </div>
+            <div class="hotspot hotspot--2">
+              <span class="hotspot-pulse"></span>
+              <div class="hotspot-tooltip">Matriz de Nano-Micelas 99.4%</div>
+            </div>
+            <div class="hotspot hotspot--3">
+              <span class="hotspot-pulse"></span>
+              <div class="hotspot-tooltip">Sello de Pureza Andina</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 6. PRODUCT GRID & QUICK ADD ==================== -->
+  <section class="kallpa-collection-section" id="products-section">
+    <div class="page-width">
+      <div class="kallpa-collection__header">
+        <div class="kallpa-kicker">
+          <span class="pulse-dot"></span>
+          <span>LINEA DE ALTO IMPACTO</span>
+        </div>
+        <h2 class="font-heading kallpa-collection__title">
+          ARSENAL DE <span class="gradient-text-gold">RENDIMIENTO</span>
+        </h2>
+        <p class="kallpa-collection__desc">
+          Formulaciones de grado bioactivo para antes, durante y después del entrenamiento.
+        </p>
+      </div>
+
+      <div class="kallpa-grid-container">
+        <!-- Tarjeta 1 -->
+        <div class="kallpa-product-card">
+          <div class="kallpa-product-card__media">
+            <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" alt="Kallpa Core Elixir" class="kallpa-product-card__image">
+            <span class="kallpa-product-card__badge">EDICIÓN SOLAR</span>
+          </div>
+          <div class="kallpa-product-card__info">
+            <div class="kallpa-product-card__rating">
+              <span style="color: var(--accent-gold);">★★★★★</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">(4.9/5)</span>
+            </div>
+            <h3 class="kallpa-product-card__title"><a href="#showcase-section">KALLPA ELIXIR VOLT-3D</a></h3>
+            <div class="kallpa-product-card__price-row">
+              <span class="kallpa-product-card__price">$68.00 USD</span>
+              <span class="kallpa-product-card__compare-price">$85.00 USD</span>
+            </div>
+            <button type="button" class="btn-kallpa btn-kallpa--secondary kallpa-product-card__btn" onclick="addToCartKallpa(101)">
+              <span>Añadir al Carrito</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tarjeta 2 -->
+        <div class="kallpa-product-card">
+          <div class="kallpa-product-card__media">
+            <img src="https://images.unsplash.com/photo-1579722821273-0f6c7d44362f?auto=format&fit=crop&w=600&q=80" alt="Kallpa Adaptogen Powder" class="kallpa-product-card__image">
+            <span class="kallpa-product-card__badge" style="color: var(--accent-cyan); border-color: var(--accent-cyan);">ADAPTÓGENOS</span>
+          </div>
+          <div class="kallpa-product-card__info">
+            <div class="kallpa-product-card__rating">
+              <span style="color: var(--accent-gold);">★★★★★</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">(5.0/5)</span>
+            </div>
+            <h3 class="kallpa-product-card__title"><a href="#showcase-section">KALLPA NANO-ASHWA 66</a></h3>
+            <div class="kallpa-product-card__price-row">
+              <span class="kallpa-product-card__price">$54.00 USD</span>
+            </div>
+            <button type="button" class="btn-kallpa btn-kallpa--secondary kallpa-product-card__btn" onclick="addToCartKallpa(102)">
+              <span>Añadir al Carrito</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tarjeta 3 -->
+        <div class="kallpa-product-card">
+          <div class="kallpa-product-card__media">
+            <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80" alt="Kallpa Hydration Matrix" class="kallpa-product-card__image">
+            <span class="kallpa-product-card__badge">ELECTROLITOS</span>
+          </div>
+          <div class="kallpa-product-card__info">
+            <div class="kallpa-product-card__rating">
+              <span style="color: var(--accent-gold);">★★★★★</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">(4.8/5)</span>
+            </div>
+            <h3 class="kallpa-product-card__title"><a href="#showcase-section">ELECTRO-MATRIX K+ SALT</a></h3>
+            <div class="kallpa-product-card__price-row">
+              <span class="kallpa-product-card__price">$42.00 USD</span>
+            </div>
+            <button type="button" class="btn-kallpa btn-kallpa--secondary kallpa-product-card__btn" onclick="addToCartKallpa(103)">
+              <span>Añadir al Carrito</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 7. FOOTER ==================== -->
+  <footer class="kallpa-footer">
+    <div class="page-width">
+      <div class="kallpa-footer__top">
+        <div class="kallpa-footer__brand">
+          <a href="/" class="kallpa-header__logo">
+            <div><span class="logo-bold">HERO</span><span class="logo-accent">KALLPA</span></div>
+            <span class="logo-sub">3D PERFORMANCE NUTRITION</span>
+          </a>
+          <p class="kallpa-footer__mission">
+            Fusionamos sabiduría botánica andina con biotecnología molecular moderna para expandir los límites del rendimiento humano.
+          </p>
+        </div>
+
+        <div class="kallpa-footer__newsletter">
+          <h4 class="newsletter-title">ACCESO A DROPS EXCLUSIVOS</h4>
+          <p class="newsletter-desc">Recibe lanzamientos de lotes numerados y protocolos de energía.</p>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('¡Bienvenido a Hero Kallpa!');">
+            <input type="email" placeholder="Tu correo electrónico..." required class="newsletter-input">
+            <button type="submit" class="btn-kallpa btn-kallpa--primary" style="padding: 0.8rem 1.6rem; font-size: 0.85rem;">
+              <span>Suscribirme</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="kallpa-footer__bottom">
+        <div class="footer-copy">
+          © 2026 HERO-KALLPA LABS. Todos los derechos reservados. Compatible con Shopify OS 2.0.
+        </div>
+        <div class="footer-links">
+          <a href="#hero-section">Privacidad</a>
+          <a href="#hero-section">Términos</a>
+          <a href="#hero-section">Certificados COA</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== DRAWER DEL CARRITO AJAX ==================== -->
+  <div id="kallpa-cart-overlay" class="cart-overlay" onclick="closeKallpaCart()"></div>
+  <div id="kallpa-cart-drawer" class="cart-drawer">
+    <div class="cart-drawer__header">
+      <h3 style="font-size: 1.1rem; font-weight: 800; letter-spacing: 0.1em; color: var(--text-main); margin: 0;">
+        TU SELECCIÓN KALLPA
+      </h3>
+      <button class="cart-drawer__close" onclick="closeKallpaCart()" aria-label="Cerrar Carrito">✕</button>
+    </div>
+    <div id="kallpa-cart-items" style="flex: 1; overflow-y: auto;"></div>
+    <div id="kallpa-cart-footer"></div>
+  </div>
+
+  <!-- ==================== PANEL DE CALIBRACIÓN 3D LOCAL ==================== -->
+  <div class="dev-control-panel">
+    <h5>⚡ Calibrador 3D Kallpa</h5>
+    <div class="dev-control-row">
+      <span>Color Energía:</span>
+      <input type="color" id="dev-color-1" value="#fdb515" onchange="updateDevEnergyColor(this.value)">
+    </div>
+    <div class="dev-control-row">
+      <span>Partículas 3D:</span>
+      <select onchange="updateDevParticles(this.value)">
+        <option value="600">600 (Bajo)</option>
+        <option value="1200" selected>1200 (Óptimo)</option>
+        <option value="2400">2400 (Ultra)</option>
+      </select>
+    </div>
+    <div style="font-size: 0.7rem; color: #889; margin-top: 8px;">
+      * Mueve el mouse sobre la pantalla para probar parallax 3D y chispas 2D.
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/three.min.js"></script>
+  <script src="assets/GLTFLoader.js"></script>
+  <script src="assets/gsap.min.js"></script>
+  <script src="assets/ScrollTrigger.min.js"></script>
+  <script src="assets/hero-3d-scene.js"></script>
+  <script src="assets/hero-2d-canvas.js"></script>
+  <script src="assets/theme.js"></script>
+
+  <script>
+    function updateDevEnergyColor(color) {
+      if (window.kallpa3D) {
+        window.kallpa3D.options.energyColor = color;
+        if (window.kallpa3D.coreMesh) {
+          window.kallpa3D.coreMesh.material.color.set(color);
+          window.kallpa3D.coreMesh.material.emissive.set(color);
+        }
+      }
+    }
+    function updateDevParticles(count) {
+      if (window.kallpa3D) {
+        window.kallpa3D.options.particleCount = parseInt(count);
+        if (window.kallpa3D.particles) {
+          window.kallpa3D.scene.remove(window.kallpa3D.particles);
+          window.kallpa3D.createEnergyParticles();
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>

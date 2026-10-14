@@ -1,0 +1,19 @@
+{
+  "name": "Colección Kallpa",
+  "sections": {
+    "products": {
+      "type": "product-grid",
+      "settings": {
+        "products_to_show": 12
+      }
+    },
+    "features": {
+      "type": "kallpa-features-grid",
+      "settings": {}
+    }
+  },
+  "order": [
+    "products",
+    "features"
+  ]
+}

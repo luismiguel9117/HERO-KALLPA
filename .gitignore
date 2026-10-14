@@ -1,0 +1,14 @@
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Node
+node_modules/
+package-lock.json
+
+# Shopify CLI
+.shopify/
+*.secret
+config/settings_data.json.bak

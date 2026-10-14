@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code | default: 'es' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="canonical" href="{{ canonical_url }}">
+    
+    <!-- Google Fonts: Outfit (Tipografía de Alta Legibilidad y Estilo Moderno) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {{ content_for_header }}
+
+    <!-- Estilos Principales -->
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+    <!-- Librerías de Animación y 3D (Cargadas con Defer para Rendimiento 100 en Core Web Vitals) -->
+    <script src="{{ 'three.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'GLTFLoader.js' | asset_url }}" defer></script>
+    <script src="{{ 'gsap.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'ScrollTrigger.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'hero-3d-scene.js' | asset_url }}" defer></script>
+    <script src="{{ 'hero-2d-canvas.js' | asset_url }}" defer></script>
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  </head>
+  <body>
+
+    <!-- Header Fijo Glassmorphic -->
+    {% section 'header' %}
+
+    <!-- Contenido Dinámico de Páginas y Secciones -->
+    <main role="main" id="MainContent">
+      {{ content_for_layout }}
+    </main>
+
+    <!-- Footer Global -->
+    {% section 'footer' %}
+
+    <!-- Drawer del Carrito AJAX Global -->
+    <div id="kallpa-cart-overlay" class="cart-overlay" onclick="closeKallpaCart()"></div>
+    <div id="kallpa-cart-drawer" class="cart-drawer">
+      <div class="cart-drawer__header">
+        <h3 style="font-size: 1.1rem; font-weight: 800; letter-spacing: 0.1em; color: var(--text-main); margin: 0;">
+          TU SELECCIÓN KALLPA
+        </h3>
+        <button class="cart-drawer__close" onclick="closeKallpaCart()" aria-label="Cerrar Carrito">
+          ✕
+        </button>
+      </div>
+
+      <div id="kallpa-cart-items" style="flex: 1; overflow-y: auto;">
+        <!-- Inyectado dinámicamente por theme.js -->
+      </div>
+
+      <div id="kallpa-cart-footer">
+        <!-- Inyectado dinámicamente por theme.js -->
+      </div>
+    </div>
+
+  </body>
+</html>

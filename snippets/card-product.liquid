@@ -1,0 +1,151 @@
+{%- comment -%}
+  SNIPPET: card-product.liquid
+  Tarjeta de Producto Premium Kallpa con Spring Curves y Quick Add
+{%- endcomment -%}
+
+<div class="kallpa-product-card" data-product-id="{{ card_product.id }}">
+  <div class="kallpa-product-card__media">
+    {%- if card_product.featured_media -%}
+      {{ card_product.featured_media | image_url: width: 600 | image_tag:
+         widths: '300, 450, 600',
+         sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw',
+         loading: 'lazy',
+         class: 'kallpa-product-card__image',
+         alt: card_product.featured_media.alt | escape
+      }}
+    {%- else -%}
+      <div class="kallpa-product-card__placeholder">
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {%- endif -%}
+
+    <span class="kallpa-product-card__badge">
+      {%- if card_product.tags contains 'new' -%}
+        NOVEDAD
+      {%- else -%}
+        ENERGÍA PURA
+      {%- endif -%}
+    </span>
+  </div>
+
+  <div class="kallpa-product-card__info">
+    <div class="kallpa-product-card__rating">
+      <span style="color: var(--accent-gold);">★★★★★</span>
+      <span style="font-size: 0.75rem; color: var(--text-muted);">(4.9/5)</span>
+    </div>
+    
+    <h3 class="kallpa-product-card__title">
+      <a href="{{ card_product.url }}">{{ card_product.title | escape }}</a>
+    </h3>
+
+    <div class="kallpa-product-card__price-row">
+      <span class="kallpa-product-card__price">
+        {{ card_product.price | money }}
+      </span>
+      {%- if card_product.compare_at_price > card_product.price -%}
+        <span class="kallpa-product-card__compare-price">
+          {{ card_product.compare_at_price | money }}
+        </span>
+      {%- endif -%}
+    </div>
+
+    <button type="button" 
+            class="btn-kallpa btn-kallpa--secondary kallpa-product-card__btn"
+            onclick="addToCartKallpa({{ card_product.selected_or_first_available_variant.id | default: 1 }})">
+      <span>Añadir</span>
+      {% render 'icon-energy' %}
+    </button>
+  </div>
+</div>
+
+<style>
+  .kallpa-product-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--card-radius);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s var(--ease-spring), border-color 0.3s;
+  }
+  .kallpa-product-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--border-focus);
+  }
+  .kallpa-product-card__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0f1117;
+    margin-bottom: 1.25rem;
+  }
+  .kallpa-product-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease-spring);
+  }
+  .kallpa-product-card:hover .kallpa-product-card__image {
+    transform: scale(1.06);
+  }
+  .kallpa-product-card__badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-focus);
+    color: var(--accent-gold);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 100px;
+  }
+  .kallpa-product-card__rating {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
+  }
+  .kallpa-product-card__title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  .kallpa-product-card__title a {
+    color: var(--text-main);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .kallpa-product-card__title a:hover {
+    color: var(--accent-gold);
+  }
+  .kallpa-product-card__price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .kallpa-product-card__price {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--accent-gold);
+  }
+  .kallpa-product-card__compare-price {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    text-decoration: line-through;
+  }
+  .kallpa-product-card__btn {
+    width: 100%;
+    padding: 0.8rem 1.5rem;
+    font-size: 0.85rem;
+    margin-top: auto;
+  }
+</style>

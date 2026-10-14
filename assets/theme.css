@@ -1,0 +1,389 @@
+/* ==========================================================================
+   HERO-KALLPA : SISTEMA DE DISEÑO DE ALTO IMPACTO (OS 2.0)
+   Inspirado en la fuerza vital "Kallpa" - Energía, Estética Oscura & 60 FPS
+   ========================================================================== */
+
+:root {
+  /* Paleta Base HSL Calibrada */
+  --color-bg-h: 220;
+  --color-bg-s: 15%;
+  --color-bg-l: 6%; /* #0c0e12 Obsidian Deep */
+
+  --color-surface-h: 220;
+  --color-surface-s: 12%;
+  --color-surface-l: 11%; /* #16181f Carbon Surface */
+
+  --color-surface-hover-h: 220;
+  --color-surface-hover-s: 12%;
+  --color-surface-hover-l: 16%;
+
+  --color-border-h: 220;
+  --color-border-s: 10%;
+  --color-border-l: 20%;
+
+  /* Acentos de Energía Kallpa */
+  --color-energy-gold-h: 38;
+  --color-energy-gold-s: 98%;
+  --color-energy-gold-l: 54%; /* #fdb515 Solar Kinetic Gold */
+
+  --color-energy-cyan-h: 172;
+  --color-energy-cyan-s: 88%;
+  --color-energy-cyan-l: 50%; /* #17f2c6 Vitality Cyan */
+
+  --color-text-h: 210;
+  --color-text-s: 20%;
+  --color-text-l: 96%; /* #f2f5f8 Pure Light */
+
+  --color-muted-h: 215;
+  --color-muted-s: 15%;
+  --color-muted-l: 65%; /* #9aa5b5 Muted Silver */
+
+  /* Inyecciones Dinámicas de Tokens */
+  --bg-primary: hsl(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l));
+  --bg-surface: hsl(var(--color-surface-h), var(--color-surface-s), var(--color-surface-l));
+  --bg-surface-hover: hsl(var(--color-surface-hover-h), var(--color-surface-hover-s), var(--color-surface-hover-l));
+  --border-subtle: hsla(var(--color-border-h), var(--color-border-s), var(--color-border-l), 0.5);
+  --border-focus: hsla(var(--color-energy-gold-h), var(--color-energy-gold-s), var(--color-energy-gold-l), 0.6);
+
+  --accent-gold: hsl(var(--color-energy-gold-h), var(--color-energy-gold-s), var(--color-energy-gold-l));
+  --accent-cyan: hsl(var(--color-energy-cyan-h), var(--color-energy-cyan-s), var(--color-energy-cyan-l));
+  
+  --text-main: hsl(var(--color-text-h), var(--color-text-s), var(--color-text-l));
+  --text-muted: hsl(var(--color-muted-h), var(--color-muted-s), var(--color-muted-l));
+
+  /* Tipografía Fluida Matemática */
+  --font-hero: clamp(2.75rem, 6.5vw + 1rem, 6.5rem);
+  --font-h1: clamp(2.25rem, 4.5vw + 0.5rem, 4rem);
+  --font-h2: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+  --font-h3: clamp(1.25rem, 2vw + 0.25rem, 1.75rem);
+  --font-body: clamp(0.95rem, 0.4vw + 0.85rem, 1.125rem);
+  --font-small: clamp(0.75rem, 0.25vw + 0.7rem, 0.875rem);
+
+  /* Curvas de Aceleración por GPU (Springs) */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-cinematic: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Efectos y Sombras de Neón Kallpa */
+  --glow-gold: 0 0 35px hsla(var(--color-energy-gold-h), var(--color-energy-gold-s), var(--color-energy-gold-l), 0.35);
+  --glow-cyan: 0 0 35px hsla(var(--color-energy-cyan-h), var(--color-energy-cyan-s), var(--color-energy-cyan-l), 0.35);
+  --card-radius: 16px;
+  --btn-radius: 100px;
+}
+
+/* Reset Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* Contenedores */
+.page-width {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .page-width {
+    padding: 0 3rem;
+  }
+}
+
+/* Tipografía */
+.font-hero {
+  font-size: var(--font-hero);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+.font-heading {
+  font-size: var(--font-h2);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.gradient-text-gold {
+  background: linear-gradient(135deg, #fff 15%, var(--accent-gold) 75%, #ff8c00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.gradient-text-cyan {
+  background: linear-gradient(135deg, #ffffff 15%, var(--accent-cyan) 80%, #00b4d8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.kallpa-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  background: hsla(var(--color-energy-gold-h), var(--color-energy-gold-s), var(--color-energy-gold-l), 0.1);
+  border: 1px solid hsla(var(--color-energy-gold-h), var(--color-energy-gold-s), var(--color-energy-gold-l), 0.3);
+  color: var(--accent-gold);
+}
+
+.kallpa-kicker .pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-gold);
+  box-shadow: 0 0 10px var(--accent-gold);
+  animation: pulseBeacon 1.8s infinite;
+}
+
+@keyframes pulseBeacon {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.4); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+/* Botones Magnéticos y Primarios */
+.btn-kallpa {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.1rem 2.5rem;
+  border-radius: var(--btn-radius);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-spring), background-color 0.3s;
+  overflow: hidden;
+  will-change: transform;
+  border: none;
+}
+
+.btn-kallpa--primary {
+  background: linear-gradient(135deg, var(--accent-gold) 0%, #e09200 100%);
+  color: #0c0e12;
+  box-shadow: 0 10px 25px -5px hsla(var(--color-energy-gold-h), var(--color-energy-gold-s), var(--color-energy-gold-l), 0.4);
+}
+
+.btn-kallpa--primary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 16px 35px -5px hsla(var(--color-energy-gold-h), var(--color-energy-gold-s), var(--color-energy-gold-l), 0.6);
+}
+
+.btn-kallpa--secondary {
+  background: hsla(var(--color-surface-h), var(--color-surface-s), var(--color-surface-l), 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+}
+
+.btn-kallpa--secondary:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--border-focus);
+  transform: translateY(-2px);
+}
+
+/* Estilos de la Tarjeta Bento / Features */
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .bento-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .bento-col-span-2 {
+    grid-column: span 2;
+  }
+}
+
+.bento-card {
+  position: relative;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--card-radius);
+  padding: 2.5rem;
+  overflow: hidden;
+  transition: transform 0.5s var(--ease-spring), border-color 0.4s;
+}
+
+.bento-card::before {
+  content: '';
+  position: absolute;
+  top: var(--mouse-y, -100px);
+  left: var(--mouse-x, -100px);
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, hsla(var(--color-energy-gold-h), 90%, 50%, 0.15) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  opacity: 0;
+}
+
+.bento-card:hover::before {
+  opacity: 1;
+}
+
+.bento-card:hover {
+  border-color: hsla(var(--color-energy-gold-h), var(--color-energy-gold-s), var(--color-energy-gold-l), 0.4);
+  transform: translateY(-4px);
+}
+
+/* Ticker Marquee Infinito */
+.ticker-wrap {
+  width: 100%;
+  overflow: hidden;
+  background: #000;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 1.25rem 0;
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: tickerAnimation 25s linear infinite;
+}
+
+.ticker-wrap:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 2rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+.ticker-item span.highlight {
+  color: var(--accent-gold);
+}
+
+@keyframes tickerAnimation {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* AJAX Cart Drawer */
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 10, 14, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease-cinematic);
+  z-index: 999;
+}
+
+.cart-overlay.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 440px;
+  height: 100vh;
+  background: var(--bg-surface);
+  border-left: 1px solid var(--border-subtle);
+  z-index: 1000;
+  transform: translateX(100%);
+  transition: transform 0.5s var(--ease-spring);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.cart-drawer.is-active {
+  transform: translateX(0);
+}
+
+.cart-drawer__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.cart-drawer__close {
+  background: none;
+  border: none;
+  color: var(--text-main);
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.cart-drawer__close:hover {
+  transform: rotate(90deg);
+  color: var(--accent-gold);
+}
+
+/* Canvas y Contenedores 3D / 2D */
+.hero-3d-viewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+.hero-2d-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}

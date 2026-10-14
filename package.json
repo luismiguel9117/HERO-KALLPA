@@ -1,0 +1,24 @@
+{
+  "name": "hero-kallpa",
+  "version": "1.0.0",
+  "description": "Shopify Online Store 2.0 Theme with 3D WebGL (Three.js), GSAP Cinematic ScrollTrigger, and 2D Interactive Physics",
+  "scripts": {
+    "dev": "npx serve . -l 3000",
+    "shopify:dev": "shopify theme dev --theme-editor-sync",
+    "shopify:pull": "shopify theme pull",
+    "shopify:push": "shopify theme push --unpublished --theme \"HERO-KALLPA v1.0\"",
+    "shopify:publish": "shopify theme publish"
+  },
+  "keywords": [
+    "shopify",
+    "theme",
+    "threejs",
+    "webgl",
+    "gsap",
+    "scrolltrigger",
+    "liquid",
+    "os2.0"
+  ],
+  "author": "Kallpa Performance Team",
+  "license": "MIT"
+}

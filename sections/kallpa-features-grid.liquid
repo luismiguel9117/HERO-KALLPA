@@ -1,0 +1,162 @@
+{%- comment -%}
+  SECCIÓN: kallpa-features-grid.liquid
+  Bento Grid 2D Interactivo con Mouse Glow Tracking y Físicas Spring
+{%- endcomment -%}
+
+<section class="kallpa-features-section" id="features-section">
+  <div class="page-width">
+    
+    <div class="kallpa-features__header">
+      <div class="kallpa-kicker">
+        <span class="pulse-dot"></span>
+        <span>{{ section.settings.kicker | default: 'ARQUITECTURA BIOLÓGICA' }}</span>
+      </div>
+      <h2 class="font-heading kallpa-features__title">
+        {{ section.settings.title_1 | default: 'INGENIERÍA DE' }}
+        <span class="gradient-text-gold">{{ section.settings.title_2 | default: 'MÁXIMO PODER' }}</span>
+      </h2>
+      <p class="kallpa-features__subtitle">
+        {{ section.settings.subtitle | default: 'Diseñado para atletas de élite y mentes enfocadas. Cada compuesto ha sido optimizado a nivel molecular.' }}
+      </p>
+    </div>
+
+    <div class="bento-grid">
+      <!-- Tarjeta 1 (Grande: 2 Columnas) -->
+      <div class="bento-card bento-col-span-2">
+        <div class="bento-card__badge">TECNOLOGÍA CORE</div>
+        <h3 class="bento-card__title">Extracción Nano-Micelar Kallpa</h3>
+        <p class="bento-card__desc">
+          Moléculas de absorción inmediata que atraviesan la barrera celular en menos de 9 minutos, entregando energía constante sin taquicardia ni picos de cortisol.
+        </p>
+        <div class="bento-card__stats">
+          <div>
+            <div class="stat-value" data-counter-target="99.4" data-counter-suffix="%">99.4%</div>
+            <div class="stat-label">Absorción Inmediata</div>
+          </div>
+          <div style="width: 1px; height: 35px; background: var(--border-subtle);"></div>
+          <div>
+            <div class="stat-value" data-counter-target="9" data-counter-suffix=" MIN">9 MIN</div>
+            <div class="stat-label">Inicio de Acción</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta 2 -->
+      <div class="bento-card">
+        <div class="bento-card__badge" style="color: var(--accent-cyan); border-color: hsla(var(--color-energy-cyan-h), 80%, 50%, 0.4);">ADAPTÓGENOS</div>
+        <h3 class="bento-card__title">Maca Negra & Ashwagandha KSM-66</h3>
+        <p class="bento-card__desc">
+          Resistencia física prolongada y balance neural ante situaciones de estrés o esfuerzo máximo.
+        </p>
+      </div>
+
+      <!-- Tarjeta 3 -->
+      <div class="bento-card">
+        <div class="bento-card__badge">HIDRATACIÓN PROFUNDA</div>
+        <h3 class="bento-card__title">Matriz de Electrolitos K+</h3>
+        <p class="bento-card__desc">
+          Magnesio quelado y sodio rosa de los Andes para prevenir calambres y mantener la hidratación celular activa.
+        </p>
+      </div>
+
+      <!-- Tarjeta 4 (2 Columnas) -->
+      <div class="bento-card bento-col-span-2">
+        <div class="bento-card__badge" style="color: var(--accent-cyan); border-color: hsla(var(--color-energy-cyan-h), 80%, 50%, 0.4);">LIBERACIÓN SOSTENIDA</div>
+        <h3 class="bento-card__title">Cafeína Orgánica Multifásica (6 Horas)</h3>
+        <p class="bento-card__desc">
+          Combinación sinérgica de té matcha ceremonial y café verde que disipa la fatiga y promueve enfoque mental limpio sin crash vespertino.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .kallpa-features-section {
+    padding: 7rem 0;
+    background-color: var(--bg-primary);
+    position: relative;
+  }
+  .kallpa-features__header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 4rem;
+  }
+  .kallpa-features__title {
+    margin: 1.25rem 0 1rem;
+  }
+  .kallpa-features__subtitle {
+    color: var(--text-muted);
+    font-size: var(--font-body);
+  }
+  .bento-card__badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
+    color: var(--accent-gold);
+    margin-bottom: 1.25rem;
+  }
+  .bento-card__title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.25;
+    color: var(--text-main);
+  }
+  .bento-card__desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .bento-card__stats {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Bento Grid Kallpa",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "ARQUITECTURA BIOLÓGICA"
+    },
+    {
+      "type": "text",
+      "id": "title_1",
+      "label": "Título Línea 1",
+      "default": "INGENIERÍA DE"
+    },
+    {
+      "type": "text",
+      "id": "title_2",
+      "label": "Título Línea 2",
+      "default": "MÁXIMO PODER"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Diseñado para atletas de élite y mentes enfocadas. Cada compuesto ha sido optimizado a nivel molecular."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bento Grid Kallpa"
+    }
+  ]
+}
+{% endschema %}

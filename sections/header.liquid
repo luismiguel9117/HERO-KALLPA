@@ -1,0 +1,161 @@
+{%- comment -%}
+  SECCIÓN: header.liquid
+  Header Glassmorphism con indicador de energía y Carrito AJAX
+{%- endcomment -%}
+
+<header class="kallpa-header" id="kallpa-header">
+  <div class="page-width kallpa-header__container">
+    <div class="kallpa-header__left">
+      <a href="/" class="kallpa-header__logo">
+        <span class="logo-bold">HERO</span><span class="logo-accent">KALLPA</span>
+        <span class="logo-sub">3D PERFORMANCE</span>
+      </a>
+    </div>
+
+    <nav class="kallpa-header__nav">
+      <a href="#hero-section" class="nav-link">Inicio</a>
+      <a href="#features-section" class="nav-link">Tecnología</a>
+      <a href="#showcase-section" class="nav-link">Fórmula 3D</a>
+      <a href="#products-section" class="nav-link">Colección</a>
+    </nav>
+
+    <div class="kallpa-header__actions">
+      <button type="button" class="kallpa-header__cart-btn" onclick="openKallpaCart()" aria-label="Abrir Carrito">
+        {% render 'icon-cart' %}
+        <span class="cart-count-badge" id="kallpa-cart-count">0</span>
+      </button>
+
+      <a href="#products-section" class="btn-kallpa btn-kallpa--primary kallpa-header__cta">
+        <span>Comprar</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .kallpa-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background 0.3s, padding 0.3s;
+  }
+  .kallpa-header__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+  }
+  .kallpa-header__logo {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .logo-bold {
+    font-size: 1.45rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+  }
+  .logo-accent {
+    font-size: 1.45rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--accent-gold);
+    margin-left: 3px;
+  }
+  .logo-sub {
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.3em;
+    color: var(--accent-cyan);
+    margin-top: 3px;
+  }
+  .kallpa-header__nav {
+    display: none;
+    align-items: center;
+    gap: 2.25rem;
+  }
+  @media (min-width: 860px) {
+    .kallpa-header__nav {
+      display: flex;
+    }
+  }
+  .nav-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: color 0.25s;
+  }
+  .nav-link:hover {
+    color: var(--accent-gold);
+  }
+  .kallpa-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  .kallpa-header__cart-btn {
+    position: relative;
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+  }
+  .kallpa-header__cart-btn:hover {
+    transform: scale(1.1);
+    color: var(--accent-gold);
+  }
+  .cart-count-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--accent-gold);
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: 800;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .kallpa-header__cta {
+    padding: 0.65rem 1.6rem;
+    font-size: 0.8rem;
+    display: none;
+  }
+  @media (min-width: 580px) {
+    .kallpa-header__cta {
+      display: inline-flex;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Header Kallpa",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Personalizado"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,35 @@
+{%- comment -%}
+  SECCIÓN: kallpa-stats-ticker.liquid
+  Marquee Cinematográfico de Alta Velocidad para Energía Kallpa
+{%- endcomment -%}
+
+<div class="ticker-wrap" style="--border-subtle: rgba(255, 255, 255, 0.1);">
+  <div class="ticker-track">
+    {%- for i in (1..6) -%}
+      <div class="ticker-item">
+        <span class="highlight">⚡ KALLPA VITALITY</span>
+        <span>•</span>
+        <span>RENDIMIENTO CELULAR 3D</span>
+        <span>•</span>
+        <span class="highlight">EXTRACTOS ANDINOS</span>
+        <span>•</span>
+        <span>CERO CAÍDA DE ENERGÍA</span>
+        <span>•</span>
+        <span class="highlight">60 FPS PERFORMANCE</span>
+        <span>•</span>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Ticker de Energía",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Ticker de Energía"
+    }
+  ]
+}
+{% endschema %}

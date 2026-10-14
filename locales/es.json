@@ -1,0 +1,17 @@
+{
+  "general": {
+    "cart": {
+      "view": "Ver Carrito",
+      "checkout": "Proceder al Checkout",
+      "empty": "Tu selección de energía está vacía.",
+      "subtotal": "Subtotal"
+    },
+    "continue_shopping": "Continuar Comprando"
+  },
+  "sections": {
+    "hero": {
+      "explore_3d": "Explorar en 3D",
+      "scroll_hint": "Scroll para explorar"
+    }
+  }
+}

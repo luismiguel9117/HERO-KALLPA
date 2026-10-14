@@ -1,0 +1,444 @@
+{%- comment -%}
+  SECCIÓN: hero-kallpa-3d.liquid
+  Hero Principal con Render 3D WebGL (Three.js), Canvas 2D y Bloques Dinámicos OS 2.0
+{%- endcomment -%}
+
+<section class="kallpa-hero-section" id="hero-section"
+         style="--energy-color: {{ section.settings.energy_color }}; --secondary-color: {{ section.settings.secondary_color }};">
+  
+  <!-- Canvas 3D WebGL (Three.js) -->
+  <div id="kallpa-hero-3d" 
+       class="hero-3d-viewport"
+       data-model-url="{{ section.settings.model_url }}"
+       data-energy-color="{{ section.settings.energy_color }}"
+       data-secondary-color="{{ section.settings.secondary_color }}"
+       data-particle-count="{{ section.settings.particle_count }}">
+  </div>
+
+  <!-- Canvas 2D (Chispas y estela de energía) -->
+  <canvas id="kallpa-hero-2d" class="hero-2d-canvas"></canvas>
+
+  <!-- Overlay de Gradiente Atmosférico para Legibilidad Editorial -->
+  <div class="kallpa-hero__vignette"></div>
+
+  <!-- Contenedor Editorial y Bloques Dinámicos -->
+  <div class="page-width kallpa-hero__container">
+    <div class="kallpa-hero__content">
+      
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+
+          {%- when 'kicker' -%}
+            <div class="hero-block hero-block--kicker" {{ block.shopify_attributes }}>
+              <div class="kallpa-kicker">
+                <span class="pulse-dot"></span>
+                <span>{{ block.settings.text }}</span>
+              </div>
+            </div>
+
+          {%- when 'heading' -%}
+            <div class="hero-block hero-block--heading" {{ block.shopify_attributes }}>
+              <h1 class="font-hero kallpa-hero__title">
+                {{ block.settings.title_line_1 }}<br>
+                <span class="gradient-text-gold">{{ block.settings.title_line_2 }}</span>
+              </h1>
+            </div>
+
+          {%- when 'description' -%}
+            <div class="hero-block hero-block--desc" {{ block.shopify_attributes }}>
+              <div class="kallpa-hero__desc">
+                {{ block.settings.text }}
+              </div>
+            </div>
+
+          {%- when 'buttons' -%}
+            <div class="hero-block hero-block--actions" {{ block.shopify_attributes }}>
+              <div class="kallpa-hero__btns">
+                <a href="{{ block.settings.btn_1_url | default: '#products-section' }}" class="btn-kallpa btn-kallpa--primary">
+                  <span>{{ block.settings.btn_1_text }}</span>
+                  {% render 'icon-arrow' %}
+                </a>
+                {%- if block.settings.btn_2_text != blank -%}
+                  <a href="{{ block.settings.btn_2_url | default: '#showcase-section' }}" class="btn-kallpa btn-kallpa--secondary">
+                    <span>{{ block.settings.btn_2_text }}</span>
+                    {% render 'icon-energy' %}
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+
+          {%- when 'stats' -%}
+            <div class="hero-block hero-block--stats" {{ block.shopify_attributes }}>
+              <div class="kallpa-hero__stats-row">
+                <div class="stat-pill">
+                  <span class="stat-value" data-counter-target="{{ block.settings.stat_1_val }}" data-counter-suffix="{{ block.settings.stat_1_suffix }}">0</span>
+                  <span class="stat-label">{{ block.settings.stat_1_label }}</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-pill">
+                  <span class="stat-value" data-counter-target="{{ block.settings.stat_2_val }}" data-counter-suffix="{{ block.settings.stat_2_suffix }}">0</span>
+                  <span class="stat-label">{{ block.settings.stat_2_label }}</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-pill">
+                  <span class="stat-value" data-counter-target="{{ block.settings.stat_3_val }}" data-counter-suffix="{{ block.settings.stat_3_suffix }}">0</span>
+                  <span class="stat-label">{{ block.settings.stat_3_label }}</span>
+                </div>
+              </div>
+            </div>
+
+          {%- when 'spacer' -%}
+            <div class="hero-block hero-block--spacer" style="height: {{ block.settings.height }}px;" {{ block.shopify_attributes }}></div>
+
+        {%- endcase -%}
+      {%- endfor -%}
+
+    </div>
+  </div>
+
+  <!-- Indicador 3D de Scroll Cinematográfico -->
+  <div class="kallpa-hero__scroll-hint">
+    <span class="scroll-text">SCROLL PARA EXPLORAR 3D</span>
+    <div class="scroll-bar">
+      <div class="scroll-thumb"></div>
+    </div>
+  </div>
+
+</section>
+
+<style>
+  .kallpa-hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-primary);
+    overflow: hidden;
+    padding-top: 100px;
+    padding-bottom: 60px;
+  }
+  .kallpa-hero__vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 65% 50%, transparent 20%, hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.85) 85%);
+    pointer-events: none;
+    z-index: 3;
+  }
+  .kallpa-hero__container {
+    position: relative;
+    z-index: 10;
+  }
+  .kallpa-hero__content {
+    max-width: 720px;
+  }
+  .hero-block {
+    margin-bottom: 1.5rem;
+  }
+  .hero-block:last-child {
+    margin-bottom: 0;
+  }
+  .kallpa-hero__title {
+    margin: 0;
+  }
+  .kallpa-hero__desc {
+    font-size: var(--font-body);
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 580px;
+  }
+  .kallpa-hero__btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+  .kallpa-hero__stats-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: hsla(var(--color-surface-h), var(--color-surface-s), var(--color-surface-l), 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-subtle);
+    padding: 1rem 1.75rem;
+    border-radius: 100px;
+    margin-top: 1.5rem;
+  }
+  .stat-pill {
+    display: flex;
+    flex-direction: column;
+  }
+  .stat-value {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--accent-gold);
+    line-height: 1.1;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+  .stat-divider {
+    width: 1px;
+    height: 32px;
+    background: var(--border-subtle);
+  }
+  .kallpa-hero__scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    pointer-events: none;
+  }
+  .scroll-text {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.25em;
+    color: var(--text-muted);
+  }
+  .scroll-bar {
+    width: 2px;
+    height: 35px;
+    background: var(--border-subtle);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-thumb {
+    width: 100%;
+    height: 12px;
+    background: var(--accent-gold);
+    border-radius: 2px;
+    animation: scrollAnim 1.8s infinite cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  @keyframes scrollAnim {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(35px); }
+  }
+  @media (max-width: 768px) {
+    .kallpa-hero__stats-row {
+      flex-direction: column;
+      align-items: flex-start;
+      border-radius: 16px;
+      width: 100%;
+    }
+    .stat-divider {
+      width: 100%;
+      height: 1px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "⚡ Hero 3D Kallpa",
+  "tag": "section",
+  "class": "section-kallpa-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Configuración del Motor 3D WebGL"
+    },
+    {
+      "type": "text",
+      "id": "model_url",
+      "label": "URL del Modelo GLB / GLTF (Opcional)",
+      "info": "Si se deja vacío, la escena generará el Núcleo de Energía Procedural 3D con partículas reactivas."
+    },
+    {
+      "type": "color",
+      "id": "energy_color",
+      "label": "Color de Energía Principal",
+      "default": "#fdb515"
+    },
+    {
+      "type": "color",
+      "id": "secondary_color",
+      "label": "Color de Acento Secundario",
+      "default": "#17f2c6"
+    },
+    {
+      "type": "range",
+      "id": "particle_count",
+      "min": 400,
+      "max": 3000,
+      "step": 100,
+      "label": "Cantidad de Partículas 3D",
+      "default": 1200
+    }
+  ],
+  "blocks": [
+    {
+      "type": "kicker",
+      "name": "Kicker (Badge)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto del Kicker",
+          "default": "KALLPA 3D ENERGY PERFORMANCE"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Título Principal",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title_line_1",
+          "label": "Línea 1",
+          "default": "POTENCIA PURA"
+        },
+        {
+          "type": "text",
+          "id": "title_line_2",
+          "label": "Línea 2 (Gradiente)",
+          "default": "ENERGÍA VITAL 3D"
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Descripción",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Texto Editorial",
+          "default": "Desata tu máxima fuerza celular. Formulado con extractos adaptógenos de los Andes y cafeína orgánica de liberación sostenida sin caídas."
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "Botones de Acción",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "btn_1_text",
+          "label": "Texto Botón Primario",
+          "default": "Desatar Energía"
+        },
+        {
+          "type": "url",
+          "id": "btn_1_url",
+          "label": "Enlace Botón Primario"
+        },
+        {
+          "type": "text",
+          "id": "btn_2_text",
+          "label": "Texto Botón Secundario",
+          "default": "Explorar Fórmula 3D"
+        },
+        {
+          "type": "url",
+          "id": "btn_2_url",
+          "label": "Enlace Botón Secundario"
+        }
+      ]
+    },
+    {
+      "type": "stats",
+      "name": "Métricas de Rendimiento",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "stat_1_val",
+          "label": "Valor 1",
+          "default": "99.4"
+        },
+        {
+          "type": "text",
+          "id": "stat_1_suffix",
+          "label": "Sufijo 1",
+          "default": "%"
+        },
+        {
+          "type": "text",
+          "id": "stat_1_label",
+          "label": "Etiqueta 1",
+          "default": "Bio-Disponibilidad"
+        },
+        {
+          "type": "text",
+          "id": "stat_2_val",
+          "label": "Valor 2",
+          "default": "0"
+        },
+        {
+          "type": "text",
+          "id": "stat_2_suffix",
+          "label": "Sufijo 2",
+          "default": "g"
+        },
+        {
+          "type": "text",
+          "id": "stat_2_label",
+          "label": "Etiqueta 2",
+          "default": "Azúcar Añadida"
+        },
+        {
+          "type": "text",
+          "id": "stat_3_val",
+          "label": "Valor 3",
+          "default": "350"
+        },
+        {
+          "type": "text",
+          "id": "stat_3_suffix",
+          "label": "Sufijo 3",
+          "default": "mg"
+        },
+        {
+          "type": "text",
+          "id": "stat_3_label",
+          "label": "Etiqueta 3",
+          "default": "Electrolitos K+"
+        }
+      ]
+    },
+    {
+      "type": "spacer",
+      "name": "Espaciador",
+      "settings": [
+        {
+          "type": "range",
+          "id": "height",
+          "min": 10,
+          "max": 100,
+          "step": 5,
+          "unit": "px",
+          "label": "Altura",
+          "default": 20
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "⚡ Hero 3D Kallpa",
+      "blocks": [
+        { "type": "kicker" },
+        { "type": "heading" },
+        { "type": "description" },
+        { "type": "buttons" },
+        { "type": "stats" }
+      ]
+    }
+  ]
+}
+{% endschema %}

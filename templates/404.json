@@ -1,0 +1,43 @@
+{
+  "name": "Página No Encontrada",
+  "sections": {
+    "hero_3d": {
+      "type": "hero-kallpa-3d",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "title_line_1": "ERROR 404",
+            "title_line_2": "ENERGÍA EXTRAVIADA"
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "text": "La coordenada dimensional que buscas no existe o ha sido reconfigurada."
+          }
+        },
+        "buttons": {
+          "type": "buttons",
+          "settings": {
+            "btn_1_text": "Volver al Origen",
+            "btn_1_url": "/"
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "description",
+        "buttons"
+      ],
+      "settings": {
+        "energy_color": "#ff3b30",
+        "secondary_color": "#fdb515",
+        "particle_count": 800
+      }
+    }
+  },
+  "order": [
+    "hero_3d"
+  ]
+}

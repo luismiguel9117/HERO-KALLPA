@@ -1,0 +1,94 @@
+{
+  "name": "Home Page",
+  "sections": {
+    "hero_3d": {
+      "type": "hero-kallpa-3d",
+      "blocks": {
+        "kicker_1": {
+          "type": "kicker",
+          "settings": {
+            "text": "KALLPA 3D ENERGY PERFORMANCE"
+          }
+        },
+        "heading_1": {
+          "type": "heading",
+          "settings": {
+            "title_line_1": "POTENCIA PURA",
+            "title_line_2": "ENERGÍA VITAL 3D"
+          }
+        },
+        "description_1": {
+          "type": "description",
+          "settings": {
+            "text": "Desata tu máxima fuerza celular. Formulado con extractos adaptógenos de los Andes y cafeína orgánica de liberación sostenida sin caídas."
+          }
+        },
+        "buttons_1": {
+          "type": "buttons",
+          "settings": {
+            "btn_1_text": "Desatar Energía",
+            "btn_1_url": "#products-section",
+            "btn_2_text": "Explorar Fórmula 3D",
+            "btn_2_url": "#showcase-section"
+          }
+        },
+        "stats_1": {
+          "type": "stats",
+          "settings": {
+            "stat_1_val": "99.4",
+            "stat_1_suffix": "%",
+            "stat_1_label": "Bio-Disponibilidad",
+            "stat_2_val": "0",
+            "stat_2_suffix": "g",
+            "stat_2_label": "Azúcar Añadida",
+            "stat_3_val": "350",
+            "stat_3_suffix": "mg",
+            "stat_3_label": "Electrolitos K+"
+          }
+        }
+      },
+      "block_order": [
+        "kicker_1",
+        "heading_1",
+        "description_1",
+        "buttons_1",
+        "stats_1"
+      ],
+      "settings": {
+        "energy_color": "#fdb515",
+        "secondary_color": "#17f2c6",
+        "particle_count": 1200
+      }
+    },
+    "ticker_1": {
+      "type": "kallpa-stats-ticker",
+      "settings": {}
+    },
+    "features_1": {
+      "type": "kallpa-features-grid",
+      "settings": {
+        "kicker": "ARQUITECTURA BIOLÓGICA",
+        "title_1": "INGENIERÍA DE",
+        "title_2": "MÁXIMO PODER",
+        "subtitle": "Diseñado para atletas de élite y mentes enfocadas. Cada compuesto ha sido optimizado a nivel molecular."
+      }
+    },
+    "showcase_3d": {
+      "type": "kallpa-3d-product-showcase",
+      "settings": {}
+    },
+    "featured_products": {
+      "type": "product-grid",
+      "settings": {
+        "products_to_show": 3
+      }
+    }
+  },
+  "order": [
+    "hero_3d",
+    "ticker_1",
+    "features_1",
+    "showcase_3d",
+    "featured_products"
+  ]
+}
