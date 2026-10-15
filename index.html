@@ -139,17 +139,16 @@
       <div class="coffee-bean-floating bean--5"></div>
     </div>
 
-    <!-- Viewport 3D WebGL con la Lata Oficial KALPA -->
+    <!-- Viewport 3D con la Lata Oficial KALPA (Motor Híbrido 2D/3D) -->
     <div id="kallpa-hero-3d" 
          class="hero-3d-viewport"
          data-energy-color="#fdb515"
          data-secondary-color="#ff9100"
-         data-particle-count="800"
-         data-fbx-path="assets/SM_BeerCan_A.fbx"
-         data-can-label="assets/can-kalpa-label.png"
-         data-can-base="assets/can-base.png"
-         data-can-normal="assets/can-normal.png"
-         data-can-rmao="assets/can-rmao.png">
+         data-base-can="assets/kalpa-can-clean.png"
+         data-droplets="assets/kalpa-can-droplets.png"
+         data-label-original="assets/kalpa-label.png"
+         data-label-gold="assets/kalpa-label-gold.png"
+         data-label-citrus="assets/kalpa-label-citrus.png">
     </div>
 
     <!-- Canvas 2D de micro-partículas -->
@@ -771,7 +770,7 @@
   <script src="assets/ScrollTrigger.min.js"></script>
   <script src="assets/motion.js"></script>
   <script src="assets/framer-animations.js"></script>
-  <script type="module" src="assets/hero-3d-scene.js"></script>
+  <script type="module" src="assets/hero-kallpa-can.js"></script>
   <script src="assets/hero-2d-canvas.js"></script>
   <script src="assets/theme.js"></script>
 
@@ -909,8 +908,8 @@
 
         currentIndex = index;
 
-        if (window.kallpa3D && typeof window.kallpa3D.transitionSlide === 'function') {
-          window.kallpa3D.transitionSlide(currentIndex);
+        if (window.kallpaHeroCan && typeof window.kallpaHeroCan.setSlide === 'function') {
+          window.kallpaHeroCan.setSlide(currentIndex);
         }
       }
 
