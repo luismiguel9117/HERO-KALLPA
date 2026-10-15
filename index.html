@@ -127,16 +127,41 @@
     <!-- Marca de agua con patrón textil andino -->
     <div class="kalpa-hero__pattern"></div>
 
-    <!-- Resplandor solar dorado detrás de la lata (Lens Flare) -->
-    <div class="kalpa-hero__glow"></div>
+    <!-- Resplandor de Luz Dorado posicionado detrás de la lata (Backlight & Rim Flare) -->
+    <div class="kalpa-hero__backlight">
+      <div class="kalpa-hero__backlight-glow"></div>
+      <div class="kalpa-hero__backlight-core"></div>
+      <div class="kalpa-hero__backlight-flare"></div>
+    </div>
 
-    <!-- Granos de café tostado flotantes con desenfoque Bokeh -->
-    <div class="floating-beans-container">
-      <div class="coffee-bean-floating bean--1"></div>
-      <div class="coffee-bean-floating bean--2"></div>
-      <div class="coffee-bean-floating bean--3"></div>
-      <div class="coffee-bean-floating bean--4"></div>
-      <div class="coffee-bean-floating bean--5"></div>
+    <!-- Elementos de Cacao con Difuminación jugando con los planos (Foreground, Midground, Background) -->
+    <div class="cacao-beans-viewport" id="cacao-beans-viewport">
+      <!-- PLANO 1: Primer plano desenfocado (Foreground Bokeh) -->
+      <div class="cacao-bean cacao-bean--top-left" data-depth="0.08" data-plane="foreground">
+        <img src="assets/cacao-1.png" alt="" class="cacao-bean__img cacao-anim--float-1" draggable="false">
+      </div>
+      <div class="cacao-bean cacao-bean--bottom-left" data-depth="0.09" data-plane="foreground">
+        <img src="assets/cacao-1.png" alt="" class="cacao-bean__img cacao-anim--float-2" draggable="false">
+      </div>
+      <div class="cacao-bean cacao-bean--bottom-right" data-depth="0.08" data-plane="foreground">
+        <img src="assets/cacao-1.png" alt="" class="cacao-bean__img cacao-anim--float-3" draggable="false">
+      </div>
+
+      <!-- PLANO 2: Plano medio enfocado / nítido (Midground Focus) -->
+      <div class="cacao-bean cacao-bean--mid-floating" data-depth="0.035" data-plane="midground">
+        <img src="assets/cacao-3.png" alt="" class="cacao-bean__img cacao-anim--float-4" draggable="false">
+      </div>
+      <div class="cacao-bean cacao-bean--bottom-center-1" data-depth="0.04" data-plane="midground">
+        <img src="assets/cacao-3.png" alt="" class="cacao-bean__img cacao-anim--float-5" draggable="false">
+      </div>
+      <div class="cacao-bean cacao-bean--bottom-center-2" data-depth="0.045" data-plane="midground">
+        <img src="assets/cacao-2.png" alt="" class="cacao-bean__img cacao-anim--float-6" draggable="false">
+      </div>
+
+      <!-- PLANO 3: Plano de fondo / profundidad (Background Depth) -->
+      <div class="cacao-bean cacao-bean--top-right" data-depth="0.02" data-plane="background">
+        <img src="assets/cacao-6.png" alt="" class="cacao-bean__img cacao-anim--float-7" draggable="false">
+      </div>
     </div>
 
     <!-- Viewport 3D con la Lata Oficial KALPA (Motor Híbrido 2D/3D) -->
@@ -161,28 +186,17 @@
         <!-- Slide 1 (Exacto al Mockup) -->
         <div class="kalpa-slide is-active" data-slide-index="0">
           <div class="kalpa-hero__left-content">
-            <span class="kalpa-hero__eyebrow">ENERGÍA NATURAL DE LOS ANDES</span>
-            <span class="kalpa-hero__giant-title">
+            <h1 class="kalpa-hero__giant-title">
               <span class="title-white">CAFÉ DE</span>
               <span class="title-gold">VRAEM</span>
-            </span>
+            </h1>
             <p class="kalpa-hero__paragraph">
-              Energía natural para tu día. Café cold brew listo para tomar, hecho con granos del VRAEM y con todo el sabor de los Andes.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
             </p>
             <div class="kalpa-hero__actions">
               <a href="#products-section" class="btn-pruebala">
-                <span>COMPRAR AHORA</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
+                <span>PRUEBALA AHORA</span>
               </a>
-            </div>
-
-            <div class="kalpa-hero__badges">
-              <div class="hero-badge"><span class="badge-icon">🍃</span> Sin azúcar</div>
-              <div class="hero-badge"><span class="badge-icon">⚡</span> 280 mg de cafeína</div>
-              <div class="hero-badge"><span class="badge-icon">🏔️</span> De los Andes</div>
             </div>
           </div>
         </div>

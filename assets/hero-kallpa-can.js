@@ -133,12 +133,24 @@ export class HeroKallpaCan {
   }
 
   bindEvents() {
-    // Pointer move across window for magnetic 3D perspective
+    // Pointer move across window for magnetic 3D perspective and depth planes parallax
     window.addEventListener('pointermove', (e) => {
       this.cursorNormX = (e.clientX / window.innerWidth - 0.5) * 2;
       this.cursorNormY = (e.clientY / window.innerHeight - 0.5) * 2;
       this.tiltXSpring.target = -this.cursorNormY * 6; // degrees
       this.tiltYSpring.target = this.cursorNormX * 8;
+
+      // Parallax en elementos de cacao jugando con los planos
+      const beans = document.querySelectorAll('.cacao-bean');
+      if (beans.length) {
+        beans.forEach((b) => {
+          const depth = parseFloat(b.dataset.depth || '0.04');
+          const px = (this.cursorNormX * depth * 85).toFixed(2);
+          const py = (this.cursorNormY * depth * 85).toFixed(2);
+          b.style.setProperty('--parallax-x', `${px}px`);
+          b.style.setProperty('--parallax-y', `${py}px`);
+        });
+      }
     }, { passive: true });
 
     // Hover on can card

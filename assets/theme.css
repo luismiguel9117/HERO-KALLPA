@@ -612,92 +612,246 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1;
 }
 
-/* Resplandor Solar Dorado detrás de la Lata */
-.kalpa-hero__glow {
+/* ==========================================================================
+   RESPLANDOR DE LUZ DETRÁS DE LA LATA (BACKLIGHT & RIM FLARE)
+   ========================================================================== */
+.kalpa-hero__glow,
+.kalpa-hero__backlight {
+  position: absolute;
+  top: 48%;
+  right: 14%;
+  transform: translateY(-50%);
+  width: clamp(340px, 32vw, 500px);
+  height: clamp(520px, 48vw, 720px);
+  pointer-events: none;
+  z-index: 2; /* Directamente detrás de la lata (z-index: 10) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Núcleo de luz hiper-brillante enfocado en el contorno izquierdo de la lata */
+.kalpa-hero__backlight-core {
+  position: absolute;
+  top: 48%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  width: clamp(180px, 18vw, 260px);
+  height: clamp(300px, 30vw, 420px);
+  background: radial-gradient(ellipse at center,
+    rgba(255, 255, 240, 1) 0%,
+    rgba(255, 220, 70, 0.95) 22%,
+    rgba(255, 140, 15, 0.85) 45%,
+    rgba(255, 60, 0, 0.45) 68%,
+    transparent 85%
+  );
+  filter: blur(16px);
+  mix-blend-mode: screen;
+  border-radius: 50%;
+  animation: backlightCorePulse 3.8s ease-in-out infinite alternate;
+}
+
+/* Destello anamórfico oblicuo / Flare angular cinematográfico */
+.kalpa-hero__backlight-flare {
   position: absolute;
   top: 50%;
-  right: 18%;
-  transform: translate(50%, -50%);
-  width: 580px;
-  height: 580px;
-  background: radial-gradient(circle, rgba(255, 185, 30, 0.85) 0%, rgba(255, 110, 0, 0.4) 35%, transparent 70%);
-  border-radius: 50%;
-  filter: blur(45px);
-  pointer-events: none;
-  z-index: 2;
-  animation: kalpaGlowPulse 4s ease-in-out infinite alternate;
+  left: 12%;
+  transform: translate(-50%, -50%) rotate(-18deg);
+  width: clamp(380px, 38vw, 560px);
+  height: clamp(100px, 10vw, 150px);
+  background: radial-gradient(ellipse at center,
+    rgba(255, 245, 195, 0.95) 0%,
+    rgba(255, 175, 30, 0.65) 28%,
+    rgba(255, 95, 0, 0.25) 55%,
+    transparent 78%
+  );
+  filter: blur(24px);
+  mix-blend-mode: screen;
 }
 
-@keyframes kalpaGlowPulse {
-  0% { transform: translate(50%, -50%) scale(0.95); opacity: 0.8; }
-  100% { transform: translate(50%, -50%) scale(1.1); opacity: 1; }
+/* Resplandor ambiental cálido que se extiende por el fondo hacia el texto */
+.kalpa-hero__backlight-glow {
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  transform: translate(-50%, -50%);
+  width: clamp(550px, 50vw, 820px);
+  height: clamp(550px, 50vw, 820px);
+  background: radial-gradient(circle,
+    rgba(255, 155, 0, 0.65) 0%,
+    rgba(225, 45, 10, 0.38) 38%,
+    rgba(140, 10, 10, 0.15) 60%,
+    transparent 75%
+  );
+  filter: blur(55px);
+  mix-blend-mode: screen;
 }
 
-/* Granos de Café Flotantes con Desenfoque de Profundidad de Campo (Bokeh) */
-.floating-beans-container {
+@keyframes backlightCorePulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.95);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   ELEMENTOS DE CACAO CON DIFUMINACIÓN Y PLANOS DE PROFUNDIDAD
+   ========================================================================== */
+.floating-beans-container,
+.cacao-beans-viewport {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
+  overflow: hidden;
+  z-index: 15;
+}
+
+.cacao-bean {
+  position: absolute;
+  pointer-events: none;
+  will-change: transform;
+  transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0);
+  transition: transform 0.15s cubic-bezier(0.2, 0.9, 0.4, 1);
+}
+
+.cacao-bean[data-plane="background"] {
   z-index: 3;
 }
 
-.coffee-bean-floating {
-  position: absolute;
-  background-image: url('coffee-bean.svg');
-  background-size: contain;
-  background-repeat: no-repeat;
-  will-change: transform;
+.cacao-bean[data-plane="midground"] {
+  z-index: 5;
 }
 
-.bean--1 {
-  width: 90px;
-  height: 120px;
-  top: 12%;
-  left: -20px;
-  filter: blur(6px);
-  transform: rotate(-35deg);
-  opacity: 0.75;
+.cacao-bean[data-plane="foreground"] {
+  z-index: 25; /* Cruza en primer plano sobre esquinas y texto */
 }
 
-.bean--2 {
-  width: 140px;
-  height: 180px;
-  bottom: -40px;
-  left: 8%;
-  filter: blur(10px);
-  transform: rotate(45deg);
-  opacity: 0.85;
+.cacao-bean__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+  transform-origin: center center;
 }
 
-.bean--3 {
-  width: 65px;
-  height: 90px;
-  top: 48%;
-  right: 42%;
-  filter: blur(1px);
-  transform: rotate(25deg);
-  opacity: 0.95;
+/* 1. Esquina Superior Izquierda (Plano 1 - Bokeh Foreground) */
+.cacao-bean--top-left {
+  top: -45px;
+  left: -35px;
+  width: clamp(140px, 15vw, 240px);
+}
+.cacao-bean--top-left .cacao-bean__img {
+  transform: rotate(-38deg);
 }
 
-.bean--4 {
-  width: 130px;
-  height: 170px;
-  bottom: -30px;
-  right: 12%;
-  filter: blur(8px);
-  transform: rotate(-25deg);
-  opacity: 0.85;
+/* 2. Esquina Inferior Izquierda (Plano 1 - Bokeh Gran Angular) */
+.cacao-bean--bottom-left {
+  bottom: -65px;
+  left: clamp(40px, 6vw, 110px);
+  width: clamp(180px, 19vw, 300px);
+}
+.cacao-bean--bottom-left .cacao-bean__img {
+  transform: rotate(44deg);
 }
 
-.bean--5 {
-  width: 80px;
-  height: 105px;
-  bottom: -15px;
-  right: 44%;
-  filter: blur(4px);
-  transform: rotate(15deg);
-  opacity: 0.8;
+/* 3. Flotante Central entre Texto y Lata (Plano 2 - Enfoque Nítido / Midground) */
+.cacao-bean--mid-floating {
+  top: 54%;
+  right: 43%;
+  width: clamp(65px, 6vw, 95px);
 }
+.cacao-bean--mid-floating .cacao-bean__img {
+  transform: rotate(24deg);
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.75));
+}
+
+/* 4. Base Central 1 (Plano 2 - Enfoque Medio bajo la lata) */
+.cacao-bean--bottom-center-1 {
+  bottom: -25px;
+  right: 47%;
+  width: clamp(75px, 6.5vw, 105px);
+}
+.cacao-bean--bottom-center-1 .cacao-bean__img {
+  transform: rotate(16deg);
+  filter: drop-shadow(0 15px 20px rgba(0, 0, 0, 0.65));
+}
+
+/* 5. Base Central 2 (Plano 2 - Enfoque Medio) */
+.cacao-bean--bottom-center-2 {
+  bottom: -45px;
+  right: 38%;
+  width: clamp(85px, 7.5vw, 120px);
+}
+.cacao-bean--bottom-center-2 .cacao-bean__img {
+  transform: rotate(-14deg);
+  filter: drop-shadow(0 18px 25px rgba(0, 0, 0, 0.75));
+}
+
+/* 6. Esquina Inferior Derecha (Plano 1 - Bokeh Foreground) */
+.cacao-bean--bottom-right {
+  bottom: -55px;
+  right: -20px;
+  width: clamp(170px, 16vw, 270px);
+}
+.cacao-bean--bottom-right .cacao-bean__img {
+  transform: rotate(-32deg);
+}
+
+/* 7. Esquina Superior Derecha (Plano 3 - Profundidad Fondo) */
+.cacao-bean--top-right {
+  top: 7%;
+  right: -25px;
+  width: clamp(120px, 11vw, 180px);
+  opacity: 0.92;
+}
+.cacao-bean--top-right .cacao-bean__img {
+  transform: rotate(32deg);
+}
+
+/* Animaciones orgánicas continuas de levitación */
+@keyframes cacaoFloat1 {
+  0%, 100% { transform: rotate(-38deg) translateY(0px); }
+  50% { transform: rotate(-35deg) translateY(-14px); }
+}
+@keyframes cacaoFloat2 {
+  0%, 100% { transform: rotate(44deg) translateY(0px); }
+  50% { transform: rotate(48deg) translateY(-18px); }
+}
+@keyframes cacaoFloat3 {
+  0%, 100% { transform: rotate(-32deg) translateY(0px); }
+  50% { transform: rotate(-28deg) translateY(-16px); }
+}
+@keyframes cacaoFloat4 {
+  0%, 100% { transform: rotate(24deg) translateY(0px) scale(1); }
+  50% { transform: rotate(27deg) translateY(-10px) scale(1.03); }
+}
+@keyframes cacaoFloat5 {
+  0%, 100% { transform: rotate(16deg) translateY(0px); }
+  50% { transform: rotate(12deg) translateY(-8px); }
+}
+@keyframes cacaoFloat6 {
+  0%, 100% { transform: rotate(-14deg) translateY(0px); }
+  50% { transform: rotate(-10deg) translateY(-9px); }
+}
+@keyframes cacaoFloat7 {
+  0%, 100% { transform: rotate(32deg) translateY(0px); }
+  50% { transform: rotate(36deg) translateY(-12px); }
+}
+
+.cacao-anim--float-1 { animation: cacaoFloat1 7s ease-in-out infinite; }
+.cacao-anim--float-2 { animation: cacaoFloat2 8.5s ease-in-out infinite; }
+.cacao-anim--float-3 { animation: cacaoFloat3 7.8s ease-in-out infinite; }
+.cacao-anim--float-4 { animation: cacaoFloat4 6.2s ease-in-out infinite; }
+.cacao-anim--float-5 { animation: cacaoFloat5 6.8s ease-in-out infinite; }
+.cacao-anim--float-6 { animation: cacaoFloat6 7.4s ease-in-out infinite; }
+.cacao-anim--float-7 { animation: cacaoFloat7 9s ease-in-out infinite; }
 
 /* Contenedor del Carrusel y Diapositivas */
 .kalpa-carousel-slides {
@@ -2826,7 +2980,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 5;
+  z-index: 10;
   overflow: visible;
 }
 
@@ -2841,7 +2995,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  z-index: 6;
+  z-index: 11;
 }
 
 @media (max-width: 990px) {
