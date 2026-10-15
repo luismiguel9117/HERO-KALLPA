@@ -7,30 +7,33 @@
         "slide_1": {
           "type": "slide",
           "settings": {
+            "eyebrow": "ENERGÍA NATURAL DE LOS ANDES",
             "lead_title": "CAFÉ DE",
             "giant_title": "VRAEM",
-            "description": "Cultivado a 1,800 metros de altitud bajo sombra andina. Macerado en frío durante 24 horas continuas a 4°C para entregar 180mg de cafeína natural pura, cero azúcar y acidez gástrica reducida.",
-            "btn_text": "PRUEBALA AHORA",
+            "description": "Energía natural para tu día. Café cold brew listo para tomar, hecho con granos del VRAEM y con todo el sabor de los Andes.",
+            "btn_text": "COMPRAR AHORA",
             "btn_url": "#products-section"
           }
         },
         "slide_2": {
           "type": "slide",
           "settings": {
-            "lead_title": "EXTRACCIÓN",
-            "giant_title": "COLD BREW",
+            "eyebrow": "EXTRACCIÓN CRIOGÉNICA 24H",
+            "lead_title": "COLD",
+            "giant_title": "BREW",
             "description": "Macerado lentamente en frío durante 24 horas continuas a 4°C. Preserva las notas más finas a cacao y elimina por completo la acidez punzante.",
-            "btn_text": "DESCUBRIR MÁS",
-            "btn_url": "#showcase-section"
+            "btn_text": "COMPRAR AHORA",
+            "btn_url": "#products-section"
           }
         },
         "slide_3": {
           "type": "slide",
           "settings": {
-            "lead_title": "ENERGÍA PURA",
-            "giant_title": "SIN CRASH",
-            "description": "180mg de cafeína natural de altura con antioxidantes botánicos. Rendimiento sostenido y enfoque mental prolongado para todo tu día.",
-            "btn_text": "COMPRAR PACK",
+            "eyebrow": "RENDIMIENTO SIN CRASH",
+            "lead_title": "ENERGÍA",
+            "giant_title": "LIMPIA",
+            "description": "280mg de cafeína natural de altura con antioxidantes botánicos. Rendimiento sostenido y enfoque mental prolongado para todo tu día.",
+            "btn_text": "COMPRAR AHORA",
             "btn_url": "#products-section"
           }
         }
@@ -43,32 +46,70 @@
       "settings": {}
     },
     "ticker_1": {
-      "type": "kallpa-stats-ticker",
+      "type": "kallpa-ticker",
       "settings": {}
     },
-    "features_1": {
-      "type": "kallpa-features-grid",
-      "settings": {}
+    "products_1": {
+      "type": "kallpa-products",
+      "settings": {
+        "eyebrow": "NUESTROS PRODUCTOS",
+        "title_part1": "ELIGE CUÁNTA",
+        "title_part2": "ENERGÍA LLEVAS"
+      }
     },
-    "showcase_3d": {
-      "type": "kallpa-3d-product-showcase",
-      "settings": {}
+    "clean_energy_1": {
+      "type": "kallpa-clean-energy",
+      "settings": {
+        "eyebrow": "LO QUE NOS MUEVE",
+        "title_part1": "ENERGÍA",
+        "title_part2": "LIMPIA",
+        "desc": "Café de los Andes sin azúcar ni ingredientes innecesarios. Solo energía natural para un día real."
+      }
     },
-    "featured_products": {
-      "type": "product-grid",
-      "settings": {}
+    "vraem_origin_1": {
+      "type": "kallpa-vraem-origin",
+      "settings": {
+        "eyebrow": "NUESTRO ORIGEN",
+        "title": "VRAEM",
+        "subtitle": "MÁS QUE UN CAFÉ, UNA HISTORIA REAL",
+        "desc": "Granos cultivados por caficultores del VRAEM, una región que impulsa el desarrollo local y un futuro con más oportunidades.",
+        "btn_text": "CONOCE EL ORIGEN",
+        "btn_url": "#origin-section"
+      }
     },
-    "protocol_1": {
-      "type": "kallpa-protocol",
-      "settings": {}
+    "benefits_bento_1": {
+      "type": "kallpa-benefits-bento",
+      "settings": {
+        "eyebrow": "HECHO PARA TU DÍA",
+        "title_part1": "RENDIR AHORA",
+        "title_part2": "Y CUIDARTE DESPUÉS"
+      }
+    },
+    "promo_banner_1": {
+      "type": "kallpa-promo-banner",
+      "settings": {
+        "eyebrow": "PROMOCIÓN DE LANZAMIENTO",
+        "title": "¿TODAVÍA SACRIFICANDO TU CUERPO POR ENERGÍA?",
+        "btn_text": "ELIGE TU PACK",
+        "btn_url": "#products-section"
+      }
+    },
+    "reels_1": {
+      "type": "kallpa-reels",
+      "settings": {
+        "eyebrow": "COMUNIDAD KALPA",
+        "title": "NUESTROS REELS"
+      }
     }
   },
   "order": [
     "hero_3d",
     "ticker_1",
-    "features_1",
-    "showcase_3d",
-    "featured_products",
-    "protocol_1"
+    "products_1",
+    "clean_energy_1",
+    "vraem_origin_1",
+    "benefits_bento_1",
+    "promo_banner_1",
+    "reels_1"
   ]
 }

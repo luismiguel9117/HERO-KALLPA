@@ -1,186 +1,82 @@
 {%- comment -%}
   SECCIÓN: footer.liquid
-  Footer Editorial KALPA Café Cold Brew del VRAEM
+  Pie de Página Oficial KALPA (Idéntico al Mockup de Marca)
 {%- endcomment -%}
 
-<footer class="kallpa-footer">
+<footer class="kallpa-footer" id="footer-section">
   <div class="page-width">
     
-    <div class="kallpa-footer__top">
-      <div class="kallpa-footer__brand">
-        <div class="footer-logo">
+    <div class="kallpa-footer__main-grid">
+      
+      <!-- Columna 1: Marca y Copyright -->
+      <div class="footer-brand-col">
+        <a href="/" class="footer-brand-logo" aria-label="KALPA - Inicio">
           <img src="{{ 'logo-kalpa-white.png' | asset_url }}" alt="KALPA Logo" class="footer-logo__img" width="130" height="32" />
-        </div>
-        <div class="footer-sub">CAFÉ COLD BREW DEL VRAEM &bull; PERÚ</div>
-        <p class="kallpa-footer__mission">
-          Honramos el origen andino a 1,800 metros de altitud. Extracción criogénica en frío de 24 horas para atletas, creativos y personas que exigen energía limpia y sostenida sin sacrificar su salud gástrica.
-        </p>
-        <div class="footer-badges">
-          <span>🇵🇪 Cosecha 100% Peruana</span>
-          <span>🌱 Comercio Justo VRAEM</span>
-          <span>♻️ Aluminio Infinito</span>
-        </div>
+        </a>
+        <p class="footer-brand-tagline">Energía de los Andes</p>
+        <p class="footer-brand-copy">&copy; 2026 KALPA. Todos los derechos reservados.</p>
       </div>
 
-      <div class="kallpa-footer__newsletter">
-        <h4 class="newsletter-title">DROPS DE COSECHA LIMITADA</h4>
-        <p class="newsletter-desc">Suscríbete para recibir acceso prioritario a nuevos microlotes de altura y 10% de descuento en tu primer pack.</p>
-        <form class="newsletter-form" onsubmit="event.preventDefault(); alert('¡Bienvenido al círculo KALPA! Código de descuento enviado.');">
-          <input type="email" placeholder="Tu correo electrónico..." required class="newsletter-input">
-          <button type="submit" class="btn-pruebala" style="padding: 0.8rem 1.8rem; font-size: 0.85rem;">
-            SUSCRIBIRME
-          </button>
-        </form>
+      <!-- Columna 2: Tienda -->
+      <div class="footer-links-col">
+        <h4 class="footer-col-title">Tienda</h4>
+        <ul class="footer-nav-list">
+          <li><a href="#products-section">Productos</a></li>
+          <li><a href="#promo-section">Promociones</a></li>
+          <li><a href="#origin-section">Envíos</a></li>
+          <li><a href="#benefits-section">Preguntas Frecuentes</a></li>
+        </ul>
       </div>
-    </div>
 
-    <div class="kallpa-footer__bottom">
-      <div class="footer-copy">
-        © {{ 'now' | date: "%Y" }} KALPA COLD BREW. Café de Altura del VRAEM. Desarrollado para Shopify OS 2.0.
+      <!-- Columna 3: Nosotros -->
+      <div class="footer-links-col">
+        <h4 class="footer-col-title">Nosotros</h4>
+        <ul class="footer-nav-list">
+          <li><a href="#clean-energy-section">Nuestra historia</a></li>
+          <li><a href="#origin-section">Origen</a></li>
+          <li><a href="#reels-section">Contacto</a></li>
+        </ul>
       </div>
-      <div class="footer-links">
-        <a href="#hero-section">Inicio</a>
-        <a href="#terroir-section">Terroir & Proceso</a>
-        <a href="#showcase-section">Anatomía 3D</a>
-        <a href="#products-section">Tienda de Packs</a>
-        <a href="#protocol-section">Protocolo</a>
+
+      <!-- Columna 4: Legal -->
+      <div class="footer-links-col">
+        <h4 class="footer-col-title">Legal</h4>
+        <ul class="footer-nav-list">
+          <li><a href="#footer-section">Términos y condiciones</a></li>
+          <li><a href="#footer-section">Política de privacidad</a></li>
+          <li><a href="#footer-section">Cambios y devoluciones</a></li>
+        </ul>
       </div>
+
+      <!-- Columna 5: Redes Sociales -->
+      <div class="footer-social-col">
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+        </a>
+        <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="TikTok">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.68 6.34 6.34 0 0 0 9.33 22a6.33 6.33 0 0 0 6.34-6.32V8.92a8.28 8.28 0 0 0 3.92 1V6.69z"></path>
+          </svg>
+        </a>
+        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="YouTube">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path>
+          </svg>
+        </a>
+      </div>
+
     </div>
 
   </div>
 </footer>
 
-<style>
-  .kallpa-footer {
-    background-color: #050608;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 6rem 0 3.5rem;
-  }
-  .kallpa-footer__top {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 4rem;
-    padding-bottom: 4rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  @media (min-width: 860px) {
-    .kallpa-footer__top {
-      grid-template-columns: 1.25fr 1fr;
-    }
-  }
-
-  .footer-logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 1.6rem;
-    font-weight: 900;
-    letter-spacing: -0.02em;
-    color: #ffffff;
-  }
-  .footer-logo .bolt {
-    color: var(--accent-gold);
-  }
-  .footer-sub {
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 0.15em;
-    color: var(--accent-gold);
-    margin-top: 4px;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-  }
-  .kallpa-footer__mission {
-    color: #94a3b8;
-    font-size: 0.95rem;
-    max-width: 460px;
-    line-height: 1.65;
-    margin-bottom: 1.5rem;
-  }
-  .footer-badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-  }
-  .footer-badges span {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: #cbd5e1;
-    background: rgba(255, 255, 255, 0.06);
-    padding: 4px 10px;
-    border-radius: 6px;
-  }
-
-  .newsletter-title {
-    font-size: 0.85rem;
-    font-weight: 800;
-    letter-spacing: 0.15em;
-    color: var(--accent-gold);
-    margin-bottom: 0.6rem;
-    text-transform: uppercase;
-  }
-  .newsletter-desc {
-    color: #94a3b8;
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-  }
-  .newsletter-form {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
-  .newsletter-input {
-    flex: 1;
-    min-width: 240px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 999px;
-    padding: 0.85rem 1.4rem;
-    color: #ffffff;
-    font-family: inherit;
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .newsletter-input:focus {
-    border-color: var(--accent-gold);
-  }
-
-  .kallpa-footer__bottom {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding-top: 2.5rem;
-    align-items: center;
-    font-size: 0.82rem;
-    color: #64748b;
-  }
-  @media (min-width: 768px) {
-    .kallpa-footer__bottom {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-  }
-  .footer-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.8rem;
-  }
-  .footer-links a {
-    color: #94a3b8;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.2s;
-  }
-  .footer-links a:hover {
-    color: var(--accent-gold);
-  }
-</style>
-
 {% schema %}
 {
-  "name": "Footer Kallpa",
+  "name": "Footer KALPA",
   "settings": []
 }
 {% endschema %}

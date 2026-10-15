@@ -1,0 +1,65 @@
+{%- comment -%}
+  SECCIÓN: kallpa-promo-banner.liquid
+  Banner Promocional Dorado: ¿Todavía sacrificando tu cuerpo por energía?
+{%- endcomment -%}
+
+<section class="kallpa-section kallpa-promo-banner-section" id="promo-section">
+  <div class="page-width">
+    <div class="kallpa-gold-banner">
+      
+      <!-- Contenido Izquierdo -->
+      <div class="gold-banner__content">
+        <span class="gold-banner__eyebrow">{{ section.settings.eyebrow | default: 'PROMOCIÓN DE LANZAMIENTO' }}</span>
+        <h2 class="gold-banner__title">
+          {{ section.settings.title | default: '¿TODAVÍA SACRIFICANDO TU CUERPO POR ENERGÍA?' }}
+        </h2>
+        <div class="gold-banner__action">
+          <a href="{{ section.settings.btn_url | default: '#products-section' }}" class="btn-banner-black">
+            <span>{{ section.settings.btn_text | default: 'ELIGE TU PACK' }}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Lata Derecha en Perspectiva -->
+      <div class="gold-banner__media">
+        <img src="{{ 'clean-energy-hero.jpg' | asset_url }}" alt="Lata KALPA Cold Brew" class="gold-banner__can-img" loading="lazy" width="400" height="400" />
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Banner Promo KALPA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "PROMOCIÓN DE LANZAMIENTO"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "¿TODAVÍA SACRIFICANDO TU CUERPO POR ENERGÍA?"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Texto del Botón",
+      "default": "ELIGE TU PACK"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Enlace del Botón"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,122 @@
+{%- comment -%}
+  SECCIÓN: kallpa-products.liquid
+  Catálogo de Productos KALPA: Elige cuánta energía llevas (355ml Cans)
+{%- endcomment -%}
+
+<section class="kallpa-section kallpa-products-section" id="products-section">
+  <div class="page-width">
+    
+    <!-- Encabezado de Sección con Flechas de Navegación -->
+    <div class="section-header-row">
+      <div class="section-title-group">
+        <span class="section-eyebrow">{{ section.settings.eyebrow | default: 'NUESTROS PRODUCTOS' }}</span>
+        <h2 class="section-main-title">
+          {{ section.settings.title_part1 | default: 'ELIGE CUÁNTA' }}
+          <span class="text-gold">{{ section.settings.title_part2 | default: 'ENERGÍA LLEVAS' }}</span>
+        </h2>
+      </div>
+
+      <!-- Controles Carrusel / Grid -->
+      <div class="section-nav-arrows">
+        <button type="button" class="nav-arrow-btn" id="prod-nav-prev" aria-label="Producto Anterior">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button type="button" class="nav-arrow-btn" id="prod-nav-next" aria-label="Producto Siguiente">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Grid de Productos (3 Latas Oficiales) -->
+    <div class="kallpa-products-grid" id="kallpa-products-track">
+      
+      <!-- Producto 1: Cold Brew Original -->
+      <div class="kallpa-product-card" data-product-id="cold-brew-original">
+        <div class="product-card__image-box">
+          <img src="{{ 'prod-original.jpg' | asset_url }}" alt="Cold Brew Original KALPA" class="product-card__img" loading="lazy" width="400" height="400" />
+        </div>
+        <div class="product-card__info">
+          <h3 class="product-card__name">COLD BREW ORIGINAL</h3>
+          <span class="product-card__volume">355 ml</span>
+          <div class="product-card__price">S/ 11.90</div>
+          <button type="button" class="btn-product-add" onclick="addKallpaToCart('Cold Brew Original 355ml', 11.90, 'assets/prod-original.jpg')">
+            AÑADIR AL CARRITO
+          </button>
+        </div>
+      </div>
+
+      <!-- Producto 2: Cold Brew Orange -->
+      <div class="kallpa-product-card" data-product-id="cold-brew-orange">
+        <div class="product-card__image-box">
+          <img src="{{ 'prod-orange.jpg' | asset_url }}" alt="Cold Brew Orange KALPA" class="product-card__img" loading="lazy" width="400" height="400" />
+        </div>
+        <div class="product-card__info">
+          <h3 class="product-card__name">COLD BREW ORANGE</h3>
+          <span class="product-card__volume">355 ml</span>
+          <div class="product-card__price">S/ 11.90</div>
+          <button type="button" class="btn-product-add" onclick="addKallpaToCart('Cold Brew Orange 355ml', 11.90, 'assets/prod-orange.jpg')">
+            AÑADIR AL CARRITO
+          </button>
+        </div>
+      </div>
+
+      <!-- Producto 3: Cold Brew Latte -->
+      <div class="kallpa-product-card" data-product-id="cold-brew-latte">
+        <div class="product-card__image-box">
+          <img src="{{ 'prod-latte.jpg' | asset_url }}" alt="Cold Brew Latte KALPA" class="product-card__img" loading="lazy" width="400" height="400" />
+        </div>
+        <div class="product-card__info">
+          <h3 class="product-card__name">COLD BREW LATTE</h3>
+          <span class="product-card__volume">355 ml</span>
+          <div class="product-card__price">S/ 11.90</div>
+          <button type="button" class="btn-product-add" onclick="addKallpaToCart('Cold Brew Latte 355ml', 11.90, 'assets/prod-latte.jpg')">
+            AÑADIR AL CARRITO
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Botón Inferior: Ver Todos los Productos -->
+    <div class="products-footer-action">
+      <a href="#showcase-section" class="btn-all-products">
+        <span>VER TODOS LOS PRODUCTOS</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Productos KALPA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "NUESTROS PRODUCTOS"
+    },
+    {
+      "type": "text",
+      "id": "title_part1",
+      "label": "Título Parte 1",
+      "default": "ELIGE CUÁNTA"
+    },
+    {
+      "type": "text",
+      "id": "title_part2",
+      "label": "Título Parte 2 (Dorado)",
+      "default": "ENERGÍA LLEVAS"
+    }
+  ]
+}
+{% endschema %}

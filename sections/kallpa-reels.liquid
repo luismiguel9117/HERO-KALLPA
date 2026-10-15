@@ -1,0 +1,149 @@
+{%- comment -%}
+  SECCIÓN: kallpa-reels.liquid
+  Comunidad KALPA: Nuestros Reels (5 Videos Verticales con View Counters)
+{%- endcomment -%}
+
+<section class="kallpa-section kallpa-reels-section" id="reels-section">
+  <div class="page-width">
+    
+    <!-- Encabezado con Botón Seguir en Instagram -->
+    <div class="reels-header-row">
+      <div class="reels-title-group">
+        <span class="section-eyebrow">{{ section.settings.eyebrow | default: 'COMUNIDAD KALPA' }}</span>
+        <h2 class="section-main-title font-italic">
+          {{ section.settings.title | default: 'NUESTROS REELS' }}
+        </h2>
+      </div>
+
+      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="btn-instagram-follow">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+        <span>SEGUIR EN INSTAGRAM</span>
+      </a>
+    </div>
+
+    <!-- Carrusel / Grid de 5 Reels -->
+    <div class="kallpa-reels-grid">
+      
+      <!-- Reel 1 -->
+      <div class="reel-card" onclick="alert('Abriendo Reel KALPA en Instagram...')">
+        <img src="{{ 'reel-1.jpg' | asset_url }}" alt="KALPA Reel 1" class="reel-card__img" loading="lazy" width="300" height="533" />
+        <div class="reel-card__overlay">
+          <div class="reel-play-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+          <div class="reel-views">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span>125K</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reel 2 -->
+      <div class="reel-card" onclick="alert('Abriendo Reel KALPA en Instagram...')">
+        <img src="{{ 'reel-2.jpg' | asset_url }}" alt="KALPA Reel 2" class="reel-card__img" loading="lazy" width="300" height="533" />
+        <div class="reel-card__overlay">
+          <div class="reel-play-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+          <div class="reel-views">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span>98K</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reel 3 -->
+      <div class="reel-card" onclick="alert('Abriendo Reel KALPA en Instagram...')">
+        <img src="{{ 'reel-3.jpg' | asset_url }}" alt="KALPA Reel 3" class="reel-card__img" loading="lazy" width="300" height="533" />
+        <div class="reel-card__overlay">
+          <div class="reel-play-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+          <div class="reel-views">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span>210K</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reel 4 -->
+      <div class="reel-card" onclick="alert('Abriendo Reel KALPA en Instagram...')">
+        <img src="{{ 'reel-4.jpg' | asset_url }}" alt="KALPA Reel 4" class="reel-card__img" loading="lazy" width="300" height="533" />
+        <div class="reel-card__overlay">
+          <div class="reel-play-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+          <div class="reel-views">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span>87K</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reel 5 -->
+      <div class="reel-card" onclick="alert('Abriendo Reel KALPA en Instagram...')">
+        <img src="{{ 'reel-5.jpg' | asset_url }}" alt="KALPA Reel 5" class="reel-card__img" loading="lazy" width="300" height="533" />
+        <div class="reel-card__overlay">
+          <div class="reel-play-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+          <div class="reel-views">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span>320K</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Reels KALPA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "COMUNIDAD KALPA"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "NUESTROS REELS"
+    }
+  ]
+}
+{% endschema %}

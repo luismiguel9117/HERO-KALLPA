@@ -17,7 +17,9 @@
     const { animate, inView, scroll, stagger } = Motion;
 
     // 1. Efecto Spring Táctil en Botones (Tap / Click Spring Physics)
-    const interactiveButtons = document.querySelectorAll('.btn-pruebala, .btn-pack-add, .carousel-btn-arrow, .kalpa-cart-capsule');
+    const interactiveButtons = document.querySelectorAll(
+      '.btn-pruebala, .btn-product-add, .btn-all-products, .btn-banner-black, .btn-instagram-follow, .nav-arrow-btn, .social-icon-btn, .carousel-btn-arrow, .kalpa-cart-capsule'
+    );
     interactiveButtons.forEach(btn => {
       btn.addEventListener('mousedown', () => {
         animate(btn, { scale: 0.94 }, { type: "spring", stiffness: 500, damping: 15 });
@@ -30,68 +32,101 @@
       });
     });
 
-    // 2. Animaciones InView con Stagger en las Tarjetas Editoriales (Terroir)
-    inView('.kallpa-terroir-section', () => {
-      animate(
-        '.editorial-card',
-        { opacity: [0, 1], y: [40, 0] },
-        { delay: stagger(0.15), duration: 0.85, ease: [0.16, 1, 0.3, 1] }
-      );
-      animate(
-        '.metric-block',
-        { opacity: [0, 1], scale: [0.92, 1] },
-        { delay: stagger(0.1), duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }
-      );
-    });
-
-    // 3. Animación InView de las Barras Sensoriales en el Showcase 3D
-    inView('.sensory-bars', () => {
-      const fills = document.querySelectorAll('.sensory-fill');
-      fills.forEach(fill => {
-        const targetWidth = fill.style.width || '80%';
-        fill.style.width = '0%';
+    // 2. Animación InView de Productos con Stagger
+    if (document.querySelector('.kallpa-products-section')) {
+      inView('.kallpa-products-section', () => {
         animate(
-          fill,
-          { width: targetWidth },
-          { duration: 1.2, ease: [0.25, 1, 0.5, 1] }
+          '.kallpa-product-card',
+          { opacity: [0, 1], y: [45, 0] },
+          { delay: stagger(0.15), duration: 0.85, ease: [0.16, 1, 0.3, 1] }
         );
       });
-    });
+    }
 
-    // 4. Animación InView en los Packs de Compra
-    inView('.kallpa-packs-grid', () => {
-      animate(
-        '.kallpa-pack-card',
-        { opacity: [0, 1], y: [50, 0] },
-        { delay: stagger(0.18), duration: 0.9, ease: [0.16, 1, 0.3, 1] }
-      );
-    });
+    // 3. Animación InView en Energía Limpia
+    if (document.querySelector('.kallpa-clean-energy-section')) {
+      inView('.kallpa-clean-energy-section', () => {
+        animate(
+          '.clean-energy__content',
+          { opacity: [0, 1], x: [-35, 0] },
+          { duration: 0.9, ease: [0.16, 1, 0.3, 1] }
+        );
+        animate(
+          '.clean-energy__media',
+          { opacity: [0, 1], scale: [0.94, 1] },
+          { duration: 0.95, ease: [0.16, 1, 0.3, 1] }
+        );
+      });
+    }
 
-    // 5. Animación InView en la Línea de Tiempo Circadiana
-    inView('.protocol-timeline', () => {
-      animate(
-        '.timeline-card',
-        { opacity: [0, 1], y: [35, 0] },
-        { delay: stagger(0.15), duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-      );
-    });
+    // 4. Animación InView en Origen VRAEM
+    if (document.querySelector('.kallpa-vraem-section')) {
+      inView('.kallpa-vraem-section', () => {
+        animate(
+          '.vraem-origin__media',
+          { opacity: [0, 1], scale: [0.94, 1] },
+          { duration: 0.95, ease: [0.16, 1, 0.3, 1] }
+        );
+        animate(
+          '.vraem-origin__content',
+          { opacity: [0, 1], x: [35, 0] },
+          { duration: 0.9, ease: [0.16, 1, 0.3, 1] }
+        );
+      });
+    }
 
-    // 6. Indicador de Progreso de Lectura Scroll-Linked
-    const progressBar = document.createElement('div');
-    progressBar.id = 'kallpa-framer-progress';
-    progressBar.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, #d97706, #f5ba2c, #fef08a);
-      transform-origin: 0%;
-      transform: scaleX(0);
-      z-index: 9999;
-      pointer-events: none;
-    `;
-    document.body.appendChild(progressBar);
+    // 5. Animación InView en Beneficios Bento
+    if (document.querySelector('.kallpa-benefits-section')) {
+      inView('.kallpa-benefits-section', () => {
+        animate(
+          '.benefit-bento-card',
+          { opacity: [0, 1], y: [40, 0] },
+          { delay: stagger(0.18), duration: 0.85, ease: [0.16, 1, 0.3, 1] }
+        );
+      });
+    }
+
+    // 6. Animación InView en Banner Promocional
+    if (document.querySelector('.kallpa-promo-banner-section')) {
+      inView('.kallpa-promo-banner-section', () => {
+        animate(
+          '.kallpa-gold-banner',
+          { opacity: [0, 1], scale: [0.96, 1] },
+          { duration: 0.9, ease: [0.16, 1, 0.3, 1] }
+        );
+      });
+    }
+
+    // 7. Animación InView en Reels con Stagger
+    if (document.querySelector('.kallpa-reels-section')) {
+      inView('.kallpa-reels-section', () => {
+        animate(
+          '.reel-card',
+          { opacity: [0, 1], y: [45, 0] },
+          { delay: stagger(0.12), duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+        );
+      });
+    }
+
+    // 8. Indicador de Progreso de Lectura Scroll-Linked
+    let progressBar = document.getElementById('kallpa-framer-progress');
+    if (!progressBar) {
+      progressBar = document.createElement('div');
+      progressBar.id = 'kallpa-framer-progress';
+      progressBar.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #d97706, #f5ba2c, #fef08a);
+        transform-origin: 0%;
+        transform: scaleX(0);
+        z-index: 9999;
+        pointer-events: none;
+      `;
+      document.body.appendChild(progressBar);
+    }
 
     if (typeof scroll === 'function') {
       scroll((progress) => {
@@ -99,15 +134,12 @@
       });
     }
 
-    console.log('⚡ Framer Motion inicializado con físicas Spring y control de scroll.');
+    console.log('⚡ Framer Motion (Official Engine) inicializado con físicas Spring y scroll triggers.');
   }
 
-  // Inicializar al cargar el DOM o en eventos de sección de Shopify
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initFramerMotion);
   } else {
     initFramerMotion();
   }
-
-  document.addEventListener('shopify:section:load', initFramerMotion);
 })();

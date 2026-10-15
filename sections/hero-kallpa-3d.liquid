@@ -45,12 +45,29 @@
              data-slide-index="{{ forloop.index0 }}"
              {{ block.shopify_attributes }}>
           <div class="kalpa-hero__left-content">
-            <span class="kalpa-hero__lead-title">{{ block.settings.lead_title }}</span>
-            <span class="kalpa-hero__giant-title">{{ block.settings.giant_title }}</span>
-            <p class="kalpa-hero__paragraph">{{ block.settings.description }}</p>
-            <a href="{{ block.settings.btn_url | default: '#products-section' }}" class="btn-pruebala">
-              {{ block.settings.btn_text | default: 'PRUEBALA AHORA' }}
-            </a>
+            <span class="kalpa-hero__eyebrow">{{ block.settings.eyebrow | default: 'ENERGÍA NATURAL DE LOS ANDES' }}</span>
+            <span class="kalpa-hero__giant-title">
+              <span class="title-white">{{ block.settings.lead_title | default: 'CAFÉ DE' }}</span>
+              <span class="title-gold">{{ block.settings.giant_title | default: 'VRAEM' }}</span>
+            </span>
+            <p class="kalpa-hero__paragraph">{{ block.settings.description | default: 'Energía natural para tu día. Café cold brew listo para tomar, hecho con granos del VRAEM y con todo el sabor de los Andes.' }}</p>
+            
+            <div class="kalpa-hero__actions">
+              <a href="{{ block.settings.btn_url | default: '#products-section' }}" class="btn-pruebala">
+                <span>{{ block.settings.btn_text | default: 'COMPRAR AHORA' }}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+
+            <!-- 3 Badges de Rendimiento Andino -->
+            <div class="kalpa-hero__badges">
+              <div class="hero-badge"><span class="badge-icon">🍃</span> Sin azúcar</div>
+              <div class="hero-badge"><span class="badge-icon">⚡</span> 280 mg de cafeína</div>
+              <div class="hero-badge"><span class="badge-icon">🏔️</span> De los Andes</div>
+            </div>
           </div>
         </div>
       {%- endfor -%}

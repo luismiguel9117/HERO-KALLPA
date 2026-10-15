@@ -181,17 +181,34 @@ window.addToCartKallpa = function(variantId, quantity = 1) {
     // Demo interactivo local
     window._demoCart = window._demoCart || { item_count: 0, total_price: 0, items: [] };
     window._demoCart.item_count += quantity;
-    window._demoCart.total_price += 6800 * quantity;
+    window._demoCart.total_price += 1190 * quantity;
     window._demoCart.items.push({
       id: Date.now(),
-      title: "KALLPA FORMULA K-9",
-      variant_title: "Extracto Adaptógeno & Cafeína Natural",
-      price: 6800,
+      title: "COLD BREW ORIGINAL",
+      variant_title: "355ml Sleek Can • Maceración 24H",
+      price: 1190,
       quantity: quantity,
-      image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=300&q=80"
+      image: "assets/prod-original.jpg"
     });
     openKallpaCart();
   }
+};
+
+// Agregar producto individual desde el catálogo del mockup
+window.addKallpaToCart = function(title, priceSol, image) {
+  const priceCents = Math.round(priceSol * 100);
+  window._demoCart = window._demoCart || { item_count: 0, total_price: 0, items: [] };
+  window._demoCart.item_count += 1;
+  window._demoCart.total_price += priceCents;
+  window._demoCart.items.push({
+    id: Date.now(),
+    title: title,
+    variant_title: "355ml Sleek Can • Café del VRAEM",
+    price: priceCents,
+    quantity: 1,
+    image: image || "assets/prod-original.jpg"
+  });
+  openKallpaCart();
 };
 
 // 4. Inicialización al cargar el DOM

@@ -1,0 +1,79 @@
+{%- comment -%}
+  SECCIÓN: kallpa-clean-energy.liquid
+  Lo que nos mueve: Energía Limpia (Split Showcase)
+{%- endcomment -%}
+
+<section class="kallpa-section kallpa-clean-energy-section" id="clean-energy-section">
+  <div class="page-width">
+    <div class="clean-energy-grid">
+      
+      <!-- Columna Izquierda: Mensaje y Badges -->
+      <div class="clean-energy__content">
+        <span class="section-eyebrow">{{ section.settings.eyebrow | default: 'LO QUE NOS MUEVE' }}</span>
+        <h2 class="section-main-title">
+          {{ section.settings.title_part1 | default: 'ENERGÍA' }}
+          <span class="text-gold">{{ section.settings.title_part2 | default: 'LIMPIA' }}</span>
+        </h2>
+        <p class="clean-energy__desc">
+          {{ section.settings.desc | default: 'Café de los Andes sin azúcar ni ingredientes innecesarios. Solo energía natural para un día real.' }}
+        </p>
+
+        <div class="clean-energy__badges">
+          <div class="energy-badge-item">
+            <span class="badge-icon">🍃</span>
+            <span class="badge-label">Sin azúcar</span>
+          </div>
+          <div class="energy-badge-item">
+            <span class="badge-icon">🚫</span>
+            <span class="badge-label">Sin conservantes</span>
+          </div>
+          <div class="energy-badge-item">
+            <span class="badge-icon">🌱</span>
+            <span class="badge-label">Ingredientes naturales</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Imagen Heroica de la Lata con Sol Andino -->
+      <div class="clean-energy__media">
+        <div class="clean-energy__media-wrapper">
+          <div class="media-lens-glow"></div>
+          <img src="{{ 'clean-energy-hero.jpg' | asset_url }}" alt="KALPA Energía Limpia de los Andes" class="clean-energy__img" loading="lazy" width="800" height="600" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Energía Limpia KALPA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "LO QUE NOS MUEVE"
+    },
+    {
+      "type": "text",
+      "id": "title_part1",
+      "label": "Título Parte 1",
+      "default": "ENERGÍA"
+    },
+    {
+      "type": "text",
+      "id": "title_part2",
+      "label": "Título Parte 2 (Dorado)",
+      "default": "LIMPIA"
+    },
+    {
+      "type": "textarea",
+      "id": "desc",
+      "label": "Descripción",
+      "default": "Café de los Andes sin azúcar ni ingredientes innecesarios. Solo energía natural para un día real."
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,85 @@
+{%- comment -%}
+  SECCIÓN: kallpa-vraem-origin.liquid
+  Nuestro Origen: VRAEM - Más que un café, una historia real
+{%- endcomment -%}
+
+<section class="kallpa-section kallpa-vraem-section" id="origin-section">
+  <div class="page-width">
+    <div class="vraem-origin-grid">
+      
+      <!-- Columna Izquierda: Fotografía de Cosecha en Mano de Caficultores -->
+      <div class="vraem-origin__media">
+        <div class="vraem-media-frame">
+          <img src="{{ 'vraem-harvest.jpg' | asset_url }}" alt="Cosecha de Café en las Montañas del VRAEM" class="vraem-harvest__img" loading="lazy" width="800" height="600" />
+          <div class="vraem-media-badge">
+            <span>⛰️ 1,800 M.S.N.M.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Manifiesto de Impacto Social y Calidad de Altura -->
+      <div class="vraem-origin__content">
+        <span class="section-eyebrow">{{ section.settings.eyebrow | default: 'NUESTRO ORIGEN' }}</span>
+        <h2 class="vraem-giant-title">{{ section.settings.title | default: 'VRAEM' }}</h2>
+        <h3 class="vraem-subtitle">{{ section.settings.subtitle | default: 'MÁS QUE UN CAFÉ, UNA HISTORIA REAL' }}</h3>
+        <p class="vraem-desc">
+          {{ section.settings.desc | default: 'Granos cultivados por caficultores del VRAEM, una región que impulsa el desarrollo local y un futuro con más oportunidades.' }}
+        </p>
+
+        <div class="vraem-action">
+          <a href="{{ section.settings.btn_url | default: '#features-section' }}" class="btn-pruebala">
+            <span>{{ section.settings.btn_text | default: 'CONOCE EL ORIGEN' }}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Origen VRAEM KALPA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "NUESTRO ORIGEN"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título Gigante",
+      "default": "VRAEM"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "MÁS QUE UN CAFÉ, UNA HISTORIA REAL"
+    },
+    {
+      "type": "textarea",
+      "id": "desc",
+      "label": "Descripción",
+      "default": "Granos cultivados por caficultores del VRAEM, una región que impulsa el desarrollo local y un futuro con más oportunidades."
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Texto del Botón",
+      "default": "CONOCE EL ORIGEN"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Enlace del Botón"
+    }
+  ]
+}
+{% endschema %}
