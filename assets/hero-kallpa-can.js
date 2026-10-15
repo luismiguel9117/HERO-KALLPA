@@ -2,6 +2,7 @@
  * HERO-KALLPA : Interactive 3D Cylindrical Hero Can Controller
  * Basado en la arquitectura híbrida 2D + 3D de alta fidelidad (Offscreen Blitting)
  * Adaptado del repositorio oficial https://github.com/luismiguel9117/Kallpa.git
+ * Incluye física de seguimiento de cursor en la lata y granos de cacao, y switch 2D / 3D.
  */
 
 import { CanRenderer } from './canRenderer.js';
@@ -30,6 +31,48 @@ class SpringValue {
   }
 }
 
+/**
+ * Física de seguimiento de cursor para elementos de cacao en planos de profundidad
+ */
+class CacaoBeanPhysics {
+  constructor(element) {
+    this.element = element;
+    this.depth = parseFloat(element.dataset.depth || '0.04');
+    // Rigidez y amortiguación según la distancia de cámara (planos bokeh se desplazan más libremente)
+    const stiffness = 38 + this.depth * 140;
+    const damping = 10 + this.depth * 20;
+    this.springX = new SpringValue(0, stiffness, damping);
+    this.springY = new SpringValue(0, stiffness, damping);
+    this.springTiltX = new SpringValue(0, 48, 12);
+    this.springTiltY = new SpringValue(0, 48, 12);
+  }
+
+  updateTarget(normX, normY) {
+    // Escala de desplazamiento por plano:
+    // Foreground (depth ~0.09) -> hasta 35px
+    // Midground (depth ~0.04) -> hasta 15px
+    // Background (depth ~0.02) -> hasta 7px
+    const distanceFactor = this.depth * 380;
+    this.springX.target = normX * distanceFactor;
+    this.springY.target = normY * distanceFactor;
+    this.springTiltX.target = -normY * (this.depth * 95);
+    this.springTiltY.target = normX * (this.depth * 95);
+  }
+
+  update(dt) {
+    const x = this.springX.update(dt);
+    const y = this.springY.update(dt);
+    const rx = this.springTiltX.update(dt);
+    const ry = this.springTiltY.update(dt);
+
+    this.element.style.transform = `
+      translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0)
+      rotateX(${rx.toFixed(2)}deg)
+      rotateY(${ry.toFixed(2)}deg)
+    `;
+  }
+}
+
 export class HeroKallpaCan {
   constructor(containerId = 'kallpa-hero-3d', options = {}) {
     this.container = document.getElementById(containerId);
@@ -39,6 +82,7 @@ export class HeroKallpaCan {
     this.options = Object.assign({
       baseCanUrl: ds.baseCan || 'assets/kalpa-can-clean.png',
       dropletsUrl: ds.droplets || 'assets/kalpa-can-droplets.png',
+      photo2dUrl: ds.photo2d || 'assets/kalpa-can-original.png',
       labels: [
         ds.labelOriginal || 'assets/kalpa-label.png',        // Slide 1: Original Cold Brew
         ds.labelGold || 'assets/kalpa-label-gold.png',       // Slide 2: Extracción 24H / Gold
@@ -49,6 +93,7 @@ export class HeroKallpaCan {
     }, options);
 
     // Initial state
+    this.mode = '3d'; // '3d' | '2d'
     this.activeSlide = 0;
     this.renderer = new CanRenderer();
     this.labelMaterials = [];
@@ -67,15 +112,22 @@ export class HeroKallpaCan {
     this.cursorNormX = 0;
     this.cursorNormY = 0;
 
-    // Physical springs
+    // Physical springs para la lata
     this.liftSpring = new SpringValue(0, 70, 11);
-    this.tiltXSpring = new SpringValue(0, 60, 12);
-    this.tiltYSpring = new SpringValue(0, 60, 12);
+    this.tiltXSpring = new SpringValue(0, 55, 11);
+    this.tiltYSpring = new SpringValue(0, 55, 11);
+    this.moveXSpring = new SpringValue(0, 48, 11);
+    this.moveYSpring = new SpringValue(0, 48, 11);
     this.floatTime = 0;
 
+    // Elementos de cacao con física
+    this.cacaoBeans = [];
+
     this.initDOM();
+    this.initCacaoPhysics();
     this.initLabels();
     this.bindEvents();
+    this.bindSwitchEvents();
     this.startLoop();
   }
 
@@ -89,7 +141,7 @@ export class HeroKallpaCan {
 
     // Interactive card container
     this.canCard = document.createElement('div');
-    this.canCard.className = 'hero-kallpa-can-card';
+    this.canCard.className = 'hero-kallpa-can-card mode-3d';
 
     // Layer 1: Base can with metallic lid, rim, chime, and studio lighting
     this.baseImg = document.createElement('img');
@@ -113,12 +165,26 @@ export class HeroKallpaCan {
     this.dropletsImg.alt = '';
     this.dropletsImg.draggable = false;
 
+    // Layer 4: Foto de Estudio Ultra-HD para Modo 2D
+    this.photo2dImg = document.createElement('img');
+    this.photo2dImg.className = 'hero-kallpa-can__photo-2d';
+    this.photo2dImg.src = this.options.photo2dUrl;
+    this.photo2dImg.alt = 'Lata KALPA Cold Brew 2D Estudio';
+    this.photo2dImg.loading = 'eager';
+    this.photo2dImg.draggable = false;
+
     // Assemble layers
     this.canCard.appendChild(this.baseImg);
     this.canCard.appendChild(this.canvas);
     this.canCard.appendChild(this.dropletsImg);
+    this.canCard.appendChild(this.photo2dImg);
     this.wrapper.appendChild(this.canCard);
     this.container.appendChild(this.wrapper);
+  }
+
+  initCacaoPhysics() {
+    const beanElements = document.querySelectorAll('.cacao-bean');
+    this.cacaoBeans = Array.from(beanElements).map(el => new CacaoBeanPhysics(el));
   }
 
   initLabels() {
@@ -133,41 +199,51 @@ export class HeroKallpaCan {
   }
 
   bindEvents() {
-    // Pointer move across window for magnetic 3D perspective and depth planes parallax
+    // Pointer move across window for magnetic 3D perspective & cacao beans tracking
     window.addEventListener('pointermove', (e) => {
       this.cursorNormX = (e.clientX / window.innerWidth - 0.5) * 2;
       this.cursorNormY = (e.clientY / window.innerHeight - 0.5) * 2;
-      this.tiltXSpring.target = -this.cursorNormY * 6; // degrees
-      this.tiltYSpring.target = this.cursorNormX * 8;
 
-      // Parallax en elementos de cacao jugando con los planos
-      const beans = document.querySelectorAll('.cacao-bean');
-      if (beans.length) {
-        beans.forEach((b) => {
-          const depth = parseFloat(b.dataset.depth || '0.04');
-          const px = (this.cursorNormX * depth * 85).toFixed(2);
-          const py = (this.cursorNormY * depth * 85).toFixed(2);
-          b.style.setProperty('--parallax-x', `${px}px`);
-          b.style.setProperty('--parallax-y', `${py}px`);
-        });
+      // Seguimiento magnético de la lata
+      this.tiltXSpring.target = -this.cursorNormY * 9;  // degrees
+      this.tiltYSpring.target = this.cursorNormX * 12;  // degrees
+      this.moveXSpring.target = this.cursorNormX * 24;  // px
+      this.moveYSpring.target = this.cursorNormY * 20;  // px
+
+      // Aplicar seguimiento de cursor idéntico a todos los elementos flotantes de cacao
+      if (this.cacaoBeans && this.cacaoBeans.length) {
+        this.cacaoBeans.forEach(b => b.updateTarget(this.cursorNormX, this.cursorNormY));
       }
     }, { passive: true });
+
+    // Cuando el cursor sale de la pantalla, regresar suavemente a posición de reposo
+    window.addEventListener('pointerleave', () => {
+      this.cursorNormX = 0;
+      this.cursorNormY = 0;
+      this.tiltXSpring.target = 0;
+      this.tiltYSpring.target = 0;
+      this.moveXSpring.target = 0;
+      this.moveYSpring.target = 0;
+      if (this.cacaoBeans && this.cacaoBeans.length) {
+        this.cacaoBeans.forEach(b => b.updateTarget(0, 0));
+      }
+    });
 
     // Hover on can card
     this.canCard.addEventListener('pointerenter', () => {
       this.liftSpring.target = 1.0;
-      if (this.spinCycleStart < 0) {
+      if (this.mode === '3d' && this.spinCycleStart < 0) {
         this.spinCycleStart = performance.now();
       }
     });
 
     this.canCard.addEventListener('pointerleave', () => {
       this.liftSpring.target = 0.0;
-      // Do not kill spinCycle: let it gracefully complete 360° rotation back to front
     });
 
-    // Drag to spin horizontally
+    // Drag to spin horizontally (solo activo en modo 3D)
     const onPointerDown = (e) => {
+      if (this.mode !== '3d') return;
       this.isDragging = true;
       this.dragStartX = e.clientX;
       this.dragStartOffset = this.currentOffset;
@@ -177,9 +253,8 @@ export class HeroKallpaCan {
     };
 
     const onPointerMove = (e) => {
-      if (!this.isDragging) return;
+      if (!this.isDragging || this.mode !== '3d') return;
       const dx = e.clientX - this.dragStartX;
-      // Sensitivity: drag 500px for full 360 turn
       this.targetOffset = this.dragStartOffset + dx / 500;
       this.currentOffset = this.targetOffset;
 
@@ -188,7 +263,7 @@ export class HeroKallpaCan {
       this.velocity = ((e.clientX - this.lastPointerX) / dt) * 0.003;
       this.lastPointerX = e.clientX;
       this.lastPointerTime = now;
-      this.spinCycleStart = -1; // interrupt auto-spin on manual drag
+      this.spinCycleStart = -1;
     };
 
     const onPointerUp = () => {
@@ -210,11 +285,68 @@ export class HeroKallpaCan {
     });
   }
 
+  bindSwitchEvents() {
+    const btn2d = document.getElementById('btn-dim-2d');
+    const btn3d = document.getElementById('btn-dim-3d');
+    const switchEl = document.getElementById('kalpa-dimension-switch');
+
+    if (btn2d) {
+      btn2d.addEventListener('click', () => this.setMode('2d'));
+    }
+    if (btn3d) {
+      btn3d.addEventListener('click', () => this.setMode('3d'));
+    }
+    if (switchEl) {
+      switchEl.addEventListener('click', (e) => {
+        const btn = e.target.closest('.dim-switch-btn');
+        if (btn && btn.dataset.mode) {
+          this.setMode(btn.dataset.mode);
+        }
+      });
+    }
+  }
+
+  setMode(newMode) {
+    if (newMode !== '2d' && newMode !== '3d') return;
+    this.mode = newMode;
+
+    const switchEl = document.getElementById('kalpa-dimension-switch');
+    const btn2d = document.getElementById('btn-dim-2d');
+    const btn3d = document.getElementById('btn-dim-3d');
+
+    if (switchEl) switchEl.setAttribute('data-active', newMode);
+    if (btn2d) {
+      btn2d.classList.toggle('is-active', newMode === '2d');
+      btn2d.setAttribute('aria-checked', newMode === '2d');
+    }
+    if (btn3d) {
+      btn3d.classList.toggle('is-active', newMode === '3d');
+      btn3d.setAttribute('aria-checked', newMode === '3d');
+    }
+
+    if (newMode === '2d') {
+      this.canCard.classList.remove('mode-3d');
+      this.canCard.classList.add('mode-2d');
+      this.isDragging = false;
+      this.canCard.classList.remove('is-dragging');
+      this.targetOffset = 0.475;
+      this.currentOffset = 0.475;
+      this.spinCycleStart = -1;
+    } else {
+      this.canCard.classList.remove('mode-2d');
+      this.canCard.classList.add('mode-3d');
+      // Giro de bienvenida 360° al pasar a 3D
+      this.spinCycleStart = performance.now();
+      this.lastAmbientSpinTime = performance.now();
+    }
+  }
+
   setSlide(slideIndex) {
     if (slideIndex < 0 || slideIndex >= this.labelMaterials.length) return;
     this.activeSlide = slideIndex;
-    // Trigger celebratory spin on slide change
-    this.spinCycleStart = performance.now();
+    if (this.mode === '3d') {
+      this.spinCycleStart = performance.now();
+    }
   }
 
   renderCanFrame(offset) {
@@ -233,57 +365,63 @@ export class HeroKallpaCan {
       lastTime = currentTime;
       this.floatTime += dt;
 
-      // 1. Natural Sinusoidal Floating
+      // 1. Levitación sinusoidal orgánica
       const floatY = Math.sin(this.floatTime * 1.8) * 9;
       const floatRot = Math.sin(this.floatTime * 1.2) * 1.2;
 
-      // 2. Physics Springs Update
+      // 2. Actualización de Resortes Físicos de la lata
       const lift = this.liftSpring.update(dt);
       const tiltX = this.tiltXSpring.update(dt);
       const tiltY = this.tiltYSpring.update(dt);
+      const moveX = this.moveXSpring.update(dt);
+      const moveY = this.moveYSpring.update(dt);
 
-      // Inertia after drag
-      if (!this.isDragging && Math.abs(this.velocity) > 0.0001) {
+      // 3. Actualización de Resortes Físicos de los Elementos de Cacao (Seguimiento de cursor sincronizado)
+      if (this.cacaoBeans && this.cacaoBeans.length) {
+        this.cacaoBeans.forEach(bean => bean.update(dt));
+      }
+
+      // Inercia tras arrastre manual (solo modo 3D)
+      if (this.mode === '3d' && !this.isDragging && Math.abs(this.velocity) > 0.0001) {
         this.currentOffset += this.velocity;
         this.velocity *= 0.92;
       }
 
-      // 3. Spontaneous Ambient Spin or Hover Spin
+      // 4. Rotación 360° en modo 3D
       const baseFrontOffset = 0.475;
-      if (this.spinCycleStart > 0) {
-        const elapsed = currentTime - this.spinCycleStart;
-        const progress = Math.min(elapsed / this.options.spinDuration, 1.0);
-        // EaseInOutCubic
-        const ease = progress < 0.5 
-          ? 4 * progress * progress * progress 
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+      if (this.mode === '3d') {
+        if (this.spinCycleStart > 0) {
+          const elapsed = currentTime - this.spinCycleStart;
+          const progress = Math.min(elapsed / this.options.spinDuration, 1.0);
+          const ease = progress < 0.5 
+            ? 4 * progress * progress * progress 
+            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
 
-        this.currentOffset = baseFrontOffset + ease * 1.0;
+          this.currentOffset = baseFrontOffset + ease * 1.0;
 
-        if (progress >= 1.0) {
-          this.spinCycleStart = -1;
-          this.currentOffset = baseFrontOffset;
-          this.lastAmbientSpinTime = currentTime;
+          if (progress >= 1.0) {
+            this.spinCycleStart = -1;
+            this.currentOffset = baseFrontOffset;
+            this.lastAmbientSpinTime = currentTime;
+          }
+        } else if (!this.isDragging) {
+          if (currentTime - this.lastAmbientSpinTime > this.options.ambientSpinInterval) {
+            this.spinCycleStart = currentTime;
+          }
         }
-      } else if (!this.isDragging) {
-        // Check ambient spin trigger
-        if (currentTime - this.lastAmbientSpinTime > this.options.ambientSpinInterval) {
-          this.spinCycleStart = currentTime;
-        }
+
+        // Renderizado del Canvas 3D
+        this.renderCanFrame(this.currentOffset);
       }
 
-      // 4. Render 3D Label & Blit
-      this.renderCanFrame(this.currentOffset);
-
-      // 5. Apply dynamic 3D transform on the can card
-      // Base diagonal pose matching the hero mockup: rotateZ around -11deg
+      // 5. Aplicar Transformación Dinámica en la Lata (Tilt + Seguimiento Magnético + Levitación)
       const baseRotZ = -11;
       const currentRotZ = baseRotZ + floatRot + (lift * 2);
       const currentPosY = floatY - (lift * 18);
       const currentScale = 1.0 + (lift * 0.05);
 
       this.canCard.style.transform = `
-        translate3d(0, ${currentPosY.toFixed(2)}px, 0)
+        translate3d(${moveX.toFixed(2)}px, ${(currentPosY + moveY).toFixed(2)}px, 0)
         rotateX(${tiltX.toFixed(2)}deg)
         rotateY(${tiltY.toFixed(2)}deg)
         rotateZ(${currentRotZ.toFixed(2)}deg)
@@ -302,6 +440,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('kallpa-hero-3d');
   if (container) {
     window.kallpaHeroCan = new HeroKallpaCan('kallpa-hero-3d');
-    console.log('⚡ Hero Kallpa Can 3D (Hybrid Offscreen Engine) montado con éxito.');
+    console.log('⚡ Hero Kallpa Can 3D + Cacao Physics + Switch 2D/3D montado con éxito.');
   }
 });
