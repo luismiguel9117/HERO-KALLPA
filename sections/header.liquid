@@ -13,12 +13,13 @@
 <header class="kalpa-navbar" id="kallpa-header">
   <div class="page-width kalpa-navbar__container">
     
-    <!-- Logo KALPA -->
-    <a href="/" class="kalpa-logo">
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-      </svg>
-      <span>KALPA</span>
+    <!-- Logo KALPA Oficial -->
+    <a href="/" class="kalpa-logo" aria-label="KALPA Cold Brew - Inicio">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 280 }}" alt="{{ shop.name }}" class="kalpa-logo__img" width="130" height="30" />
+      {%- else -%}
+        <img src="{{ 'logo-kalpa-white.png' | asset_url }}" alt="KALPA Logo" class="kalpa-logo__img" width="130" height="30" />
+      {%- endif -%}
     </a>
 
     <!-- Menú Central -->
