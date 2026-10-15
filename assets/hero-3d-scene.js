@@ -43,6 +43,13 @@ class Kallpa3DScene {
     this.clock = new THREE.Clock();
 
     this.mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+    this.mouseVec2 = new THREE.Vector2(-999, -999);
+    this.raycaster = new THREE.Raycaster();
+    this.isCanHovered = false;
+    this.liftVal = 0;
+    this.targetLift = 0;
+    this.liftVal2D = 0;
+    this.targetLift2D = 0;
     this.isVisible = true;
     this.rafId = null;
 
@@ -161,6 +168,15 @@ class Kallpa3DScene {
   init2DCan() {
     this.container2D = document.getElementById('kallpa-hero-2d-can');
     this.can2dCard = document.getElementById('hero-2d-can-card');
+
+    if (this.can2dCard) {
+      this.can2dCard.addEventListener('pointerenter', () => {
+        this.targetLift2D = 1.0;
+      });
+      this.can2dCard.addEventListener('pointerleave', () => {
+        this.targetLift2D = 0.0;
+      });
+    }
   }
 
   bindSwitchEvents() {
@@ -187,6 +203,11 @@ class Kallpa3DScene {
   setMode(newMode) {
     if (newMode !== '2d' && newMode !== '3d') return;
     this.mode = newMode;
+    this.targetLift = 0;
+    this.liftVal = 0;
+    this.targetLift2D = 0;
+    this.liftVal2D = 0;
+    this.isCanHovered = false;
 
     const switchEl = document.getElementById('kalpa-dimension-switch');
     const btn2d = document.getElementById('btn-dim-2d');
@@ -480,15 +501,59 @@ class Kallpa3DScene {
     window.addEventListener('resize', this.onResize.bind(this));
 
     if (this.options.interactive) {
-      // Seguimiento de cursor magnético en toda la ventana
+      // Seguimiento de cursor magnético en toda la ventana y detección de hover en toda la botella
       window.addEventListener('pointermove', (e) => {
         this.mouse.targetX = (e.clientX / window.innerWidth - 0.5) * 2;
         this.mouse.targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+
+        // Detección de Hover en Modo 3D con Raycasting Three.js sobre toda la geometría de la lata
+        if (this.mode === '3d' && this.renderer && this.camera && this.canGroup) {
+          const rect = this.renderer.domElement.getBoundingClientRect();
+          if (
+            e.clientX >= rect.left && e.clientX <= rect.right &&
+            e.clientY >= rect.top && e.clientY <= rect.bottom
+          ) {
+            this.mouseVec2.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+            this.mouseVec2.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+            this.raycaster.setFromCamera(this.mouseVec2, this.camera);
+            const targets = [];
+            if (this.bodyMesh) targets.push(this.bodyMesh);
+            if (this.alumMesh) targets.push(this.alumMesh);
+
+            const intersects = this.raycaster.intersectObjects(targets.length ? targets : this.canGroup.children, true);
+            const isHovered = intersects.length > 0;
+            this.isCanHovered = isHovered;
+            this.targetLift = isHovered ? 1.0 : 0.0;
+            if (this.container) {
+              this.container.style.cursor = isHovered ? 'grab' : 'default';
+            }
+          } else {
+            this.isCanHovered = false;
+            this.targetLift = 0.0;
+            if (this.container) this.container.style.cursor = 'default';
+          }
+        }
+
+        // Detección de Hover en Modo 2D
+        if (this.mode === '2d' && this.can2dCard) {
+          const rect2d = this.can2dCard.getBoundingClientRect();
+          const isInside = (
+            e.clientX >= rect2d.left && e.clientX <= rect2d.right &&
+            e.clientY >= rect2d.top && e.clientY <= rect2d.bottom
+          );
+          this.targetLift2D = isInside ? 1.0 : 0.0;
+          this.can2dCard.style.cursor = isInside ? 'grab' : 'default';
+        }
       }, { passive: true });
 
       window.addEventListener('pointerleave', () => {
         this.mouse.targetX = 0;
         this.mouse.targetY = 0;
+        this.targetLift = 0.0;
+        this.targetLift2D = 0.0;
+        this.isCanHovered = false;
+        if (this.container) this.container.style.cursor = 'default';
       });
     }
 
@@ -530,21 +595,34 @@ class Kallpa3DScene {
     this.mouse.x += (this.mouse.targetX - this.mouse.x) * 0.045;
     this.mouse.y += (this.mouse.targetY - this.mouse.y) * 0.045;
 
-    // 2. Movimiento de perspectiva de cámara Three.js
+    // 2. Interpolación suave de la física de levantamiento (Hover Lift)
+    this.liftVal += (this.targetLift - this.liftVal) * 0.085;
+    this.liftVal2D += (this.targetLift2D - this.liftVal2D) * 0.085;
+
+    // 3. Movimiento de perspectiva de cámara Three.js
     this.camera.position.x = this.mouse.x * 0.45;
     this.camera.position.y = -this.mouse.y * 0.35;
     this.camera.lookAt(0, 0, 0);
 
-    // 3. SEGUIMIENTO DE CURSOR E INCLINACIÓN 3D EN LA LATA THREE.JS
+    // 4. SEGUIMIENTO DE CURSOR, INCLINACIÓN Y ELEVACIÓN EN LA LATA THREE.JS 3D
     if (this.canGroup) {
-      this.canGroup.position.y = this.basePosY + Math.sin(elapsedTime * 1.5) * 0.035 - (this.mouse.y * 0.12);
+      // Elevación hacia arriba (0.24 unidades Three.js) y sutil escalado (+5%) en hover
+      const liftY = this.liftVal * 0.24;
+      const liftRotZ = this.liftVal * 0.035;
+      const liftScale = 1.0 + (this.liftVal * 0.05);
+
+      this.canGroup.position.y = this.basePosY + liftY + Math.sin(elapsedTime * 1.5) * 0.035 - (this.mouse.y * 0.12);
       this.canGroup.position.x = this.basePosX + Math.cos(elapsedTime * 1.1) * 0.015 + (this.mouse.x * 0.14);
       this.canGroup.rotation.y = this.baseRotY + Math.sin(elapsedTime * 0.8) * 0.025 + (this.mouse.x * 0.22);
-      this.canGroup.rotation.z = this.baseRotZ + Math.cos(elapsedTime * 1.1) * 0.015 + (this.mouse.y * 0.09);
+      this.canGroup.rotation.z = this.baseRotZ + liftRotZ + Math.cos(elapsedTime * 1.1) * 0.015 + (this.mouse.y * 0.09);
       this.canGroup.rotation.x = this.baseRotX + Math.sin(elapsedTime * 0.9) * 0.015 - (this.mouse.y * 0.10);
+
+      const targetCanHeight = 2.65;
+      const baseScaleFactor = targetCanHeight / 165.35;
+      this.canGroup.scale.setScalar(baseScaleFactor * liftScale);
     }
 
-    // 4. APLICAR EL MISMO SEGUIMIENTO DE CURSOR A TODOS LOS ELEMENTOS FLOTANTES DE CACAO
+    // 5. APLICAR EL MISMO SEGUIMIENTO DE CURSOR A TODOS LOS ELEMENTOS FLOTANTES DE CACAO
     if (this.cacaoBeans && this.cacaoBeans.length) {
       this.cacaoBeans.forEach(b => {
         const mult = b.depth * 380;
@@ -556,17 +634,27 @@ class Kallpa3DScene {
       });
     }
 
-    // 5. Seguimiento de cursor en la lata 2D (cuando está activo el modo 2D)
+    // 6. Seguimiento de cursor y elevación en la lata 2D (cuando está activo el modo 2D)
     if (this.can2dCard) {
       const px = (this.mouse.x * 24).toFixed(2);
       const py = (this.mouse.y * 20).toFixed(2);
       const float2dY = Math.sin(elapsedTime * 1.8) * 8;
+      const lift2dPx = this.liftVal2D * 22; // 22px de elevación hacia arriba
+      const lift2dScale = 1.0 + (this.liftVal2D * 0.05); // +5% de escala en hover
+      const lift2dRotZ = this.liftVal2D * 2.0;
       const tilt2dX = (-this.mouse.y * 8).toFixed(2);
       const tilt2dY = (this.mouse.x * 11).toFixed(2);
-      this.can2dCard.style.transform = `translate3d(${px}px, ${(float2dY + parseFloat(py)).toFixed(2)}px, 0) rotateX(${tilt2dX}deg) rotateY(${tilt2dY}deg) rotateZ(-11deg)`;
+
+      this.can2dCard.style.transform = `
+        translate3d(${px}px, ${(float2dY + parseFloat(py) - lift2dPx).toFixed(2)}px, 0)
+        rotateX(${tilt2dX}deg)
+        rotateY(${tilt2dY}deg)
+        rotateZ(${(-11 + lift2dRotZ).toFixed(2)}deg)
+        scale(${lift2dScale.toFixed(3)})
+      `;
     }
 
-    // 6. Renderizar Three.js en Modo 3D
+    // 7. Renderizar Three.js en Modo 3D
     if (this.mode === '3d') {
       this.renderer.render(this.scene, this.camera);
     }
