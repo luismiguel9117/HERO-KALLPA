@@ -2,6 +2,11 @@
  * HERO-KALLPA : Three.js + WebGL 3D Controller
  * Carga directa del Modelo Final Oficial FBX (SM_BeerCan_A.fbx) + CanRefinerPro.js
  * Extraído directamente del repositorio https://github.com/luismiguel9117/Lata-3d-.git
+ * Incluye:
+ * - Renderizado Three.js PBR 3D con iluminación de estudio y RoomEnvironment HDR
+ * - Seguimiento de cursor fluido y orgánico en la lata 3D
+ * - Mismo seguimiento de cursor aplicado sincronizadamente a todos los granos de cacao flotantes
+ * - Switch de Alternancia entre Modo 3D (Three.js WebGL) y Modo 2D (Foto Estudio)
  */
 
 import * as THREE from 'three';
@@ -10,22 +15,24 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { smoothCanBody, buildRealisticCanRimAndBase } from './CanRefinerPro.js';
 
 class Kallpa3DScene {
-  constructor(containerId, options = {}) {
+  constructor(containerId = 'kallpa-hero-3d', options = {}) {
     this.container = document.getElementById(containerId);
     if (!this.container) return;
 
+    const ds = this.container.dataset || {};
     this.options = Object.assign({
-      fbxPath: this.container.dataset.fbxPath || 'assets/SM_BeerCan_A.fbx',
-      canLabel: this.container.dataset.canLabel || 'assets/can-kalpa-label.png',
-      canBase: this.container.dataset.canBase || 'assets/can-base.png',
-      canNormal: this.container.dataset.canNormal || 'assets/can-normal.png',
-      canRmao: this.container.dataset.canRmao || 'assets/can-rmao.png',
-      energyColor: this.container.dataset.energyColor || '#fdb515',
-      secondaryColor: this.container.dataset.secondaryColor || '#ff9100',
+      fbxPath: ds.fbxPath || 'assets/SM_BeerCan_A.fbx',
+      canLabel: ds.canLabel || 'assets/can-kalpa-label.png',
+      canBase: ds.canBase || 'assets/can-base.png',
+      canNormal: ds.canNormal || 'assets/can-normal.png',
+      canRmao: ds.canRmao || 'assets/can-rmao.png',
+      energyColor: ds.energyColor || '#fdb515',
+      secondaryColor: ds.secondaryColor || '#ff9100',
       interactive: true,
       scrollLinked: true
     }, options);
 
+    this.mode = '3d'; // '3d' (Three.js) | '2d' (Estudio)
     this.scene = null;
     this.camera = null;
     this.renderer = null;
@@ -38,6 +45,11 @@ class Kallpa3DScene {
     this.mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
     this.isVisible = true;
     this.rafId = null;
+
+    // Elementos de cacao flotantes con física de planos
+    this.cacaoBeans = [];
+    this.container2D = null;
+    this.can2dCard = null;
 
     // Posición y orientación base calibradas para encuadre publicitario Hero
     this.basePosX = (typeof window !== 'undefined' && window.innerWidth > 990) ? 1.85 : 0.35;
@@ -53,7 +65,7 @@ class Kallpa3DScene {
     const width = this.container.clientWidth || window.innerWidth;
     const height = this.container.clientHeight || window.innerHeight;
 
-    // 1. Escena
+    // 1. Escena Three.js
     this.scene = new THREE.Scene();
 
     // 2. Cámara (Perspectiva de Estudio Fotográfico)
@@ -67,7 +79,7 @@ class Kallpa3DScene {
       alpha: true
     });
     this.renderer.setSize(width, height);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.25;
     this.renderer.shadowMap.enabled = true;
@@ -78,12 +90,12 @@ class Kallpa3DScene {
     this.renderer.domElement.style.display = 'block';
     this.container.appendChild(this.renderer.domElement);
 
-    // Entorno HDR de estudio para reflejos metálicos brillantes en el aluminio (de Lata-3d-)
+    // Entorno HDR de estudio para reflejos metálicos brillantes en el aluminio
     const pmremGenerator = new THREE.PMREMGenerator(this.renderer);
     pmremGenerator.compileEquirectangularShader();
     this.scene.environment = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
 
-    // 4. Iluminación Comercial de Estudio Fotográfico (Idéntica a Lata-3d-)
+    // 4. Iluminación Comercial de Estudio Fotográfico
     const hemiLight = new THREE.HemisphereLight(0xffffff, 0xd0d5dd, 1.2);
     hemiLight.position.set(0, 20, 0);
     this.scene.add(hemiLight);
@@ -123,14 +135,105 @@ class Kallpa3DScene {
     // 6. Cargar Modelo FBX y Refinar con CanRefinerPro
     this.loadFBXModel(this.options.fbxPath);
 
-    // 7. Eventos & Resize
-    this.bindEvents();
+    // 7. Inicializar Elementos de Cacao y Vista 2D
+    this.initCacaoBeans();
+    this.init2DCan();
 
-    // 8. Integración con GSAP ScrollTrigger
+    // 8. Eventos, Resize y Switch 2D/3D
+    this.bindEvents();
+    this.bindSwitchEvents();
+
+    // 9. Integración con GSAP ScrollTrigger
     this.initGSAPTimeline();
 
-    // 9. Loop de Renderizado
+    // 10. Loop de Renderizado
     this.animate();
+  }
+
+  initCacaoBeans() {
+    const elements = document.querySelectorAll('.cacao-bean');
+    this.cacaoBeans = Array.from(elements).map(el => ({
+      element: el,
+      depth: parseFloat(el.dataset.depth || '0.04')
+    }));
+  }
+
+  init2DCan() {
+    this.container2D = document.getElementById('kallpa-hero-2d-can');
+    this.can2dCard = document.getElementById('hero-2d-can-card');
+  }
+
+  bindSwitchEvents() {
+    const btn2d = document.getElementById('btn-dim-2d');
+    const btn3d = document.getElementById('btn-dim-3d');
+    const switchEl = document.getElementById('kalpa-dimension-switch');
+
+    if (btn2d) {
+      btn2d.addEventListener('click', () => this.setMode('2d'));
+    }
+    if (btn3d) {
+      btn3d.addEventListener('click', () => this.setMode('3d'));
+    }
+    if (switchEl) {
+      switchEl.addEventListener('click', (e) => {
+        const btn = e.target.closest('.dim-switch-btn');
+        if (btn && btn.dataset.mode) {
+          this.setMode(btn.dataset.mode);
+        }
+      });
+    }
+  }
+
+  setMode(newMode) {
+    if (newMode !== '2d' && newMode !== '3d') return;
+    this.mode = newMode;
+
+    const switchEl = document.getElementById('kalpa-dimension-switch');
+    const btn2d = document.getElementById('btn-dim-2d');
+    const btn3d = document.getElementById('btn-dim-3d');
+    const container3D = this.container;
+    const container2D = this.container2D || document.getElementById('kallpa-hero-2d-can');
+
+    if (switchEl) switchEl.setAttribute('data-active', newMode);
+    if (btn2d) {
+      btn2d.classList.toggle('is-active', newMode === '2d');
+      btn2d.setAttribute('aria-checked', newMode === '2d');
+    }
+    if (btn3d) {
+      btn3d.classList.toggle('is-active', newMode === '3d');
+      btn3d.setAttribute('aria-checked', newMode === '3d');
+    }
+
+    if (newMode === '3d') {
+      if (container3D) {
+        container3D.style.opacity = '1';
+        container3D.style.visibility = 'visible';
+        container3D.style.pointerEvents = 'auto';
+      }
+      if (container2D) {
+        container2D.style.opacity = '0';
+        container2D.style.visibility = 'hidden';
+        container2D.style.pointerEvents = 'none';
+      }
+      // Giro de bienvenida 360° al pasar al modo 3D
+      if (this.canGroup && typeof gsap !== 'undefined') {
+        gsap.fromTo(this.canGroup.rotation, 
+          { y: this.baseRotY + Math.PI * 2 }, 
+          { y: this.baseRotY, duration: 1.2, ease: "power2.out" }
+        );
+      }
+    } else {
+      if (container3D) {
+        container3D.style.opacity = '0';
+        container3D.style.visibility = 'hidden';
+        container3D.style.pointerEvents = 'none';
+      }
+      if (container2D) {
+        container2D.style.opacity = '1';
+        container2D.style.visibility = 'visible';
+        container2D.style.pointerEvents = 'auto';
+      }
+    }
   }
 
   async preloadTextures() {
@@ -254,7 +357,7 @@ class Kallpa3DScene {
             this.canGroup.add(this.bodyMesh);
             this.canGroup.add(this.alumMesh);
 
-            // Altura de lata calibrada (2.65 unidades Three.js) para encajar con espacio superior holgado
+            // Altura de lata calibrada (2.65 unidades Three.js) para encajar en el Hero
             const targetCanHeight = 2.65;
             const scaleFactor = targetCanHeight / 165.35;
             this.canGroup.scale.setScalar(scaleFactor);
@@ -377,11 +480,24 @@ class Kallpa3DScene {
     window.addEventListener('resize', this.onResize.bind(this));
 
     if (this.options.interactive) {
-      window.addEventListener('mousemove', (e) => {
+      // Seguimiento de cursor magnético en toda la ventana
+      window.addEventListener('pointermove', (e) => {
         this.mouse.targetX = (e.clientX / window.innerWidth - 0.5) * 2;
         this.mouse.targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+      }, { passive: true });
+
+      window.addEventListener('pointerleave', () => {
+        this.mouse.targetX = 0;
+        this.mouse.targetY = 0;
       });
     }
+
+    // Escuchar cambio de diapositivas del carrusel hero
+    document.addEventListener('kallpa:slidechange', (e) => {
+      if (typeof e.detail?.index === 'number') {
+        this.transitionSlide(e.detail.index);
+      }
+    });
 
     const observer = new IntersectionObserver(([entry]) => {
       this.isVisible = entry.isIntersecting;
@@ -410,23 +526,50 @@ class Kallpa3DScene {
 
     const elapsedTime = this.clock.getElapsedTime();
 
-    this.mouse.x += (this.mouse.targetX - this.mouse.x) * 0.04;
-    this.mouse.y += (this.mouse.targetY - this.mouse.y) * 0.04;
+    // 1. Suavizado del mouse con inercia elástica
+    this.mouse.x += (this.mouse.targetX - this.mouse.x) * 0.045;
+    this.mouse.y += (this.mouse.targetY - this.mouse.y) * 0.045;
 
+    // 2. Movimiento de perspectiva de cámara Three.js
     this.camera.position.x = this.mouse.x * 0.45;
     this.camera.position.y = -this.mouse.y * 0.35;
     this.camera.lookAt(0, 0, 0);
 
-    // Micro-flotación orgánica y viva (sin rotación descontrolada)
+    // 3. SEGUIMIENTO DE CURSOR E INCLINACIÓN 3D EN LA LATA THREE.JS
     if (this.canGroup) {
-      this.canGroup.position.y = this.basePosY + Math.sin(elapsedTime * 1.5) * 0.035;
-      this.canGroup.position.x = this.basePosX + Math.cos(elapsedTime * 1.1) * 0.015;
-      this.canGroup.rotation.y = this.baseRotY + Math.sin(elapsedTime * 0.8) * 0.025 + (this.mouse.x * 0.12);
-      this.canGroup.rotation.z = this.baseRotZ + Math.cos(elapsedTime * 1.1) * 0.015 + (this.mouse.y * 0.05);
-      this.canGroup.rotation.x = this.baseRotX + Math.sin(elapsedTime * 0.9) * 0.015;
+      this.canGroup.position.y = this.basePosY + Math.sin(elapsedTime * 1.5) * 0.035 - (this.mouse.y * 0.12);
+      this.canGroup.position.x = this.basePosX + Math.cos(elapsedTime * 1.1) * 0.015 + (this.mouse.x * 0.14);
+      this.canGroup.rotation.y = this.baseRotY + Math.sin(elapsedTime * 0.8) * 0.025 + (this.mouse.x * 0.22);
+      this.canGroup.rotation.z = this.baseRotZ + Math.cos(elapsedTime * 1.1) * 0.015 + (this.mouse.y * 0.09);
+      this.canGroup.rotation.x = this.baseRotX + Math.sin(elapsedTime * 0.9) * 0.015 - (this.mouse.y * 0.10);
     }
 
-    this.renderer.render(this.scene, this.camera);
+    // 4. APLICAR EL MISMO SEGUIMIENTO DE CURSOR A TODOS LOS ELEMENTOS FLOTANTES DE CACAO
+    if (this.cacaoBeans && this.cacaoBeans.length) {
+      this.cacaoBeans.forEach(b => {
+        const mult = b.depth * 380;
+        const px = (this.mouse.x * mult).toFixed(2);
+        const py = (this.mouse.y * mult).toFixed(2);
+        const rx = (-this.mouse.y * (b.depth * 95)).toFixed(2);
+        const ry = (this.mouse.x * (b.depth * 95)).toFixed(2);
+        b.element.style.transform = `translate3d(${px}px, ${py}px, 0) rotateX(${rx}deg) rotateY(${ry}deg)`;
+      });
+    }
+
+    // 5. Seguimiento de cursor en la lata 2D (cuando está activo el modo 2D)
+    if (this.can2dCard) {
+      const px = (this.mouse.x * 24).toFixed(2);
+      const py = (this.mouse.y * 20).toFixed(2);
+      const float2dY = Math.sin(elapsedTime * 1.8) * 8;
+      const tilt2dX = (-this.mouse.y * 8).toFixed(2);
+      const tilt2dY = (this.mouse.x * 11).toFixed(2);
+      this.can2dCard.style.transform = `translate3d(${px}px, ${(float2dY + parseFloat(py)).toFixed(2)}px, 0) rotateX(${tilt2dX}deg) rotateY(${tilt2dY}deg) rotateZ(-11deg)`;
+    }
+
+    // 6. Renderizar Three.js en Modo 3D
+    if (this.mode === '3d') {
+      this.renderer.render(this.scene, this.camera);
+    }
   }
 
   destroy() {
@@ -444,6 +587,7 @@ window.initKallpa3DScene = function() {
   const container = document.getElementById('kallpa-hero-3d');
   if (container) {
     window.kallpa3D = new Kallpa3DScene('kallpa-hero-3d');
+    console.log('⚡ Hero Kallpa 3D Three.js + Cacao Parallax + Switch 2D/3D montado con éxito.');
   }
 };
 

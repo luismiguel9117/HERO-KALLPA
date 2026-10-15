@@ -164,17 +164,26 @@
       </div>
     </div>
 
-    <!-- Viewport 3D con la Lata Oficial KALPA (Motor Híbrido 2D/3D) -->
+    <!-- Viewport 3D WebGL con la Lata 3D Oficial KALPA (Three.js) -->
     <div id="kallpa-hero-3d" 
          class="hero-3d-viewport"
          data-energy-color="#fdb515"
          data-secondary-color="#ff9100"
-         data-base-can="assets/kalpa-can-clean.png"
-         data-droplets="assets/kalpa-can-droplets.png"
-         data-photo-2d="assets/kalpa-can-original.png"
-         data-label-original="assets/kalpa-label.png"
-         data-label-gold="assets/kalpa-label-gold.png"
-         data-label-citrus="assets/kalpa-label-citrus.png">
+         data-fbx-path="assets/SM_BeerCan_A.fbx"
+         data-can-label="assets/can-kalpa-label.png"
+         data-can-base="assets/can-base.png"
+         data-can-normal="assets/can-normal.png"
+         data-can-rmao="assets/can-rmao.png">
+    </div>
+
+    <!-- Viewport 2D con la Lata Estudio KALPA -->
+    <div id="kallpa-hero-2d-can" class="hero-2d-can-viewport">
+      <div class="hero-2d-can-wrapper">
+        <div class="hero-2d-can-card" id="hero-2d-can-card">
+          <img src="assets/kalpa-can-clean.png" class="hero-2d-can__base" alt="Lata KALPA Cold Brew 2D" draggable="false">
+          <img src="assets/kalpa-can-droplets.png" class="hero-2d-can__droplets" alt="Gotas de condensación" draggable="false">
+        </div>
+      </div>
     </div>
 
     <!-- Canvas 2D de micro-partículas -->
@@ -801,7 +810,7 @@
   <script src="assets/ScrollTrigger.min.js"></script>
   <script src="assets/motion.js"></script>
   <script src="assets/framer-animations.js"></script>
-  <script type="module" src="assets/hero-kallpa-can.js"></script>
+  <script type="module" src="assets/hero-3d-scene.js"></script>
   <script src="assets/hero-2d-canvas.js"></script>
   <script src="assets/theme.js"></script>
 
@@ -939,9 +948,10 @@
 
         currentIndex = index;
 
-        if (window.kallpaHeroCan && typeof window.kallpaHeroCan.setSlide === 'function') {
-          window.kallpaHeroCan.setSlide(currentIndex);
+        if (window.kallpa3D && typeof window.kallpa3D.transitionSlide === 'function') {
+          window.kallpa3D.transitionSlide(currentIndex);
         }
+        document.dispatchEvent(new CustomEvent('kallpa:slidechange', { detail: { index: currentIndex } }));
       }
 
       if (prevBtn) prevBtn.addEventListener('click', () => {
