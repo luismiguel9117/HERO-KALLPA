@@ -22,5 +22,9 @@
     "os2.0"
   ],
   "author": "Kallpa Performance Team",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "framer-motion": "^14.3.0",
+    "motion": "^14.3.0"
+  }
 }
