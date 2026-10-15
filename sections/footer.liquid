@@ -1,6 +1,6 @@
 {%- comment -%}
   SECCIÓN: footer.liquid
-  Footer de Alto Impacto para HERO-KALLPA
+  Footer Editorial KALPA Café Cold Brew del VRAEM
 {%- endcomment -%}
 
 <footer class="kallpa-footer">
@@ -8,22 +8,28 @@
     
     <div class="kallpa-footer__top">
       <div class="kallpa-footer__brand">
-        <a href="/" class="kallpa-header__logo">
-          <span class="logo-bold">HERO</span><span class="logo-accent">KALLPA</span>
-          <span class="logo-sub">3D PERFORMANCE NUTRITION</span>
-        </a>
+        <div class="footer-logo">
+          <span class="bolt">⚡</span>
+          <span class="brand-txt">KALPA</span>
+        </div>
+        <div class="footer-sub">CAFÉ COLD BREW DEL VRAEM &bull; PERÚ</div>
         <p class="kallpa-footer__mission">
-          Fusionamos sabiduría botánica andina con biotecnología molecular moderna para expandir los límites del rendimiento humano.
+          Honramos el origen andino a 1,800 metros de altitud. Extracción criogénica en frío de 24 horas para atletas, creativos y personas que exigen energía limpia y sostenida sin sacrificar su salud gástrica.
         </p>
+        <div class="footer-badges">
+          <span>🇵🇪 Cosecha 100% Peruana</span>
+          <span>🌱 Comercio Justo VRAEM</span>
+          <span>♻️ Aluminio Infinito</span>
+        </div>
       </div>
 
       <div class="kallpa-footer__newsletter">
-        <h4 class="newsletter-title">ACCESO A DROPS EXCLUSIVOS</h4>
-        <p class="newsletter-desc">Recibe lanzamientos de lotes numerados y protocolos de energía.</p>
-        <form class="newsletter-form" onsubmit="event.preventDefault(); alert('¡Bienvenido al círculo Hero Kallpa!');">
+        <h4 class="newsletter-title">DROPS DE COSECHA LIMITADA</h4>
+        <p class="newsletter-desc">Suscríbete para recibir acceso prioritario a nuevos microlotes de altura y 10% de descuento en tu primer pack.</p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); alert('¡Bienvenido al círculo KALPA! Código de descuento enviado.');">
           <input type="email" placeholder="Tu correo electrónico..." required class="newsletter-input">
-          <button type="submit" class="btn-kallpa btn-kallpa--primary" style="padding: 0.8rem 1.6rem; font-size: 0.85rem;">
-            <span>Suscribirme</span>
+          <button type="submit" class="btn-pruebala" style="padding: 0.8rem 1.8rem; font-size: 0.85rem;">
+            SUSCRIBIRME
           </button>
         </form>
       </div>
@@ -31,12 +37,14 @@
 
     <div class="kallpa-footer__bottom">
       <div class="footer-copy">
-        © {{ 'now' | date: "%Y" }} HERO-KALLPA LABS. Todos los derechos reservados. Diseñado para Shopify OS 2.0.
+        © {{ 'now' | date: "%Y" }} KALPA COLD BREW. Café de Altura del VRAEM. Desarrollado para Shopify OS 2.0.
       </div>
       <div class="footer-links">
-        <a href="#hero-section">Privacidad</a>
-        <a href="#hero-section">Términos de Servicio</a>
-        <a href="#hero-section">Certificados COA</a>
+        <a href="#hero-section">Inicio</a>
+        <a href="#terroir-section">Terroir & Proceso</a>
+        <a href="#showcase-section">Anatomía 3D</a>
+        <a href="#products-section">Tienda de Packs</a>
+        <a href="#protocol-section">Protocolo</a>
       </div>
     </div>
 
@@ -46,39 +54,77 @@
 <style>
   .kallpa-footer {
     background-color: #050608;
-    border-top: 1px solid var(--border-subtle);
-    padding: 6rem 0 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 6rem 0 3.5rem;
   }
   .kallpa-footer__top {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 3.5rem;
+    gap: 4rem;
     padding-bottom: 4rem;
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
   @media (min-width: 860px) {
     .kallpa-footer__top {
-      grid-template-columns: 1.2fr 1fr;
+      grid-template-columns: 1.25fr 1fr;
     }
   }
-  .kallpa-footer__mission {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    margin-top: 1.25rem;
-    max-width: 440px;
-    line-height: 1.6;
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: #ffffff;
   }
+  .footer-logo .bolt {
+    color: var(--accent-gold);
+  }
+  .footer-sub {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    color: var(--accent-gold);
+    margin-top: 4px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+  .kallpa-footer__mission {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    max-width: 460px;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+  }
+  .footer-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .footer-badges span {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+
   .newsletter-title {
     font-size: 0.85rem;
     font-weight: 800;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     color: var(--accent-gold);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
   }
   .newsletter-desc {
-    color: var(--text-muted);
+    color: #94a3b8;
     font-size: 0.9rem;
-    margin-bottom: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
   }
   .newsletter-form {
     display: flex;
@@ -87,28 +133,29 @@
   }
   .newsletter-input {
     flex: 1;
-    min-width: 220px;
-    background: var(--bg-surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--btn-radius);
-    padding: 0.8rem 1.4rem;
-    color: var(--text-main);
+    min-width: 240px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    padding: 0.85rem 1.4rem;
+    color: #ffffff;
     font-family: inherit;
     font-size: 0.9rem;
     outline: none;
-    transition: border-color 0.3s;
+    transition: border-color 0.2s;
   }
   .newsletter-input:focus {
-    border-color: var(--border-focus);
+    border-color: var(--accent-gold);
   }
+
   .kallpa-footer__bottom {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     padding-top: 2.5rem;
     align-items: center;
-    font-size: 0.8rem;
-    color: var(--text-muted);
+    font-size: 0.82rem;
+    color: #64748b;
   }
   @media (min-width: 768px) {
     .kallpa-footer__bottom {
@@ -118,11 +165,13 @@
   }
   .footer-links {
     display: flex;
-    gap: 2rem;
+    flex-wrap: wrap;
+    gap: 1.8rem;
   }
   .footer-links a {
-    color: var(--text-muted);
+    color: #94a3b8;
     text-decoration: none;
+    font-weight: 600;
     transition: color 0.2s;
   }
   .footer-links a:hover {

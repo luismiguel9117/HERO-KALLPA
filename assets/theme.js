@@ -78,7 +78,7 @@ window.closeKallpaCart = function() {
 // Formato de moneda adaptable
 function formatMoney(cents) {
   if (typeof cents !== 'number') return cents;
-  return '$' + (cents / 100).toFixed(2) + ' USD';
+  return 'S/ ' + (cents / 100).toFixed(2) + ' PEN';
 }
 
 // Actualizar o refrescar contenido del carrito
@@ -98,18 +98,18 @@ window.refreshKallpaCart = function() {
       })
       .catch(err => console.warn('Error fetching Shopify cart:', err));
   } else {
-    // Modo preview local interactivo con datos demo
+    // Modo preview local interactivo con datos auténticos KALPA
     const demoCart = window._demoCart || {
       item_count: 1,
-      total_price: 6800,
+      total_price: 10500,
       items: [
         {
-          id: 101,
-          title: "KALLPA ELIXIR VOLT-3D",
-          variant_title: "Pack 30 Servicios / Sabor Citrus Solar",
-          price: 6800,
+          id: 102,
+          title: "KALPA 12-Pack Pro Performance",
+          variant_title: "12 x 355ml Sleek Can • Maceración 24H",
+          price: 10500,
           quantity: 1,
-          image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=300&q=80"
+          image: "assets/kalpa-hero-bg.png"
         }
       ]
     };

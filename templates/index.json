@@ -9,7 +9,7 @@
           "settings": {
             "lead_title": "CAFÉ DE",
             "giant_title": "VRAEM",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.",
+            "description": "Cultivado a 1,800 metros de altitud bajo sombra andina. Macerado en frío durante 24 horas continuas a 4°C para entregar 180mg de cafeína natural pura, cero azúcar y acidez gástrica reducida.",
             "btn_text": "PRUEBALA AHORA",
             "btn_url": "#products-section"
           }
@@ -48,12 +48,7 @@
     },
     "features_1": {
       "type": "kallpa-features-grid",
-      "settings": {
-        "kicker": "ARQUITECTURA BIOLÓGICA",
-        "title_1": "INGENIERÍA DE",
-        "title_2": "MÁXIMO PODER",
-        "subtitle": "Diseñado para atletas de élite y mentes enfocadas. Cada compuesto ha sido optimizado a nivel molecular."
-      }
+      "settings": {}
     },
     "showcase_3d": {
       "type": "kallpa-3d-product-showcase",
@@ -61,9 +56,11 @@
     },
     "featured_products": {
       "type": "product-grid",
-      "settings": {
-        "products_to_show": 3
-      }
+      "settings": {}
+    },
+    "protocol_1": {
+      "type": "kallpa-protocol",
+      "settings": {}
     }
   },
   "order": [
@@ -71,6 +68,7 @@
     "ticker_1",
     "features_1",
     "showcase_3d",
-    "featured_products"
+    "featured_products",
+    "protocol_1"
   ]
 }

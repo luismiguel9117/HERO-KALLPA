@@ -1,91 +1,221 @@
 {%- comment -%}
   SECCIÓN: kallpa-3d-product-showcase.liquid
-  Inspección 3D Interactiva del Envase / Producto con Hotspots
+  Anatomía del Producto, Notas de Cata & Laboratorio Sensorial
+  Diseñado bajo los principios de frontend-design: eliminación de fotos genéricas, datos auténticos y micro-interactividad táctil.
 {%- endcomment -%}
 
 <section class="kallpa-showcase-section" id="showcase-section">
   <div class="page-width">
     
     <div class="kallpa-showcase__grid">
-      <!-- Columna Izquierda: Especificaciones Técnicas -->
+      <!-- Columna Izquierda: Especificaciones Técnicas y Origen -->
       <div class="kallpa-showcase__info">
-        <div class="kallpa-kicker">
-          <span class="pulse-dot"></span>
-          <span>ANATOMÍA DEL PRODUCTO</span>
+        <div class="showcase-eyebrow">
+          <span class="eyebrow-badge">ANATOMÍA DEL PRODUCTO</span>
+          <span class="eyebrow-id">LOTE COLD BREW 01 // 355 ML</span>
         </div>
-        <h2 class="font-heading kallpa-showcase__title">
-          DISEÑADO HASTA EL <br>
-          <span class="gradient-text-cyan">ÚLTIMO MILÍMETRO</span>
+
+        <h2 class="font-heading showcase-title">
+          DISEÑADA PARA LA GÉLIDA <br>
+          <span class="gradient-text-gold">PERFECCIÓN SENSORIAL</span>
         </h2>
-        <p class="kallpa-showcase__desc">
-          El envase de grado aeroespacial protege la integridad bioactiva de cada dosis contra los rayos UV y la degradación por calor, asegurando 100% de potencia activa hasta la última toma.
+
+        <p class="showcase-summary">
+          Cada lata Sleek de 355ml alberga la destilación de 24 horas de café arábica de estricta altura. Protegida bajo atmósfera inerte de nitrógeno para evitar cualquier contacto con el oxígeno hasta el instante en que abres la anilla.
         </p>
 
-        <div class="kallpa-showcase__specs">
-          <div class="spec-item">
-            <div class="spec-icon">{% render 'icon-check' %}</div>
-            <div>
-              <h4 class="spec-title">Cierre Hermético Criogénico</h4>
-              <p class="spec-desc">Evita la oxidación de los adaptógenos y la pérdida de terpenos activos.</p>
+        <!-- Pestañas Interactivas de Especificación -->
+        <div class="showcase-tabs">
+          <button type="button" class="showcase-tab is-active" data-tab="flavor" onclick="switchShowcaseTab('flavor', this)">
+            Notas de Cata
+          </button>
+          <button type="button" class="showcase-tab" data-tab="specs" onclick="switchShowcaseTab('specs', this)">
+            Envase Sleek Can
+          </button>
+          <button type="button" class="showcase-tab" data-tab="nutrition" onclick="switchShowcaseTab('nutrition', this)">
+            Tabla Nutricional
+          </button>
+        </div>
+
+        <!-- Panel 1: Notas de Cata -->
+        <div class="showcase-panel is-active" id="tab-flavor">
+          <div class="sensory-bars">
+            <div class="sensory-item">
+              <div class="sensory-header">
+                <span class="sensory-name">Cacao Amargo del VRAEM</span>
+                <span class="sensory-pct">88%</span>
+              </div>
+              <div class="sensory-track"><div class="sensory-fill" style="width: 88%;"></div></div>
+            </div>
+
+            <div class="sensory-item">
+              <div class="sensory-header">
+                <span class="sensory-name">Panela Orgánica & Miel de Caña</span>
+                <span class="sensory-pct">72%</span>
+              </div>
+              <div class="sensory-track"><div class="sensory-fill" style="width: 72%;"></div></div>
+            </div>
+
+            <div class="sensory-item">
+              <div class="sensory-header">
+                <span class="sensory-name">Avellanas & Nuez Tostada</span>
+                <span class="sensory-pct">65%</span>
+              </div>
+              <div class="sensory-track"><div class="sensory-fill" style="width: 65%;"></div></div>
+            </div>
+
+            <div class="sensory-item">
+              <div class="sensory-header">
+                <span class="sensory-name">Acidez Áspera (Reducción en Frío)</span>
+                <span class="sensory-pct" style="color: #64748b;">18% (Mínima)</span>
+              </div>
+              <div class="sensory-track"><div class="sensory-fill sensory-fill--muted" style="width: 18%;"></div></div>
             </div>
           </div>
-
-          <div class="spec-item">
-            <div class="spec-icon">{% render 'icon-check' %}</div>
-            <div>
-              <h4 class="spec-title">Aluminio Infinito 100% Reciclable</h4>
-              <p class="spec-desc">Cero plásticos de un solo uso. Máxima ligereza y resistencia térmica.</p>
-            </div>
+          <div class="tasting-notes-tags">
+            <span class="tasting-tag">✓ Cuerpo Sedoso</span>
+            <span class="tasting-tag">✓ Final Limpio</span>
+            <span class="tasting-tag">✓ Cero Astringencia</span>
           </div>
+        </div>
 
-          <div class="spec-item">
-            <div class="spec-icon">{% render 'icon-check' %}</div>
-            <div>
-              <h4 class="spec-title">Dosificación Ergonómica K-Cap</h4>
-              <p class="spec-desc">Medición exacta de 15g por servicio con un solo giro.</p>
+        <!-- Panel 2: Envase Sleek Can -->
+        <div class="showcase-panel" id="tab-specs">
+          <div class="specs-grid">
+            <div class="spec-card">
+              <h4 class="spec-card__title">Aluminio Puro 355ml</h4>
+              <p class="spec-card__desc">Conductividad térmica superior. Alcanza 3°C en solo 12 minutos en heladera.</p>
+            </div>
+            <div class="spec-card">
+              <h4 class="spec-card__title">Sellado con Nitrógeno</h4>
+              <p class="spec-card__desc">Presurizado para expulsar el oxígeno residual y conservar la frescura por 12 meses.</p>
+            </div>
+            <div class="spec-card">
+              <h4 class="spec-card__title">Microfiltrado a 5 Micras</h4>
+              <p class="spec-card__desc">Retiene cualquier sedimento o grasa amarga para una claridad y textura cristalina.</p>
+            </div>
+            <div class="spec-card">
+              <h4 class="spec-card__title">100% Reciclable</h4>
+              <p class="spec-card__desc">Aluminio infinitamente reciclable con cero plástico en botella o tapón.</p>
             </div>
           </div>
         </div>
 
-        <div style="margin-top: 2.5rem;">
-          <a href="#products-section" class="btn-kallpa btn-kallpa--primary">
-            <span>Ver Edición Limitada</span>
-            {% render 'icon-arrow' %}
+        <!-- Panel 3: Tabla Nutricional -->
+        <div class="showcase-panel" id="tab-nutrition">
+          <div class="nutrition-table-box">
+            <div class="nutrition-row">
+              <span>Tamaño de la porción</span>
+              <strong>1 Lata (355 ml)</strong>
+            </div>
+            <div class="nutrition-row">
+              <span>Calorías</span>
+              <strong style="color: var(--accent-gold);">0 kcal</strong>
+            </div>
+            <div class="nutrition-row">
+              <span>Grasas Totales</span>
+              <strong>0 g (0% VD)</strong>
+            </div>
+            <div class="nutrition-row">
+              <span>Sodio</span>
+              <strong>0 mg (0% VD)</strong>
+            </div>
+            <div class="nutrition-row">
+              <span>Carbohidratos / Azúcares</span>
+              <strong>0 g (0% VD)</strong>
+            </div>
+            <div class="nutrition-row highlight-row">
+              <span>Cafeína Natural Bioactiva</span>
+              <strong style="color: var(--accent-gold); font-size: 1.1rem;">180 mg</strong>
+            </div>
+            <div class="nutrition-row">
+              <span>Ingredientes</span>
+              <span style="font-size: 0.8rem; color: #a1a1aa;">Agua pura filtrada, café arábica de altura del VRAEM tostado artesanalmente.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="showcase-cta">
+          <a href="#products-section" class="btn-pruebala">
+            SELECCIONAR PACKS DISPONIBLES
           </a>
         </div>
       </div>
 
-      <!-- Columna Derecha: Render 3D Interactivo con Hotspots -->
+      <!-- Columna Derecha: Tarjeta Visual de Producto con Acabado Holográfico y Hotspots -->
       <div class="kallpa-showcase__visual">
-        <div class="kallpa-3d-card">
-          <div class="kallpa-3d-card__glow"></div>
-          <div class="kallpa-3d-card__badge">RENDER 3D INTERACTIVO</div>
+        <div class="can-anatomy-stage">
+          <div class="stage-lens-flare"></div>
           
-          <!-- Mockup / Visual 3D -->
-          <div class="kallpa-3d-card__render">
-            <div class="kallpa-orb-halo"></div>
-            <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=700&q=80" 
-                 alt="Kallpa 3D Product" 
-                 class="kallpa-3d-img">
-          </div>
+          <!-- Insignia Superior -->
+          <div class="stage-tag">EDICIÓN COLD BREW ORIGINAL &bull; VRAEM</div>
 
-          <!-- Hotspots Interactivos -->
-          <div class="hotspot hotspot--1">
-            <span class="hotspot-pulse"></span>
-            <div class="hotspot-tooltip">Tapa Criogénica K-Cap</div>
-          </div>
+          <!-- Silueta e Ilustración de la Lata KALPA con Gotas de Condensación -->
+          <div class="can-display-card">
+            <div class="can-glamour-backdrop"></div>
+            
+            <div class="can-central-artwork">
+              <div class="can-badge-floating">⚡ 180MG CAFEÍNA</div>
+              
+              <!-- Hotspots de Inspección Táctil -->
+              <div class="hotspot hotspot--top">
+                <span class="hotspot-pulse"></span>
+                <div class="hotspot-bubble">
+                  <strong>Tapa de Aluminio Plateado</strong>
+                  <span>Apertura con anilla higiénica presurizada</span>
+                </div>
+              </div>
 
-          <div class="hotspot hotspot--2">
-            <span class="hotspot-pulse"></span>
-            <div class="hotspot-tooltip">Matriz de Nano-Micelas 99.4%</div>
-          </div>
+              <div class="hotspot hotspot--body">
+                <span class="hotspot-pulse"></span>
+                <div class="hotspot-bubble">
+                  <strong>Etiqueta Negra Seda Mate</strong>
+                  <span>Protección UV contra la foto-degradación de cafeína</span>
+                </div>
+              </div>
 
-          <div class="hotspot hotspot--3">
-            <span class="hotspot-pulse"></span>
-            <div class="hotspot-tooltip">Sello de Pureza Andina</div>
+              <div class="hotspot hotspot--bottom">
+                <span class="hotspot-pulse"></span>
+                <div class="hotspot-bubble">
+                  <strong>Base Cóncava Reforzada</strong>
+                  <span>Presión criogénica calibrada para goteo cero</span>
+                </div>
+              </div>
+
+              <!-- Representación Visual de la Marca y Relieve -->
+              <div class="can-visual-replica">
+                <div class="can-replica__lid"></div>
+                <div class="can-replica__body">
+                  <div class="can-replica__brand">
+                    <span class="can-replica__logo">⚡ KALPA</span>
+                    <span class="can-replica__sub">ORIGINAL COLD BREW</span>
+                    <span class="can-replica__meta">CAFÉ DE VRAEM &bull; 0 CAL &bull; 355ML</span>
+                  </div>
+                </div>
+                <div class="can-replica__base"></div>
+              </div>
+            </div>
+
+            <!-- Datos Rápidos Inferiores -->
+            <div class="stage-quick-stats">
+              <div class="stat-pill">
+                <span class="stat-val">3°C</span>
+                <span class="stat-lbl">Servir Bien Frío</span>
+              </div>
+              <div class="stat-pill">
+                <span class="stat-val">100%</span>
+                <span class="stat-lbl">Arábica Peruano</span>
+              </div>
+              <div class="stat-pill">
+                <span class="stat-val">0%</span>
+                <span class="stat-lbl">Conservantes</span>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
+
     </div>
 
   </div>
@@ -93,160 +223,437 @@
 
 <style>
   .kallpa-showcase-section {
-    padding: 8rem 0;
-    background-color: #080a0e;
+    padding: 8rem 0 9rem;
+    background-color: #0b0c10;
     position: relative;
-    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
   .kallpa-showcase__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 4rem;
+    gap: 4.5rem;
     align-items: center;
   }
   @media (min-width: 990px) {
     .kallpa-showcase__grid {
-      grid-template-columns: 1.1fr 1fr;
+      grid-template-columns: 1.15fr 1fr;
     }
   }
-  .kallpa-showcase__title {
-    margin: 1.5rem 0 1.25rem;
-  }
-  .kallpa-showcase__desc {
-    color: var(--text-muted);
-    font-size: var(--font-body);
-    margin-bottom: 2.5rem;
-    line-height: 1.6;
-  }
-  .kallpa-showcase__specs {
-    display: flex;
-    flex-direction: column;
-    gap: 1.75rem;
-  }
-  .spec-item {
-    display: flex;
-    gap: 1.25rem;
-  }
-  .spec-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: hsla(var(--color-energy-cyan-h), 80%, 50%, 0.1);
-    border: 1px solid var(--accent-cyan);
-    color: var(--accent-cyan);
+
+  .showcase-eyebrow {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
   }
-  .spec-title {
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 0.25rem;
-    color: var(--text-main);
+  .eyebrow-badge {
+    background: var(--accent-gold);
+    color: #000000;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    padding: 5px 12px;
+    border-radius: 999px;
+    text-transform: uppercase;
   }
-  .spec-desc {
+  .eyebrow-id {
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.75rem;
     color: var(--text-muted);
-    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+  }
+  .showcase-title {
+    font-size: clamp(2rem, 3.8vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+  .showcase-summary {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #94a3b8;
+    margin-bottom: 2.2rem;
+  }
+
+  /* Pestañas */
+  .showcase-tabs {
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 2rem;
+  }
+  .showcase-tab {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 0.8rem 1.2rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .showcase-tab:hover {
+    color: #ffffff;
+  }
+  .showcase-tab.is-active {
+    color: var(--accent-gold);
+    border-bottom-color: var(--accent-gold);
+  }
+
+  .showcase-panel {
+    display: none;
+  }
+  .showcase-panel.is-active {
+    display: block;
+    animation: fadeInPanel 0.3s ease;
+  }
+  @keyframes fadeInPanel {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Barras Sensoriales */
+  .sensory-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .sensory-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.4rem;
+  }
+  .sensory-pct {
+    color: var(--accent-gold);
+    font-family: ui-monospace, monospace;
+  }
+  .sensory-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .sensory-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #d97706, #f5ba2c);
+    border-radius: 999px;
+  }
+  .sensory-fill--muted {
+    background: #64748b;
+  }
+  .tasting-notes-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+  .tasting-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 5px 12px;
+    border-radius: 6px;
+  }
+
+  /* Especificaciones del Envase */
+  .specs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .spec-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 1.2rem;
+  }
+  .spec-card__title {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--accent-gold);
+    margin-bottom: 0.4rem;
+  }
+  .spec-card__desc {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #94a3b8;
     margin: 0;
   }
 
-  /* Tarjeta 3D Visual */
-  .kallpa-3d-card {
+  /* Tabla Nutricional */
+  .nutrition-table-box {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+  }
+  .nutrition-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 0.85rem;
+    color: #e2e8f0;
+  }
+  .nutrition-row:last-child {
+    border-bottom: none;
+  }
+  .highlight-row {
+    background: rgba(245, 186, 44, 0.08);
+    margin: 0 -1.5rem;
+    padding: 0.75rem 1.5rem;
+    border-top: 1px solid rgba(245, 186, 44, 0.3);
+    border-bottom: 1px solid rgba(245, 186, 44, 0.3);
+  }
+
+  .showcase-cta {
+    margin-top: 2.5rem;
+  }
+
+  /* Escenario Visual de la Lata */
+  .can-anatomy-stage {
     position: relative;
     border-radius: 24px;
-    background: radial-gradient(circle at 50% 50%, #161a24 0%, #0c0e14 100%);
-    border: 1px solid var(--border-subtle);
+    background: radial-gradient(circle at 50% 40%, #200808 0%, #0d0f15 75%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     padding: 3rem 2rem;
+    overflow: hidden;
+    min-height: 580px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+  }
+  .stage-lens-flare {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(245, 186, 44, 0.22) 0%, transparent 65%);
+    filter: blur(25px);
+    pointer-events: none;
+  }
+  .stage-tag {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    color: var(--accent-gold);
+    text-align: center;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+  }
+  .can-display-card {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem 0;
+  }
+  .can-central-artwork {
+    position: relative;
+    width: 200px;
+    height: 360px;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 520px;
-    overflow: hidden;
   }
-  .kallpa-3d-card__badge {
+  .can-badge-floating {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: -15px;
+    background: #000000;
+    color: var(--accent-gold);
+    border: 1px solid var(--accent-gold);
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 999px;
+    letter-spacing: 0.1em;
+    box-shadow: 0 4px 15px rgba(245, 186, 44, 0.3);
+    z-index: 10;
+  }
+
+  /* Réplica Escultórica de la Lata */
+  .can-visual-replica {
+    width: 150px;
+    height: 320px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.9));
+  }
+  .can-replica__lid {
+    width: 120px;
+    height: 20px;
+    background: linear-gradient(180deg, #e2e8f0 0%, #94a3b8 100%);
+    border-radius: 50% 50% 10% 10% / 100% 100% 0% 0%;
+    border: 2px solid #cbd5e1;
+  }
+  .can-replica__body {
+    width: 140px;
+    height: 275px;
+    background: linear-gradient(135deg, #18181b 0%, #09090b 50%, #27272a 100%);
+    border-left: 2px solid rgba(255, 255, 255, 0.15);
+    border-right: 2px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem 0.5rem;
+    position: relative;
+    box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.8);
+  }
+  .can-replica__base {
+    width: 124px;
+    height: 18px;
+    background: linear-gradient(180deg, #64748b 0%, #cbd5e1 100%);
+    border-radius: 10% 10% 50% 50% / 0% 0% 100% 100%;
+  }
+  .can-replica__brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .can-replica__logo {
+    font-size: 1.4rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+  .can-replica__sub {
     font-size: 0.65rem;
     font-weight: 800;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
     color: var(--accent-gold);
-    background: rgba(0, 0, 0, 0.4);
-    padding: 0.35rem 0.8rem;
-    border-radius: 100px;
-    border: 1px solid var(--border-subtle);
+    text-transform: uppercase;
   }
-  .kallpa-orb-halo {
-    position: absolute;
-    width: 320px;
-    height: 320px;
-    background: radial-gradient(circle, hsla(var(--color-energy-gold-h), 90%, 50%, 0.25) 0%, transparent 70%);
-    border-radius: 50%;
-    filter: blur(20px);
-    pointer-events: none;
-  }
-  .kallpa-3d-img {
-    position: relative;
-    z-index: 2;
-    max-width: 320px;
-    width: 100%;
-    border-radius: 16px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-    transition: transform 0.6s var(--ease-spring);
-  }
-  .kallpa-3d-card:hover .kallpa-3d-img {
-    transform: scale(1.05) translateY(-6px);
+  .can-replica__meta {
+    font-size: 0.58rem;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+    margin-top: 10px;
   }
 
   /* Hotspots */
   .hotspot {
     position: absolute;
-    z-index: 10;
+    z-index: 20;
     cursor: pointer;
   }
   .hotspot-pulse {
     display: block;
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background: var(--accent-gold);
     box-shadow: 0 0 15px var(--accent-gold);
-    animation: pulseBeacon 1.5s infinite;
+    animation: pulseBeacon 1.8s infinite;
   }
-  .hotspot-tooltip {
+  .hotspot-bubble {
     position: absolute;
-    left: 24px;
-    top: -5px;
-    background: rgba(10, 12, 16, 0.9);
-    border: 1px solid var(--border-focus);
-    padding: 0.35rem 0.75rem;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    white-space: nowrap;
-    color: var(--text-main);
+    left: 26px;
+    top: -10px;
+    background: rgba(15, 17, 23, 0.95);
+    border: 1px solid var(--accent-gold);
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    width: 180px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
     opacity: 0;
-    transform: translateX(-5px);
-    transition: opacity 0.2s, transform 0.2s;
     pointer-events: none;
+    transform: translateX(-6px);
+    transition: opacity 0.25s, transform 0.25s;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
   }
-  .hotspot:hover .hotspot-tooltip {
+  .hotspot-bubble strong {
+    font-size: 0.75rem;
+    color: #ffffff;
+  }
+  .hotspot-bubble span {
+    font-size: 0.68rem;
+    color: #94a3b8;
+    line-height: 1.3;
+  }
+  .hotspot:hover .hotspot-bubble {
     opacity: 1;
+    pointer-events: auto;
     transform: translateX(0);
   }
-  .hotspot--1 { top: 22%; left: 45%; }
-  .hotspot--2 { top: 52%; right: 28%; }
-  .hotspot--3 { bottom: 25%; left: 32%; }
+  .hotspot--top { top: 18px; left: 10px; }
+  .hotspot--body { top: 160px; right: 0px; }
+  .hotspot--bottom { bottom: 20px; left: 15px; }
+
+  /* Quick stats de la stage */
+  .stage-quick-stats {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .stat-pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.6rem 1rem;
+    border-radius: 12px;
+  }
+  .stat-val {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #ffffff;
+  }
+  .stat-lbl {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
 </style>
+
+<script>
+  function switchShowcaseTab(tabId, btn) {
+    const section = btn.closest('.kallpa-showcase-section');
+    if (!section) return;
+    
+    section.querySelectorAll('.showcase-tab').forEach(t => t.classList.remove('is-active'));
+    section.querySelectorAll('.showcase-panel').forEach(p => p.classList.remove('is-active'));
+    
+    btn.classList.add('is-active');
+    const target = section.querySelector('#tab-' + tabId);
+    if (target) target.classList.add('is-active');
+  }
+</script>
 
 {% schema %}
 {
-  "name": "Showcase 3D de Producto",
+  "name": "Kallpa Showcase 3D",
   "settings": [],
   "presets": [
     {
-      "name": "Showcase 3D de Producto"
+      "name": "Kallpa Showcase 3D"
     }
   ]
 }
