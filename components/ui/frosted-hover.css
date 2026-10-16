@@ -1,0 +1,49 @@
+/**
+ * Frosted Hover / Freeze Effect Styles
+ * Diseñado para usarse con Tailwind CSS o CSS vanilla.
+ */
+
+:root {
+  --clr-bg: #020617;
+  --clr-text: #fff;
+  --clr-primary: #fff;
+}
+
+/* Contenedor del elemento congelado */
+nav[style*="--max-a"] {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+nav[style*="--max-a"] img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: url("#❄️");
+  transition: filter 0.3s ease;
+}
+
+/* Grilla de detección de cursor para romper el hielo / efecto interactivo */
+.hover-area {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--max-a, 30), 1fr);
+  grid-template-rows: repeat(var(--max-a, 30), 1fr);
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.hover-area i {
+  display: block;
+}
+
+svg[data-defs] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
