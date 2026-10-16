@@ -513,11 +513,19 @@ h1, h2, h3, h4, h5, h6 {
 .kalpa-announcement-bar {
   background-color: #f5ba2c;
   color: #000000;
-  font-size: 0.82rem;
-  font-weight: 600;
-  text-align: center;
-  padding: 0.55rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
   letter-spacing: -0.01em;
+}
+
+.kalpa-announcement-bar .announcement-truck-icon {
+  flex-shrink: 0;
+  color: #000000;
 }
 
 .kalpa-announcement-bar a {
@@ -529,6 +537,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .kalpa-announcement-bar a:hover {
   opacity: 0.75;
+}
+
+@media (max-width: 600px) {
+  .kalpa-announcement-bar .announcement-link-desktop {
+    display: none;
+  }
 }
 
 .kalpa-navbar {
@@ -641,24 +655,45 @@ h1, h2, h3, h4, h5, h6 {
   transform: scale(1.1);
 }
 
-.kalpa-cart-capsule {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 100px;
-  padding: 0.35rem 0.85rem;
+.kalpa-nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
   color: #ffffff;
-  font-size: 0.85rem;
-  font-weight: 700;
-  background: transparent;
   cursor: pointer;
-  transition: all 0.2s;
+  padding: 0.25rem;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, transform 0.2s;
 }
 
-.kalpa-cart-capsule:hover {
-  border-color: #f5ba2c;
+.kalpa-nav-hamburger:hover {
   color: #f5ba2c;
+  transform: scale(1.08);
+}
+
+@media (max-width: 860px) {
+  .kalpa-navbar {
+    height: 62px;
+  }
+  .kalpa-nav-actions {
+    gap: 0.85rem;
+  }
+  .kalpa-nav-icon.nav-icon--search,
+  .kalpa-nav-icon.nav-icon--favorites {
+    display: none;
+  }
+  .kalpa-cart-capsule {
+    border: none;
+    padding: 0.2rem;
+    background: transparent;
+  }
+  .kalpa-cart-capsule span#kallpa-cart-count {
+    display: none;
+  }
+  .kalpa-nav-hamburger {
+    display: flex;
+  }
 }
 
 /* ==========================================================================
@@ -974,8 +1009,29 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 25;
 }
 
+.kalpa-hero__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-brand);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 0.65rem;
+}
+
+.kalpa-hero__kicker .kicker-line {
+  display: inline-block;
+  width: 20px;
+  height: 2px;
+  background-color: #f7bf19;
+  border-radius: 2px;
+}
+
 .kalpa-hero__lead-title {
-  font-size: clamp(2.75rem, 6vw, 4.75rem);
+  font-size: clamp(2.5rem, 5.5vw, 4.25rem);
   font-weight: 900;
   color: #ffffff;
   line-height: 0.95;
@@ -987,49 +1043,73 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .kalpa-hero__giant-title {
-  font-size: clamp(4.25rem, 9.5vw, 8.25rem);
+  font-family: var(--font-brand);
+  font-size: clamp(3.2rem, 8vw, 6.5rem);
   font-weight: 900;
-  color: #f7bf19;
-  line-height: 0.88;
-  letter-spacing: -0.03em;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
   text-transform: uppercase;
-  margin: 0 0 1.5rem 0;
-  display: block;
+  margin: 0 0 1.25rem 0;
+  display: flex;
+  flex-direction: column;
   font-style: italic;
-  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.kalpa-hero__giant-title .title-white {
+  color: #ffffff;
+  display: block;
+}
+
+.kalpa-hero__giant-title .title-gold {
+  color: #f7bf19;
+  display: block;
+  font-size: 1.15em;
 }
 
 .kalpa-hero__paragraph {
   font-size: 0.95rem;
   line-height: 1.65;
-  color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 2.25rem;
-  max-width: 500px;
+  color: rgba(255, 255, 255, 0.88);
+  margin-bottom: 2rem;
+  max-width: 480px;
 }
 
 .btn-pruebala {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.85rem 2.5rem;
+  gap: 0.65rem;
+  padding: 0.85rem 2.2rem;
   border-radius: 100px;
-  border: 1.8px solid #f7bf19;
-  background: transparent;
-  color: #f7bf19;
-  font-size: 0.95rem;
+  border: none;
+  background: linear-gradient(135deg, #f7bf19 0%, #f5ba2c 100%);
+  color: #000000;
+  font-family: var(--font-brand);
+  font-size: 0.92rem;
   font-weight: 800;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
+  box-shadow: 0 8px 24px rgba(245, 186, 44, 0.4);
   transition: all 0.35s var(--ease-spring);
 }
 
 .btn-pruebala:hover {
-  background: #f7bf19;
+  background: #ffffff;
   color: #000000;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 25px rgba(247, 191, 25, 0.35);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(245, 186, 44, 0.6);
+}
+
+.btn-pruebala .btn-arrow {
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.btn-pruebala:hover .btn-arrow {
+  transform: translateX(4px);
 }
 
 /* Controles del Carrusel (Flechas y Bullets) */
@@ -1177,6 +1257,225 @@ h1, h2, h3, h4, h5, h6 {
 
 .kalpa-dimension-switch[data-active="3d"] .dim-switch-glider {
   transform: translateX(100%);
+}
+
+/* ==========================================================================
+   BARRA DE 4 BENEFICIOS (TRUST FEATURES STRIP)
+   ========================================================================== */
+.kalpa-hero-features-bar {
+  background-color: #050608;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.4rem 0;
+  width: 100%;
+  position: relative;
+  z-index: 20;
+}
+
+.kalpa-hero-features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+}
+
+.hero-feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 100%;
+}
+
+.hero-feature-icon {
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s var(--ease-spring), color 0.25s ease;
+}
+
+.hero-feature-item:hover .hero-feature-icon {
+  transform: translateY(-2px) scale(1.08);
+  color: #f7bf19;
+}
+
+.hero-feature-text {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-brand);
+  font-size: clamp(0.60rem, 2.1vw, 0.78rem);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+/* ==========================================================================
+   HERO RESPONSIVE EXACTO AL MOCKUP (Móviles <= 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .kalpa-hero-carousel {
+    min-height: 840px;
+    height: 860px;
+    max-height: none;
+    display: block;
+    padding-top: 1.6rem;
+    padding-bottom: 2rem;
+    overflow: hidden;
+  }
+
+  .kalpa-hero-carousel .page-width {
+    padding: 0 1.25rem;
+  }
+
+  .kalpa-carousel-slides {
+    height: auto;
+  }
+
+  .kalpa-slide {
+    height: auto;
+  }
+
+  .kalpa-slide.is-active {
+    display: block;
+  }
+
+  .kalpa-hero__left-content {
+    max-width: 100%;
+    padding-top: 0.25rem;
+    text-align: left;
+  }
+
+  .kalpa-hero__kicker {
+    font-size: 0.72rem;
+    letter-spacing: 0.20em;
+    margin-bottom: 0.45rem;
+  }
+
+  .kalpa-hero__giant-title {
+    font-size: clamp(2.4rem, 11.5vw, 3.4rem);
+    line-height: 0.92;
+    margin-bottom: 0.75rem;
+  }
+
+  .kalpa-hero__paragraph {
+    font-size: 0.88rem;
+    line-height: 1.48;
+    max-width: 320px;
+    margin-bottom: 1.25rem;
+  }
+
+  .btn-pruebala {
+    padding: 0.75rem 1.85rem;
+    font-size: 0.88rem;
+    box-shadow: 0 8px 24px rgba(245, 186, 44, 0.45);
+  }
+
+  /* Posición de la lata 2D en mitad inferior */
+  .hero-2d-can-wrapper {
+    position: absolute;
+    top: auto;
+    bottom: 35px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: 270px;
+    height: 500px;
+    opacity: 1;
+  }
+
+  /* Backlight de sol andino en mitad inferior */
+  .kalpa-hero__glow,
+  .kalpa-hero__backlight {
+    position: absolute;
+    top: auto;
+    bottom: 60px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: 340px;
+    height: 480px;
+  }
+
+  .kalpa-hero__backlight-core {
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 320px;
+  }
+
+  .kalpa-hero__backlight-flare {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-18deg);
+    width: 360px;
+    height: 90px;
+  }
+
+  /* Switch 2D/3D centrado abajo de la lata */
+  .kalpa-carousel-nav {
+    position: absolute;
+    bottom: 1.1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 30;
+    width: auto;
+  }
+
+  .carousel-btn-arrow,
+  .carousel-dots,
+  .nav-control-separator {
+    display: none !important;
+  }
+
+  .kalpa-dimension-switch {
+    transform: scale(0.92);
+  }
+
+  /* Granos de cacao distribuidos alrededor de la lata en mitad inferior */
+  .cacao-bean--top-left {
+    top: 52%;
+    left: -15px;
+    width: 105px;
+  }
+
+  .cacao-bean--bottom-left {
+    bottom: 25px;
+    left: 10px;
+    width: 135px;
+  }
+
+  .cacao-bean--top-right {
+    top: 48%;
+    right: -15px;
+    width: 95px;
+  }
+
+  .cacao-bean--bottom-right {
+    bottom: 25px;
+    right: -10px;
+    width: 125px;
+  }
+
+  .cacao-bean--mid-floating {
+    top: 54%;
+    right: 14%;
+    width: 60px;
+  }
+
+  .cacao-bean--bottom-center-1,
+  .cacao-bean--bottom-center-2 {
+    display: none;
+  }
 }
 
 

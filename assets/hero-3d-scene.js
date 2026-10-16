@@ -59,11 +59,15 @@ class Kallpa3DScene {
     this.can2dCard = null;
 
     // Posición y orientación base calibradas para encuadre publicitario Hero
-    this.basePosX = (typeof window !== 'undefined' && window.innerWidth > 990) ? 1.85 : 0.35;
-    this.basePosY = -0.55;
+    const winW = (typeof window !== 'undefined') ? window.innerWidth : 1200;
+    this.isMobile = winW <= 768;
+    this.isTablet = winW > 768 && winW <= 990;
+
+    this.basePosX = this.isMobile ? 0.08 : this.isTablet ? 1.05 : 1.85;
+    this.basePosY = this.isMobile ? -1.25 : this.isTablet ? -0.65 : -0.55;
     this.baseRotX = 0.06;
     this.baseRotY = 0.0;
-    this.baseRotZ = -0.22;
+    this.baseRotZ = this.isMobile ? -0.19 : -0.22;
 
     this.init();
   }
@@ -72,12 +76,19 @@ class Kallpa3DScene {
     const width = this.container.clientWidth || window.innerWidth;
     const height = this.container.clientHeight || window.innerHeight;
 
+    this.isMobile = width <= 768;
+    this.isTablet = width > 768 && width <= 990;
+    this.basePosX = this.isMobile ? 0.08 : this.isTablet ? 1.05 : 1.85;
+    this.basePosY = this.isMobile ? -1.25 : this.isTablet ? -0.65 : -0.55;
+    this.baseRotZ = this.isMobile ? -0.19 : -0.22;
+
     // 1. Escena Three.js
     this.scene = new THREE.Scene();
 
     // 2. Cámara (Perspectiva de Estudio Fotográfico)
     this.camera = new THREE.PerspectiveCamera(34, width / height, 0.1, 1000);
-    this.camera.position.set(0, 0, 7.0);
+    const camZ = this.isMobile ? 7.6 : 7.0;
+    this.camera.position.set(0, 0, camZ);
 
     // 3. Renderer WebGL con fidelidad de color
     this.renderer = new THREE.WebGLRenderer({
@@ -443,11 +454,14 @@ class Kallpa3DScene {
   transitionSlide(slideIndex) {
     if (!this.canGroup) return;
 
+    const baseZ = this.isMobile ? -0.19 : -0.22;
+    const baseY = this.isMobile ? -1.25 : (this.isTablet ? -0.65 : -0.55);
+
     // Variaciones elegantes según el slide, manteniendo el logo frontal KALPA visible
     const slideAngles = [
-      { rotY: 0.0,   rotZ: -0.22, posY: -0.55 }, // Slide 1: CAFÉ DE VRAEM (Frontal con inclinación hero)
-      { rotY: 0.22,  rotZ: -0.16, posY: -0.55 }, // Slide 2: COLD BREW (Leve giro de perfil)
-      { rotY: -0.20, rotZ: -0.24, posY: -0.55 }  // Slide 3: ENERGÍA PURA (Giro dinámico inverso)
+      { rotY: 0.0,   rotZ: baseZ,        posY: baseY },        // Slide 1: CAFÉ DE VRAEM (Frontal con inclinación hero)
+      { rotY: 0.22,  rotZ: baseZ + 0.06, posY: baseY },        // Slide 2: COLD BREW (Leve giro de perfil)
+      { rotY: -0.20, rotZ: baseZ - 0.02, posY: baseY }         // Slide 3: ENERGÍA PURA (Giro dinámico inverso)
     ];
 
     const target = slideAngles[slideIndex % slideAngles.length];
@@ -575,13 +589,21 @@ class Kallpa3DScene {
     const width = this.container.clientWidth;
     const height = this.container.clientHeight;
 
+    this.isMobile = width <= 768;
+    this.isTablet = width > 768 && width <= 990;
+
     this.camera.aspect = width / height;
+    this.camera.position.z = this.isMobile ? 7.6 : 7.0;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
 
     if (this.canGroup) {
-      this.basePosX = width > 990 ? 1.85 : 0.35;
+      this.basePosX = this.isMobile ? 0.08 : this.isTablet ? 1.05 : 1.85;
+      this.basePosY = this.isMobile ? -1.25 : this.isTablet ? -0.65 : -0.55;
+      this.baseRotZ = this.isMobile ? -0.19 : -0.22;
       this.canGroup.position.x = this.basePosX;
+      this.canGroup.position.y = this.basePosY;
+      this.canGroup.rotation.z = this.baseRotZ;
     }
   }
 

@@ -79,15 +79,23 @@
              data-slide-index="{{ forloop.index0 }}"
              {{ block.shopify_attributes }}>
           <div class="kalpa-hero__left-content">
+            <div class="kalpa-hero__kicker">
+              <span class="kicker-line"></span>
+              {{ block.settings.kicker | default: 'ENERGÍA DE LOS ANDES' }}
+            </div>
             <h1 class="kalpa-hero__giant-title">
               <span class="title-white">{{ block.settings.lead_title | default: 'CAFÉ DE' }}</span>
               <span class="title-gold">{{ block.settings.giant_title | default: 'VRAEM' }}</span>
             </h1>
-            <p class="kalpa-hero__paragraph">{{ block.settings.description | default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.' }}</p>
+            <p class="kalpa-hero__paragraph">{{ block.settings.description | default: 'Energía natural para tu día. Café cold brew listo para tomar, hecho con granos del VRAEM y con todo el sabor de los Andes.' }}</p>
             
             <div class="kalpa-hero__actions">
               <a href="{{ block.settings.btn_url | default: '#products-section' }}" class="btn-pruebala">
-                <span>{{ block.settings.btn_text | default: 'PRUEBALA AHORA' }}</span>
+                <span>{{ block.settings.btn_text | default: 'PRUÉBALA AHORA' }}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-arrow">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
               </a>
             </div>
           </div>
@@ -138,6 +146,68 @@
     </div>
   </div>
 
+</section>
+
+<!-- Barra de 4 Beneficios de Confianza (Exacto al Mockup Responsive) -->
+<section class="kalpa-hero-features-bar">
+  <div class="page-width kalpa-hero-features-grid">
+    <div class="hero-feature-item">
+      <div class="hero-feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+        </svg>
+      </div>
+      <div class="hero-feature-text">
+        <span>GRANOS</span>
+        <span>DEL VRAEM</span>
+      </div>
+    </div>
+
+    <div class="hero-feature-item">
+      <div class="hero-feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
+      </div>
+      <div class="hero-feature-text">
+        <span>ENERGÍA</span>
+        <span>NATURAL</span>
+      </div>
+    </div>
+
+    <div class="hero-feature-item">
+      <div class="hero-feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <line x1="12" y1="2" x2="12" y2="22"></line>
+          <path d="m20 16-4-4 4-4"></path>
+          <path d="m4 8 4 4-4 4"></path>
+          <path d="m16 4-4 4-4-4"></path>
+          <path d="m8 20 4-4 4 4"></path>
+        </svg>
+      </div>
+      <div class="hero-feature-text">
+        <span>COLD BREW</span>
+        <span>24H</span>
+      </div>
+    </div>
+
+    <div class="hero-feature-item">
+      <div class="hero-feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="3" width="15" height="13"></rect>
+          <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+          <circle cx="5.5" cy="18.5" r="2.5"></circle>
+          <circle cx="18.5" cy="18.5" r="2.5"></circle>
+        </svg>
+      </div>
+      <div class="hero-feature-text">
+        <span>ENVÍOS A</span>
+        <span>TODO EL PERÚ</span>
+      </div>
+    </div>
+  </div>
 </section>
 
 <script>
