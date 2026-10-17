@@ -1,11 +1,12 @@
 /**
- * HERO-KALLPA : Cinematic Parallax Intro Controller
+ * HERO-KALLPA : Cinematic Parallax Intro Controller (Osmo Parallax Engine)
  * Capas de profundidad: Cielo, Cancha, Tipografía, Mano y Lata
- * Arquitectura: Capa flotante SUPERPUESTA sobre la web (Fixed Overlay)
- * Efectos:
- *  1. Seguimiento de cursor magnético 3D e inercia elástica
- *  2. Levitación orgánica en la lata
- *  3. Transición deslizante hacia arriba (Slide-Up) que revela la web completa debajo
+ * Animación de Referencia (Osmo):
+ *  1. Inicio: Pantalla nítida y brillante con la escena completa (cielo, cancha, mano, lata y textos).
+ *  2. Scroll: Un bloque negro sólido asciende desde la base cubriendo la pantalla hacia arriba.
+ *  3. Upward Parallax: La mano y la lata suben acompañando el ascenso hacia el cielo.
+ *  4. Transición a la web: Cuando la pantalla está por ponerse toda en negro (progress > 85%),
+ *     la web aparece suavemente (Announcement Bar, Navbar y Hero 3D).
  */
 
 (function() {
@@ -30,32 +31,103 @@
       this.innerMano = this.container.querySelector('.intro-img--mano');
       this.innerLata = document.getElementById('intro-can-card');
 
-      this.fadeBlack = document.getElementById('intro-fade-black');
+      this.risingBlack = document.getElementById('intro-rising-black');
       this.devControlPanel = document.getElementById('dev-control-panel');
 
       this.scrollHint = document.getElementById('intro-scroll-hint');
       this.btnEnter = document.getElementById('btn-intro-enter');
-
-      // Estado de la intro
-      this.isDismissed = false;
-      this.isTransitioning = false;
-
-      // Bloquear scroll de la web mientras la intro esté abierta encima
-      document.body.classList.add('kalpa-intro-active');
 
       // Coordenadas de mouse normalizadas (-1 a 1)
       this.mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
       this.clock = 0;
       this.rafId = null;
 
+      this.initParallaxScroll();
       this.bindEvents();
       this.startLoop();
+    }
+
+    initParallaxScroll() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: this.container,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.5,
+          onUpdate: (self) => {
+            // "cuando esté por ponerse toda la pantalla en negro aparezca la web"
+            // Cuando el bloque negro ya cubrió más del 85% de la pantalla:
+            if (self.progress > 0.85) {
+              document.body.classList.add('web-revealed');
+              if (this.devControlPanel) {
+                this.devControlPanel.classList.add('is-visible');
+              }
+            } else {
+              document.body.classList.remove('web-revealed');
+              if (this.devControlPanel) {
+                this.devControlPanel.classList.remove('is-visible');
+              }
+            }
+
+            // Justo cuando el negro llega al tope (self.progress > 0.88), el frame sticky se desvanece
+            // para entregar limpiamente el control visual y de eventos a la web debajo
+            if (self.progress > 0.88) {
+              const fade = (1 - self.progress) / 0.12;
+              this.sticky.style.opacity = Math.max(0, fade).toFixed(3);
+              this.sticky.style.pointerEvents = fade < 0.1 ? 'none' : 'auto';
+            } else {
+              this.sticky.style.opacity = '1';
+              this.sticky.style.pointerEvents = 'auto';
+            }
+          }
+        }
+      });
+
+      // 1. EL BLOQUE NEGRO SUBE DESDE ABAJO (IDÉNTICO A OSMO: Image 2 -> Image 3)
+      if (this.risingBlack) {
+        tl.fromTo(this.risingBlack,
+          { yPercent: 100 },
+          { yPercent: 0, ease: "none" },
+          0
+        );
+      }
+
+      // 2. LA MANO SUBE HACIA ARRIBA ACOMPAÑANDO EL ASCENSO DEL FONDO NEGRO
+      if (this.layerMano) {
+        tl.to(this.layerMano, { yPercent: -50, ease: "none" }, 0);
+      }
+
+      // 3. LA LATA SUBE CON MAYOR VELOCIDAD (PARALLAX ASCENDENTE HACIA EL CIELO)
+      if (this.layerLata) {
+        tl.to(this.layerLata, { yPercent: -80, scale: 1.05, ease: "none" }, 0);
+      }
+
+      // 4. EL CONTENIDO EDITORIAL SUBE Y SE DISUELVE TEMPRANO
+      if (this.layerContent) {
+        tl.to(this.layerContent, { yPercent: -60, opacity: 0, ease: "power1.out" }, 0);
+      }
+
+      // 5. CIELO Y CANCHA: ESTÁTICOS SEGÚN LO SOLICITADO
+      if (this.layerCielo) {
+        tl.to(this.layerCielo, { scale: 1.02, ease: "none" }, 0);
+      }
+      if (this.layerCancha) {
+        tl.to(this.layerCancha, { yPercent: 0, ease: "none" }, 0);
+      }
+
+      // 6. HEADER Y FOOTER DE LA INTRO: SE DESVANECEN TEMPRANAMENTE
+      const navFooter = this.container.querySelectorAll('.kalpa-intro-nav, .kalpa-intro-footer, .intro-scroll-indicator');
+      if (navFooter.length) {
+        tl.to(navFooter, { opacity: 0, y: -20, ease: "power1.out" }, 0);
+      }
     }
 
     bindEvents() {
       // 1. Seguimiento de cursor en la pantalla
       window.addEventListener('pointermove', (e) => {
-        if (this.isDismissed) return;
         this.mouse.targetX = (e.clientX / window.innerWidth - 0.5) * 2;
         this.mouse.targetY = (e.clientY / window.innerHeight - 0.5) * 2;
       }, { passive: true });
@@ -68,7 +140,6 @@
       // 2. Giroscopio en móviles
       if (window.DeviceOrientationEvent && 'ontouchstart' in window) {
         window.addEventListener('deviceorientation', (e) => {
-          if (this.isDismissed) return;
           if (e.gamma !== null && e.beta !== null) {
             this.mouse.targetX = Math.min(Math.max(e.gamma / 30, -1), 1);
             this.mouse.targetY = Math.min(Math.max((e.beta - 45) / 30, -1), 1);
@@ -76,182 +147,60 @@
         }, { passive: true });
       }
 
-      // 3. Deslizamiento hacia arriba con rueda de mouse (wheel)
-      window.addEventListener('wheel', (e) => {
-        if (this.isDismissed || this.isTransitioning) return;
-        if (e.deltaY > 15) {
-          this.dismissIntro();
-        }
-      }, { passive: true });
-
-      // 4. Deslizamiento hacia arriba con gesto táctil (touch swipe up)
-      let touchStartY = 0;
-      window.addEventListener('touchstart', (e) => {
-        if (this.isDismissed || this.isTransitioning) return;
-        touchStartY = e.touches[0].clientY;
-      }, { passive: true });
-
-      window.addEventListener('touchmove', (e) => {
-        if (this.isDismissed || this.isTransitioning) return;
-        const touchCurrentY = e.touches[0].clientY;
-        const diff = touchStartY - touchCurrentY;
-        if (diff > 25) { // Deslizó hacia arriba
-          this.dismissIntro();
-        }
-      }, { passive: true });
-
-      // 5. Clicks en botón "Conoce más" y en indicador de scroll
+      // 3. Botón "Conoce más" y botón scroll que conducen al contenido principal
       const enterTargets = [this.btnEnter, this.scrollHint];
       enterTargets.forEach(el => {
         if (!el) return;
         el.addEventListener('click', (e) => {
           e.preventDefault();
-          this.dismissIntro('#hero-section');
+          this.scrollToMain();
         });
       });
 
-      // 6. Clicks en enlaces del navbar de la intro
+      // 4. Enlaces de navegación dentro de la intro
       const introNavLinks = this.container.querySelectorAll('.intro-menu-link, .intro-btn-shop');
       introNavLinks.forEach(link => {
         link.addEventListener('click', (e) => {
           const href = link.getAttribute('href');
           if (href && href.startsWith('#')) {
             e.preventDefault();
-            this.dismissIntro(href);
+            const targetEl = document.querySelector(href);
+            if (targetEl) {
+              if (typeof gsap !== 'undefined') {
+                gsap.to(window, {
+                  scrollTo: { y: targetEl, autoKill: false },
+                  duration: 1.4,
+                  ease: "power2.inOut"
+                });
+              } else {
+                targetEl.scrollIntoView({ behavior: 'smooth' });
+              }
+            }
           }
         });
       });
     }
 
-    dismissIntro(targetSectionId) {
-      if (this.isDismissed || this.isTransitioning) return;
-      this.isTransitioning = true;
-
-      // Animar el telón superpuesto deslizándose hacia arriba con GSAP
-      if (typeof gsap !== 'undefined') {
-        const tl = gsap.timeline({
-          onComplete: () => {
-            this.finishDismiss(targetSectionId);
-          }
-        });
-
-        // El contenedor entero se desliza hacia arriba saliendo del viewport
-        tl.to(this.container, {
-          yPercent: -100,
-          duration: 0.95,
-          ease: "power3.inOut"
-        }, 0);
-
-        // Movimiento parallax ascendente interno mientras sube
-        if (this.layerLata) {
-          tl.to(this.layerLata, {
-            yPercent: -40,
-            scale: 1.05,
-            duration: 0.85,
-            ease: "power2.in"
-          }, 0);
-        }
-
-        if (this.layerMano) {
-          tl.to(this.layerMano, {
-            yPercent: -25,
-            duration: 0.85,
-            ease: "power2.in"
-          }, 0);
-        }
-
-        if (this.layerContent) {
-          tl.to(this.layerContent, {
-            y: -70,
-            opacity: 0,
-            duration: 0.55,
-            ease: "power2.out"
-          }, 0);
-        }
-
-        const navFooter = this.container.querySelectorAll('.kalpa-intro-nav, .kalpa-intro-footer, .intro-scroll-indicator');
-        if (navFooter.length) {
-          tl.to(navFooter, {
-            opacity: 0,
-            duration: 0.35,
-            ease: "power1.out"
-          }, 0);
+    scrollToMain() {
+      const heroSection = document.getElementById('hero-section');
+      if (heroSection) {
+        if (typeof gsap !== 'undefined') {
+          gsap.to(window, {
+            scrollTo: { y: heroSection, autoKill: false },
+            duration: 1.3,
+            ease: "power2.inOut"
+          });
+        } else {
+          heroSection.scrollIntoView({ behavior: 'smooth' });
         }
       } else {
-        // Fallback con transición CSS si GSAP no estuviera disponible
-        this.container.style.transition = 'transform 0.85s cubic-bezier(0.65, 0, 0.35, 1)';
-        this.container.style.transform = 'translateY(-100%)';
-        setTimeout(() => {
-          this.finishDismiss(targetSectionId);
-        }, 850);
-      }
-    }
-
-    finishDismiss(targetSectionId) {
-      this.isDismissed = true;
-      this.isTransitioning = false;
-      this.container.style.display = 'none';
-      this.container.style.visibility = 'hidden';
-      this.container.style.pointerEvents = 'none';
-
-      // Restaurar el scroll del body
-      document.body.classList.remove('kalpa-intro-active');
-
-      // Cancelar loop de RAF
-      if (this.rafId) {
-        cancelAnimationFrame(this.rafId);
-        this.rafId = null;
-      }
-
-      // Mostrar calibrador 3D en la web
-      if (this.devControlPanel) {
-        this.devControlPanel.classList.add('is-visible');
-      }
-
-      // Desplazar a la sección solicitada si corresponde
-      if (targetSectionId && targetSectionId !== '#hero-section') {
-        const targetEl = document.querySelector(targetSectionId);
-        if (targetEl) {
-          setTimeout(() => {
-            targetEl.scrollIntoView({ behavior: 'smooth' });
-          }, 50);
-        }
-      }
-    }
-
-    showIntro() {
-      if (!this.isDismissed && !this.isTransitioning) return;
-      this.isDismissed = false;
-      this.isTransitioning = true;
-      this.container.style.display = 'block';
-      this.container.style.visibility = 'visible';
-      this.container.style.pointerEvents = 'auto';
-      document.body.classList.add('kalpa-intro-active');
-
-      if (this.devControlPanel) {
-        this.devControlPanel.classList.remove('is-visible');
-      }
-
-      if (typeof gsap !== 'undefined') {
-        gsap.to(this.container, {
-          yPercent: 0,
-          duration: 0.85,
-          ease: "power3.out",
-          onComplete: () => {
-            this.isTransitioning = false;
-            this.startLoop();
-          }
-        });
-      } else {
-        this.container.style.transform = 'translateY(0%)';
-        this.isTransitioning = false;
-        this.startLoop();
+        const offset = this.container.offsetHeight || window.innerHeight * 2;
+        window.scrollTo({ top: offset, behavior: 'smooth' });
       }
     }
 
     startLoop() {
       const loop = () => {
-        if (this.isDismissed) return;
         this.clock += 0.016;
 
         // 1. Suavizado inercial del mouse
@@ -304,7 +253,6 @@
 
     destroy() {
       if (this.rafId) cancelAnimationFrame(this.rafId);
-      document.body.classList.remove('kalpa-intro-active');
     }
   }
 
