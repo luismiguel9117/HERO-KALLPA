@@ -1,0 +1,107 @@
+/* components/ui/parallax-scrolling.css */
+.parallax {
+  width: 100%;
+  position: relative;
+  background-color: #000;
+}
+
+.parallax__header {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.parallax__visuals {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.parallax__black-line-overflow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #000;
+  z-index: 10;
+}
+
+.parallax__layers {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.parallax__layer-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.parallax__layer-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.parallax__title {
+  font-family: inherit;
+  font-size: clamp(3.5rem, 12vw, 9rem);
+  font-weight: 900;
+  color: #000000;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.parallax__fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 35vh;
+  background: linear-gradient(180deg, transparent 0%, #000000 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.parallax__content {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000000;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  z-index: 6;
+}
+
+.osmo-icon-svg {
+  width: 80px;
+  height: 80px;
+  color: #ffffff;
+}
+
+.osmo-credits {
+  padding: 2rem;
+  text-align: center;
+  background-color: #000000;
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.osmo-credits__p-a {
+  color: #fff;
+  text-decoration: underline;
+}

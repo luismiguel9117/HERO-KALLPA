@@ -1,4 +1,4 @@
-// components/ui/parallax-scrolling.tsx
+// src/components/ui/parallax-scrolling.tsx
 'use client';
 
 import React, { useEffect, useRef } from 'react';
@@ -25,11 +25,10 @@ export function ParallaxComponent() {
       });
 
       const layers = [
-        { layer: "1", yPercent: 0 },   // Cielo: Estático
-        { layer: "2", yPercent: 0 },   // Cancha: Estática
-        { layer: "3", yPercent: -80 }, // Título: Sube y se disuelve
-        { layer: "4", yPercent: -95 }, // Lata: Sube hacia arriba (despegue)
-        { layer: "5", yPercent: -55 }  // Mano: Sube hacia arriba
+        { layer: "1", yPercent: 70 },
+        { layer: "2", yPercent: 55 },
+        { layer: "3", yPercent: 40 },
+        { layer: "4", yPercent: 10 }
       ];
 
       layers.forEach((layerObj, idx) => {
@@ -63,13 +62,12 @@ export function ParallaxComponent() {
         <div className="parallax__visuals">
           <div className="parallax__black-line-overflow"></div>
           <div data-parallax-layers className="parallax__layers">
-            <img src="assets/CIELO.png" loading="eager" width="1920" data-parallax-layer="1" alt="Cielo Andes" className="parallax__layer-img" />
-            <img src="assets/CANCHA.png" loading="eager" width="1920" data-parallax-layer="2" alt="Cancha Estadio" className="parallax__layer-img" />
+            <img src="https://cdn.21st.dev/assets/mirror/a4/a43f4eae3459c461345ee676f12d6e1ddca65e8a5279a5af00d475b17ff83aea.webp" loading="eager" width="800" data-parallax-layer="1" alt="" className="parallax__layer-img" />
+            <img src="https://cdn.21st.dev/assets/mirror/50/50ca6a0d36d2780bfcb469d6db7eaec0be7e0d2961ba69a63d2a1473b040338d.webp" loading="eager" width="800" data-parallax-layer="2" alt="" className="parallax__layer-img" />
             <div data-parallax-layer="3" className="parallax__layer-title">
-              <h2 className="parallax__title">ENERGÍA REAL</h2>
+              <h2 className="parallax__title">Parallax</h2>
             </div>
-            <img src="assets/LATA.png" loading="eager" width="600" data-parallax-layer="4" alt="Lata KALPA" className="parallax__layer-img" />
-            <img src="assets/MANO.png" loading="eager" width="800" data-parallax-layer="5" alt="Mano Atleta" className="parallax__layer-img" />
+            <img src="https://cdn.21st.dev/assets/mirror/e1/e1c8137b5f971c3b3ec1a0f9e79b9c17018767005f844a10082b890472afecfb.webp" loading="eager" width="800" data-parallax-layer="4" alt="" className="parallax__layer-img" />
           </div>
           <div className="parallax__fade"></div>
         </div>
