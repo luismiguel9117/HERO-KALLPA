@@ -32,7 +32,7 @@
       bottom: 24px;
       right: 24px;
       z-index: 999;
-      background: rgba(14, 17, 24, 0.85);
+      background: rgba(14, 17, 24, 0.88);
       backdrop-filter: blur(14px);
       border: 1px solid var(--border-focus);
       border-radius: 14px;
@@ -41,6 +41,30 @@
       color: #fff;
       font-size: 0.8rem;
       max-width: 280px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .dev-control-panel.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .dev-control-panel.is-minimized {
+      padding: 10px 16px;
+      width: auto !important;
+    }
+    .dev-control-panel.is-minimized .dev-control-row,
+    .dev-control-panel.is-minimized .dev-control-footer {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .dev-control-panel {
+        bottom: 12px;
+        right: 12px;
+        max-width: calc(100vw - 24px);
+      }
     }
     .dev-control-panel h5 {
       font-size: 0.85rem;
@@ -135,6 +159,12 @@
             <div class="intro-can-flare"></div>
           </div>
         </div>
+
+        <!-- Capa 6: Difuminado a negro en la base -->
+        <div class="intro-fade-black" id="intro-fade-black"></div>
+
+        <!-- Capa 7: Telón negro para transición cinemática hacia la web -->
+        <div class="intro-black-curtain" id="intro-black-curtain"></div>
       </div>
 
       <!-- Indicador de Scroll hacia abajo -->
@@ -950,8 +980,11 @@
   </div>
 
   <!-- ==================== PANEL DE CALIBRACIÓN 3D LOCAL ==================== -->
-  <div class="dev-control-panel" style="width: 260px;">
-    <h5>⚡ Calibrador 3D Kallpa</h5>
+  <div class="dev-control-panel" id="dev-control-panel" style="width: 260px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
+      <h5 style="margin:0; font-size:0.85rem; font-weight:800; color:var(--accent-gold); display:flex; align-items:center; gap:6px;">⚡ Calibrador 3D Kallpa</h5>
+      <button type="button" onclick="toggleDevPanel(this)" style="background:none; border:none; color:#889; cursor:pointer; font-size:1rem; font-weight:bold; padding:0 4px;" title="Minimizar / Expandir">_</button>
+    </div>
     <div class="dev-control-row">
       <span>Altura Y:</span>
       <input type="range" min="-1.5" max="0.5" step="0.05" value="-0.55" id="slider-pos-y" oninput="updateDevCanPosY(this.value)">
@@ -981,7 +1014,7 @@
       <span>Color Energía:</span>
       <input type="color" id="dev-color-1" value="#fdb515" onchange="updateDevEnergyColor(this.value)">
     </div>
-    <div style="font-size: 0.7rem; color: #889; margin-top: 8px; line-height: 1.3;">
+    <div class="dev-control-footer" style="font-size: 0.7rem; color: #889; margin-top: 8px; line-height: 1.3;">
       * Calibra la lata en tiempo real. Abre la consola si deseas copiar los valores exactos.
     </div>
   </div>
@@ -997,6 +1030,14 @@
   <script src="assets/theme.js"></script>
 
   <script>
+    function toggleDevPanel(btn) {
+      const panel = document.getElementById('dev-control-panel');
+      if (panel) {
+        panel.classList.toggle('is-minimized');
+        btn.textContent = panel.classList.contains('is-minimized') ? '▲' : '_';
+      }
+    }
+
     function updateDevCanPosY(val) {
       val = parseFloat(val);
       document.getElementById('val-pos-y').textContent = val.toFixed(2);

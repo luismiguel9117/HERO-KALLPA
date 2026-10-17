@@ -29,6 +29,10 @@
       this.innerMano = this.container.querySelector('.intro-img--mano');
       this.innerLata = document.getElementById('intro-can-card');
 
+      this.fadeBlack = document.getElementById('intro-fade-black');
+      this.blackCurtain = document.getElementById('intro-black-curtain');
+      this.devControlPanel = document.getElementById('dev-control-panel');
+
       this.scrollHint = document.getElementById('intro-scroll-hint');
       this.btnEnter = document.getElementById('btn-intro-enter');
 
@@ -55,48 +59,62 @@
             end: "bottom top",
             scrub: 0.6,
             onUpdate: (self) => {
-              // Si el scroll supera el 85%, reducir opacidad general de la intro
-              if (self.progress > 0.85) {
-                const fade = (1 - self.progress) / 0.15;
-                this.sticky.style.opacity = Math.max(0, fade).toFixed(3);
-                this.sticky.style.pointerEvents = fade < 0.1 ? 'none' : 'auto';
+              // Control del calibrador 3D: oculto durante la intro, visible solo en la web
+              if (this.devControlPanel) {
+                if (self.progress > 0.88) {
+                  this.devControlPanel.classList.add('is-visible');
+                } else {
+                  this.devControlPanel.classList.remove('is-visible');
+                }
+              }
+
+              // Cuando el telón de difuminado a negro cubre la pantalla (>92%), pasar pointer-events a la web
+              if (self.progress > 0.92) {
+                this.sticky.style.pointerEvents = 'none';
               } else {
-                this.sticky.style.opacity = '1';
                 this.sticky.style.pointerEvents = 'auto';
               }
             }
           }
         });
 
-        // 1. La mano del atleta se desliza hacia abajo saliendo de cuadro
-        if (this.layerMano) {
-          tl.to(this.layerMano, { yPercent: 85, ease: "none" }, 0);
-        }
-
-        // 2. La lata se desliza hacia abajo y hace una sutil rotación
-        if (this.layerLata) {
-          tl.to(this.layerLata, { yPercent: 65, scale: 0.92, ease: "none" }, 0);
-        }
-
-        // 3. La cancha se desliza hacia abajo con menor velocidad
-        if (this.layerCancha) {
-          tl.to(this.layerCancha, { yPercent: 45, ease: "none" }, 0);
-        }
-
-        // 4. El contenido tipográfico se eleva y desvanece
-        if (this.layerContent) {
-          tl.to(this.layerContent, { yPercent: -50, opacity: 0, ease: "none" }, 0);
-        }
-
-        // 5. El cielo se expande sutilmente
+        // 1. CIELO Y CANCHA: ESTÁTICOS según solicitud (fondo firme inalterado)
         if (this.layerCielo) {
-          tl.to(this.layerCielo, { yPercent: -15, scale: 1.06, ease: "none" }, 0);
+          tl.to(this.layerCielo, { scale: 1.02, ease: "none" }, 0);
+        }
+        if (this.layerCancha) {
+          tl.to(this.layerCancha, { yPercent: 0, ease: "none" }, 0);
         }
 
-        // 6. Header y footer de la intro se desvanecen rápidamente
+        // 2. CONTENIDO EDITORIAL (Texto y botón): SUBE hacia arriba y se difumina
+        if (this.layerContent) {
+          tl.to(this.layerContent, { yPercent: -85, opacity: 0, ease: "power1.out" }, 0);
+        }
+
+        // 3. MANO DEL ATLETA: SUBE hacia arriba al deslizar
+        if (this.layerMano) {
+          tl.to(this.layerMano, { yPercent: -55, ease: "none" }, 0);
+        }
+
+        // 4. LATA FLOTANTE: SUBE hacia arriba más rápido con efecto de elevación / despegue
+        if (this.layerLata) {
+          tl.to(this.layerLata, { yPercent: -95, scale: 1.08, ease: "none" }, 0);
+        }
+
+        // 5. DIFUMINADO A NEGRO: Sube desde la base oscureciendo gradualmente la parte inferior
+        if (this.fadeBlack) {
+          tl.to(this.fadeBlack, { yPercent: -35, opacity: 1, ease: "none" }, 0);
+        }
+
+        // 6. TELÓN NEGRO: De 0 a 1 cubriendo todo en negro difuminado (#0b0d13) para la transición a la web
+        if (this.blackCurtain) {
+          tl.to(this.blackCurtain, { opacity: 1, ease: "power2.inOut" }, 0.25);
+        }
+
+        // 7. HEADER Y FOOTER DE LA INTRO: Se disuelven tempranamente
         const navFooter = this.container.querySelectorAll('.kalpa-intro-nav, .kalpa-intro-footer, .intro-scroll-indicator');
         if (navFooter.length) {
-          tl.to(navFooter, { opacity: 0, y: -25, ease: "none" }, 0);
+          tl.to(navFooter, { opacity: 0, y: -20, ease: "power1.out" }, 0);
         }
       }
     }

@@ -25,10 +25,11 @@ export function ParallaxComponent() {
       });
 
       const layers = [
-        { layer: "1", yPercent: 70 },
-        { layer: "2", yPercent: 55 },
-        { layer: "3", yPercent: 40 },
-        { layer: "4", yPercent: 10 }
+        { layer: "1", yPercent: 0 },   // Cielo: Estático
+        { layer: "2", yPercent: 0 },   // Cancha: Estática
+        { layer: "3", yPercent: -80 }, // Título: Sube y se disuelve
+        { layer: "4", yPercent: -95 }, // Lata: Sube hacia arriba (despegue)
+        { layer: "5", yPercent: -55 }  // Mano: Sube hacia arriba
       ];
 
       layers.forEach((layerObj, idx) => {
