@@ -418,6 +418,7 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: auto;
   opacity: 1;
   visibility: visible;
+  display: block;
   transition: opacity 0.45s ease, visibility 0.45s ease;
 }
 
@@ -431,6 +432,7 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
+  display: none;
   transition: opacity 0.45s ease, visibility 0.45s ease;
 }
 
@@ -444,6 +446,7 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
+  display: none;
   transition: opacity 0.45s ease, visibility 0.45s ease;
 }
 
@@ -1193,18 +1196,20 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   display: inline-flex;
   align-items: center;
-  background: rgba(18, 12, 14, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(18, 12, 14, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 100px;
   padding: 3px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  z-index: 45;
+  pointer-events: auto;
 }
 
 .dim-switch-btn {
   position: relative;
-  z-index: 2;
+  z-index: 5;
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -1221,6 +1226,11 @@ h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
   transition: color 0.25s ease;
   user-select: none;
+  pointer-events: auto !important;
+}
+
+.dim-switch-btn * {
+  pointer-events: none !important;
 }
 
 .dim-switch-btn:hover {
@@ -1262,6 +1272,7 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 4px 15px rgba(247, 191, 25, 0.45);
   transition: transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
   z-index: 1;
+  pointer-events: none !important;
 }
 
 .kalpa-dimension-switch[data-active="2d"] .dim-switch-glider {

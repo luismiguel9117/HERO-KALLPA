@@ -277,68 +277,11 @@ export class HeroKallpaCan {
     });
   }
 
-  bindSwitchEvents() {
-    const btn2d = document.getElementById('btn-dim-2d');
-    const btn3d = document.getElementById('btn-dim-3d');
-    const switchEl = document.getElementById('kalpa-dimension-switch');
-
-    if (btn2d) {
-      btn2d.addEventListener('click', () => this.setMode('2d'));
-    }
-    if (btn3d) {
-      btn3d.addEventListener('click', () => this.setMode('3d'));
-    }
-    if (switchEl) {
-      switchEl.addEventListener('click', (e) => {
-        const btn = e.target.closest('.dim-switch-btn');
-        if (btn && btn.dataset.mode) {
-          this.setMode(btn.dataset.mode);
-        }
-      });
-    }
-  }
-
-  setMode(newMode) {
-    if (newMode !== '2d' && newMode !== '3d') return;
-    this.mode = newMode;
-
-    const switchEl = document.getElementById('kalpa-dimension-switch');
-    const btn2d = document.getElementById('btn-dim-2d');
-    const btn3d = document.getElementById('btn-dim-3d');
-
-    if (switchEl) switchEl.setAttribute('data-active', newMode);
-    if (btn2d) {
-      btn2d.classList.toggle('is-active', newMode === '2d');
-      btn2d.setAttribute('aria-checked', newMode === '2d');
-    }
-    if (btn3d) {
-      btn3d.classList.toggle('is-active', newMode === '3d');
-      btn3d.setAttribute('aria-checked', newMode === '3d');
-    }
-
-    if (newMode === '2d') {
-      this.canCard.classList.remove('mode-3d');
-      this.canCard.classList.add('mode-2d');
-      this.isDragging = false;
-      this.canCard.classList.remove('is-dragging');
-      this.targetOffset = 0.475;
-      this.currentOffset = 0.475;
-      this.spinCycleStart = -1;
-    } else {
-      this.canCard.classList.remove('mode-2d');
-      this.canCard.classList.add('mode-3d');
-      // Giro de bienvenida 360° al pasar a 3D
-      this.spinCycleStart = performance.now();
-      this.lastAmbientSpinTime = performance.now();
-    }
-  }
-
+  // Control de diapositiva sincronizada con el carrusel hero
   setSlide(slideIndex) {
     if (slideIndex < 0 || slideIndex >= this.labelMaterials.length) return;
     this.activeSlide = slideIndex;
-    if (this.mode === '3d') {
-      this.spinCycleStart = performance.now();
-    }
+    this.spinCycleStart = performance.now();
   }
 
   renderCanFrame(offset) {

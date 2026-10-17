@@ -164,6 +164,9 @@ class Kallpa3DScene {
     // 9. Integración con GSAP ScrollTrigger
     this.initGSAPTimeline();
 
+    // Sincronizar explícitamente el modo inicial 3D
+    this.setMode('3d');
+
     // 10. Loop de Renderizado
     this.animate();
   }
@@ -192,28 +195,17 @@ class Kallpa3DScene {
   }
 
   bindSwitchEvents() {
-    const btn2d = document.getElementById('btn-dim-2d');
-    const btn2dAnim = document.getElementById('btn-dim-2d-anim');
-    const btn3d = document.getElementById('btn-dim-3d');
     const switchEl = document.getElementById('kalpa-dimension-switch');
+    if (!switchEl) return;
 
-    if (btn2d) {
-      btn2d.addEventListener('click', () => this.setMode('2d'));
-    }
-    if (btn2dAnim) {
-      btn2dAnim.addEventListener('click', () => this.setMode('2d-anim'));
-    }
-    if (btn3d) {
-      btn3d.addEventListener('click', () => this.setMode('3d'));
-    }
-    if (switchEl) {
-      switchEl.addEventListener('click', (e) => {
-        const btn = e.target.closest('.dim-switch-btn');
-        if (btn && btn.dataset.mode) {
-          this.setMode(btn.dataset.mode);
-        }
-      });
-    }
+    switchEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('.dim-switch-btn');
+      if (btn && btn.dataset.mode) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.setMode(btn.dataset.mode);
+      }
+    });
   }
 
   setMode(newMode) {
@@ -251,6 +243,7 @@ class Kallpa3DScene {
     // 1. Contenedor 3D WebGL (Three.js)
     if (container3D) {
       const is3D = newMode === '3d';
+      container3D.style.display = is3D ? 'block' : 'none';
       container3D.style.opacity = is3D ? '1' : '0';
       container3D.style.visibility = is3D ? 'visible' : 'hidden';
       container3D.style.pointerEvents = is3D ? 'auto' : 'none';
@@ -259,18 +252,23 @@ class Kallpa3DScene {
     // 2. Contenedor 2D Animada (Offscreen Canvas Cilíndrico de Kallpa Repo)
     if (container2DAnim) {
       const is2DAnim = newMode === '2d-anim';
+      container2DAnim.style.display = is2DAnim ? 'block' : 'none';
       container2DAnim.style.opacity = is2DAnim ? '1' : '0';
       container2DAnim.style.visibility = is2DAnim ? 'visible' : 'hidden';
       container2DAnim.style.pointerEvents = is2DAnim ? 'auto' : 'none';
       if (is2DAnim && window.kallpa2DAnim) {
         window.kallpa2DAnim.spinCycleStart = performance.now();
         window.kallpa2DAnim.lastAmbientSpinTime = performance.now();
+        if (typeof window.kallpa2DAnim.renderCanFrame === 'function') {
+          window.kallpa2DAnim.renderCanFrame(window.kallpa2DAnim.currentOffset);
+        }
       }
     }
 
     // 3. Contenedor 2D Foto Estudio HD
     if (container2D) {
       const is2DFoto = newMode === '2d';
+      container2D.style.display = is2DFoto ? 'block' : 'none';
       container2D.style.opacity = is2DFoto ? '1' : '0';
       container2D.style.visibility = is2DFoto ? 'visible' : 'hidden';
       container2D.style.pointerEvents = is2DFoto ? 'auto' : 'none';

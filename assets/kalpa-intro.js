@@ -47,87 +47,19 @@
       this.startLoop();
     }
 
-    initParallaxScroll() {
-      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-      gsap.registerPlugin(ScrollTrigger);
+      // Estado de transición
+      this.isTransitioning = false;
+      this.isFinished = false;
+      document.body.classList.add('intro-active');
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: this.container,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.5,
-          onUpdate: (self) => {
-            // "cuando esté por ponerse toda la pantalla en negro aparezca la web"
-            // Cuando el bloque negro ya cubrió más del 85% de la pantalla:
-            if (self.progress > 0.85) {
-              document.body.classList.add('web-revealed');
-              if (this.devControlPanel) {
-                this.devControlPanel.classList.add('is-visible');
-              }
-            } else {
-              document.body.classList.remove('web-revealed');
-              if (this.devControlPanel) {
-                this.devControlPanel.classList.remove('is-visible');
-              }
-            }
-
-            // Justo cuando el negro llega al tope (self.progress > 0.88), el frame sticky se desvanece
-            // para entregar limpiamente el control visual y de eventos a la web debajo
-            if (self.progress > 0.88) {
-              const fade = (1 - self.progress) / 0.12;
-              this.sticky.style.opacity = Math.max(0, fade).toFixed(3);
-              this.sticky.style.pointerEvents = fade < 0.1 ? 'none' : 'auto';
-            } else {
-              this.sticky.style.opacity = '1';
-              this.sticky.style.pointerEvents = 'auto';
-            }
-          }
-        }
-      });
-
-      // 1. EL BLOQUE NEGRO SUBE DESDE ABAJO (IDÉNTICO A OSMO: Image 2 -> Image 3)
-      if (this.risingBlack) {
-        tl.fromTo(this.risingBlack,
-          { yPercent: 100 },
-          { yPercent: 0, ease: "none" },
-          0
-        );
-      }
-
-      // 2. LA MANO SUBE HACIA ARRIBA ACOMPAÑANDO EL ASCENSO DEL FONDO NEGRO
-      if (this.layerMano) {
-        tl.to(this.layerMano, { yPercent: -50, ease: "none" }, 0);
-      }
-
-      // 3. LA LATA SUBE CON MAYOR VELOCIDAD (PARALLAX ASCENDENTE HACIA EL CIELO)
-      if (this.layerLata) {
-        tl.to(this.layerLata, { yPercent: -80, scale: 1.05, ease: "none" }, 0);
-      }
-
-      // 4. EL CONTENIDO EDITORIAL SUBE Y SE DISUELVE TEMPRANO
-      if (this.layerContent) {
-        tl.to(this.layerContent, { yPercent: -60, opacity: 0, ease: "power1.out" }, 0);
-      }
-
-      // 5. CIELO Y CANCHA: ESTÁTICOS SEGÚN LO SOLICITADO
-      if (this.layerCielo) {
-        tl.to(this.layerCielo, { scale: 1.02, ease: "none" }, 0);
-      }
-      if (this.layerCancha) {
-        tl.to(this.layerCancha, { yPercent: 0, ease: "none" }, 0);
-      }
-
-      // 6. HEADER Y FOOTER DE LA INTRO: SE DESVANECEN TEMPRANAMENTE
-      const navFooter = this.container.querySelectorAll('.kalpa-intro-nav, .kalpa-intro-footer, .intro-scroll-indicator');
-      if (navFooter.length) {
-        tl.to(navFooter, { opacity: 0, y: -20, ease: "power1.out" }, 0);
-      }
+      this.bindEvents();
+      this.startLoop();
     }
 
     bindEvents() {
-      // 1. Seguimiento de cursor en la pantalla
+      // 1. Seguimiento de cursor en la pantalla para efecto de profundidad en las capas
       window.addEventListener('pointermove', (e) => {
+        if (this.isTransitioning || this.isFinished) return;
         this.mouse.targetX = (e.clientX / window.innerWidth - 0.5) * 2;
         this.mouse.targetY = (e.clientY / window.innerHeight - 0.5) * 2;
       }, { passive: true });
@@ -137,66 +69,135 @@
         this.mouse.targetY = 0;
       });
 
-      // 2. Giroscopio en móviles
-      if (window.DeviceOrientationEvent && 'ontouchstart' in window) {
-        window.addEventListener('deviceorientation', (e) => {
-          if (e.gamma !== null && e.beta !== null) {
-            this.mouse.targetX = Math.min(Math.max(e.gamma / 30, -1), 1);
-            this.mouse.targetY = Math.min(Math.max((e.beta - 45) / 30, -1), 1);
-          }
-        }, { passive: true });
-      }
+      // 2. Detección de Desplazamiento de Rueda (Wheel)
+      let wheelDelta = 0;
+      window.addEventListener('wheel', (e) => {
+        if (this.isTransitioning || this.isFinished) return;
+        wheelDelta += e.deltaY;
+        if (wheelDelta > 30) {
+          this.transitionToWeb();
+        }
+      }, { passive: true });
 
-      // 3. Botón "Conoce más" y botón scroll que conducen al contenido principal
+      // 3. Detección de Gesto Táctil / Swipe en Móviles
+      let touchStartY = 0;
+      window.addEventListener('touchstart', (e) => {
+        if (e.touches && e.touches[0]) {
+          touchStartY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchmove', (e) => {
+        if (this.isTransitioning || this.isFinished) return;
+        if (e.touches && e.touches[0]) {
+          const currentY = e.touches[0].clientY;
+          const diff = touchStartY - currentY;
+          if (diff > 35) { // Deslizamiento hacia arriba
+            this.transitionToWeb();
+          }
+        }
+      }, { passive: true });
+
+      // 4. Teclado (Flecha Abajo, Espacio, PageDown)
+      window.addEventListener('keydown', (e) => {
+        if (this.isTransitioning || this.isFinished) return;
+        if (['ArrowDown', 'Space', 'PageDown'].includes(e.code)) {
+          this.transitionToWeb();
+        }
+      });
+
+      // 5. Botones "Conoce más", indicador de scroll o enlaces
       const enterTargets = [this.btnEnter, this.scrollHint];
       enterTargets.forEach(el => {
         if (!el) return;
         el.addEventListener('click', (e) => {
           e.preventDefault();
-          this.scrollToMain();
+          this.transitionToWeb();
         });
       });
 
-      // 4. Enlaces de navegación dentro de la intro
-      const introNavLinks = this.container.querySelectorAll('.intro-menu-link, .intro-btn-shop');
-      introNavLinks.forEach(link => {
+      const introLinks = this.container.querySelectorAll('.intro-menu-link, .intro-btn-shop');
+      introLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-          const href = link.getAttribute('href');
-          if (href && href.startsWith('#')) {
-            e.preventDefault();
-            const targetEl = document.querySelector(href);
-            if (targetEl) {
-              if (typeof gsap !== 'undefined') {
-                gsap.to(window, {
-                  scrollTo: { y: targetEl, autoKill: false },
-                  duration: 1.4,
-                  ease: "power2.inOut"
-                });
-              } else {
-                targetEl.scrollIntoView({ behavior: 'smooth' });
-              }
-            }
-          }
+          e.preventDefault();
+          this.transitionToWeb();
         });
       });
     }
 
-    scrollToMain() {
-      const heroSection = document.getElementById('hero-section');
-      if (heroSection) {
-        if (typeof gsap !== 'undefined') {
-          gsap.to(window, {
-            scrollTo: { y: heroSection, autoKill: false },
-            duration: 1.3,
-            ease: "power2.inOut"
-          });
-        } else {
-          heroSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      } else {
-        const offset = this.container.offsetHeight || window.innerHeight * 2;
-        window.scrollTo({ top: offset, behavior: 'smooth' });
+    transitionToWeb() {
+      if (this.isTransitioning || this.isFinished) return;
+      this.isTransitioning = true;
+
+      if (typeof gsap === 'undefined') {
+        this.container.style.display = 'none';
+        document.body.classList.remove('intro-active');
+        document.body.classList.add('web-revealed');
+        this.isFinished = true;
+        return;
       }
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          this.container.style.display = 'none';
+          document.body.classList.remove('intro-active');
+          document.body.classList.add('web-revealed');
+          this.isFinished = true;
+          if (this.rafId) cancelAnimationFrame(this.rafId);
+          if (window.kallpa3D && typeof window.kallpa3D.onResize === 'function') {
+            window.kallpa3D.onResize();
+          }
+        }
+      });
+
+      // 1. La mano y la lata continúan su deslizamiento ascendente hacia el cielo sin cortarse jamás
+      const flyDist = window.innerHeight * 1.4;
+      if (this.layerMano) {
+        tl.to(this.layerMano, {
+          y: -flyDist,
+          duration: 1.15,
+          ease: "power2.in"
+        }, 0);
+      }
+
+      if (this.layerLata) {
+        tl.to(this.layerLata, {
+          y: -flyDist * 1.25,
+          scale: 1.15,
+          duration: 1.15,
+          ease: "power2.in"
+        }, 0);
+      }
+
+      // 2. Textos, logo y botones se desvanecen
+      const uiElements = this.container.querySelectorAll(
+        '.kalpa-intro-nav, .kalpa-intro-footer, .intro-content-wrap, .intro-scroll-indicator'
+      );
+      if (uiElements.length) {
+        tl.to(uiElements, {
+          opacity: 0,
+          y: -40,
+          duration: 0.45,
+          ease: "power1.out"
+        }, 0);
+      }
+
+      // 3. Efecto blur de desvanecimiento general de la intro
+      tl.to(this.container, {
+        filter: "blur(28px)",
+        opacity: 0,
+        scale: 1.04,
+        duration: 0.85,
+        ease: "power2.inOut"
+      }, 0.25);
+
+      // 4. Revelar la web limpia y nítida por debajo
+      tl.call(() => {
+        document.body.classList.add('web-revealed');
+        if (this.devControlPanel) {
+          this.devControlPanel.classList.add('is-visible');
+        }
+      }, null, 0.45);
     }
 
     startLoop() {
