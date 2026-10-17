@@ -57,12 +57,21 @@
        data-can-rmao="{{ 'can-rmao.png' | asset_url }}">
   </div>
 
-  <!-- 5. Viewport 2D con la Lata Estudio KALPA -->
+  <!-- 5. Viewport 2D Animada con Canvas Cilíndrico Interactivo (Kallpa Repo) -->
+  <div id="kallpa-hero-2d-anim" 
+       class="hero-2d-anim-viewport"
+       data-base-can="{{ 'kalpa-can-clean.png' | asset_url }}"
+       data-droplets="{{ 'kalpa-can-droplets.png' | asset_url }}"
+       data-label-original="{{ 'kalpa-label.png' | asset_url }}"
+       data-label-gold="{{ 'kalpa-label-gold.png' | asset_url }}"
+       data-label-citrus="{{ 'kalpa-label-citrus.png' | asset_url }}">
+  </div>
+
+  <!-- 6. Viewport 2D Foto Estudio HD KALPA -->
   <div id="kallpa-hero-2d-can" class="hero-2d-can-viewport">
     <div class="hero-2d-can-wrapper">
       <div class="hero-2d-can-card" id="hero-2d-can-card">
-        <img src="{{ 'kalpa-can-clean.png' | asset_url }}" class="hero-2d-can__base" alt="Lata KALPA Cold Brew 2D" draggable="false">
-        <img src="{{ 'kalpa-can-droplets.png' | asset_url }}" class="hero-2d-can__droplets" alt="Gotas de condensación" draggable="false">
+        <img src="{{ 'kalpa-can-original.png' | asset_url }}" class="hero-2d-can__base" alt="Lata KALPA Cold Brew 2D Foto Estudio" draggable="false">
       </div>
     </div>
   </div>
@@ -132,15 +141,19 @@
     <!-- Separador Sutil en Barra de Controles -->
     <span class="nav-control-separator"></span>
 
-    <!-- Switch de Alternancia 2D / 3D -->
-    <div class="kalpa-dimension-switch" id="kalpa-dimension-switch" data-active="3d" role="radiogroup" aria-label="Alternar modo 2D y 3D">
+    <!-- Switch de Alternancia 2D FOTO / 2D ANIMADA / 3D WEBGL -->
+    <div class="kalpa-dimension-switch" id="kalpa-dimension-switch" data-active="3d" role="radiogroup" aria-label="Alternar modo de lata">
       <button type="button" class="dim-switch-btn" data-mode="2d" id="btn-dim-2d" role="radio" aria-checked="false" aria-label="Modo 2D Foto Estudio">
         <span class="dim-badge">2D</span>
         <span class="dim-text">FOTO</span>
       </button>
-      <button type="button" class="dim-switch-btn is-active" data-mode="3d" id="btn-dim-3d" role="radio" aria-checked="true" aria-label="Modo 3D Interactivo">
+      <button type="button" class="dim-switch-btn" data-mode="2d-anim" id="btn-dim-2d-anim" role="radio" aria-checked="false" aria-label="Modo 2D Animada">
+        <span class="dim-badge">2D</span>
+        <span class="dim-text">ANIMADA</span>
+      </button>
+      <button type="button" class="dim-switch-btn is-active" data-mode="3d" id="btn-dim-3d" role="radio" aria-checked="true" aria-label="Modo 3D WebGL">
         <span class="dim-badge">3D</span>
-        <span class="dim-text">INTERACTIVO</span>
+        <span class="dim-text">WEBGL</span>
       </button>
       <span class="dim-switch-glider"></span>
     </div>

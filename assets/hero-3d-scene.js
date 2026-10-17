@@ -178,6 +178,7 @@ class Kallpa3DScene {
 
   init2DCan() {
     this.container2D = document.getElementById('kallpa-hero-2d-can');
+    this.container2DAnim = document.getElementById('kallpa-hero-2d-anim');
     this.can2dCard = document.getElementById('hero-2d-can-card');
 
     if (this.can2dCard) {
@@ -192,11 +193,15 @@ class Kallpa3DScene {
 
   bindSwitchEvents() {
     const btn2d = document.getElementById('btn-dim-2d');
+    const btn2dAnim = document.getElementById('btn-dim-2d-anim');
     const btn3d = document.getElementById('btn-dim-3d');
     const switchEl = document.getElementById('kalpa-dimension-switch');
 
     if (btn2d) {
       btn2d.addEventListener('click', () => this.setMode('2d'));
+    }
+    if (btn2dAnim) {
+      btn2dAnim.addEventListener('click', () => this.setMode('2d-anim'));
     }
     if (btn3d) {
       btn3d.addEventListener('click', () => this.setMode('3d'));
@@ -212,7 +217,7 @@ class Kallpa3DScene {
   }
 
   setMode(newMode) {
-    if (newMode !== '2d' && newMode !== '3d') return;
+    if (newMode !== '2d' && newMode !== '2d-anim' && newMode !== '3d') return;
     this.mode = newMode;
     this.targetLift = 0;
     this.liftVal = 0;
@@ -222,49 +227,66 @@ class Kallpa3DScene {
 
     const switchEl = document.getElementById('kalpa-dimension-switch');
     const btn2d = document.getElementById('btn-dim-2d');
+    const btn2dAnim = document.getElementById('btn-dim-2d-anim');
     const btn3d = document.getElementById('btn-dim-3d');
     const container3D = this.container;
+    const container2DAnim = this.container2DAnim || document.getElementById('kallpa-hero-2d-anim');
     const container2D = this.container2D || document.getElementById('kallpa-hero-2d-can');
+    const devPanel = document.getElementById('dev-control-panel');
 
     if (switchEl) switchEl.setAttribute('data-active', newMode);
     if (btn2d) {
       btn2d.classList.toggle('is-active', newMode === '2d');
       btn2d.setAttribute('aria-checked', newMode === '2d');
     }
+    if (btn2dAnim) {
+      btn2dAnim.classList.toggle('is-active', newMode === '2d-anim');
+      btn2dAnim.setAttribute('aria-checked', newMode === '2d-anim');
+    }
     if (btn3d) {
       btn3d.classList.toggle('is-active', newMode === '3d');
       btn3d.setAttribute('aria-checked', newMode === '3d');
     }
 
-    if (newMode === '3d') {
-      if (container3D) {
-        container3D.style.opacity = '1';
-        container3D.style.visibility = 'visible';
-        container3D.style.pointerEvents = 'auto';
+    // 1. Contenedor 3D WebGL (Three.js)
+    if (container3D) {
+      const is3D = newMode === '3d';
+      container3D.style.opacity = is3D ? '1' : '0';
+      container3D.style.visibility = is3D ? 'visible' : 'hidden';
+      container3D.style.pointerEvents = is3D ? 'auto' : 'none';
+    }
+
+    // 2. Contenedor 2D Animada (Offscreen Canvas Cilíndrico de Kallpa Repo)
+    if (container2DAnim) {
+      const is2DAnim = newMode === '2d-anim';
+      container2DAnim.style.opacity = is2DAnim ? '1' : '0';
+      container2DAnim.style.visibility = is2DAnim ? 'visible' : 'hidden';
+      container2DAnim.style.pointerEvents = is2DAnim ? 'auto' : 'none';
+      if (is2DAnim && window.kallpa2DAnim) {
+        window.kallpa2DAnim.spinCycleStart = performance.now();
+        window.kallpa2DAnim.lastAmbientSpinTime = performance.now();
       }
-      if (container2D) {
-        container2D.style.opacity = '0';
-        container2D.style.visibility = 'hidden';
-        container2D.style.pointerEvents = 'none';
-      }
-      // Giro de bienvenida 360° al pasar al modo 3D
-      if (this.canGroup && typeof gsap !== 'undefined') {
-        gsap.fromTo(this.canGroup.rotation, 
-          { y: this.baseRotY + Math.PI * 2 }, 
-          { y: this.baseRotY, duration: 1.2, ease: "power2.out" }
-        );
-      }
-    } else {
-      if (container3D) {
-        container3D.style.opacity = '0';
-        container3D.style.visibility = 'hidden';
-        container3D.style.pointerEvents = 'none';
-      }
-      if (container2D) {
-        container2D.style.opacity = '1';
-        container2D.style.visibility = 'visible';
-        container2D.style.pointerEvents = 'auto';
-      }
+    }
+
+    // 3. Contenedor 2D Foto Estudio HD
+    if (container2D) {
+      const is2DFoto = newMode === '2d';
+      container2D.style.opacity = is2DFoto ? '1' : '0';
+      container2D.style.visibility = is2DFoto ? 'visible' : 'hidden';
+      container2D.style.pointerEvents = is2DFoto ? 'auto' : 'none';
+    }
+
+    // Giro de bienvenida 360° al pasar al modo 3D
+    if (newMode === '3d' && this.canGroup && typeof gsap !== 'undefined') {
+      gsap.fromTo(this.canGroup.rotation, 
+        { y: this.baseRotY + Math.PI * 2 }, 
+        { y: this.baseRotY, duration: 1.2, ease: "power2.out" }
+      );
+    }
+
+    // Mostrar panel de calibración solo en modo 3D
+    if (devPanel) {
+      devPanel.style.display = (newMode === '3d') ? 'block' : 'none';
     }
   }
 
@@ -481,6 +503,10 @@ class Kallpa3DScene {
       this.baseRotY = target.rotY;
       this.baseRotZ = target.rotZ;
       this.basePosY = target.posY;
+    }
+
+    if (window.kallpa2DAnim && typeof window.kallpa2DAnim.setSlide === 'function') {
+      window.kallpa2DAnim.setSlide(slideIndex);
     }
   }
 

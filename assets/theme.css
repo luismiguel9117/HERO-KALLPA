@@ -421,6 +421,19 @@ h1, h2, h3, h4, h5, h6 {
   transition: opacity 0.45s ease, visibility 0.45s ease;
 }
 
+.hero-2d-anim-viewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 12;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
 .hero-2d-can-viewport {
   position: absolute;
   top: 0;
@@ -1242,7 +1255,7 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   top: 3px;
   left: 3px;
-  width: calc(50% - 3px);
+  width: calc(33.333% - 2px);
   height: calc(100% - 6px);
   background: linear-gradient(135deg, #f7bf19 0%, #ff9800 100%);
   border-radius: 100px;
@@ -1255,8 +1268,12 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateX(0);
 }
 
-.kalpa-dimension-switch[data-active="3d"] .dim-switch-glider {
+.kalpa-dimension-switch[data-active="2d-anim"] .dim-switch-glider {
   transform: translateX(100%);
+}
+
+.kalpa-dimension-switch[data-active="3d"] .dim-switch-glider {
+  transform: translateX(200%);
 }
 
 /* ==========================================================================

@@ -74,7 +74,7 @@ class CacaoBeanPhysics {
 }
 
 export class HeroKallpaCan {
-  constructor(containerId = 'kallpa-hero-3d', options = {}) {
+  constructor(containerId = 'kallpa-hero-2d-anim', options = {}) {
     this.container = document.getElementById(containerId);
     if (!this.container) return;
 
@@ -92,8 +92,8 @@ export class HeroKallpaCan {
       ambientSpinInterval: 7500 // ms between spontaneous ambient rotations
     }, options);
 
-    // Initial state
-    this.mode = '3d'; // '3d' | '2d'
+    // Initial state: Always active interactive cylinder canvas
+    this.mode = '3d'; // Interactive cylinder mode
     this.activeSlide = 0;
     this.renderer = new CanRenderer();
     this.labelMaterials = [];
@@ -127,7 +127,6 @@ export class HeroKallpaCan {
     this.initCacaoPhysics();
     this.initLabels();
     this.bindEvents();
-    this.bindSwitchEvents();
     this.startLoop();
   }
 
@@ -147,7 +146,7 @@ export class HeroKallpaCan {
     this.baseImg = document.createElement('img');
     this.baseImg.className = 'hero-kallpa-can__base';
     this.baseImg.src = this.options.baseCanUrl;
-    this.baseImg.alt = 'Lata KALPA Cold Brew 3D';
+    this.baseImg.alt = 'Lata KALPA Cold Brew 2D Animada';
     this.baseImg.loading = 'eager';
     this.baseImg.draggable = false;
 
@@ -165,24 +164,17 @@ export class HeroKallpaCan {
     this.dropletsImg.alt = '';
     this.dropletsImg.draggable = false;
 
-    // Layer 4: Foto de Estudio Ultra-HD para Modo 2D
-    this.photo2dImg = document.createElement('img');
-    this.photo2dImg.className = 'hero-kallpa-can__photo-2d';
-    this.photo2dImg.src = this.options.photo2dUrl;
-    this.photo2dImg.alt = 'Lata KALPA Cold Brew 2D Estudio';
-    this.photo2dImg.loading = 'eager';
-    this.photo2dImg.draggable = false;
-
     // Assemble layers
     this.canCard.appendChild(this.baseImg);
     this.canCard.appendChild(this.canvas);
     this.canCard.appendChild(this.dropletsImg);
-    this.canCard.appendChild(this.photo2dImg);
     this.wrapper.appendChild(this.canCard);
     this.container.appendChild(this.wrapper);
   }
 
   initCacaoPhysics() {
+    // Si ya existe la escena 3D controlando el parallax del cacao, evitar conflicto
+    if (window.kallpa3D) return;
     const beanElements = document.querySelectorAll('.cacao-bean');
     this.cacaoBeans = Array.from(beanElements).map(el => new CacaoBeanPhysics(el));
   }
@@ -437,9 +429,9 @@ export class HeroKallpaCan {
 
 // Global auto-mount on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
-  const container = document.getElementById('kallpa-hero-3d');
+  const container = document.getElementById('kallpa-hero-2d-anim');
   if (container) {
-    window.kallpaHeroCan = new HeroKallpaCan('kallpa-hero-3d');
-    console.log('⚡ Hero Kallpa Can 3D + Cacao Physics + Switch 2D/3D montado con éxito.');
+    window.kallpa2DAnim = new HeroKallpaCan('kallpa-hero-2d-anim');
+    console.log('⚡ Hero Kallpa 2D Animada (Offscreen Canvas) montado con éxito.');
   }
 });
