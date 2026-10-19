@@ -152,10 +152,18 @@
           <img src="assets/MANO.png" alt="Mano de Atleta" class="intro-img--mano" loading="eager">
         </div>
 
-        <!-- Capa 5: Lata Flotante -->
+        <!-- Capa 5: Lata Flotante (Lata Animada 2D Cilíndrica Interactiva) -->
         <div class="intro-layer intro-layer--lata">
-          <div class="intro-can-card" id="intro-can-card">
-            <img src="assets/LATA.png" alt="Lata KALPA Cold Brew" class="intro-img--lata" loading="eager">
+          <div class="intro-can-card" id="intro-can-card"
+               data-base-can="assets/kalpa-can-clean.png"
+               data-droplets="assets/kalpa-can-droplets.png"
+               data-label="assets/kalpa-label.png">
+            <!-- Capa 1: Base de la Lata Metálica Limpia -->
+            <img src="assets/kalpa-can-clean.png" alt="Lata KALPA Cold Brew 2D Animada" class="intro-can__base" loading="eager" draggable="false">
+            <!-- Capa 2: Canvas Cilíndrico con la Etiqueta 3D Rotatoria -->
+            <canvas class="intro-can__canvas" id="intro-can-canvas" width="500" height="1000"></canvas>
+            <!-- Capa 3: Gotas de Condensación HD -->
+            <img src="assets/kalpa-can-droplets.png" alt="" class="intro-can__droplets" loading="eager" draggable="false">
             <div class="intro-can-flare"></div>
           </div>
         </div>

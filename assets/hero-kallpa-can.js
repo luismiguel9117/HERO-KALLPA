@@ -370,11 +370,229 @@ export class HeroKallpaCan {
   }
 }
 
-// Global auto-mount on DOM Ready
-document.addEventListener('DOMContentLoaded', () => {
-  const container = document.getElementById('kallpa-hero-2d-anim');
-  if (container) {
+/**
+ * INTRO-KALLPA : Controller para la Lata Animada 2D en la Pantalla de Introducción
+ * Renderiza la lata cilíndrica con rotación 3D en tiempo real (Offscreen WebGL Blitting),
+ * gotas de condensación, resplandor solar y física de arrastre con inercia.
+ */
+export class IntroKallpaCan {
+  constructor(containerId = 'intro-can-card', options = {}) {
+    this.container = typeof containerId === 'string' ? document.getElementById(containerId) : containerId;
+    if (!this.container) return;
+
+    const ds = this.container.dataset || {};
+    this.options = Object.assign({
+      baseCanUrl: ds.baseCan || 'assets/kalpa-can-clean.png',
+      dropletsUrl: ds.droplets || 'assets/kalpa-can-droplets.png',
+      labelUrl: ds.label || 'assets/kalpa-label.png',
+      spinDuration: 2400,
+      ambientSpinInterval: 6500
+    }, options);
+
+    this.renderer = new CanRenderer();
+    this.labelMaterial = null;
+    this.currentOffset = 0.475; // Front logo KALPA
+    this.targetOffset = 0.475;
+    this.spinCycleStart = -1;
+    this.lastAmbientSpinTime = performance.now();
+    this.isDragging = false;
+    this.dragStartX = 0;
+    this.dragStartOffset = 0;
+    this.lastPointerX = 0;
+    this.lastPointerTime = 0;
+    this.velocity = 0;
+    this.isPaused = window.scrollY > 20;
+    this.rafId = null;
+
+    this.initDOM();
+    this.initLabel();
+    this.bindEvents();
+    if (!this.isPaused) {
+      this.startLoop();
+    }
+  }
+
+  initDOM() {
+    // Reutilizar o inyectar elementos de las capas
+    let baseImg = this.container.querySelector('.intro-can__base');
+    if (!baseImg) {
+      baseImg = document.createElement('img');
+      baseImg.className = 'intro-can__base';
+      baseImg.src = this.options.baseCanUrl;
+      baseImg.alt = 'Lata KALPA Cold Brew 2D Animada';
+      baseImg.loading = 'eager';
+      baseImg.draggable = false;
+      this.container.appendChild(baseImg);
+    }
+    this.baseImg = baseImg;
+
+    let canvas = this.container.querySelector('.intro-can__canvas');
+    if (!canvas) {
+      canvas = document.createElement('canvas');
+      canvas.className = 'intro-can__canvas';
+      canvas.width = 500;
+      canvas.height = 1000;
+      this.container.appendChild(canvas);
+    }
+    this.canvas = canvas;
+    this.ctx = this.canvas.getContext('2d');
+
+    let droplets = this.container.querySelector('.intro-can__droplets');
+    if (!droplets) {
+      droplets = document.createElement('img');
+      droplets.className = 'intro-can__droplets';
+      droplets.src = this.options.dropletsUrl;
+      droplets.alt = '';
+      droplets.draggable = false;
+      this.container.appendChild(droplets);
+    }
+    this.dropletsImg = droplets;
+
+    let flare = this.container.querySelector('.intro-can-flare');
+    if (!flare) {
+      flare = document.createElement('div');
+      flare.className = 'intro-can-flare';
+      this.container.appendChild(flare);
+    }
+    this.flare = flare;
+  }
+
+  initLabel() {
+    this.labelMaterial = this.renderer.createLabelMaterial(this.options.labelUrl, () => {
+      this.renderFrame(this.currentOffset);
+    });
+  }
+
+  bindEvents() {
+    const onPointerDown = (e) => {
+      if (e.button !== 0 && e.pointerType === 'mouse') return;
+      this.isDragging = true;
+      this.dragStartX = e.clientX;
+      this.dragStartOffset = this.currentOffset;
+      this.lastPointerX = e.clientX;
+      this.lastPointerTime = performance.now();
+      this.container.classList.add('is-dragging');
+    };
+
+    const onPointerMove = (e) => {
+      if (!this.isDragging) return;
+      const dx = e.clientX - this.dragStartX;
+      this.targetOffset = this.dragStartOffset + dx / 480;
+      this.currentOffset = this.targetOffset;
+
+      const now = performance.now();
+      const dt = Math.max(1, now - this.lastPointerTime);
+      this.velocity = ((e.clientX - this.lastPointerX) / dt) * 0.003;
+      this.lastPointerX = e.clientX;
+      this.lastPointerTime = now;
+      this.spinCycleStart = -1;
+    };
+
+    const onPointerUp = () => {
+      if (!this.isDragging) return;
+      this.isDragging = false;
+      this.container.classList.remove('is-dragging');
+    };
+
+    this.container.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerUp);
+  }
+
+  renderFrame(offset) {
+    if (!this.labelMaterial) return;
+    this.renderer.render(this.labelMaterial, offset);
+    this.renderer.blit(this.ctx, 500, 1000);
+  }
+
+  startLoop() {
+    if (this.rafId) cancelAnimationFrame(this.rafId);
+    let lastTime = performance.now();
+
+    const loop = (currentTime) => {
+      if (this.isPaused) return;
+
+      const dt = Math.min((currentTime - lastTime) / 1000, 0.1);
+      lastTime = currentTime;
+
+      // 1. Inercia tras arrastre manual
+      if (!this.isDragging && Math.abs(this.velocity) > 0.0001) {
+        this.currentOffset += this.velocity;
+        this.velocity *= 0.92;
+      }
+
+      // 2. Rotación 360° ambiental periódica
+      const baseFrontOffset = 0.475;
+      if (this.spinCycleStart > 0) {
+        const elapsed = currentTime - this.spinCycleStart;
+        const progress = Math.min(elapsed / this.options.spinDuration, 1.0);
+        const ease = progress < 0.5 
+          ? 4 * progress * progress * progress 
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+        this.currentOffset = baseFrontOffset + ease * 1.0;
+
+        if (progress >= 1.0) {
+          this.spinCycleStart = -1;
+          this.currentOffset = baseFrontOffset;
+          this.lastAmbientSpinTime = currentTime;
+        }
+      } else if (!this.isDragging) {
+        if (currentTime - this.lastAmbientSpinTime > this.options.ambientSpinInterval) {
+          this.spinCycleStart = currentTime;
+        }
+      }
+
+      // 3. Renderizado cilíndrico en el canvas
+      this.renderFrame(this.currentOffset);
+
+      this.rafId = requestAnimationFrame(loop);
+    };
+
+    this.rafId = requestAnimationFrame(loop);
+  }
+
+  pause() {
+    this.isPaused = true;
+    if (this.rafId) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
+  }
+
+  resume() {
+    if (!this.isPaused) return;
+    this.isPaused = false;
+    this.startLoop();
+  }
+
+  destroy() {
+    this.pause();
+    if (this.renderer) this.renderer.destroy();
+  }
+}
+
+// Auto-inicialización global en DOM Ready
+function initAllKallpaCans() {
+  // 1. Lata Animada 2D en la Pantalla de Introducción
+  const introContainer = document.getElementById('intro-can-card');
+  if (introContainer && !window.kallpaIntroCan) {
+    window.kallpaIntroCan = new IntroKallpaCan(introContainer);
+    console.log('⚡ Intro Kallpa 2D Animada montada con éxito.');
+  }
+
+  // 2. Lata Animada 2D en el Hero Principal (Modo 2D Animada)
+  const heroContainer = document.getElementById('kallpa-hero-2d-anim');
+  if (heroContainer && !window.kallpa2DAnim) {
     window.kallpa2DAnim = new HeroKallpaCan('kallpa-hero-2d-anim');
     console.log('⚡ Hero Kallpa 2D Animada (Offscreen Canvas) montado con éxito.');
   }
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAllKallpaCans);
+} else {
+  initAllKallpaCans();
+}
+
