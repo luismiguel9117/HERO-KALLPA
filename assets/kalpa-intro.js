@@ -42,15 +42,17 @@
       this.clock = 0;
       this.rafId = null;
 
-      this.initParallaxScroll();
-      this.bindEvents();
-      this.startLoop();
-    }
-
       // Estado de transición
       this.isTransitioning = false;
       this.isFinished = false;
-      document.body.classList.add('intro-active');
+
+      // Si la página ya está scrolleada, omitir intro
+      if (window.scrollY > 20) {
+        this.container.style.display = 'none';
+        document.body.classList.add('web-revealed');
+        this.isFinished = true;
+        return;
+      }
 
       this.bindEvents();
       this.startLoop();
@@ -69,17 +71,23 @@
         this.mouse.targetY = 0;
       });
 
-      // 2. Detección de Desplazamiento de Rueda (Wheel)
-      let wheelDelta = 0;
+      // 2. Detección inmediata de cualquier intento de scroll con la rueda (Wheel)
       window.addEventListener('wheel', (e) => {
         if (this.isTransitioning || this.isFinished) return;
-        wheelDelta += e.deltaY;
-        if (wheelDelta > 30) {
+        if (e.deltaY > 0) {
           this.transitionToWeb();
         }
       }, { passive: true });
 
-      // 3. Detección de Gesto Táctil / Swipe en Móviles
+      // 3. Detección de Scroll nativo de la ventana
+      window.addEventListener('scroll', () => {
+        if (this.isTransitioning || this.isFinished) return;
+        if (window.scrollY > 5) {
+          this.transitionToWeb();
+        }
+      }, { passive: true });
+
+      // 4. Detección de Gesto Táctil / Swipe en Móviles
       let touchStartY = 0;
       window.addEventListener('touchstart', (e) => {
         if (e.touches && e.touches[0]) {
@@ -92,13 +100,13 @@
         if (e.touches && e.touches[0]) {
           const currentY = e.touches[0].clientY;
           const diff = touchStartY - currentY;
-          if (diff > 35) { // Deslizamiento hacia arriba
+          if (diff > 12) { // Deslizamiento hacia arriba
             this.transitionToWeb();
           }
         }
       }, { passive: true });
 
-      // 4. Teclado (Flecha Abajo, Espacio, PageDown)
+      // 5. Teclado (Flecha Abajo, Espacio, PageDown)
       window.addEventListener('keydown', (e) => {
         if (this.isTransitioning || this.isFinished) return;
         if (['ArrowDown', 'Space', 'PageDown'].includes(e.code)) {
@@ -106,7 +114,7 @@
         }
       });
 
-      // 5. Botones "Conoce más", indicador de scroll o enlaces
+      // 6. Botones "Conoce más", indicador de scroll o enlaces
       const enterTargets = [this.btnEnter, this.scrollHint];
       enterTargets.forEach(el => {
         if (!el) return;
@@ -128,10 +136,10 @@
     transitionToWeb() {
       if (this.isTransitioning || this.isFinished) return;
       this.isTransitioning = true;
+      this.container.style.pointerEvents = 'none';
 
       if (typeof gsap === 'undefined') {
         this.container.style.display = 'none';
-        document.body.classList.remove('intro-active');
         document.body.classList.add('web-revealed');
         this.isFinished = true;
         return;
@@ -140,7 +148,6 @@
       const tl = gsap.timeline({
         onComplete: () => {
           this.container.style.display = 'none';
-          document.body.classList.remove('intro-active');
           document.body.classList.add('web-revealed');
           this.isFinished = true;
           if (this.rafId) cancelAnimationFrame(this.rafId);

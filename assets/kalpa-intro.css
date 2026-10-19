@@ -15,10 +15,6 @@
   will-change: filter, opacity, transform;
 }
 
-body.intro-active {
-  overflow: hidden !important;
-}
-
 .kalpa-intro-sticky {
   position: relative;
   width: 100%;
