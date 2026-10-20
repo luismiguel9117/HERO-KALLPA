@@ -312,7 +312,7 @@ body.web-revealed .kalpa-navbar {
 
 .intro-can-card {
   position: absolute;
-  top: 8.5%;
+  top: 16%;
   left: 52%;
   transform: translate(-50%, 0) rotate(13deg);
   transform-origin: 50% 50%;
@@ -548,7 +548,7 @@ body.web-revealed .kalpa-navbar {
 
   /* Lata flotante en tercio superior */
   .intro-can-card {
-    top: 11%;
+    top: 17%;
     left: 52%;
     transform: translate(-50%, 0) rotate(13deg);
     height: clamp(240px, 39vh, 370px);
