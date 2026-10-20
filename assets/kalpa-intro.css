@@ -313,11 +313,11 @@ body.web-revealed .kalpa-navbar {
 
 .intro-can-card {
   position: absolute;
-  top: 13%;
-  left: 48%;
-  transform: translate(-50%, 0) rotate(-16deg);
-  transform-origin: 50% 80%;
-  width: clamp(210px, 18.5vw, 290px);
+  top: 6%;
+  left: 51.5%;
+  transform: translate(-50%, 0) rotate(13.5deg);
+  transform-origin: 50% 50%;
+  width: clamp(200px, 17.5vw, 275px);
   aspect-ratio: 1 / 2;
   pointer-events: auto;
   cursor: grab;
@@ -546,12 +546,12 @@ body.web-revealed .kalpa-navbar {
     width: clamp(340px, 92vw, 440px);
   }
 
-  /* Lata flotante en tercio superior-medio */
+  /* Lata flotante en tercio superior */
   .intro-can-card {
-    top: 15%;
-    left: 54%;
-    transform: translate(-50%, 0) rotate(-16deg);
-    width: clamp(165px, 44vw, 215px);
+    top: 7%;
+    left: 52%;
+    transform: translate(-50%, 0) rotate(13.5deg);
+    width: clamp(150px, 38vw, 195px);
     aspect-ratio: 1 / 2;
   }
 

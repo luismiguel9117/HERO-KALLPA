@@ -255,7 +255,7 @@
           const cy = (this.mouse.y * 26 + floatY).toFixed(2);
           const rx = (-this.mouse.y * 12).toFixed(2);
           const ry = (this.mouse.x * 14).toFixed(2);
-          const rz = (-16 + floatRot).toFixed(2);
+          const rz = (13.5 + floatRot).toFixed(2);
           this.innerLata.style.transform = `translate3d(calc(-50% + ${cx}px), ${cy}px, 0) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg)`;
         }
 
