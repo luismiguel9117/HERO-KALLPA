@@ -371,9 +371,280 @@ export class HeroKallpaCan {
 }
 
 /**
+ * GENERADOR DE ELECTRICIDAD PROCEDURAL 3D PARA LA LATA KALLPA
+ * Basado en el motor de arcos y descargas eléctricas del proyecto Animación
+ * - 4 arcos asíncronos concurrentes con vidas útiles escalonadas.
+ * - Cobertura 360°: Corona superior, descargas basales, envolturas diagonales y flancos laterales.
+ * - Doble capa volumétrica: Capa 0 (detrás de la lata) y Capa 1 (delante de la lata).
+ * - Trazo triple: Resplandor ambiental (#FFD500), trazo dorado de alta energía y núcleo blanco puro.
+ */
+const createRng = (seed) => {
+  let s = seed | 0;
+  return () => {
+    s = (s + 0x6D2B79F5) | 0;
+    let t = Math.imul(s ^ (s >>> 15), 1 | s);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+};
+
+export class CanElectricArc {
+  constructor(slotId, startDelay = 0) {
+    this.slotId = slotId;
+    this.t0 = performance.now() + startDelay;
+    this.duration = 1350 + Math.random() * 450;
+    this.seed = Math.floor(Math.random() * 100000);
+    this.zone = slotId % 6;
+    this.buildPath();
+  }
+
+  reset(now, nextZone) {
+    this.t0 = now;
+    this.duration = 1300 + Math.random() * 450;
+    this.seed = Math.floor(Math.random() * 100000);
+    this.zone = nextZone != null ? nextZone : Math.floor(Math.random() * 6);
+    this.buildPath();
+  }
+
+  buildPath() {
+    const z = this.zone;
+    const r = createRng(this.seed);
+    let waypoints = [];
+
+    if (z === 0) {
+      // Corona superior (Chispas ascendentes desde la tapa hacia el cielo)
+      const side = r() > 0.5 ? 1 : -1;
+      waypoints = [
+        { u: side * (0.25 + r() * 0.25), v: -0.74 + r() * 0.08, z: 0.2 },
+        { u: side * (0.50 + r() * 0.25), v: -0.88 - r() * 0.12, z: -0.2 },
+        { u: side * (0.75 + r() * 0.35), v: -1.05 - r() * 0.22, z: -0.6 },
+        { u: side * (1.00 + r() * 0.45), v: -1.22 - r() * 0.35, z: -0.9 }
+      ];
+    } else if (z === 1) {
+      // Descarga basal inferior (Chispas descendentes hacia la base)
+      const side = r() > 0.5 ? 1 : -1;
+      waypoints = [
+        { u: side * (0.20 + r() * 0.3), v: 0.80 + r() * 0.06, z: 0.3 },
+        { u: side * (0.42 + r() * 0.3), v: 0.95 + r() * 0.10, z: 0.1 },
+        { u: side * (0.68 + r() * 0.35), v: 1.12 + r() * 0.18, z: -0.4 },
+        { u: side * (0.85 + r() * 0.45), v: 1.30 + r() * 0.28, z: -0.8 }
+      ];
+    } else if (z === 2) {
+      // Envoltura diagonal descendente (Atrás -> Delante -> Atrás)
+      const dir = r() > 0.5 ? 1 : -1;
+      waypoints = [
+        { u: -dir * (0.92 + r() * 0.18), v: -0.62 - r() * 0.18, z: -0.7 },
+        { u: -dir * (0.55 + r() * 0.18), v: -0.32 + r() * 0.12, z: -0.1 },
+        { u: 0.0 + (r() - 0.5) * 0.25, v: 0.0 + (r() - 0.5) * 0.18, z: 0.8 },
+        { u: dir * (0.60 + r() * 0.18), v: 0.35 + r() * 0.12, z: 0.2 },
+        { u: dir * (0.98 + r() * 0.20), v: 0.65 + r() * 0.18, z: -0.6 }
+      ];
+    } else if (z === 3) {
+      // Envoltura diagonal ascendente (Atrás -> Delante -> Atrás)
+      const dir = r() > 0.5 ? 1 : -1;
+      waypoints = [
+        { u: -dir * (0.95 + r() * 0.18), v: 0.60 + r() * 0.16, z: -0.6 },
+        { u: -dir * (0.52 + r() * 0.18), v: 0.26 + r() * 0.12, z: 0.2 },
+        { u: 0.04 * dir, v: -0.04 + (r() - 0.5) * 0.18, z: 0.9 },
+        { u: dir * (0.58 + r() * 0.18), v: -0.35 + r() * 0.12, z: 0.1 },
+        { u: dir * (0.98 + r() * 0.20), v: -0.68 + r() * 0.16, z: -0.7 }
+      ];
+    } else if (z === 4) {
+      // Flanco lateral izquierdo
+      waypoints = [
+        { u: -0.82 - r() * 0.12, v: -0.52 + r() * 0.12, z: -0.3 },
+        { u: -0.98 - r() * 0.16, v: -0.14 + r() * 0.12, z: 0.2 },
+        { u: -0.95 - r() * 0.15, v: 0.20 + r() * 0.12, z: 0.4 },
+        { u: -0.85 - r() * 0.12, v: 0.58 + r() * 0.12, z: -0.2 }
+      ];
+    } else {
+      // Flanco lateral derecho
+      waypoints = [
+        { u: 0.82 + r() * 0.12, v: -0.50 + r() * 0.12, z: -0.3 },
+        { u: 0.98 + r() * 0.16, v: -0.10 + r() * 0.12, z: 0.2 },
+        { u: 0.95 + r() * 0.15, v: 0.22 + r() * 0.12, z: 0.4 },
+        { u: 0.85 + r() * 0.12, v: 0.60 + r() * 0.12, z: -0.2 }
+      ];
+    }
+
+    const pts = [];
+    for (let i = 0; i < waypoints.length - 1; i++) {
+      const p1 = waypoints[i];
+      const p2 = waypoints[i + 1];
+      const segs = 8 + Math.floor(r() * 4);
+      const dx = p2.u - p1.u, dy = p2.v - p1.v, dz = p2.z - p1.z;
+      const len = Math.hypot(dx, dy) || 1;
+      const nx = -dy / len, ny = dx / len;
+
+      for (let s = 0; s <= segs; s++) {
+        if (i > 0 && s === 0) continue;
+        const t = s / segs;
+        const env = Math.sin(t * Math.PI);
+        const harmonic = Math.sin(t * Math.PI * 6 + r() * 6) * 0.05 * env;
+        const sharpJitter = (r() - 0.5) * 0.11 * env;
+        const jitterAmp = harmonic + sharpJitter;
+
+        const u = p1.u + dx * t + nx * jitterAmp;
+        const v = p1.v + dy * t + ny * jitterAmp;
+        const z = p1.z + dz * t;
+        pts.push({ u, v, z });
+      }
+    }
+    this.points = pts;
+
+    // Sub-ramas de alta tensión
+    this.branches = [];
+    const numBranches = r() > 0.4 ? (r() > 0.7 ? 2 : 1) : 0;
+    for (let b = 0; b < numBranches; b++) {
+      const forkIdx = Math.floor(pts.length * (0.28 + r() * 0.42));
+      const forkPt = pts[forkIdx];
+      const nextPt = pts[Math.min(pts.length - 1, forkIdx + 1)];
+      const bdx = nextPt.u - forkPt.u, bdy = nextPt.v - forkPt.v;
+      const angle = Math.atan2(bdy, bdx) + (r() > 0.5 ? 0.65 : -0.65) + (r() - 0.5) * 0.25;
+      const branchLen = (0.22 + r() * 0.25);
+      const bSegs = 5 + Math.floor(r() * 3);
+      const bPts = [{ u: forkPt.u, v: forkPt.v, z: forkPt.z }];
+
+      for (let s = 1; s <= bSegs; s++) {
+        const bt = s / bSegs;
+        const dist = branchLen * bt;
+        const jit = (r() - 0.5) * 0.07 * Math.sin(bt * Math.PI);
+        const bu = forkPt.u + Math.cos(angle) * dist - Math.sin(angle) * jit;
+        const bv = forkPt.v + Math.sin(angle) * dist + Math.cos(angle) * jit;
+        bPts.push({ u: bu, v: bv, z: forkPt.z });
+      }
+      this.branches.push({
+        forkFrac: forkIdx / (pts.length - 1),
+        points: bPts
+      });
+    }
+  }
+
+  render(ctx, targetLayer, now, cx, cy, canW, canH) {
+    const elapsed = now - this.t0;
+    if (elapsed < 0) return;
+    const prog = elapsed / this.duration;
+    if (prog >= 1.0) {
+      this.reset(now + Math.random() * 120);
+      return;
+    }
+
+    const head = Math.min(1, prog / 0.65);
+    const tail = prog < 0.36 ? 0 : Math.min(1, (prog - 0.36) / 0.64);
+    if (tail >= head) return;
+
+    const fadeIn = Math.min(1, elapsed / 60);
+    const fadeOut = prog < 0.72 ? 1.0 : Math.max(0, (1.0 - prog) / 0.28);
+    const pulse = 1.0 + 0.14 * Math.sin(now * 0.025 + this.seed);
+    const curAlpha = Math.min(1, fadeIn * fadeOut * pulse);
+    if (curAlpha <= 0.01) return;
+
+    const totalPts = this.points.length;
+    const startIdx = Math.max(0, Math.floor(tail * (totalPts - 1)));
+    const endIdx = Math.min(totalPts - 1, Math.ceil(head * (totalPts - 1)));
+    if (endIdx <= startIdx) return;
+
+    this.renderSegmentList(ctx, targetLayer, this.points, startIdx, endIdx, curAlpha, cx, cy, canW, canH, 1.0);
+
+    for (const br of this.branches) {
+      if (head >= br.forkFrac && tail < br.forkFrac + 0.25) {
+        const brProg = Math.min(1, (head - br.forkFrac) / 0.22);
+        const brTail = tail < br.forkFrac ? 0 : Math.min(1, (tail - br.forkFrac) / 0.25);
+        const brEndIdx = Math.min(br.points.length - 1, Math.ceil(brProg * (br.points.length - 1)));
+        const brStartIdx = Math.max(0, Math.floor(brTail * (br.points.length - 1)));
+        if (brEndIdx > brStartIdx) {
+          this.renderSegmentList(ctx, targetLayer, br.points, brStartIdx, brEndIdx, curAlpha * 0.88, cx, cy, canW, canH, 0.75);
+        }
+      }
+    }
+  }
+
+  renderSegmentList(ctx, targetLayer, ptsList, startIdx, endIdx, alpha, cx, cy, canW, canH, scaleWidth) {
+    const halfW = canW * 0.5;
+    const halfH = canH * 0.5;
+
+    let currentRun = [];
+    for (let i = startIdx; i < endIdx; i++) {
+      const p1 = ptsList[i];
+      const p2 = ptsList[i + 1];
+      const avgZ = (p1.z + p2.z) * 0.5;
+      const isTarget = targetLayer === 0 ? (avgZ < 0.05) : (avgZ >= 0.05);
+
+      if (isTarget) {
+        if (currentRun.length === 0) {
+          currentRun.push({ x: cx + p1.u * halfW, y: cy + p1.v * halfH });
+        }
+        currentRun.push({ x: cx + p2.u * halfW, y: cy + p2.v * halfH });
+      } else {
+        if (currentRun.length > 1) {
+          this.strokePath(ctx, currentRun, alpha, scaleWidth);
+        }
+        currentRun = [];
+      }
+    }
+
+    if (currentRun.length > 1) {
+      this.strokePath(ctx, currentRun, alpha, scaleWidth);
+    }
+  }
+
+  strokePath(ctx, path, alpha, scaleWidth) {
+    if (path.length < 2) return;
+
+    ctx.save();
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'miter';
+    ctx.miterLimit = 3;
+
+    // 1. Resplandor Amarillo Ambiental (#FFD500)
+    ctx.beginPath();
+    ctx.moveTo(path[0].x, path[0].y);
+    for (let i = 1; i < path.length; i++) ctx.lineTo(path[i].x, path[i].y);
+    ctx.strokeStyle = `rgba(255, 213, 0, ${(0.26 * alpha).toFixed(3)})`;
+    ctx.lineWidth = 6.0 * scaleWidth;
+    ctx.stroke();
+
+    // 2. Trazo Dorado de Alta Energía (#FFD500)
+    ctx.beginPath();
+    ctx.moveTo(path[0].x, path[0].y);
+    for (let i = 1; i < path.length; i++) ctx.lineTo(path[i].x, path[i].y);
+    ctx.strokeStyle = `rgba(255, 213, 0, ${(0.94 * alpha).toFixed(3)})`;
+    ctx.lineWidth = 2.2 * scaleWidth;
+    ctx.stroke();
+
+    // 3. Núcleo Blanco Puro Incandescente
+    ctx.beginPath();
+    ctx.moveTo(path[0].x, path[0].y);
+    for (let i = 1; i < path.length; i++) ctx.lineTo(path[i].x, path[i].y);
+    ctx.strokeStyle = `rgba(255, 255, 255, ${(0.96 * alpha).toFixed(3)})`;
+    ctx.lineWidth = 1.1 * scaleWidth;
+    ctx.stroke();
+
+    ctx.restore();
+  }
+}
+
+export class CanElectricEngine {
+  constructor() {
+    this.arcs = [
+      new CanElectricArc(0, 0),
+      new CanElectricArc(1, 380),
+      new CanElectricArc(2, 760),
+      new CanElectricArc(3, 1140)
+    ];
+  }
+
+  render(ctx, targetLayer, now, cx, cy, canW, canH) {
+    for (const arc of this.arcs) {
+      arc.render(ctx, targetLayer, now, cx, cy, canW, canH);
+    }
+  }
+}
+
+/**
  * INTRO-KALLPA : Controller para la Lata Animada 2D en la Pantalla de Introducción
  * Renderiza la lata cilíndrica con rotación 3D en tiempo real (Offscreen WebGL Blitting),
- * gotas de condensación, resplandor solar y física de arrastre con inercia.
+ * efecto de electricidad procedural volumétrica 3D, gotas de condensación y física interactiva.
  */
 export class IntroKallpaCan {
   constructor(containerId = 'intro-can-card', options = {}) {
@@ -390,6 +661,8 @@ export class IntroKallpaCan {
     }, options);
 
     this.renderer = new CanRenderer();
+    this.electricEngine = new CanElectricEngine();
+
     this.labelMaterial = null;
     this.currentOffset = 0.475; // Front logo KALPA
     this.targetOffset = 0.475;
@@ -405,6 +678,7 @@ export class IntroKallpaCan {
     this.rafId = null;
 
     this.initDOM();
+    this.initElectricCanvases();
     this.initLabel();
     this.bindEvents();
     if (!this.isPaused) {
@@ -413,7 +687,16 @@ export class IntroKallpaCan {
   }
 
   initDOM() {
-    // Reutilizar o inyectar elementos de las capas
+    // 0. Capa trasera de electricidad
+    let backCanvas = this.container.querySelector('.intro-can__electric-back');
+    if (!backCanvas) {
+      backCanvas = document.createElement('canvas');
+      backCanvas.className = 'intro-can__electric-back';
+      this.container.appendChild(backCanvas);
+    }
+    this.electricBackCanvas = backCanvas;
+
+    // 1. Base metálica
     let baseImg = this.container.querySelector('.intro-can__base');
     if (!baseImg) {
       baseImg = document.createElement('img');
@@ -426,6 +709,7 @@ export class IntroKallpaCan {
     }
     this.baseImg = baseImg;
 
+    // 2. Canvas 3D de la etiqueta cilíndrica
     let canvas = this.container.querySelector('.intro-can__canvas');
     if (!canvas) {
       canvas = document.createElement('canvas');
@@ -437,6 +721,7 @@ export class IntroKallpaCan {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext('2d');
 
+    // 3. Gotas de condensación
     let droplets = this.container.querySelector('.intro-can__droplets');
     if (!droplets) {
       droplets = document.createElement('img');
@@ -448,6 +733,16 @@ export class IntroKallpaCan {
     }
     this.dropletsImg = droplets;
 
+    // 4. Capa frontal de electricidad
+    let frontCanvas = this.container.querySelector('.intro-can__electric-front');
+    if (!frontCanvas) {
+      frontCanvas = document.createElement('canvas');
+      frontCanvas.className = 'intro-can__electric-front';
+      this.container.appendChild(frontCanvas);
+    }
+    this.electricFrontCanvas = frontCanvas;
+
+    // 5. Destello solar
     let flare = this.container.querySelector('.intro-can-flare');
     if (!flare) {
       flare = document.createElement('div');
@@ -455,6 +750,32 @@ export class IntroKallpaCan {
       this.container.appendChild(flare);
     }
     this.flare = flare;
+  }
+
+  initElectricCanvases() {
+    this.backCtx = this.electricBackCanvas ? this.electricBackCanvas.getContext('2d') : null;
+    this.frontCtx = this.electricFrontCanvas ? this.electricFrontCanvas.getContext('2d') : null;
+    this.resizeElectricCanvases();
+    window.addEventListener('resize', () => this.resizeElectricCanvases());
+  }
+
+  resizeElectricCanvases() {
+    const rect = this.container.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    this.cssCanW = rect.width || 200;
+    this.cssCanH = rect.height || 400;
+    this.cssW = this.cssCanW * 1.7;
+    this.cssH = this.cssCanH * 1.5;
+
+    if (this.electricBackCanvas) {
+      this.electricBackCanvas.width = Math.round(this.cssW * dpr);
+      this.electricBackCanvas.height = Math.round(this.cssH * dpr);
+    }
+    if (this.electricFrontCanvas) {
+      this.electricFrontCanvas.width = Math.round(this.cssW * dpr);
+      this.electricFrontCanvas.height = Math.round(this.cssH * dpr);
+    }
   }
 
   initLabel() {
@@ -506,6 +827,31 @@ export class IntroKallpaCan {
     this.renderer.blit(this.ctx, 500, 1000);
   }
 
+  renderElectricity(currentTime) {
+    if (!this.electricEngine) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const W = this.cssW;
+    const H = this.cssH;
+    const canW = this.cssCanW;
+    const canH = this.cssCanH;
+    const cx = W / 2;
+    const cy = H / 2;
+
+    // Capa 0: Arcos detrás de la lata
+    if (this.backCtx) {
+      this.backCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      this.backCtx.clearRect(0, 0, W, H);
+      this.electricEngine.render(this.backCtx, 0, currentTime, cx, cy, canW, canH);
+    }
+
+    // Capa 1: Arcos por delante de la lata
+    if (this.frontCtx) {
+      this.frontCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      this.frontCtx.clearRect(0, 0, W, H);
+      this.electricEngine.render(this.frontCtx, 1, currentTime, cx, cy, canW, canH);
+    }
+  }
+
   startLoop() {
     if (this.rafId) cancelAnimationFrame(this.rafId);
     let lastTime = performance.now();
@@ -544,8 +890,11 @@ export class IntroKallpaCan {
         }
       }
 
-      // 3. Renderizado cilíndrico en el canvas
+      // 3. Renderizado cilíndrico en el canvas de la lata
       this.renderFrame(this.currentOffset);
+
+      // 4. Renderizado procedural de rayos y electricidad 3D envolvente
+      this.renderElectricity(currentTime);
 
       this.rafId = requestAnimationFrame(loop);
     };
@@ -559,11 +908,19 @@ export class IntroKallpaCan {
       cancelAnimationFrame(this.rafId);
       this.rafId = null;
     }
+    // Limpiar canvas para liberar GPU
+    if (this.backCtx && this.cssW && this.cssH) {
+      this.backCtx.clearRect(0, 0, this.cssW, this.cssH);
+    }
+    if (this.frontCtx && this.cssW && this.cssH) {
+      this.frontCtx.clearRect(0, 0, this.cssW, this.cssH);
+    }
   }
 
   resume() {
     if (!this.isPaused) return;
     this.isPaused = false;
+    this.resizeElectricCanvases();
     this.startLoop();
   }
 
