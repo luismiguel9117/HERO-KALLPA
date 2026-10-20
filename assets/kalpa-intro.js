@@ -222,8 +222,8 @@
         this.mouse.y += (this.mouse.targetY - this.mouse.y) * 0.055;
 
         // 2. Levitación senoidal suave para la lata
-        const floatY = Math.sin(this.clock * 2.0) * 8;
-        const floatRot = Math.cos(this.clock * 1.6) * 1.5;
+        const floatY = Math.sin(this.clock * 2.0) * 6;
+        const floatRot = Math.cos(this.clock * 1.6) * 1.0;
 
         // 3. Aplicar transformaciones 3D diferenciadas por plano de profundidad (Cursor Tracking)
         if (this.innerCielo) {
@@ -245,17 +245,17 @@
         }
 
         if (this.innerMano) {
-          const cx = (this.mouse.x * 32).toFixed(2);
-          const cy = (this.mouse.y * 20).toFixed(2);
+          const cx = (this.mouse.x * 24).toFixed(2);
+          const cy = (this.mouse.y * 16).toFixed(2);
           this.innerMano.style.transform = `translate3d(calc(-50% + ${cx}px), ${cy}px, 0)`;
         }
 
         if (this.innerLata) {
-          const cx = (this.mouse.x * 42).toFixed(2);
-          const cy = (this.mouse.y * 26 + floatY).toFixed(2);
-          const rx = (-this.mouse.y * 12).toFixed(2);
-          const ry = (this.mouse.x * 14).toFixed(2);
-          const rz = (13.5 + floatRot).toFixed(2);
+          const cx = (this.mouse.x * 32).toFixed(2);
+          const cy = (this.mouse.y * 20 + floatY).toFixed(2);
+          const rx = (-this.mouse.y * 10).toFixed(2);
+          const ry = (this.mouse.x * 12).toFixed(2);
+          const rz = (13.0 + floatRot).toFixed(2);
           this.innerLata.style.transform = `translate3d(calc(-50% + ${cx}px), ${cy}px, 0) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg)`;
         }
 

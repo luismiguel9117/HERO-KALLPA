@@ -296,10 +296,10 @@ body.web-revealed .kalpa-navbar {
 
 .intro-img--mano {
   position: absolute;
-  bottom: -4%;
+  bottom: -6%;
   left: 49%;
   transform: translateX(-50%);
-  width: clamp(480px, 42vw, 680px);
+  width: clamp(320px, 24vw, 420px);
   height: auto;
   display: block;
   filter: drop-shadow(0 25px 40px rgba(0, 0, 0, 0.65));
@@ -313,11 +313,11 @@ body.web-revealed .kalpa-navbar {
 
 .intro-can-card {
   position: absolute;
-  top: 6%;
-  left: 51.5%;
-  transform: translate(-50%, 0) rotate(13.5deg);
+  top: 7%;
+  left: 52%;
+  transform: translate(-50%, 0) rotate(13deg);
   transform-origin: 50% 50%;
-  width: clamp(200px, 17.5vw, 275px);
+  width: clamp(145px, 12.2vw, 195px);
   aspect-ratio: 1 / 2;
   pointer-events: auto;
   cursor: grab;
@@ -540,18 +540,18 @@ body.web-revealed .kalpa-navbar {
 
   /* Mano en primer plano saliendo de abajo-centro */
   .intro-img--mano {
-    bottom: -2%;
+    bottom: -4%;
     left: 50%;
     transform: translateX(-50%);
-    width: clamp(340px, 92vw, 440px);
+    width: clamp(250px, 68vw, 320px);
   }
 
   /* Lata flotante en tercio superior */
   .intro-can-card {
-    top: 7%;
+    top: 9%;
     left: 52%;
-    transform: translate(-50%, 0) rotate(13.5deg);
-    width: clamp(150px, 38vw, 195px);
+    transform: translate(-50%, 0) rotate(13deg);
+    width: clamp(120px, 30vw, 155px);
     aspect-ratio: 1 / 2;
   }
 
