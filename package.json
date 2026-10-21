@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Shopify Online Store 2.0 Theme with 3D WebGL (Three.js), GSAP Cinematic ScrollTrigger, and 2D Interactive Physics",
   "scripts": {
+    "start": "serve . -l 3000",
     "dev": "npx serve . -l 3000",
     "merge:can": "git subtree pull --prefix=lata-3d lata-repo main --squash && node scripts/sync-can-assets.js",
     "sync:can": "node scripts/sync-can-assets.js",
@@ -27,6 +28,7 @@
     "@studio-freight/lenis": "^1.0.42",
     "framer-motion": "^14.3.0",
     "gsap": "^3.15.0",
-    "motion": "^14.3.0"
+    "motion": "^14.3.0",
+    "serve": "^14.2.4"
   }
 }
