@@ -240,15 +240,6 @@
           </svg>
         </button>
 
-        <button type="button" class="kalpa-cart-capsule" onclick="openKallpaCart()" aria-label="Abrir Carrito">
-          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <path d="M16 10a4 4 0 0 1-8 0"></path>
-          </svg>
-          <span id="kallpa-cart-count">0</span>
-        </button>
-
         <button type="button" class="kalpa-nav-icon nav-icon--account" aria-label="Cuenta">
           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -261,6 +252,24 @@
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
           </svg>
         </button>
+
+        <button type="button" class="kalpa-cart-capsule" onclick="openKallpaCart()" aria-label="Abrir Carrito">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span id="kallpa-cart-count">0</span>
+        </button>
+
+        <a href="#products-section" class="kalpa-nav-cta">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="21" r="1"></circle>
+            <circle cx="19" cy="21" r="1"></circle>
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+          </svg>
+          <span>COMPRAR AHORA</span>
+        </a>
 
         <button type="button" class="kalpa-nav-hamburger" id="kalpa-mobile-menu-btn" aria-label="Abrir Menú">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -434,16 +443,16 @@
       <span class="nav-control-separator"></span>
 
       <!-- Switch de Alternancia 2D FOTO / 2D ANIMADA / 3D WEBGL -->
-      <div class="kalpa-dimension-switch" id="kalpa-dimension-switch" data-active="3d" role="radiogroup" aria-label="Alternar modo de lata">
+      <div class="kalpa-dimension-switch" id="kalpa-dimension-switch" data-active="2d-anim" role="radiogroup" aria-label="Alternar modo de lata">
         <button type="button" class="dim-switch-btn" data-mode="2d" id="btn-dim-2d" role="radio" aria-checked="false" aria-label="Modo 2D Foto Estudio">
           <span class="dim-badge">2D</span>
           <span class="dim-text">FOTO</span>
         </button>
-        <button type="button" class="dim-switch-btn" data-mode="2d-anim" id="btn-dim-2d-anim" role="radio" aria-checked="false" aria-label="Modo 2D Animada">
+        <button type="button" class="dim-switch-btn is-active" data-mode="2d-anim" id="btn-dim-2d-anim" role="radio" aria-checked="true" aria-label="Modo 2D Animada">
           <span class="dim-badge">2D</span>
           <span class="dim-text">ANIMADA</span>
         </button>
-        <button type="button" class="dim-switch-btn is-active" data-mode="3d" id="btn-dim-3d" role="radio" aria-checked="true" aria-label="Modo 3D WebGL">
+        <button type="button" class="dim-switch-btn" data-mode="3d" id="btn-dim-3d" role="radio" aria-checked="false" aria-label="Modo 3D WebGL">
           <span class="dim-badge">3D</span>
           <span class="dim-text">WEBGL</span>
         </button>

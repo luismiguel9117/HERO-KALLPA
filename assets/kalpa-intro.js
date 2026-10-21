@@ -207,7 +207,7 @@
       // 4. Revelar la web limpia y nítida por debajo
       tl.call(() => {
         document.body.classList.add('web-revealed');
-        if (this.devControlPanel) {
+        if (this.devControlPanel && window.kallpa3D && window.kallpa3D.mode === '3d') {
           this.devControlPanel.classList.add('is-visible');
         }
       }, null, 0.45);

@@ -32,7 +32,7 @@ class Kallpa3DScene {
       scrollLinked: true
     }, options);
 
-    this.mode = '3d'; // '3d' (Three.js) | '2d' (Estudio)
+    this.mode = '2d-anim'; // '2d-anim' (Cilíndrica 2D) | '3d' (Three.js) | '2d' (Estudio)
     this.scene = null;
     this.camera = null;
     this.renderer = null;
@@ -73,8 +73,8 @@ class Kallpa3DScene {
   }
 
   async init() {
-    const width = this.container.clientWidth || window.innerWidth;
-    const height = this.container.clientHeight || window.innerHeight;
+    const width = this.container.clientWidth || (this.container.parentElement && this.container.parentElement.clientWidth) || window.innerWidth;
+    const height = this.container.clientHeight || (this.container.parentElement && this.container.parentElement.clientHeight) || window.innerHeight;
 
     this.isMobile = width <= 768;
     this.isTablet = width > 768 && width <= 990;
@@ -164,8 +164,8 @@ class Kallpa3DScene {
     // 9. Integración con GSAP ScrollTrigger
     this.initGSAPTimeline();
 
-    // Sincronizar explícitamente el modo inicial 3D
-    this.setMode('3d');
+    // Sincronizar explícitamente el modo inicial preseleccionado: 2D Animada
+    this.setMode('2d-anim');
 
     // 10. Loop de Renderizado
     this.animate();
@@ -247,6 +247,9 @@ class Kallpa3DScene {
       container3D.style.opacity = is3D ? '1' : '0';
       container3D.style.visibility = is3D ? 'visible' : 'hidden';
       container3D.style.pointerEvents = is3D ? 'auto' : 'none';
+      if (is3D) {
+        this.onResize();
+      }
     }
 
     // 2. Contenedor 2D Animada (Offscreen Canvas Cilíndrico de Kallpa Repo)
@@ -285,6 +288,7 @@ class Kallpa3DScene {
     // Mostrar panel de calibración solo en modo 3D
     if (devPanel) {
       devPanel.style.display = (newMode === '3d') ? 'block' : 'none';
+      devPanel.classList.toggle('is-visible', newMode === '3d');
     }
   }
 
@@ -615,8 +619,8 @@ class Kallpa3DScene {
 
   onResize() {
     if (!this.container || !this.camera || !this.renderer) return;
-    const width = this.container.clientWidth;
-    const height = this.container.clientHeight;
+    const width = this.container.clientWidth || (this.container.parentElement && this.container.parentElement.clientWidth) || window.innerWidth;
+    const height = this.container.clientHeight || (this.container.parentElement && this.container.parentElement.clientHeight) || window.innerHeight;
 
     this.isMobile = width <= 768;
     this.isTablet = width > 768 && width <= 990;
