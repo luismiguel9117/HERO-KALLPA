@@ -294,33 +294,30 @@
       <div class="kalpa-hero__backlight-flare"></div>
     </div>
 
-    <!-- Elementos de Cacao con Difuminación jugando con los planos (Foreground, Midground, Background) -->
+    <!-- Elementos de Cacao con Difuminación jugando con los planos (Bokeh Foreground & Background) -->
     <div class="cacao-beans-viewport" id="cacao-beans-viewport">
-      <!-- PLANO 1: Primer plano desenfocado (Foreground Bokeh) -->
+      <!-- PLANO 1: Primer plano desenfocado izquierdo (Foreground Bokeh) -->
       <div class="cacao-bean cacao-bean--top-left" data-depth="0.08" data-plane="foreground">
         <img src="assets/cacao-1.png" alt="" class="cacao-bean__img cacao-anim--float-1" draggable="false">
       </div>
       <div class="cacao-bean cacao-bean--bottom-left" data-depth="0.09" data-plane="foreground">
         <img src="assets/cacao-1.png" alt="" class="cacao-bean__img cacao-anim--float-2" draggable="false">
       </div>
-      <div class="cacao-bean cacao-bean--bottom-right" data-depth="0.08" data-plane="foreground">
+
+      <!-- PLANO 2: Bokeh inferior central-izquierdo -->
+      <div class="cacao-bean cacao-bean--bottom-center-1" data-depth="0.06" data-plane="foreground">
+        <img src="assets/cacao-1.png" alt="" class="cacao-bean__img cacao-anim--float-5" draggable="false">
+      </div>
+
+      <!-- PLANO 3: Esquina superior e inferior derecha desenfocadas -->
+      <div class="cacao-bean cacao-bean--top-right" data-depth="0.07" data-plane="foreground">
+        <img src="assets/cacao-1.png" alt="" class="cacao-bean__img cacao-anim--float-7" draggable="false">
+      </div>
+      <div class="cacao-bean cacao-bean--mid-right" data-depth="0.07" data-plane="foreground">
+        <img src="assets/cacao-1.png" alt="" class="cacao-bean__img cacao-anim--float-4" draggable="false">
+      </div>
+      <div class="cacao-bean cacao-bean--bottom-right" data-depth="0.09" data-plane="foreground">
         <img src="assets/cacao-1.png" alt="" class="cacao-bean__img cacao-anim--float-3" draggable="false">
-      </div>
-
-      <!-- PLANO 2: Plano medio enfocado / nítido (Midground Focus) -->
-      <div class="cacao-bean cacao-bean--mid-floating" data-depth="0.035" data-plane="midground">
-        <img src="assets/cacao-3.png" alt="" class="cacao-bean__img cacao-anim--float-4" draggable="false">
-      </div>
-      <div class="cacao-bean cacao-bean--bottom-center-1" data-depth="0.04" data-plane="midground">
-        <img src="assets/cacao-3.png" alt="" class="cacao-bean__img cacao-anim--float-5" draggable="false">
-      </div>
-      <div class="cacao-bean cacao-bean--bottom-center-2" data-depth="0.045" data-plane="midground">
-        <img src="assets/cacao-2.png" alt="" class="cacao-bean__img cacao-anim--float-6" draggable="false">
-      </div>
-
-      <!-- PLANO 3: Plano de fondo / profundidad (Background Depth) -->
-      <div class="cacao-bean cacao-bean--top-right" data-depth="0.02" data-plane="background">
-        <img src="assets/cacao-6.png" alt="" class="cacao-bean__img cacao-anim--float-7" draggable="false">
       </div>
     </div>
 
@@ -419,25 +416,36 @@
       </div>
     </div>
 
-    <!-- Controles de Navegación del Carrusel (Flechas, Bullets y Switch 2D/3D) -->
+    <!-- Flechas Laterales del Carrusel Hero -->
+    <button type="button" class="carousel-btn-arrow carousel-btn-arrow--left" id="carousel-prev" aria-label="Banner Anterior">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    <button type="button" class="carousel-btn-arrow carousel-btn-arrow--right" id="carousel-next" aria-label="Siguiente Banner">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+
+    <!-- Controles Inferiores del Carrusel (Paginación Numerada 01-02-03 y Switch 2D/3D) -->
     <div class="kalpa-carousel-nav">
-      <button type="button" class="carousel-btn-arrow" id="carousel-prev" aria-label="Banner Anterior">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-      </button>
-
       <div class="carousel-dots" id="carousel-dots">
-        <button type="button" class="carousel-dot is-active" data-dot-index="0" aria-label="Slide 1"></button>
-        <button type="button" class="carousel-dot" data-dot-index="1" aria-label="Slide 2"></button>
-        <button type="button" class="carousel-dot" data-dot-index="2" aria-label="Slide 3"></button>
+        <button type="button" class="carousel-dot is-active" data-dot-index="0" aria-label="Slide 1">
+          <span class="dot-num">01</span>
+          <span class="dot-bar"></span>
+        </button>
+        <span class="dot-connector"></span>
+        <button type="button" class="carousel-dot" data-dot-index="1" aria-label="Slide 2">
+          <span class="dot-num">02</span>
+          <span class="dot-bar"></span>
+        </button>
+        <span class="dot-connector"></span>
+        <button type="button" class="carousel-dot" data-dot-index="2" aria-label="Slide 3">
+          <span class="dot-num">03</span>
+          <span class="dot-bar"></span>
+        </button>
       </div>
-
-      <button type="button" class="carousel-btn-arrow" id="carousel-next" aria-label="Siguiente Banner">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </button>
 
       <!-- Separador Sutil en Barra de Controles -->
       <span class="nav-control-separator"></span>
@@ -570,92 +578,138 @@
     </div>
   </div>
 
-  <!-- ==================== 4. NUESTROS PRODUCTOS ==================== -->
-  <section class="kallpa-section kallpa-products-section" id="products-section">
-    <div class="page-width">
-      
-      <div class="section-header-row">
-        <div class="section-title-group">
-          <span class="section-eyebrow">NUESTROS PRODUCTOS</span>
-          <h2 class="section-main-title">
-            ELIGE CUÁNTA
-            <span class="text-gold">ENERGÍA LLEVAS</span>
-          </h2>
-        </div>
-
-        <div class="section-nav-arrows">
-          <button type="button" class="nav-arrow-btn" id="prod-nav-prev" aria-label="Producto Anterior">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </button>
-          <button type="button" class="nav-arrow-btn" id="prod-nav-next" aria-label="Producto Siguiente">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <div class="kallpa-products-grid" id="kallpa-products-track">
+  <!-- ==================== 4. NUESTRO PRODUCTO: KALPA ORIGINAL (VENTA UNIDAD Y PACK X 6) ==================== -->
+  <section class="kalpa-product-showcase-sale" id="products-section">
+    <div class="page-width kalpa-sale-container">
+      <div class="kalpa-sale-grid">
         
-        <!-- Producto 1: Cold Brew Original -->
-        <div class="kallpa-product-card" data-product-id="cold-brew-original">
-          <div class="product-card__image-box">
-            <img src="assets/prod-original.jpg" alt="Cold Brew Original KALPA" class="product-card__img" loading="lazy" width="400" height="400">
-          </div>
-          <div class="product-card__info">
-            <h3 class="product-card__name">COLD BREW ORIGINAL</h3>
-            <span class="product-card__volume">355 ml</span>
-            <div class="product-card__price">S/ 11.90</div>
-            <button type="button" class="btn-product-add" onclick="addKallpaToCart('Cold Brew Original 355ml', 11.90, 'assets/prod-original.jpg')">
-              AÑADIR AL CARRITO
-            </button>
+        <!-- Columna 1: Información Editorial y 4 Sellos Circulares -->
+        <div class="kalpa-sale__info">
+          <span class="sale-top-line"></span>
+          <span class="sale-eyebrow">NUESTRO PRODUCTO</span>
+          <h2 class="sale-giant-title">
+            <span class="sale-title-main">KALPA</span>
+            <span class="sale-title-sub">ORIGINAL</span>
+          </h2>
+          <p class="sale-description">
+            Café cold brew de origen peruano, hecho con granos del VRAEM. Listo para tomar, en cualquier momento y lugar.
+          </p>
+
+          <!-- 4 Iconos de Atributos Circulares -->
+          <div class="sale-features-row">
+            <div class="sale-feature-badge">
+              <div class="sale-feature-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                </svg>
+                <span class="drop-zero">0</span>
+              </div>
+              <span class="sale-feature-label">CALORÍAS</span>
+            </div>
+
+            <div class="sale-feature-badge">
+              <div class="sale-feature-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+                  <line x1="4" y1="4" x2="20" y2="20"></line>
+                </svg>
+              </div>
+              <span class="sale-feature-label">SIN AZÚCARES<br>AÑADIDOS</span>
+            </div>
+
+            <div class="sale-feature-badge">
+              <div class="sale-feature-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="6" y="4" width="10" height="17" rx="2"></rect>
+                  <path d="M16 8h2a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"></path>
+                  <line x1="8" y1="2" x2="14" y2="2"></line>
+                </svg>
+              </div>
+              <span class="sale-feature-label">LISTO<br>PARA TOMAR</span>
+            </div>
+
+            <div class="sale-feature-badge">
+              <div class="sale-feature-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <line x1="12" y1="2" x2="12" y2="22"></line>
+                  <path d="m20 16-4-4 4-4"></path>
+                  <path d="m4 8 4 4-4 4"></path>
+                  <path d="m16 4-4 4-4-4"></path>
+                  <path d="m8 20 4-4 4 4"></path>
+                </svg>
+              </div>
+              <span class="sale-feature-label">COLD BREW<br>REFRESCANTE</span>
+            </div>
           </div>
         </div>
 
-        <!-- Producto 2: Cold Brew Orange -->
-        <div class="kallpa-product-card" data-product-id="cold-brew-orange">
-          <div class="product-card__image-box">
-            <img src="assets/prod-orange.jpg" alt="Cold Brew Orange KALPA" class="product-card__img" loading="lazy" width="400" height="400">
-          </div>
-          <div class="product-card__info">
-            <h3 class="product-card__name">COLD BREW ORANGE</h3>
-            <span class="product-card__volume">355 ml</span>
-            <div class="product-card__price">S/ 11.90</div>
-            <button type="button" class="btn-product-add" onclick="addKallpaToCart('Cold Brew Orange 355ml', 11.90, 'assets/prod-orange.jpg')">
-              AÑADIR AL CARRITO
-            </button>
+        <!-- Columna 2: Composición Central (Lata + Hielos + Granos + Piedra Volcánica) -->
+        <div class="kalpa-sale__centerpiece">
+          <div class="sale-can-stage">
+            <!-- Capa Trasera: Granos de café y cubos de hielo flotando alrededor -->
+            <img src="assets/hero-beans-ice-back.png" alt="" class="sale-stage__beans-back" draggable="false">
+            <img src="assets/hero-beans-ice-front.png" alt="" class="sale-stage__beans-mid" draggable="false">
+            <!-- Lata Central KALPA Original Vertical -->
+            <img src="assets/kalpa-can-original.png" alt="KALPA Café Cold Brew Original 355ml" class="sale-stage__can" draggable="false">
+            <!-- Grano frontal superpuesto a la derecha de la lata -->
+            <img src="assets/hero-bean-single.png" alt="" class="sale-stage__bean-front" draggable="false">
           </div>
         </div>
 
-        <!-- Producto 3: Cold Brew Latte -->
-        <div class="kallpa-product-card" data-product-id="cold-brew-latte">
-          <div class="product-card__image-box">
-            <img src="assets/prod-latte.jpg" alt="Cold Brew Latte KALPA" class="product-card__img" loading="lazy" width="400" height="400">
+        <!-- Columna 3: Tarjeta Dual de Compra (Unidad y Pack x 6) -->
+        <div class="kalpa-sale__buy-box">
+          <!-- Opción A: Compra por Unidad -->
+          <div class="sale-buy-col sale-buy-col--unit">
+            <div class="sale-unit-header">Unidad</div>
+            <div class="sale-price-block">
+              <div class="sale-price-main">S/ 7.90</div>
+              <div class="sale-volume-sub">355 ml</div>
+            </div>
+            <div class="sale-qty-stepper" aria-label="Cantidad de unidades">
+              <button type="button" class="qty-btn" onclick="updateSaleUnitQty(-1)" aria-label="Disminuir cantidad">&minus;</button>
+              <span id="sale-unit-qty" class="qty-val">1</span>
+              <button type="button" class="qty-btn" onclick="updateSaleUnitQty(1)" aria-label="Aumentar cantidad">+</button>
+            </div>
+            <button type="button" class="btn-sale-add" onclick="addSaleUnitToCart()">
+              <span>AGREGAR</span>
+              <svg class="sale-add-arrow-mobile" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
           </div>
-          <div class="product-card__info">
-            <h3 class="product-card__name">COLD BREW LATTE</h3>
-            <span class="product-card__volume">355 ml</span>
-            <div class="product-card__price">S/ 11.90</div>
-            <button type="button" class="btn-product-add" onclick="addKallpaToCart('Cold Brew Latte 355ml', 11.90, 'assets/prod-latte.jpg')">
-              AÑADIR AL CARRITO
+
+          <!-- Opción B: Compra Pack x 6 (-15%) -->
+          <div class="sale-buy-col sale-buy-col--pack">
+            <div class="sale-pack-header">
+              <span class="sale-pack-title">Pack x 6</span>
+              <span class="sale-pack-discount">-15%</span>
+            </div>
+            <div class="sale-pack-body">
+              <div class="sale-pack-pricing">
+                <span class="sale-pack-old-price">S/ 47.40</span>
+                <div class="sale-price-main sale-price-main--pack">S/ 39.90</div>
+                <div class="sale-volume-sub">6 latas de 355 ml</div>
+              </div>
+              <div class="sale-pack-cans-visual" aria-hidden="true">
+                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--left" draggable="false">
+                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--center" draggable="false">
+                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--right" draggable="false">
+              </div>
+            </div>
+            <button type="button" class="btn-sale-add" onclick="addPackToKallpaCart('pack-6-original', 'Pack x 6 KALPA Original (6x355ml)', 39.90)">
+              <span>AGREGAR</span>
             </button>
           </div>
         </div>
 
       </div>
+    </div>
 
-      <div class="products-footer-action">
-        <a href="#promo-section" class="btn-all-products">
-          <span>VER TODOS LOS PRODUCTOS</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </a>
-      </div>
-
+    <!-- Base de Piedra Volcánica, Hielos y Granos en la Base de la Sección (Desktop) -->
+    <div class="sale-rock-pedestal" aria-hidden="true">
+      <img src="assets/hero-rock-base.png" alt="" class="sale-rock-pedestal__img" draggable="false">
     </div>
   </section>
 
@@ -1155,6 +1209,23 @@
       btn.classList.add('is-active');
       const target = section.querySelector('#tab-' + tabId);
       if (target) target.classList.add('is-active');
+    }
+
+    // Control de cantidad e integración con carrito para la sección KALPA ORIGINAL
+    function updateSaleUnitQty(delta) {
+      const el = document.getElementById('sale-unit-qty');
+      if (!el) return;
+      let val = parseInt(el.textContent || '1', 10) + delta;
+      if (val < 1) val = 1;
+      if (val > 24) val = 24;
+      el.textContent = val;
+    }
+
+    function addSaleUnitToCart() {
+      const el = document.getElementById('sale-unit-qty');
+      const qty = el ? Math.max(1, parseInt(el.textContent || '1', 10)) : 1;
+      const total = +(7.90 * qty).toFixed(2);
+      addPackToKallpaCart('unit-kalpa-original', `${qty}x KALPA Original 355ml`, total);
     }
 
     // Add to Cart Controller for Cold Brew Packs

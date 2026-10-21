@@ -926,27 +926,29 @@ h1, h2, h3, h4, h5, h6 {
   transform-origin: center center;
 }
 
-/* 1. Esquina Superior Izquierda (Plano 1 - Bokeh Foreground) */
+/* 1. Lateral Izquierdo Superior (Plano 1 - Bokeh Foreground sobre flecha izquierda) */
 .cacao-bean--top-left {
-  top: -45px;
-  left: -35px;
-  width: clamp(140px, 15vw, 240px);
+  top: 25%;
+  left: -48px;
+  width: clamp(115px, 11vw, 165px);
 }
 .cacao-bean--top-left .cacao-bean__img {
-  transform: rotate(-38deg);
+  transform: rotate(-28deg);
+  filter: blur(2px);
 }
 
-/* 2. Esquina Inferior Izquierda (Plano 1 - Bokeh Gran Angular) */
+/* 2. Esquina Inferior Izquierda (Plano 1 - Bokeh Gran Angular junto a 01-02-03) */
 .cacao-bean--bottom-left {
-  bottom: -65px;
-  left: clamp(40px, 6vw, 110px);
-  width: clamp(180px, 19vw, 300px);
+  bottom: -55px;
+  left: -38px;
+  width: clamp(190px, 18vw, 275px);
 }
 .cacao-bean--bottom-left .cacao-bean__img {
-  transform: rotate(44deg);
+  transform: rotate(36deg);
+  filter: blur(3px);
 }
 
-/* 3. Flotante Central entre Texto y Lata (Plano 2 - Enfoque Nítido / Midground) */
+/* 3. Flotante Central entre Texto y Lata */
 .cacao-bean--mid-floating {
   top: 54%;
   right: 43%;
@@ -957,18 +959,19 @@ h1, h2, h3, h4, h5, h6 {
   filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.75));
 }
 
-/* 4. Base Central 1 (Plano 2 - Enfoque Medio bajo la lata) */
+/* 4. Base Central-Izquierda (Bokeh desenfocado en el borde inferior entre CTA y lata) */
 .cacao-bean--bottom-center-1 {
-  bottom: -25px;
-  right: 47%;
-  width: clamp(75px, 6.5vw, 105px);
+  bottom: -60px;
+  left: 27%;
+  right: auto;
+  width: clamp(160px, 15vw, 230px);
 }
 .cacao-bean--bottom-center-1 .cacao-bean__img {
-  transform: rotate(16deg);
-  filter: drop-shadow(0 15px 20px rgba(0, 0, 0, 0.65));
+  transform: rotate(18deg);
+  filter: blur(3.5px);
 }
 
-/* 5. Base Central 2 (Plano 2 - Enfoque Medio) */
+/* 5. Base Central 2 */
 .cacao-bean--bottom-center-2 {
   bottom: -45px;
   right: 38%;
@@ -979,25 +982,38 @@ h1, h2, h3, h4, h5, h6 {
   filter: drop-shadow(0 18px 25px rgba(0, 0, 0, 0.75));
 }
 
-/* 6. Esquina Inferior Derecha (Plano 1 - Bokeh Foreground) */
+/* 6. Esquina Inferior Derecha (Plano 1 - Bokeh Foreground sobre la derecha de la piedra) */
 .cacao-bean--bottom-right {
-  bottom: -55px;
-  right: -20px;
-  width: clamp(170px, 16vw, 270px);
+  bottom: -48px;
+  right: -28px;
+  width: clamp(145px, 14vw, 215px);
 }
 .cacao-bean--bottom-right .cacao-bean__img {
-  transform: rotate(-32deg);
+  transform: rotate(-28deg);
+  filter: blur(2.5px);
 }
 
-/* 7. Esquina Superior Derecha (Plano 3 - Profundidad Fondo) */
+/* 6.5 Lateral Derecho Medio (Bokeh debajo de la flecha derecha) */
+.cacao-bean--mid-right {
+  top: 56%;
+  right: -45px;
+  width: clamp(120px, 11.5vw, 175px);
+}
+.cacao-bean--mid-right .cacao-bean__img {
+  transform: rotate(15deg);
+  filter: blur(2.5px);
+}
+
+/* 7. Esquina Superior Derecha (Plano 3 - Bokeh Superior Derecho) */
 .cacao-bean--top-right {
-  top: 7%;
-  right: -25px;
-  width: clamp(120px, 11vw, 180px);
-  opacity: 0.92;
+  top: 3%;
+  right: -35px;
+  width: clamp(135px, 13vw, 195px);
+  opacity: 0.95;
 }
 .cacao-bean--top-right .cacao-bean__img {
   transform: rotate(32deg);
+  filter: blur(2.5px);
 }
 
 /* Animaciones orgánicas continuas de levitación */
@@ -1182,11 +1198,11 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateX(4px);
 }
 
-/* Controles del Carrusel (Flechas y Bullets) */
+/* Controles del Carrusel (Flechas Laterales Doradas y Paginación 01 — 02 — 03) */
 .kalpa-carousel-nav {
   position: absolute;
-  bottom: 2.5rem;
-  left: 3rem;
+  bottom: 2.2rem;
+  left: max(2rem, calc((100vw - 1280px) / 2 + 2rem));
   display: flex;
   align-items: center;
   gap: 1.25rem;
@@ -1195,45 +1211,90 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .carousel-btn-arrow {
+  position: absolute;
+  top: 54%;
+  transform: translateY(-50%);
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(8px);
+  border: 1.2px solid rgba(247, 191, 25, 0.75);
+  background: rgba(25, 4, 5, 0.35);
+  backdrop-filter: blur(6px);
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.25s;
+  z-index: 32;
+  pointer-events: auto;
+  transition: all 0.25s ease;
+}
+
+.carousel-btn-arrow--left {
+  left: 1.5rem;
+}
+
+.carousel-btn-arrow--right {
+  right: 1.5rem;
 }
 
 .carousel-btn-arrow:hover {
   border-color: #f7bf19;
+  background: rgba(247, 191, 25, 0.18);
   color: #f7bf19;
-  transform: scale(1.08);
+  transform: translateY(-50%) scale(1.08);
 }
 
 .carousel-dots {
   display: flex;
-  gap: 0.6rem;
+  align-items: flex-end;
+  gap: 0;
 }
 
 .carousel-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  background: transparent;
   border: none;
+  padding: 0;
   cursor: pointer;
-  transition: all 0.3s;
+  color: rgba(255, 255, 255, 0.65);
+  font-family: var(--font-brand);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1;
+  transition: all 0.3s ease;
+}
+
+.carousel-dot .dot-num {
+  display: block;
+}
+
+.carousel-dot .dot-bar {
+  display: none;
+  width: 30px;
+  height: 8px;
+  border-radius: 99px;
+  background-color: #f7bf19;
 }
 
 .carousel-dot.is-active {
-  width: 28px;
-  border-radius: 10px;
-  background: #f7bf19;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.carousel-dot.is-active .dot-bar {
+  display: block;
+}
+
+.dot-connector {
+  display: inline-block;
+  width: 22px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.35);
+  margin: 0 8px 4px 8px;
 }
 
 /* Separador Sutil en Barra de Controles */
@@ -3593,11 +3654,11 @@ a.footer-contact-item:hover {
 
 .hero-kallpa-can-wrapper {
   position: absolute;
-  top: 50%;
-  right: 12%;
+  top: 52%;
+  right: 11%;
   transform: translateY(-46%);
-  width: clamp(260px, 24vw, 360px);
-  height: clamp(520px, 48vw, 720px);
+  width: clamp(290px, 26vw, 390px);
+  height: clamp(580px, 52vw, 780px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3605,9 +3666,58 @@ a.footer-contact-item:hover {
   z-index: 11;
 }
 
+/* Capas de Composición (Hielos, Granos de Café Enocados y Piedra Volcánica en Base) */
+.hero-can-comp {
+  position: absolute;
+  max-width: none;
+  user-select: none;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Capa Trasera (Capa 3: Granos superiores/laterales y cubos de hielo detrás de la lata) */
+.hero-can-comp__back {
+  width: 175%;
+  height: auto;
+  top: 2%;
+  left: -38%;
+  z-index: 1;
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.55));
+}
+
+/* Capa Media-Baja (Capa 2 copia 2: Granos e hielos en el tercio inferior) */
+.hero-can-comp__mid {
+  width: 162%;
+  height: auto;
+  bottom: 8%;
+  left: -34%;
+  z-index: 1;
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.65));
+}
+
+/* Grano Frontal Individual (Capa 4: Superpuesto al borde derecho inferior de la lata) */
+.hero-can-comp__bean-single {
+  width: 29%;
+  height: auto;
+  bottom: 22%;
+  right: -5%;
+  z-index: 4;
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.75));
+}
+
+/* Base de Piedra Volcánica con Hielos y Café (Capa 2 copia: Delante de la base de la lata) */
+.hero-can-comp__rock {
+  width: 185%;
+  height: auto;
+  bottom: -6%;
+  left: -42%;
+  z-index: 5;
+  filter: drop-shadow(0 -8px 24px rgba(0, 0, 0, 0.65));
+}
+
 @media (max-width: 990px) {
   .hero-kallpa-can-wrapper {
-    right: 4%;
+    right: 6%;
     transform: translateY(-42%);
     width: 280px;
     height: 560px;
@@ -3617,23 +3727,48 @@ a.footer-contact-item:hover {
 @media (max-width: 768px) {
   .hero-kallpa-can-wrapper {
     top: auto;
-    bottom: 48px;
+    bottom: 42px;
     left: 50%;
     right: auto;
     transform: translateX(-50%);
-    width: clamp(210px, 56vw, 255px);
-    height: clamp(410px, 48vh, 470px);
+    width: clamp(210px, 54vw, 250px);
+    height: clamp(410px, 46vh, 460px);
     opacity: 1;
+  }
+
+  .hero-can-comp__back {
+    width: 165%;
+    top: 6%;
+    left: -33%;
+  }
+
+  .hero-can-comp__mid {
+    width: 155%;
+    bottom: 10%;
+    left: -28%;
+  }
+
+  .hero-can-comp__bean-single {
+    width: 28%;
+    bottom: 22%;
+    right: -4%;
+  }
+
+  .hero-can-comp__rock {
+    width: 175%;
+    bottom: -8%;
+    left: -37%;
   }
 }
 
 .hero-kallpa-can-card {
   position: relative;
+  z-index: 2;
   width: 100%;
   height: 100%;
   pointer-events: auto;
   cursor: grab;
-  transform-origin: 50% 80%;
+  transform-origin: 50% 62%;
   will-change: transform;
   touch-action: pan-y;
   opacity: 0;
@@ -3733,4 +3868,618 @@ a.footer-contact-item:hover {
 .hero-kallpa-can-card.mode-3d .hero-kallpa-can__droplets {
   opacity: 1;
   visibility: visible;
+}
+
+/* ==========================================================================
+   SECCIÓN DE VENTA DE PRODUCTO: NUESTRO PRODUCTO - KALPA ORIGINAL (CREMA)
+   Exacto a las referencias de Desktop y Mobile Responsive
+   ========================================================================== */
+.kalpa-product-showcase-sale {
+  position: relative;
+  background: radial-gradient(circle at 48% 48%, #fdf8ef 0%, #f5ece0 58%, #eee3d3 100%);
+  color: #120f0d;
+  padding: clamp(3.5rem, 6vw, 5.5rem) 0 clamp(4.5rem, 7vw, 6.5rem);
+  overflow: hidden;
+  z-index: 15;
+}
+
+.kalpa-sale-container {
+  position: relative;
+  z-index: 5;
+}
+
+.kalpa-sale-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr 1.25fr;
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  align-items: center;
+}
+
+/* Columna 1: Información Editorial y 4 Sellos Circulares */
+.kalpa-sale__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  z-index: 6;
+}
+
+.sale-top-line {
+  display: block;
+  width: 30px;
+  height: 2px;
+  background-color: #1a1615;
+  margin-bottom: 0.85rem;
+}
+
+.sale-eyebrow {
+  display: block;
+  font-family: var(--font-brand);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #2b2520;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.sale-giant-title {
+  font-family: var(--font-brand);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  margin: 0 0 1.1rem 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 0.9;
+  color: #0b0908;
+}
+
+.sale-title-main {
+  font-size: clamp(3.5rem, 5.8vw, 5.4rem);
+  letter-spacing: -0.03em;
+  display: block;
+}
+
+.sale-title-sub {
+  font-size: clamp(2rem, 3.3vw, 3.1rem);
+  letter-spacing: -0.02em;
+  display: block;
+  margin-top: 0.12rem;
+}
+
+.sale-description {
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: #4a4138;
+  margin: 0 0 1.85rem 0;
+  max-width: 350px;
+}
+
+.sale-features-row {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 1.15rem;
+  align-items: start;
+}
+
+.sale-feature-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.45rem;
+}
+
+.sale-feature-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid rgba(26, 22, 21, 0.16);
+  background: rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: #0f0c0a;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.sale-feature-badge:hover .sale-feature-circle {
+  transform: translateY(-2px);
+  border-color: #0f0c0a;
+}
+
+.sale-feature-circle .drop-zero {
+  position: absolute;
+  font-family: var(--font-brand);
+  font-size: 0.62rem;
+  font-weight: 900;
+  color: #fdf8ef;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -45%);
+  line-height: 1;
+}
+
+.sale-feature-label {
+  font-family: var(--font-brand);
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+  color: #1a1615;
+  text-transform: uppercase;
+}
+
+/* Columna 2: Composición Central (Lata + Hielos + Granos) */
+.kalpa-sale__centerpiece {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+
+.sale-can-stage {
+  position: relative;
+  width: clamp(220px, 20vw, 290px);
+  height: clamp(400px, 36vw, 500px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Resplandor cálido detrás de la lata en la sección crema */
+.sale-can-stage::before {
+  content: '';
+  position: absolute;
+  width: 145%;
+  height: 85%;
+  top: 10%;
+  left: -22%;
+  background: radial-gradient(circle, rgba(245, 165, 35, 0.25) 0%, rgba(245, 165, 35, 0.08) 45%, transparent 72%);
+  filter: blur(22px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.sale-stage__beans-back {
+  position: absolute;
+  width: 168%;
+  max-width: none;
+  height: auto;
+  top: 2%;
+  left: -34%;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sale-stage__beans-mid {
+  position: absolute;
+  width: 158%;
+  max-width: none;
+  height: auto;
+  bottom: 10%;
+  left: -30%;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sale-stage__can {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 22px 32px rgba(45, 22, 5, 0.28));
+}
+
+.sale-stage__bean-front {
+  position: absolute;
+  width: 31%;
+  height: auto;
+  bottom: 20%;
+  right: -4%;
+  z-index: 3;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35));
+}
+
+/* Pedestal de Piedra Volcánica en la Base Inferior (Desktop) */
+.sale-rock-pedestal {
+  position: absolute;
+  bottom: -24px;
+  left: 48%;
+  transform: translateX(-50%);
+  width: clamp(460px, 44vw, 650px);
+  z-index: 5;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sale-rock-pedestal__img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Columna 3: Tarjeta Dual de Compra (Unidad y Pack x 6) */
+.kalpa-sale__buy-box {
+  background: rgba(255, 252, 247, 0.76);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(26, 22, 21, 0.07);
+  border-radius: 18px;
+  padding: 1.4rem;
+  display: grid;
+  grid-template-columns: 0.92fr 1.18fr;
+  gap: 1.25rem;
+  box-shadow: 0 20px 45px rgba(40, 25, 10, 0.06);
+  position: relative;
+  z-index: 6;
+}
+
+.sale-buy-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sale-buy-col--pack {
+  border-left: 1px solid rgba(26, 22, 21, 0.08);
+  padding-left: 1.25rem;
+}
+
+.sale-unit-header {
+  background-color: #0f0d0c;
+  color: #ffffff;
+  font-family: var(--font-brand);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.35rem;
+}
+
+.sale-price-block {
+  margin-bottom: 1rem;
+}
+
+.sale-price-main {
+  font-family: var(--font-brand);
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: #0b0908;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.sale-price-main--pack {
+  font-size: 1.55rem;
+}
+
+.sale-volume-sub {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #6e655c;
+  margin-top: 0.2rem;
+}
+
+.sale-qty-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid rgba(26, 22, 21, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.65);
+  padding: 0.25rem 0.45rem;
+  margin-bottom: 1rem;
+}
+
+.qty-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: #1a1615;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s ease;
+}
+
+.qty-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.qty-val {
+  font-family: var(--font-brand);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #0b0908;
+  min-width: 24px;
+  text-align: center;
+}
+
+.btn-sale-add {
+  width: 100%;
+  background: #fbd132;
+  color: #0b0908;
+  border: none;
+  border-radius: 999px;
+  padding: 0.82rem 1rem;
+  font-family: var(--font-brand);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  box-shadow: 0 8px 20px rgba(251, 209, 50, 0.35);
+  transition: transform 0.22s ease, background-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.btn-sale-add:hover {
+  background: #f5c414;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(251, 209, 50, 0.5);
+}
+
+.sale-add-arrow-mobile {
+  display: none;
+}
+
+/* Pack x 6 Sub-columna */
+.sale-pack-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid rgba(26, 22, 21, 0.08);
+  margin-bottom: 1.1rem;
+}
+
+.sale-pack-title {
+  font-family: var(--font-brand);
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #0b0908;
+}
+
+.sale-pack-discount {
+  background-color: #b90e18;
+  color: #ffffff;
+  font-family: var(--font-brand);
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+}
+
+.sale-pack-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.sale-pack-old-price {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #8c8277;
+  text-decoration: line-through;
+  margin-bottom: 0.15rem;
+}
+
+.sale-pack-cans-visual {
+  position: relative;
+  width: 78px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pack-mini-can {
+  position: absolute;
+  height: 82px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+}
+
+.pack-mini-can--left {
+  left: 2px;
+  height: 76px;
+  z-index: 1;
+}
+
+.pack-mini-can--center {
+  left: 50%;
+  transform: translateX(-50%);
+  height: 84px;
+  z-index: 3;
+}
+
+.pack-mini-can--right {
+  right: 2px;
+  height: 76px;
+  z-index: 2;
+}
+
+@media (max-width: 1080px) {
+  .kalpa-sale-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .kalpa-sale__buy-box {
+    grid-column: 1 / -1;
+    max-width: 540px;
+    margin: 1.5rem auto 0;
+    width: 100%;
+  }
+  .sale-rock-pedestal {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   VERSIÓN RESPONSIVE MOBILE (<= 768px) EXACTA A LA SEGUNDA IMAGEN
+   ========================================================================== */
+@media (max-width: 768px) {
+  .kalpa-product-showcase-sale {
+    padding: 2.5rem 0 2.75rem;
+    background: radial-gradient(circle at 50% 48%, #fdf8ef 0%, #f5ece0 65%, #efe4d4 100%);
+  }
+
+  .kalpa-sale-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+
+  /* Ocultar elementos exclusivos de desktop para igualar el diseño mobile limpio */
+  .sale-top-line,
+  .sale-description,
+  .sale-features-row,
+  .sale-rock-pedestal,
+  .sale-unit-header,
+  .sale-qty-stepper,
+  .sale-buy-col--pack {
+    display: none !important;
+  }
+
+  .kalpa-sale__info {
+    align-items: flex-start;
+    padding: 0 0.5rem;
+  }
+
+  .sale-eyebrow {
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    color: #3a332c;
+    margin-bottom: 0.35rem;
+  }
+
+  .sale-giant-title {
+    margin-bottom: 0.25rem;
+  }
+
+  .sale-title-main {
+    font-size: clamp(2.6rem, 11vw, 3.2rem);
+    line-height: 0.92;
+  }
+
+  .sale-title-sub {
+    font-size: clamp(1.85rem, 8vw, 2.3rem);
+    line-height: 0.96;
+    margin-top: 0.08rem;
+  }
+
+  /* Lata central con hielos y granos en mobile */
+  .kalpa-sale__centerpiece {
+    margin: 0.25rem 0 0.5rem;
+  }
+
+  .sale-can-stage {
+    width: 195px;
+    height: 335px;
+  }
+
+  /* Sombra de apoyo suave bajo la lata en mobile */
+  .sale-can-stage::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 16px;
+    background: radial-gradient(ellipse at center, rgba(35, 20, 8, 0.42) 0%, rgba(35, 20, 8, 0.15) 55%, transparent 80%);
+    filter: blur(4px);
+    z-index: 1;
+  }
+
+  .sale-stage__beans-back {
+    width: 162%;
+    top: 4%;
+    left: -31%;
+  }
+
+  .sale-stage__beans-mid {
+    width: 155%;
+    bottom: 8%;
+    left: -28%;
+  }
+
+  .sale-stage__bean-front {
+    width: 30%;
+    bottom: 18%;
+    right: -4%;
+  }
+
+  /* Bloque inferior de precio y botón AGREGAR -> en mobile */
+  .kalpa-sale__buy-box {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    padding: 0 0.5rem;
+    margin: 0;
+    display: block;
+  }
+
+  .sale-buy-col--unit {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sale-price-block {
+    margin-bottom: 0.9rem;
+    padding-left: 0.25rem;
+  }
+
+  .sale-price-main {
+    font-size: 2rem;
+    font-weight: 900;
+  }
+
+  .sale-volume-sub {
+    font-size: 0.78rem;
+    color: #6e655c;
+  }
+
+  .btn-sale-add {
+    padding: 0.95rem 1.5rem;
+    font-size: 0.9rem;
+    border-radius: 999px;
+    background: #fbd132;
+    box-shadow: 0 10px 24px rgba(251, 209, 50, 0.4);
+  }
+
+  .sale-add-arrow-mobile {
+    display: inline-block;
+  }
 }

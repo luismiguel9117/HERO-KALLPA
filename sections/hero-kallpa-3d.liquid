@@ -15,33 +15,30 @@
     <div class="kalpa-hero__backlight-flare"></div>
   </div>
 
-  <!-- 3. Elementos de Cacao con Difuminación jugando con los planos (Foreground, Midground, Background) -->
+  <!-- 3. Elementos de Cacao con Difuminación jugando con los planos (Bokeh Foreground & Background) -->
   <div class="cacao-beans-viewport" id="cacao-beans-viewport">
-    <!-- PLANO 1: Primer plano desenfocado (Foreground Bokeh) -->
+    <!-- PLANO 1: Primer plano desenfocado izquierdo (Foreground Bokeh) -->
     <div class="cacao-bean cacao-bean--top-left" data-depth="0.08" data-plane="foreground">
       <img src="{{ 'cacao-1.png' | asset_url }}" alt="" class="cacao-bean__img cacao-anim--float-1" draggable="false">
     </div>
     <div class="cacao-bean cacao-bean--bottom-left" data-depth="0.09" data-plane="foreground">
       <img src="{{ 'cacao-1.png' | asset_url }}" alt="" class="cacao-bean__img cacao-anim--float-2" draggable="false">
     </div>
-    <div class="cacao-bean cacao-bean--bottom-right" data-depth="0.08" data-plane="foreground">
+
+    <!-- PLANO 2: Bokeh inferior central-izquierdo -->
+    <div class="cacao-bean cacao-bean--bottom-center-1" data-depth="0.06" data-plane="foreground">
+      <img src="{{ 'cacao-1.png' | asset_url }}" alt="" class="cacao-bean__img cacao-anim--float-5" draggable="false">
+    </div>
+
+    <!-- PLANO 3: Esquina superior e inferior derecha desenfocadas -->
+    <div class="cacao-bean cacao-bean--top-right" data-depth="0.07" data-plane="foreground">
+      <img src="{{ 'cacao-1.png' | asset_url }}" alt="" class="cacao-bean__img cacao-anim--float-7" draggable="false">
+    </div>
+    <div class="cacao-bean cacao-bean--mid-right" data-depth="0.07" data-plane="foreground">
+      <img src="{{ 'cacao-1.png' | asset_url }}" alt="" class="cacao-bean__img cacao-anim--float-4" draggable="false">
+    </div>
+    <div class="cacao-bean cacao-bean--bottom-right" data-depth="0.09" data-plane="foreground">
       <img src="{{ 'cacao-1.png' | asset_url }}" alt="" class="cacao-bean__img cacao-anim--float-3" draggable="false">
-    </div>
-
-    <!-- PLANO 2: Plano medio enfocado / nítido (Midground Focus) -->
-    <div class="cacao-bean cacao-bean--mid-floating" data-depth="0.035" data-plane="midground">
-      <img src="{{ 'cacao-3.png' | asset_url }}" alt="" class="cacao-bean__img cacao-anim--float-4" draggable="false">
-    </div>
-    <div class="cacao-bean cacao-bean--bottom-center-1" data-depth="0.04" data-plane="midground">
-      <img src="{{ 'cacao-3.png' | asset_url }}" alt="" class="cacao-bean__img cacao-anim--float-5" draggable="false">
-    </div>
-    <div class="cacao-bean cacao-bean--bottom-center-2" data-depth="0.045" data-plane="midground">
-      <img src="{{ 'cacao-2.png' | asset_url }}" alt="" class="cacao-bean__img cacao-anim--float-6" draggable="false">
-    </div>
-
-    <!-- PLANO 3: Plano de fondo / profundidad (Background Depth) -->
-    <div class="cacao-bean cacao-bean--top-right" data-depth="0.02" data-plane="background">
-      <img src="{{ 'cacao-6.png' | asset_url }}" alt="" class="cacao-bean__img cacao-anim--float-7" draggable="false">
     </div>
   </div>
 
@@ -114,29 +111,34 @@
     </div>
   </div>
 
-  <!-- 7. Controles de Navegación del Carrusel (Flechas, Bullets y Switch 2D/3D) -->
-  <div class="kalpa-carousel-nav">
-    <button type="button" class="carousel-btn-arrow" id="carousel-prev" aria-label="Banner Anterior">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="15 18 9 12 15 6"></polyline>
-      </svg>
-    </button>
+  <!-- 7. Flechas Laterales del Carrusel Hero -->
+  <button type="button" class="carousel-btn-arrow carousel-btn-arrow--left" id="carousel-prev" aria-label="Banner Anterior">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+  <button type="button" class="carousel-btn-arrow carousel-btn-arrow--right" id="carousel-next" aria-label="Siguiente Banner">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
 
+  <!-- 8. Controles Inferiores del Carrusel (Paginación Numerada 01-02-03 y Switch 2D/3D) -->
+  <div class="kalpa-carousel-nav">
     <div class="carousel-dots" id="carousel-dots">
       {%- for block in section.blocks -%}
         <button type="button" 
                 class="carousel-dot {% if forloop.first %}is-active{% endif %}" 
                 data-dot-index="{{ forloop.index0 }}" 
                 aria-label="Ir a diapositiva {{ forloop.index }}">
+          <span class="dot-num">0{{ forloop.index }}</span>
+          <span class="dot-bar"></span>
         </button>
+        {%- unless forloop.last -%}
+          <span class="dot-connector"></span>
+        {%- endunless -%}
       {%- endfor -%}
     </div>
-
-    <button type="button" class="carousel-btn-arrow" id="carousel-next" aria-label="Siguiente Banner">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-    </button>
 
     <!-- Separador Sutil en Barra de Controles -->
     <span class="nav-control-separator"></span>

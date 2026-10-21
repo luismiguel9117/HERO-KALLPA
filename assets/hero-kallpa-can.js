@@ -138,7 +138,14 @@ export class HeroKallpaCan {
     this.wrapper = document.createElement('div');
     this.wrapper.className = 'hero-kallpa-can-wrapper';
 
-    // Interactive card container
+    // Layer 0 (Behind Can): Focused coffee beans & ice cubes splash (Capa 3)
+    this.compBackImg = document.createElement('img');
+    this.compBackImg.className = 'hero-can-comp hero-can-comp__back';
+    this.compBackImg.src = 'assets/hero-beans-ice-back.png';
+    this.compBackImg.alt = '';
+    this.compBackImg.draggable = false;
+
+    // Interactive card container (Lata 2D Animada Cilíndrica)
     this.canCard = document.createElement('div');
     this.canCard.className = 'hero-kallpa-can-card mode-3d';
 
@@ -164,11 +171,37 @@ export class HeroKallpaCan {
     this.dropletsImg.alt = '';
     this.dropletsImg.draggable = false;
 
+    // Layer 4 (Mid-Front): Focused coffee beans & ice cubes around lower can (Capa 2 copia 2)
+    this.compMidImg = document.createElement('img');
+    this.compMidImg.className = 'hero-can-comp hero-can-comp__mid';
+    this.compMidImg.src = 'assets/hero-beans-ice-front.png';
+    this.compMidImg.alt = '';
+    this.compMidImg.draggable = false;
+
+    // Layer 5 (Front Bean): Single sharp coffee bean overlapping right side of can (Capa 4)
+    this.compSingleBeanImg = document.createElement('img');
+    this.compSingleBeanImg.className = 'hero-can-comp hero-can-comp__bean-single';
+    this.compSingleBeanImg.src = 'assets/hero-bean-single.png';
+    this.compSingleBeanImg.alt = '';
+    this.compSingleBeanImg.draggable = false;
+
+    // Layer 6 (Foreground Base): Volcanic rock pedestal with ice and coffee beans (Capa 2 copia)
+    this.compRockImg = document.createElement('img');
+    this.compRockImg.className = 'hero-can-comp hero-can-comp__rock';
+    this.compRockImg.src = 'assets/hero-rock-base.png';
+    this.compRockImg.alt = '';
+    this.compRockImg.draggable = false;
+
     // Assemble layers
     this.canCard.appendChild(this.baseImg);
     this.canCard.appendChild(this.canvas);
     this.canCard.appendChild(this.dropletsImg);
+
+    this.wrapper.appendChild(this.compBackImg);
     this.wrapper.appendChild(this.canCard);
+    this.wrapper.appendChild(this.compMidImg);
+    this.wrapper.appendChild(this.compSingleBeanImg);
+    this.wrapper.appendChild(this.compRockImg);
     this.container.appendChild(this.wrapper);
   }
 
@@ -383,11 +416,11 @@ export class HeroKallpaCan {
         this.renderCanFrame(this.currentOffset);
       }
 
-      // 5. Aplicar Transformación Dinámica en la Lata (Tilt + Seguimiento Magnético + Levitación)
-      const baseRotZ = -11;
-      const currentRotZ = baseRotZ + floatRot + (lift * 2);
-      const currentPosY = floatY - (lift * 18);
-      const currentScale = 1.0 + (lift * 0.05);
+      // 5. Aplicar Transformación Dinámica en la Lata (Tilt +15° horario como el diseño + Seguimiento Magnético + Levitación)
+      const baseRotZ = 15;
+      const currentRotZ = baseRotZ + floatRot + (lift * 1.8);
+      const currentPosY = floatY - (lift * 14);
+      const currentScale = 1.0 + (lift * 0.04);
 
       this.canCard.style.transform = `
         translate3d(${moveX.toFixed(2)}px, ${(currentPosY + moveY).toFixed(2)}px, 0)
@@ -396,6 +429,20 @@ export class HeroKallpaCan {
         rotateZ(${currentRotZ.toFixed(2)}deg)
         scale(${currentScale.toFixed(3)})
       `;
+
+      // Parallax sutil sincronizado en las capas de hielos, granos y piedra volcánica
+      if (this.compBackImg) {
+        this.compBackImg.style.transform = `translate3d(${(moveX * 0.55).toFixed(2)}px, ${(moveY * 0.55 - floatY * 0.35).toFixed(2)}px, 0)`;
+      }
+      if (this.compMidImg) {
+        this.compMidImg.style.transform = `translate3d(${(moveX * 0.85).toFixed(2)}px, ${(moveY * 0.85 + floatY * 0.45).toFixed(2)}px, 0)`;
+      }
+      if (this.compSingleBeanImg) {
+        this.compSingleBeanImg.style.transform = `translate3d(${(moveX * 1.05).toFixed(2)}px, ${(currentPosY * 0.7 + moveY * 1.05).toFixed(2)}px, 0) rotate(${(floatRot * 1.5).toFixed(2)}deg)`;
+      }
+      if (this.compRockImg) {
+        this.compRockImg.style.transform = `translate3d(${(moveX * 0.25).toFixed(2)}px, ${(moveY * 0.15).toFixed(2)}px, 0)`;
+      }
 
       requestAnimationFrame(loop);
     };
