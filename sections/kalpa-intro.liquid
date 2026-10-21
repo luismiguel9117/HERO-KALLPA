@@ -4,6 +4,9 @@
 {% endcomment %}
 
 {{ 'kalpa-intro.css' | asset_url | stylesheet_tag }}
+<link rel="preload" as="image" href="{{ 'kalpa-can-clean.png' | asset_url }}" fetchpriority="high">
+<link rel="preload" as="image" href="{{ 'kalpa-label.png' | asset_url }}" fetchpriority="high">
+<link rel="preload" as="image" href="{{ 'kalpa-can-droplets.png' | asset_url }}" fetchpriority="high">
 
 <section class="kalpa-intro-container" id="kalpa-intro-section" data-section-id="{{ section.id }}">
   <div class="kalpa-intro-sticky" id="kalpa-intro-sticky">

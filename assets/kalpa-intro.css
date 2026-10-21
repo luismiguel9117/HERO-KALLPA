@@ -324,6 +324,14 @@ body.web-revealed .kalpa-navbar {
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.28)) drop-shadow(0 4px 10px rgba(247, 191, 25, 0.12));
   touch-action: pan-y;
   user-select: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.22s ease-out, visibility 0.22s ease-out;
+}
+
+.intro-can-card.is-ready {
+  opacity: 1;
+  visibility: visible;
 }
 
 .intro-can-card.is-dragging {
@@ -531,7 +539,8 @@ body.web-revealed .kalpa-navbar {
    ========================================================================== */
 @media (max-width: 768px) {
   .kalpa-intro-container {
-    height: 200vh;
+    height: 100vh;
+    height: 100dvh;
   }
 
   .kalpa-intro-nav {
@@ -558,38 +567,42 @@ body.web-revealed .kalpa-navbar {
   }
 
   .intro-img--cancha {
-    object-position: 60% bottom;
+    object-position: 55% bottom;
   }
 
-  /* Mano en primer plano saliendo de abajo-centro */
+  /* Mano en primer plano más arriba, bien centrada bajo la lata */
   .intro-img--mano {
-    bottom: -2%;
-    left: 50%;
+    bottom: 7.5%;
+    left: 43.5%;
     transform: translateX(-50%);
-    height: clamp(280px, 46vh, 420px);
+    height: clamp(365px, 51dvh, 495px);
     width: auto;
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 8%);
+    mask-image: linear-gradient(to top, transparent 0%, #000 8%);
   }
 
-  /* Lata flotante en tercio superior */
+  /* Lata flotante protagonista y centrada justo sobre los dedos abiertos */
   .intro-can-card {
-    top: 17%;
-    left: 52%;
+    top: 13.5%;
+    left: 51%;
     transform: translate(-50%, 0) rotate(13deg);
-    height: clamp(240px, 39vh, 370px);
+    height: clamp(295px, 40.5dvh, 410px);
     width: auto;
     aspect-ratio: 1 / 2;
+    filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.28)) drop-shadow(0 4px 10px rgba(247, 191, 25, 0.10));
   }
 
-  /* Contenido tipográfico en el tercio inferior superpuesto sobre la mano */
+  /* Contenido tipográfico en el tercio inferior con sombreado intermedio equilibrado */
   .intro-layer--content {
     padding: 0 1.25rem;
     align-items: flex-end;
     justify-content: center;
+    background: linear-gradient(180deg, transparent 56%, rgba(4, 6, 10, 0.28) 78%, rgba(4, 6, 10, 0.56) 100%);
   }
 
   .intro-content-wrap {
     margin-top: 0;
-    margin-bottom: 2.8rem;
+    margin-bottom: clamp(1.75rem, 4dvh, 2.8rem);
     max-width: 340px;
     text-align: center;
     display: flex;

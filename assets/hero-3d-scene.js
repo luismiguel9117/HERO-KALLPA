@@ -63,11 +63,11 @@ class Kallpa3DScene {
     this.isMobile = winW <= 768;
     this.isTablet = winW > 768 && winW <= 990;
 
-    this.basePosX = this.isMobile ? 0.08 : this.isTablet ? 1.05 : 1.85;
-    this.basePosY = this.isMobile ? -1.25 : this.isTablet ? -0.65 : -0.55;
+    this.basePosX = this.isMobile ? 0.0 : this.isTablet ? 1.05 : 1.85;
+    this.basePosY = this.isMobile ? -0.82 : this.isTablet ? -0.65 : -0.55;
     this.baseRotX = 0.06;
     this.baseRotY = 0.0;
-    this.baseRotZ = this.isMobile ? -0.19 : -0.22;
+    this.baseRotZ = this.isMobile ? -0.18 : -0.22;
 
     this.init();
   }
@@ -78,9 +78,9 @@ class Kallpa3DScene {
 
     this.isMobile = width <= 768;
     this.isTablet = width > 768 && width <= 990;
-    this.basePosX = this.isMobile ? 0.08 : this.isTablet ? 1.05 : 1.85;
-    this.basePosY = this.isMobile ? -1.25 : this.isTablet ? -0.65 : -0.55;
-    this.baseRotZ = this.isMobile ? -0.19 : -0.22;
+    this.basePosX = this.isMobile ? 0.0 : this.isTablet ? 1.05 : 1.85;
+    this.basePosY = this.isMobile ? -0.82 : this.isTablet ? -0.65 : -0.55;
+    this.baseRotZ = this.isMobile ? -0.18 : -0.22;
 
     // 1. Escena Three.js
     this.scene = new THREE.Scene();
@@ -409,8 +409,8 @@ class Kallpa3DScene {
             this.canGroup.add(this.bodyMesh);
             this.canGroup.add(this.alumMesh);
 
-            // Altura de lata calibrada (2.65 unidades Three.js) para encajar en el Hero
-            const targetCanHeight = 2.65;
+            // Altura de lata calibrada (2.65 en desktop, 2.25 en móvil) para encajar en el Hero
+            const targetCanHeight = this.isMobile ? 2.25 : 2.65;
             const scaleFactor = targetCanHeight / 165.35;
             this.canGroup.scale.setScalar(scaleFactor);
 
@@ -418,8 +418,12 @@ class Kallpa3DScene {
             this.canGroup.position.set(this.basePosX, this.basePosY, 0);
             this.canGroup.rotation.set(this.baseRotX, this.baseRotY, this.baseRotZ);
 
-            this.scene.add(this.canGroup);
+            // Aplicar materiales ANTES de insertar en la escena para evitar cualquier frame sin etiqueta
             this.applyMaterials();
+            this.scene.add(this.canGroup);
+            if (this.renderer && this.camera) {
+              this.renderer.render(this.scene, this.camera);
+            }
           }
         },
         undefined,
@@ -474,8 +478,8 @@ class Kallpa3DScene {
   transitionSlide(slideIndex) {
     if (!this.canGroup) return;
 
-    const baseZ = this.isMobile ? -0.19 : -0.22;
-    const baseY = this.isMobile ? -1.25 : (this.isTablet ? -0.65 : -0.55);
+    const baseZ = this.isMobile ? -0.18 : -0.22;
+    const baseY = this.isMobile ? -0.82 : (this.isTablet ? -0.65 : -0.55);
 
     // Variaciones elegantes según el slide, manteniendo el logo frontal KALPA visible
     const slideAngles = [
@@ -511,9 +515,10 @@ class Kallpa3DScene {
   initGSAPTimeline() {
     if (typeof gsap === 'undefined') return;
 
+    const targetCamZ = this.isMobile ? 7.6 : 7.0;
     gsap.fromTo(this.camera.position, 
       { z: 12, y: 2 },
-      { z: 7.0, y: 0, duration: 2.2, ease: "power3.out" }
+      { z: targetCamZ, y: 0, duration: 2.2, ease: "power3.out" }
     );
 
     if (typeof ScrollTrigger !== 'undefined' && this.options.scrollLinked) {
@@ -622,9 +627,9 @@ class Kallpa3DScene {
     this.renderer.setSize(width, height);
 
     if (this.canGroup) {
-      this.basePosX = this.isMobile ? 0.08 : this.isTablet ? 1.05 : 1.85;
-      this.basePosY = this.isMobile ? -1.25 : this.isTablet ? -0.65 : -0.55;
-      this.baseRotZ = this.isMobile ? -0.19 : -0.22;
+      this.basePosX = this.isMobile ? 0.0 : this.isTablet ? 1.05 : 1.85;
+      this.basePosY = this.isMobile ? -0.82 : this.isTablet ? -0.65 : -0.55;
+      this.baseRotZ = this.isMobile ? -0.18 : -0.22;
       this.canGroup.position.x = this.basePosX;
       this.canGroup.position.y = this.basePosY;
       this.canGroup.rotation.z = this.baseRotZ;
@@ -663,7 +668,7 @@ class Kallpa3DScene {
       this.canGroup.rotation.z = this.baseRotZ + liftRotZ + Math.cos(elapsedTime * 1.1) * 0.015 + (this.mouse.y * 0.09);
       this.canGroup.rotation.x = this.baseRotX + Math.sin(elapsedTime * 0.9) * 0.015 - (this.mouse.y * 0.10);
 
-      const targetCanHeight = 2.65;
+      const targetCanHeight = this.isMobile ? 2.25 : 2.65;
       const baseScaleFactor = targetCanHeight / 165.35;
       this.canGroup.scale.setScalar(baseScaleFactor * liftScale);
     }

@@ -180,14 +180,47 @@ export class HeroKallpaCan {
   }
 
   initLabels() {
+    this.isBaseLoaded = false;
+    this.isDropletsLoaded = false;
+    this.isLabelReady = false;
+
+    const waitImg = (img, onDone) => {
+      if (!img) { onDone(); return; }
+      if (img.complete && img.naturalWidth > 0) {
+        onDone();
+      } else {
+        img.addEventListener('load', onDone, { once: true });
+        img.addEventListener('error', onDone, { once: true });
+      }
+    };
+
+    waitImg(this.baseImg, () => {
+      this.isBaseLoaded = true;
+      this.checkReady();
+    });
+
+    waitImg(this.dropletsImg, () => {
+      this.isDropletsLoaded = true;
+      this.checkReady();
+    });
+
     this.labelMaterials = this.options.labels.map((url, idx) => {
       const matObj = this.renderer.createLabelMaterial(url, () => {
         if (idx === this.activeSlide) {
+          this.isLabelReady = true;
           this.renderCanFrame(this.currentOffset);
+          this.checkReady();
         }
       });
       return matObj;
     });
+  }
+
+  checkReady() {
+    if (this.isBaseLoaded && this.isDropletsLoaded && this.isLabelReady && this.canCard) {
+      this.renderCanFrame(this.currentOffset);
+      this.canCard.classList.add('is-ready');
+    }
   }
 
   bindEvents() {
@@ -286,10 +319,11 @@ export class HeroKallpaCan {
 
   renderCanFrame(offset) {
     const activeLabelObj = this.labelMaterials[this.activeSlide];
-    if (!activeLabelObj) return;
+    if (!activeLabelObj || !activeLabelObj.isLoaded) return;
 
-    this.renderer.render(activeLabelObj, offset);
-    this.renderer.blit(this.ctx, 500, 1000);
+    if (this.renderer.render(activeLabelObj, offset)) {
+      this.renderer.blit(this.ctx, 500, 1000);
+    }
   }
 
   startLoop() {
@@ -779,9 +813,44 @@ export class IntroKallpaCan {
   }
 
   initLabel() {
-    this.labelMaterial = this.renderer.createLabelMaterial(this.options.labelUrl, () => {
-      this.renderFrame(this.currentOffset);
+    this.isBaseLoaded = false;
+    this.isDropletsLoaded = false;
+    this.isLabelReady = false;
+
+    const waitImg = (img, onDone) => {
+      if (!img) { onDone(); return; }
+      if (img.complete && img.naturalWidth > 0) {
+        onDone();
+      } else {
+        img.addEventListener('load', onDone, { once: true });
+        img.addEventListener('error', onDone, { once: true });
+      }
+    };
+
+    waitImg(this.baseImg, () => {
+      this.isBaseLoaded = true;
+      this.checkReady();
     });
+
+    waitImg(this.dropletsImg, () => {
+      this.isDropletsLoaded = true;
+      this.checkReady();
+    });
+
+    this.labelMaterial = this.renderer.createLabelMaterial(this.options.labelUrl, () => {
+      this.isLabelReady = true;
+      this.renderFrame(this.currentOffset);
+      this.checkReady();
+    });
+  }
+
+  checkReady() {
+    if (this.isBaseLoaded && this.isDropletsLoaded && this.isLabelReady && this.container) {
+      this.resizeElectricCanvases();
+      this.renderFrame(this.currentOffset);
+      this.renderElectricity(performance.now());
+      this.container.classList.add('is-ready');
+    }
   }
 
   bindEvents() {
@@ -822,9 +891,10 @@ export class IntroKallpaCan {
   }
 
   renderFrame(offset) {
-    if (!this.labelMaterial) return;
-    this.renderer.render(this.labelMaterial, offset);
-    this.renderer.blit(this.ctx, 500, 1000);
+    if (!this.labelMaterial || !this.labelMaterial.isLoaded) return;
+    if (this.renderer.render(this.labelMaterial, offset)) {
+      this.renderer.blit(this.ctx, 500, 1000);
+    }
   }
 
   renderElectricity(currentTime) {

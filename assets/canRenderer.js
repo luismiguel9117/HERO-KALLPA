@@ -126,12 +126,27 @@ export class CanRenderer {
     const uOffset = { value: this.config.frontRot };
     const uGap = { value: this.config.gapLabel };
 
+    const labelState = {
+      material: null,
+      texture: null,
+      isLoaded: false,
+      setOffset: (val) => {
+        uOffset.value = val;
+      },
+      dispose: () => {
+        if (labelState.material) labelState.material.dispose();
+        if (labelState.texture) labelState.texture.dispose();
+      }
+    };
+
     const texture = this.textureLoader.load(labelUrl, () => {
       texture.wrapS = THREE.RepeatWrapping;
       texture.wrapT = THREE.ClampToEdgeWrapping;
       texture.colorSpace = THREE.SRGBColorSpace;
       texture.generateMipmaps = true;
-      if (onReady) onReady();
+      texture.needsUpdate = true;
+      labelState.isLoaded = true;
+      if (onReady) onReady(labelState);
     });
 
     // Semi-gloss varnish coating with subtle metallic aluminum undercoat
@@ -184,27 +199,20 @@ export class CanRenderer {
       );
     };
 
-    return {
-      material,
-      texture,
-      setOffset: (val) => {
-        uOffset.value = val;
-      },
-      dispose: () => {
-        material.dispose();
-        texture.dispose();
-      }
-    };
+    labelState.material = material;
+    labelState.texture = texture;
+    return labelState;
   }
 
   /**
    * Render the 3D cylinder offscreen with the requested rotation offset
    */
   render(labelObj, offset) {
-    if (!labelObj || !labelObj.material) return;
+    if (!labelObj || !labelObj.material || !labelObj.isLoaded) return false;
     labelObj.setOffset(offset);
     this.mesh.material = labelObj.material;
     this.renderer.render(this.scene, this.camera);
+    return true;
   }
 
   /**
