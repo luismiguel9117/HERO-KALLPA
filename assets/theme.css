@@ -3677,40 +3677,35 @@ a.footer-contact-item:hover {
 
 /* Capa Trasera (Capa 3: Granos superiores/laterales y cubos de hielo detrás de la lata) */
 .hero-can-comp__back {
-  width: 175%;
+  width: 162%;
   height: auto;
-  top: 2%;
-  left: -38%;
+  top: 0%;
+  left: -31%;
   z-index: 1;
   filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.55));
 }
 
-/* Capa Media-Baja (Capa 2 copia 2: Granos e hielos en el tercio inferior) */
+/* Capa Media-Baja (Oculta en desktop porque hero-rock-base ya incluye esos granos e hielos) */
 .hero-can-comp__mid {
-  width: 162%;
-  height: auto;
-  bottom: 8%;
-  left: -34%;
-  z-index: 1;
-  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.65));
+  display: none;
 }
 
 /* Grano Frontal Individual (Capa 4: Superpuesto al borde derecho inferior de la lata) */
 .hero-can-comp__bean-single {
-  width: 29%;
+  width: 28%;
   height: auto;
   bottom: 22%;
-  right: -5%;
+  right: -6%;
   z-index: 4;
   filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.75));
 }
 
 /* Base de Piedra Volcánica con Hielos y Café (Capa 2 copia: Delante de la base de la lata) */
 .hero-can-comp__rock {
-  width: 185%;
+  width: 215%;
   height: auto;
   bottom: -6%;
-  left: -42%;
+  left: -74%;
   z-index: 5;
   filter: drop-shadow(0 -8px 24px rgba(0, 0, 0, 0.65));
 }
@@ -3876,9 +3871,9 @@ a.footer-contact-item:hover {
    ========================================================================== */
 .kalpa-product-showcase-sale {
   position: relative;
-  background: radial-gradient(circle at 48% 48%, #fdf8ef 0%, #f5ece0 58%, #eee3d3 100%);
+  background: radial-gradient(circle at 48% 52%, #fbf4e6 0%, #f4eadb 55%, #ede0ce 100%);
   color: #120f0d;
-  padding: clamp(3.5rem, 6vw, 5.5rem) 0 clamp(4.5rem, 7vw, 6.5rem);
+  padding: 2.2rem 0 0;
   overflow: hidden;
   z-index: 15;
 }
@@ -3886,12 +3881,13 @@ a.footer-contact-item:hover {
 .kalpa-sale-container {
   position: relative;
   z-index: 5;
+  max-width: 1260px;
 }
 
 .kalpa-sale-grid {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr 1.25fr;
-  gap: clamp(1.5rem, 3vw, 2.75rem);
+  grid-template-columns: 1.05fr 0.92fr 1.25fr;
+  gap: clamp(1rem, 2.2vw, 2rem);
   align-items: center;
 }
 
@@ -3902,12 +3898,13 @@ a.footer-contact-item:hover {
   align-items: flex-start;
   position: relative;
   z-index: 6;
+  padding-bottom: 2.4rem;
 }
 
 .sale-top-line {
   display: block;
-  width: 30px;
-  height: 2px;
+  width: 34px;
+  height: 2.5px;
   background-color: #1a1615;
   margin-bottom: 0.85rem;
 }
@@ -3915,12 +3912,12 @@ a.footer-contact-item:hover {
 .sale-eyebrow {
   display: block;
   font-family: var(--font-brand);
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   color: #2b2520;
   text-transform: uppercase;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.25rem;
 }
 
 .sale-giant-title {
@@ -3928,38 +3925,38 @@ a.footer-contact-item:hover {
   font-weight: 900;
   font-style: italic;
   text-transform: uppercase;
-  margin: 0 0 1.1rem 0;
+  margin: 0 0 1rem 0;
   display: flex;
   flex-direction: column;
-  line-height: 0.9;
+  line-height: 0.88;
   color: #0b0908;
 }
 
 .sale-title-main {
-  font-size: clamp(3.5rem, 5.8vw, 5.4rem);
+  font-size: clamp(3.8rem, 6.2vw, 5.8rem);
   letter-spacing: -0.03em;
   display: block;
 }
 
 .sale-title-sub {
-  font-size: clamp(2rem, 3.3vw, 3.1rem);
+  font-size: clamp(2.1rem, 3.4vw, 3.2rem);
   letter-spacing: -0.02em;
   display: block;
   margin-top: 0.12rem;
 }
 
 .sale-description {
-  font-size: 0.94rem;
-  line-height: 1.55;
+  font-size: 0.96rem;
+  line-height: 1.5;
   color: #4a4138;
-  margin: 0 0 1.85rem 0;
-  max-width: 350px;
+  margin: 0 0 1.65rem 0;
+  max-width: 365px;
 }
 
 .sale-features-row {
   display: grid;
   grid-template-columns: repeat(4, auto);
-  gap: 1.15rem;
+  gap: 1.25rem;
   align-items: start;
 }
 
@@ -3968,15 +3965,15 @@ a.footer-contact-item:hover {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 0.45rem;
+  gap: 0.5rem;
 }
 
 .sale-feature-circle {
-  width: 50px;
-  height: 50px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  border: 1px solid rgba(26, 22, 21, 0.16);
-  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(26, 22, 21, 0.15);
+  background: rgba(255, 255, 255, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3993,7 +3990,7 @@ a.footer-contact-item:hover {
 .sale-feature-circle .drop-zero {
   position: absolute;
   font-family: var(--font-brand);
-  font-size: 0.62rem;
+  font-size: 0.65rem;
   font-weight: 900;
   color: #fdf8ef;
   top: 53%;
@@ -4004,7 +4001,7 @@ a.footer-contact-item:hover {
 
 .sale-feature-label {
   font-family: var(--font-brand);
-  font-size: 0.62rem;
+  font-size: 0.65rem;
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: 0.03em;
@@ -4012,62 +4009,66 @@ a.footer-contact-item:hover {
   text-transform: uppercase;
 }
 
-/* Columna 2: Composición Central (Lata + Hielos + Granos) */
+/* Columna 2: Composición Central Integrada (Lata + Hielos + Granos + Piedra en Base) */
 .kalpa-sale__centerpiece {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
+  align-self: end;
   z-index: 4;
 }
 
 .sale-can-stage {
   position: relative;
-  width: clamp(220px, 20vw, 290px);
-  height: clamp(400px, 36vw, 500px);
+  width: clamp(235px, 19.5vw, 275px);
+  height: clamp(470px, 39vw, 550px);
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
+  margin-bottom: -14px;
 }
 
-/* Resplandor cálido detrás de la lata en la sección crema */
+/* Resplandor ámbar-dorado detrás de la lata para integrarla con el fondo crema y los hielos */
 .sale-can-stage::before {
   content: '';
   position: absolute;
-  width: 145%;
-  height: 85%;
-  top: 10%;
-  left: -22%;
-  background: radial-gradient(circle, rgba(245, 165, 35, 0.25) 0%, rgba(245, 165, 35, 0.08) 45%, transparent 72%);
-  filter: blur(22px);
+  width: 165%;
+  height: 88%;
+  top: 6%;
+  left: -32%;
+  background: radial-gradient(ellipse at 50% 48%,
+    rgba(235, 130, 18, 0.52) 0%,
+    rgba(245, 168, 38, 0.28) 38%,
+    rgba(245, 185, 65, 0.10) 60%,
+    transparent 76%
+  );
+  filter: blur(20px);
   z-index: 0;
   pointer-events: none;
 }
 
+/* Granos de café y cubos de hielo abrazando los bordes izquierdo y derecho de la lata */
 .sale-stage__beans-back {
   position: absolute;
-  width: 168%;
+  width: 152%;
   max-width: none;
   height: auto;
-  top: 2%;
-  left: -34%;
+  top: -1%;
+  left: -26%;
+  transform: rotate(-13deg);
   z-index: 1;
   pointer-events: none;
   user-select: none;
+  filter: drop-shadow(0 12px 22px rgba(45, 20, 5, 0.25));
 }
 
+/* Oculto en Desktop para evitar duplicar los granos de la base de piedra */
 .sale-stage__beans-mid {
-  position: absolute;
-  width: 158%;
-  max-width: none;
-  height: auto;
-  bottom: 10%;
-  left: -30%;
-  z-index: 1;
-  pointer-events: none;
-  user-select: none;
+  display: none;
 }
 
+/* Lata KALPA Original grande, nítida y enterrada en la base de piedra volcánica */
 .sale-stage__can {
   position: relative;
   width: 100%;
@@ -4076,53 +4077,51 @@ a.footer-contact-item:hover {
   z-index: 2;
   pointer-events: none;
   user-select: none;
-  filter: drop-shadow(0 22px 32px rgba(45, 22, 5, 0.28));
+  filter: drop-shadow(0 18px 32px rgba(40, 18, 4, 0.35));
 }
 
+/* Grano de café frontal superpuesto al borde derecho inferior de la lata */
 .sale-stage__bean-front {
   position: absolute;
   width: 31%;
   height: auto;
-  bottom: 20%;
-  right: -4%;
+  bottom: 22%;
+  right: -7%;
   z-index: 3;
   pointer-events: none;
   user-select: none;
-  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35));
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.42));
 }
 
-/* Pedestal de Piedra Volcánica en la Base Inferior (Desktop) */
-.sale-rock-pedestal {
+/* Base de Piedra Volcánica con Hielos y Café integrada directamente sobre la base de la lata */
+.sale-stage__rock {
   position: absolute;
-  bottom: -24px;
-  left: 48%;
-  transform: translateX(-50%);
-  width: clamp(460px, 44vw, 650px);
-  z-index: 5;
+  width: 235%;
+  max-width: none;
+  height: auto;
+  bottom: -2%;
+  left: -82%;
+  z-index: 4;
   pointer-events: none;
   user-select: none;
-}
-
-.sale-rock-pedestal__img {
-  width: 100%;
-  height: auto;
-  display: block;
+  filter: drop-shadow(0 -6px 18px rgba(25, 10, 2, 0.35));
 }
 
 /* Columna 3: Tarjeta Dual de Compra (Unidad y Pack x 6) */
 .kalpa-sale__buy-box {
-  background: rgba(255, 252, 247, 0.76);
+  background: rgba(255, 252, 247, 0.74);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(26, 22, 21, 0.07);
-  border-radius: 18px;
-  padding: 1.4rem;
+  border: 1px solid rgba(26, 22, 21, 0.06);
+  border-radius: 20px;
+  padding: 1.6rem 1.65rem;
   display: grid;
-  grid-template-columns: 0.92fr 1.18fr;
-  gap: 1.25rem;
-  box-shadow: 0 20px 45px rgba(40, 25, 10, 0.06);
+  grid-template-columns: 0.94fr 1.18fr;
+  gap: 1.35rem;
+  box-shadow: 0 18px 42px rgba(40, 25, 10, 0.05);
   position: relative;
   z-index: 6;
+  margin-bottom: 2.2rem;
 }
 
 .sale-buy-col {
@@ -4133,19 +4132,19 @@ a.footer-contact-item:hover {
 
 .sale-buy-col--pack {
   border-left: 1px solid rgba(26, 22, 21, 0.08);
-  padding-left: 1.25rem;
+  padding-left: 1.35rem;
 }
 
 .sale-unit-header {
   background-color: #0f0d0c;
   color: #ffffff;
   font-family: var(--font-brand);
-  font-size: 0.88rem;
+  font-size: 0.96rem;
   font-weight: 700;
   text-align: center;
-  padding: 0.65rem 1rem;
-  border-radius: 8px;
-  margin-bottom: 1.35rem;
+  padding: 0.72rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.4rem;
 }
 
 .sale-price-block {
@@ -4154,62 +4153,62 @@ a.footer-contact-item:hover {
 
 .sale-price-main {
   font-family: var(--font-brand);
-  font-size: 1.85rem;
+  font-size: 2.15rem;
   font-weight: 900;
   color: #0b0908;
-  line-height: 1.05;
+  line-height: 1.02;
   letter-spacing: -0.02em;
 }
 
 .sale-price-main--pack {
-  font-size: 1.55rem;
+  font-size: 1.75rem;
 }
 
 .sale-volume-sub {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 500;
   color: #6e655c;
-  margin-top: 0.2rem;
+  margin-top: 0.25rem;
 }
 
 .sale-qty-stepper {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1fr;
   align-items: center;
-  justify-content: space-between;
-  border: 1px solid rgba(26, 22, 21, 0.14);
+  border: 1px solid rgba(26, 22, 21, 0.13);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.65);
-  padding: 0.25rem 0.45rem;
-  margin-bottom: 1rem;
+  padding: 0.22rem 0;
+  margin-bottom: 1.1rem;
 }
 
 .qty-btn {
-  width: 28px;
-  height: 28px;
+  height: 30px;
   border: none;
   background: transparent;
   color: #1a1615;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  transition: background 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 .qty-btn:hover {
-  background: rgba(0, 0, 0, 0.06);
+  color: #d97706;
 }
 
 .qty-val {
   font-family: var(--font-brand);
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: #0b0908;
-  min-width: 24px;
   text-align: center;
+  border-left: 1px solid rgba(26, 22, 21, 0.1);
+  border-right: 1px solid rgba(26, 22, 21, 0.1);
+  line-height: 24px;
 }
 
 .btn-sale-add {
@@ -4218,9 +4217,9 @@ a.footer-contact-item:hover {
   color: #0b0908;
   border: none;
   border-radius: 999px;
-  padding: 0.82rem 1rem;
+  padding: 0.88rem 1rem;
   font-family: var(--font-brand);
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   font-weight: 900;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -4249,14 +4248,14 @@ a.footer-contact-item:hover {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  padding-bottom: 0.7rem;
+  padding-bottom: 0.75rem;
   border-bottom: 1px solid rgba(26, 22, 21, 0.08);
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
 }
 
 .sale-pack-title {
   font-family: var(--font-brand);
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   font-weight: 900;
   color: #0b0908;
 }
@@ -4265,9 +4264,9 @@ a.footer-contact-item:hover {
   background-color: #b90e18;
   color: #ffffff;
   font-family: var(--font-brand);
-  font-size: 0.78rem;
+  font-size: 0.88rem;
   font-weight: 800;
-  padding: 0.28rem 0.65rem;
+  padding: 0.32rem 0.75rem;
   border-radius: 999px;
 }
 
@@ -4276,53 +4275,73 @@ a.footer-contact-item:hover {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.15rem;
 }
 
 .sale-pack-old-price {
   display: block;
-  font-size: 0.86rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #8c8277;
   text-decoration: line-through;
   margin-bottom: 0.15rem;
 }
 
+/* Visual de 6 latas (3 fila trasera + 3 fila delantera escalonadas) */
 .sale-pack-cans-visual {
   position: relative;
-  width: 78px;
-  height: 90px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 98px;
+  height: 94px;
   flex-shrink: 0;
 }
 
 .pack-mini-can {
   position: absolute;
-  height: 82px;
-  width: auto;
+  width: 34px;
+  height: 74px;
   object-fit: contain;
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+  filter: drop-shadow(0 5px 9px rgba(0, 0, 0, 0.42));
 }
 
-.pack-mini-can--left {
+/* Fila Trasera (3 latas elevadas para que se vean las 6 latas claramente) */
+.pack-mini-can--b1 {
   left: 2px;
-  height: 76px;
+  top: 0px;
   z-index: 1;
+  filter: brightness(0.88) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.35));
 }
 
-.pack-mini-can--center {
-  left: 50%;
-  transform: translateX(-50%);
-  height: 84px;
+.pack-mini-can--b2 {
+  left: 26px;
+  top: -3px;
+  z-index: 2;
+  filter: brightness(0.92) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.35));
+}
+
+.pack-mini-can--b3 {
+  left: 50px;
+  top: 0px;
+  z-index: 1;
+  filter: brightness(0.88) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.35));
+}
+
+/* Fila Delantera (3 latas desplazadas al frente) */
+.pack-mini-can--f1 {
+  left: 14px;
+  top: 16px;
   z-index: 3;
 }
 
-.pack-mini-can--right {
-  right: 2px;
-  height: 76px;
-  z-index: 2;
+.pack-mini-can--f2 {
+  left: 38px;
+  top: 19px;
+  z-index: 5;
+}
+
+.pack-mini-can--f3 {
+  left: 62px;
+  top: 16px;
+  z-index: 4;
 }
 
 @media (max-width: 1080px) {
@@ -4332,11 +4351,8 @@ a.footer-contact-item:hover {
   .kalpa-sale__buy-box {
     grid-column: 1 / -1;
     max-width: 540px;
-    margin: 1.5rem auto 0;
+    margin: 1.5rem auto 2rem;
     width: 100%;
-  }
-  .sale-rock-pedestal {
-    display: none;
   }
 }
 
@@ -4362,7 +4378,7 @@ a.footer-contact-item:hover {
   .sale-top-line,
   .sale-description,
   .sale-features-row,
-  .sale-rock-pedestal,
+  .sale-stage__rock,
   .sale-unit-header,
   .sale-qty-stepper,
   .sale-buy-col--pack {
@@ -4399,43 +4415,52 @@ a.footer-contact-item:hover {
   /* Lata central con hielos y granos en mobile */
   .kalpa-sale__centerpiece {
     margin: 0.25rem 0 0.5rem;
+    align-self: center;
   }
 
   .sale-can-stage {
-    width: 195px;
-    height: 335px;
+    width: 185px;
+    height: 340px;
+    margin-bottom: 0;
   }
 
   /* Sombra de apoyo suave bajo la lata en mobile */
   .sale-can-stage::after {
     content: '';
     position: absolute;
-    bottom: 8px;
+    bottom: 2px;
     left: 50%;
     transform: translateX(-50%);
-    width: 130px;
+    width: 140px;
     height: 16px;
-    background: radial-gradient(ellipse at center, rgba(35, 20, 8, 0.42) 0%, rgba(35, 20, 8, 0.15) 55%, transparent 80%);
+    background: radial-gradient(ellipse at center, rgba(35, 20, 8, 0.45) 0%, rgba(35, 20, 8, 0.15) 55%, transparent 80%);
     filter: blur(4px);
     z-index: 1;
   }
 
   .sale-stage__beans-back {
     width: 162%;
-    top: 4%;
+    top: 2%;
     left: -31%;
+    transform: rotate(-12deg);
   }
 
   .sale-stage__beans-mid {
-    width: 155%;
-    bottom: 8%;
-    left: -28%;
+    display: block;
+    position: absolute;
+    width: 165%;
+    max-width: none;
+    height: auto;
+    bottom: 4%;
+    left: -32%;
+    z-index: 3;
+    pointer-events: none;
   }
 
   .sale-stage__bean-front {
     width: 30%;
     bottom: 18%;
-    right: -4%;
+    right: -6%;
   }
 
   /* Bloque inferior de precio y botón AGREGAR -> en mobile */

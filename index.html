@@ -644,16 +644,19 @@
           </div>
         </div>
 
-        <!-- Columna 2: Composición Central (Lata + Hielos + Granos + Piedra Volcánica) -->
+        <!-- Columna 2: Composición Central Integrada (Lata + Hielos + Granos + Piedra Volcánica) -->
         <div class="kalpa-sale__centerpiece">
           <div class="sale-can-stage">
-            <!-- Capa Trasera: Granos de café y cubos de hielo flotando alrededor -->
+            <!-- Capa Trasera: Granos de café y cubos de hielo abrazando la lata -->
             <img src="assets/hero-beans-ice-back.png" alt="" class="sale-stage__beans-back" draggable="false">
+            <!-- Capa Hielos Mobile (visible solo en mobile cuando se oculta la piedra) -->
             <img src="assets/hero-beans-ice-front.png" alt="" class="sale-stage__beans-mid" draggable="false">
             <!-- Lata Central KALPA Original Vertical -->
             <img src="assets/kalpa-can-original.png" alt="KALPA Café Cold Brew Original 355ml" class="sale-stage__can" draggable="false">
             <!-- Grano frontal superpuesto a la derecha de la lata -->
             <img src="assets/hero-bean-single.png" alt="" class="sale-stage__bean-front" draggable="false">
+            <!-- Base de Piedra Volcánica, Hielos y Granos integrada en la base de la lata -->
+            <img src="assets/hero-rock-base.png" alt="" class="sale-stage__rock" draggable="false">
           </div>
         </div>
 
@@ -680,7 +683,7 @@
             </button>
           </div>
 
-          <!-- Opción B: Compra Pack x 6 (-15%) -->
+          <!-- Opción B: Compra Pack x 6 (-15%) con 6 latas visibles -->
           <div class="sale-buy-col sale-buy-col--pack">
             <div class="sale-pack-header">
               <span class="sale-pack-title">Pack x 6</span>
@@ -693,9 +696,14 @@
                 <div class="sale-volume-sub">6 latas de 355 ml</div>
               </div>
               <div class="sale-pack-cans-visual" aria-hidden="true">
-                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--left" draggable="false">
-                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--center" draggable="false">
-                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--right" draggable="false">
+                <!-- Fila trasera (3 latas) -->
+                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--b1" draggable="false">
+                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--b2" draggable="false">
+                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--b3" draggable="false">
+                <!-- Fila delantera (3 latas) -->
+                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--f1" draggable="false">
+                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--f2" draggable="false">
+                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--f3" draggable="false">
               </div>
             </div>
             <button type="button" class="btn-sale-add" onclick="addPackToKallpaCart('pack-6-original', 'Pack x 6 KALPA Original (6x355ml)', 39.90)">
@@ -705,11 +713,6 @@
         </div>
 
       </div>
-    </div>
-
-    <!-- Base de Piedra Volcánica, Hielos y Granos en la Base de la Sección (Desktop) -->
-    <div class="sale-rock-pedestal" aria-hidden="true">
-      <img src="assets/hero-rock-base.png" alt="" class="sale-rock-pedestal__img" draggable="false">
     </div>
   </section>
 
