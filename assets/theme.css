@@ -3148,7 +3148,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   width: 100%;
   min-height: 520px;
-  background-color: #07090c;
+  background-color: #050608;
   background-image: url('vraem-landscape-bg.png');
   background-size: cover;
   background-position: center 45%;
@@ -3157,8 +3157,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   padding: clamp(4.5rem, 7vw, 6.5rem) 0;
   overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border: none;
 }
 
 .vraem-panorama-overlay {
@@ -3166,17 +3165,19 @@ h1, h2, h3, h4, h5, h6 {
   inset: 0;
   background: 
     linear-gradient(90deg, 
-      rgba(4, 6, 8, 0.88) 0%, 
-      rgba(4, 6, 8, 0.60) 28%, 
+      rgba(4, 6, 8, 0.92) 0%, 
+      rgba(4, 6, 8, 0.65) 28%, 
       rgba(4, 6, 8, 0.15) 50%, 
-      rgba(4, 6, 8, 0.58) 72%, 
-      rgba(4, 6, 8, 0.88) 100%
+      rgba(4, 6, 8, 0.65) 72%, 
+      rgba(4, 6, 8, 0.92) 100%
     ),
     linear-gradient(180deg, 
-      rgba(4, 6, 8, 0.65) 0%, 
-      transparent 22%, 
-      transparent 78%, 
-      rgba(4, 6, 8, 0.8) 100%
+      #050608 0%, 
+      rgba(5, 6, 8, 0.96) 3%, 
+      transparent 18%, 
+      transparent 80%, 
+      rgba(5, 6, 8, 0.96) 97%, 
+      #050608 100%
     );
   pointer-events: none;
   z-index: 1;
@@ -3758,7 +3759,7 @@ a.footer-contact-item:hover {
 .hero-kallpa-can-wrapper {
   position: absolute;
   top: 52%;
-  right: 11%;
+  right: 13%;
   transform: translateY(-46%);
   width: clamp(290px, 26vw, 390px);
   height: clamp(580px, 52vw, 780px);
@@ -4123,6 +4124,7 @@ a.footer-contact-item:hover {
   justify-content: center;
   align-self: end;
   z-index: 4;
+  transform: translateX(-40px);
 }
 
 .sale-can-stage {
