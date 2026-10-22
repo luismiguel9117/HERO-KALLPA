@@ -3605,140 +3605,328 @@ h1, h2, h3, h4, h5, h6 {
   width: fit-content;
 }
 
-/* 9. Official Footer Layout */
-.kallpa-footer {
-  background-color: #050608;
+/* 9. Official Footer Layout con Banner Newsletter */
+.kallpa-footer-wrapper {
+  background-color: #000000;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 4.5rem 0 3rem;
 }
 
-.kallpa-footer__main-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2.5rem;
+/* BANNER NEWSLETTER SUPERIOR: SÉ PARTE DE KALPA */
+.kallpa-newsletter-banner {
+  position: relative;
+  width: 100%;
+  background: radial-gradient(ellipse at 42% 50%, #46080b 0%, #290406 50%, #150203 100%);
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-@media (min-width: 768px) {
-  .kallpa-footer__main-grid {
-    grid-template-columns: 1.3fr repeat(3, 0.85fr) 1.45fr;
-    gap: 2rem;
-  }
-}
-
-.footer-contact-col {
+.kallpa-newsletter-container {
+  position: relative;
+  min-height: 220px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.2rem 1.5rem;
 }
 
-.footer-contact-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 1.25rem 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+/* Lata con Hielos y Salpicaduras en Primer Plano Izquierdo */
+.newsletter-banner__can-box {
+  position: absolute;
+  left: -25px;
+  bottom: -20px;
+  width: clamp(280px, 30vw, 420px);
+  pointer-events: none;
+  z-index: 1;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.75));
 }
 
-.footer-contact-item {
-  display: inline-flex;
-  align-items: flex-start;
-  gap: 0.6rem;
-  color: #94a3b8;
-  text-decoration: none;
+.newsletter-banner__can {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Contenido Central */
+.newsletter-banner__content {
+  position: relative;
+  z-index: 2;
+  text-align: left;
+  max-width: 580px;
+  margin-left: clamp(140px, 18vw, 260px);
+  margin-right: auto;
+}
+
+.newsletter-banner__title {
+  font-family: var(--font-brand);
+  font-size: clamp(1.4rem, 2.3vw, 1.95rem);
+  font-weight: 900;
+  font-style: italic;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin: 0 0 0.35rem 0;
+  line-height: 1.1;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.newsletter-banner__desc {
   font-size: 0.88rem;
   line-height: 1.45;
-  transition: color 0.2s ease;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0 0 1.25rem 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
 
-a.footer-contact-item:hover {
-  color: var(--accent-gold);
-}
-
-.footer-contact-icon {
-  color: var(--accent-gold);
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.footer-brand-col {
+.newsletter-banner__form {
   display: flex;
-  flex-direction: column;
-}
-
-.footer-brand-logo {
-  display: inline-block;
-  margin-bottom: 0.6rem;
-}
-
-.footer-brand-tagline {
-  color: #94a3b8;
-  font-size: 0.9rem;
-  margin-bottom: 0.8rem;
-}
-
-.footer-brand-copy {
-  color: #64748b;
-  font-size: 0.8rem;
-  margin-top: auto;
-}
-
-.footer-col-title {
-  font-family: var(--font-brand);
-  font-size: 0.95rem;
-  font-weight: 900;
-  color: #ffffff;
-  margin-bottom: 1.2rem;
-  letter-spacing: 0.02em;
-}
-
-.footer-nav-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
-.footer-nav-list a {
-  color: #94a3b8;
-  text-decoration: none;
+.newsletter-banner__input {
+  background: rgba(12, 3, 4, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  padding: 0.72rem 1.4rem;
+  color: #ffffff;
+  font-family: inherit;
   font-size: 0.88rem;
-  transition: color 0.2s ease, transform 0.2s ease;
-  display: inline-block;
+  min-width: 260px;
+  outline: none;
+  transition: border-color 0.25s, background-color 0.25s;
 }
 
-.footer-nav-list a:hover {
-  color: var(--accent-gold);
+.newsletter-banner__input:focus {
+  border-color: #f7bf19;
+  background: rgba(12, 3, 4, 0.85);
+}
+
+.newsletter-banner__input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.newsletter-banner__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: #f7bf19;
+  color: #000000;
+  border: none;
+  border-radius: 999px;
+  padding: 0.72rem 1.75rem;
+  font-family: var(--font-brand);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(247, 191, 25, 0.35);
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.newsletter-banner__btn:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.4);
+}
+
+.newsletter-banner__btn svg {
+  transition: transform 0.25s ease;
+}
+
+.newsletter-banner__btn:hover svg {
   transform: translateX(3px);
 }
 
-.footer-social-col {
-  display: flex;
-  gap: 0.9rem;
-  align-items: flex-start;
+/* Grano de Café en la Esquina Superior Derecha */
+.newsletter-banner__bean-box {
+  position: absolute;
+  right: clamp(25px, 5vw, 65px);
+  top: 25px;
+  width: clamp(75px, 7vw, 105px);
+  transform: rotate(34deg);
+  pointer-events: none;
+  z-index: 1;
+  filter: drop-shadow(0 12px 25px rgba(0, 0, 0, 0.65));
 }
 
-.social-icon-btn {
-  width: 40px;
-  height: 40px;
+.newsletter-banner__bean {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* BARRA INFERIOR DEL FOOTER: LOGO, MENÚ, REDES, ENVÍOS Y LEGAL */
+.kallpa-footer-bottom {
+  background-color: #000000;
+  width: 100%;
+}
+
+.footer-bottom__main-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2rem 0 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-wrap: wrap;
+}
+
+.footer-logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.footer-logo-img {
+  height: 32px;
+  width: auto;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.footer-logo-link:hover .footer-logo-img {
+  transform: scale(1.05);
+}
+
+.footer-horizontal-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.2rem, 2vw, 2.2rem);
+}
+
+.footer-horizontal-nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.footer-horizontal-nav a:hover {
+  color: #f7bf19;
+}
+
+.footer-social-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer-social-btn {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #cbd5e1;
+  color: #ffffff;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  transition: all 0.25s var(--ease-spring);
+  transition: all 0.25s ease;
 }
 
-.social-icon-btn:hover {
-  background: var(--accent-gold);
+.footer-social-btn:hover {
+  background: #f7bf19;
   color: #000000;
-  border-color: var(--accent-gold);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 18px rgba(245, 186, 44, 0.35);
+  border-color: #f7bf19;
+  transform: translateY(-2px);
+}
+
+.footer-shipping-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.footer-shipping-icon {
+  color: #ffffff;
+}
+
+.footer-bottom__legal-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.25rem 0 2rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  flex-wrap: wrap;
+}
+
+.footer-copyright {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer-legal-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer-legal-links a {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-legal-links a:hover {
+  color: #ffffff;
+}
+
+.legal-sep {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 900px) {
+  .kallpa-newsletter-container {
+    min-height: auto;
+    padding: 2.2rem 1.25rem;
+    flex-direction: column;
+  }
+  .newsletter-banner__can-box {
+    position: static;
+    width: 220px;
+    margin: 0 auto 1.25rem;
+  }
+  .newsletter-banner__content {
+    margin: 0 auto;
+    text-align: center;
+  }
+  .newsletter-banner__form {
+    justify-content: center;
+  }
+  .newsletter-banner__bean-box {
+    display: none;
+  }
+  .footer-bottom__main-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+  }
+  .footer-horizontal-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.2rem;
+  }
+  .footer-bottom__legal-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
 }
 
 
