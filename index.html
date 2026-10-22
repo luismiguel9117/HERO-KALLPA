@@ -1031,17 +1031,23 @@
     
     <!-- BANNER NEWSLETTER SUPERIOR: SÉ PARTE DE KALPA -->
     <div class="kallpa-newsletter-banner">
-      <div class="page-width kallpa-newsletter-container">
+      <!-- Marca de agua con patrón textil andino del hero -->
+      <div class="kallpa-newsletter-banner__pattern" aria-hidden="true"></div>
+      <div class="kallpa-newsletter-banner__vignette" aria-hidden="true"></div>
+
+      <div class="kallpa-newsletter-container">
         
         <!-- Lata con Hielos y Salpicadura en Primer Plano Izquierdo -->
         <div class="newsletter-banner__can-box">
           <img src="assets/footer-banner-can.png" alt="Lata KALPA Cold Brew" class="newsletter-banner__can" draggable="false" loading="lazy">
         </div>
 
-        <!-- Contenido Central: Título, Bajada y Formulario de Suscripción -->
-        <div class="newsletter-banner__content">
-          <h3 class="newsletter-banner__title">SÉ PARTE DE KALPA</h3>
-          <p class="newsletter-banner__desc">Recibe promociones exclusivas, lanzamientos y más historias del VRAEM.</p>
+        <!-- Bloque de Contenido y Formulario -->
+        <div class="newsletter-banner__content-box">
+          <div class="newsletter-banner__header">
+            <h3 class="newsletter-banner__title">SÉ PARTE DE KALPA</h3>
+            <p class="newsletter-banner__desc">Recibe promociones exclusivas, lanzamientos y más historias del VRAEM.</p>
+          </div>
           <form class="newsletter-banner__form" onsubmit="event.preventDefault(); alert('¡Gracias por unirte a la comunidad KALPA!');">
             <input type="email" placeholder="Tu correo electrónico" class="newsletter-banner__input" required aria-label="Tu correo electrónico">
             <button type="submit" class="newsletter-banner__btn">
@@ -1054,7 +1060,7 @@
           </form>
         </div>
 
-        <!-- Grano de Café en la Esquina Superior Derecha -->
+        <!-- Grano de Café en la Esquina Superior Derecha (sobre el botón) -->
         <div class="newsletter-banner__bean-box" aria-hidden="true">
           <img src="assets/hero-bean-single.png" alt="" class="newsletter-banner__bean" draggable="false">
         </div>
@@ -1064,7 +1070,7 @@
 
     <!-- BARRA INFERIOR DEL FOOTER: LOGO, MENÚ, REDES, ENVÍOS Y LEGAL -->
     <div class="kallpa-footer-bottom">
-      <div class="page-width">
+      <div class="kallpa-footer-bottom__container">
         
         <!-- Fila 1: Logo + Navegación + Redes Sociales + Envíos a todo el Perú -->
         <div class="footer-bottom__main-row">
