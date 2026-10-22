@@ -296,10 +296,10 @@ body.web-revealed .kalpa-navbar {
 
 .intro-img--mano {
   position: absolute;
-  bottom: -4%;
-  left: 49%;
+  bottom: -5%;
+  left: 45%;
   transform: translateX(-50%);
-  height: clamp(300px, 46vh, 500px);
+  height: clamp(350px, 52vh, 580px);
   width: auto;
   display: block;
   pointer-events: none;
@@ -572,10 +572,10 @@ body.web-revealed .kalpa-navbar {
 
   /* Mano en primer plano saliendo de la base */
   .intro-img--mano {
-    bottom: -1%;
-    left: 43.5%;
+    bottom: -2%;
+    left: 38.5%;
     transform: translateX(-50%);
-    height: clamp(330px, 46dvh, 450px);
+    height: clamp(370px, 52dvh, 520px);
     width: auto;
     -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 8%);
     mask-image: linear-gradient(to top, transparent 0%, #000 8%);
