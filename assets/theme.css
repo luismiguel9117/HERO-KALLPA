@@ -3143,82 +3143,185 @@ h1, h2, h3, h4, h5, h6 {
   transform: scale(1.04);
 }
 
-/* 5. VRAEM Origin Section */
-.vraem-origin-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
-  align-items: center;
-}
-
-@media (min-width: 860px) {
-  .vraem-origin-grid {
-    grid-template-columns: 1.1fr 1fr;
-    gap: 4.5rem;
-  }
-}
-
-.vraem-media-frame {
+/* 5. VRAEM Origin Section: Un Origen Extraordinario */
+.kallpa-vraem-panorama-section {
   position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
-}
-
-.vraem-harvest__img {
   width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-  transition: transform 0.6s var(--ease-spring);
+  min-height: 520px;
+  background-color: #07090c;
+  background-image: url('vraem-landscape-bg.png');
+  background-size: cover;
+  background-position: center 45%;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  padding: clamp(4.5rem, 7vw, 6.5rem) 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.vraem-media-frame:hover .vraem-harvest__img {
-  transform: scale(1.04);
-}
-
-.vraem-media-badge {
+.vraem-panorama-overlay {
   position: absolute;
-  top: 18px;
-  left: 18px;
-  background: rgba(14, 17, 24, 0.85);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(245, 186, 44, 0.4);
-  padding: 6px 14px;
-  border-radius: 999px;
-  color: var(--accent-gold);
+  inset: 0;
+  background: 
+    linear-gradient(90deg, 
+      rgba(4, 6, 8, 0.88) 0%, 
+      rgba(4, 6, 8, 0.60) 28%, 
+      rgba(4, 6, 8, 0.15) 50%, 
+      rgba(4, 6, 8, 0.58) 72%, 
+      rgba(4, 6, 8, 0.88) 100%
+    ),
+    linear-gradient(180deg, 
+      rgba(4, 6, 8, 0.65) 0%, 
+      transparent 22%, 
+      transparent 78%, 
+      rgba(4, 6, 8, 0.8) 100%
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.vraem-panorama-container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: clamp(2rem, 5vw, 6rem);
+}
+
+.vraem-panorama__left {
+  max-width: 580px;
+}
+
+.vraem-panorama__title {
   font-family: var(--font-brand);
-  font-size: 0.75rem;
+  margin: 0 0 1.25rem 0;
+  display: flex;
+  flex-direction: column;
+  letter-spacing: -0.02em;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+}
+
+.vraem-panorama__title .title-white {
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
   font-weight: 800;
-  letter-spacing: 0.1em;
-}
-
-.vraem-giant-title {
-  font-family: var(--font-brand);
-  font-size: clamp(3.2rem, 7vw, 6rem);
-  font-weight: 900;
-  line-height: 0.95;
-  color: var(--accent-gold);
-  letter-spacing: -0.03em;
-  margin: 0.2rem 0 0.8rem;
-}
-
-.vraem-subtitle {
-  font-family: var(--font-brand);
-  font-size: clamp(1.2rem, 2vw + 0.3rem, 1.6rem);
-  font-weight: 900;
-  line-height: 1.2;
   color: #ffffff;
-  margin-bottom: 1.2rem;
-  letter-spacing: -0.01em;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
-.vraem-desc {
-  color: #94a3b8;
-  font-size: 1.05rem;
-  line-height: 1.7;
-  margin-bottom: 2rem;
+.vraem-panorama__title .title-gold {
+  font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+  font-weight: 900;
+  font-style: italic;
+  color: #f7bf19;
+  line-height: 0.95;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+.vraem-panorama__text {
+  font-size: clamp(0.98rem, 1.15vw, 1.12rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0 0 2rem 0;
+  max-width: 490px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+}
+
+.btn-vraem-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.9rem 2.2rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #f7bf19 0%, #f5ba2c 100%);
+  color: #000000;
+  font-family: var(--font-brand);
+  font-size: 0.88rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(247, 191, 25, 0.4);
+  transition: all 0.3s var(--ease-spring);
+}
+
+.btn-vraem-gold:hover {
+  background: #ffffff;
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(255, 255, 255, 0.4);
+}
+
+.btn-vraem-gold svg {
+  transition: transform 0.25s ease;
+}
+
+.btn-vraem-gold:hover svg {
+  transform: translateX(4px);
+}
+
+.vraem-panorama__right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  flex-shrink: 0;
+}
+
+.vraem-feature-pill {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  color: #ffffff;
+  transition: transform 0.25s ease;
+}
+
+.vraem-feature-pill:hover {
+  transform: translateX(4px);
+}
+
+.vraem-feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.7));
+}
+
+.vraem-feature-label {
+  font-family: var(--font-brand);
+  font-size: clamp(0.92rem, 1.05vw, 1.05rem);
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.35;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+  max-width: 250px;
+}
+
+@media (max-width: 900px) {
+  .vraem-panorama-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3rem;
+  }
+  .kallpa-vraem-panorama-section {
+    min-height: auto;
+    padding: 4.5rem 0;
+    background-position: 65% center;
+  }
+  .vraem-panorama-overlay {
+    background: linear-gradient(180deg, 
+      rgba(4, 6, 8, 0.88) 0%, 
+      rgba(4, 6, 8, 0.65) 50%, 
+      rgba(4, 6, 8, 0.92) 100%
+    );
+  }
 }
 
 /* 6. Benefits Bento Section */
