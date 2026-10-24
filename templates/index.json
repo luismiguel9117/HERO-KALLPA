@@ -57,15 +57,6 @@
         "title_part2": "ENERGÍA LLEVAS"
       }
     },
-    "clean_energy_1": {
-      "type": "kallpa-clean-energy",
-      "settings": {
-        "eyebrow": "LO QUE NOS MUEVE",
-        "title_part1": "ENERGÍA",
-        "title_part2": "LIMPIA",
-        "desc": "Café de los Andes sin azúcar ni ingredientes innecesarios. Solo energía natural para un día real."
-      }
-    },
     "vraem_origin_1": {
       "type": "kallpa-vraem-origin",
       "settings": {
@@ -106,7 +97,6 @@
     "hero_3d",
     "ticker_1",
     "products_1",
-    "clean_energy_1",
     "vraem_origin_1",
     "benefits_bento_1",
     "promo_banner_1",
