@@ -297,7 +297,7 @@ body.web-revealed .kalpa-navbar {
 .intro-img--mano {
   position: absolute;
   bottom: -5%;
-  left: 37%;
+  left: 44.5%;
   transform: translateX(-50%);
   height: clamp(350px, 52vh, 580px);
   width: auto;
@@ -573,7 +573,7 @@ body.web-revealed .kalpa-navbar {
   /* Mano en primer plano saliendo de la base */
   .intro-img--mano {
     bottom: -2%;
-    left: 26%;
+    left: 36%;
     transform: translateX(-50%);
     height: clamp(370px, 52dvh, 520px);
     width: auto;
