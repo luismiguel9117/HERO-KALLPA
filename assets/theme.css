@@ -5021,13 +5021,13 @@ h1, h2, h3, h4, h5, h6 {
 .kallpa-energy-natural-section {
   position: relative;
   width: 100%;
-  min-height: clamp(440px, 50vw, 560px);
-  background-color: #05070a;
+  min-height: clamp(420px, 38vw, 540px);
+  background-color: #030406;
   display: flex;
   align-items: center;
   overflow: hidden;
-  border-top: 1px solid rgba(245, 186, 44, 0.15);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(245, 186, 44, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .energy-natural__bg-layer {
@@ -5035,26 +5035,26 @@ h1, h2, h3, h4, h5, h6 {
   inset: 0;
   width: 100%;
   height: 100%;
-  background: url("energy-natural-bg.png") center right / cover no-repeat;
+  background: url("energy-natural-composition.png") right center / cover no-repeat;
   pointer-events: none;
   z-index: 1;
 }
 
-/* Sombra suave a la izquierda para garantizar legibilidad del texto */
+/* Sombra suave a la izquierda para garantizar legibilidad óptima del texto sobre el fondo */
 .energy-natural__bg-layer::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(5, 7, 10, 0.94) 0%, rgba(5, 7, 10, 0.88) 36%, rgba(5, 7, 10, 0.35) 60%, rgba(5, 7, 10, 0.02) 100%);
+  background: linear-gradient(90deg, rgba(3, 4, 6, 0.96) 0%, rgba(3, 4, 6, 0.88) 32%, rgba(3, 4, 6, 0.4) 55%, transparent 72%);
   pointer-events: none;
 }
 
-/* Viñeta sutil en bordes superior e inferior */
+/* Viñeta sutil en bordes superior e inferior para fundirse armónicamente */
 .energy-natural__bg-layer::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(5, 7, 10, 0.75) 0%, transparent 22%, transparent 78%, rgba(5, 7, 10, 0.75) 100%);
+  background: linear-gradient(180deg, rgba(3, 4, 6, 0.7) 0%, transparent 18%, transparent 82%, rgba(3, 4, 6, 0.7) 100%);
   pointer-events: none;
 }
 
@@ -5062,24 +5062,22 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   z-index: 5;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1360px;
   margin: 0 auto;
-  padding: 3.5rem clamp(2rem, 5vw, 5rem);
+  padding: 3.5rem clamp(2rem, 5vw, 4.5rem);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  min-height: clamp(440px, 50vw, 560px);
+  min-height: clamp(420px, 38vw, 540px);
 }
 
 .energy-natural__content {
   position: relative;
   z-index: 10;
-  max-width: 520px;
-  padding: 1rem 0;
+  max-width: 540px;
 }
 
 .energy-natural__accent-bar {
-  width: 26px;
+  width: 28px;
   height: 3px;
   background: #ea580c;
   border-radius: 2px;
@@ -5088,94 +5086,66 @@ h1, h2, h3, h4, h5, h6 {
 
 .energy-natural__title {
   margin: 0 0 1.25rem;
-  line-height: 1.14;
+  line-height: 1.12;
 }
 
 .energy-title-line1 {
   display: block;
   font-family: 'Syne', sans-serif;
-  font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+  font-size: clamp(1.8rem, 2.5vw, 2.4rem);
   font-weight: 300;
   color: #ffffff;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
+  margin-bottom: 0.35rem;
 }
 
 .energy-title-line2 {
   display: block;
   font-family: 'Syne', sans-serif;
-  font-size: clamp(2.1rem, 3.8vw, 3.25rem);
+  font-size: clamp(1.95rem, 3.2vw, 3.1rem);
   font-weight: 900;
   color: #f5ba2c;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.01em;
   text-transform: uppercase;
-  text-shadow: 0 4px 25px rgba(245, 186, 44, 0.35);
+  white-space: nowrap;
+  text-shadow: 0 4px 30px rgba(245, 186, 44, 0.4);
 }
 
 .energy-natural__text {
-  font-size: clamp(0.92rem, 1.1vw, 1.05rem);
-  line-height: 1.65;
+  font-size: clamp(0.95rem, 1.1vw, 1.06rem);
+  line-height: 1.68;
   color: #d1d5db;
   font-weight: 400;
   margin: 0;
-}
-
-/* Grano gigante protagonista posicionado en la mitad derecha */
-.energy-natural__visual {
-  position: absolute;
-  top: 50%;
-  right: -3%;
-  transform: translateY(-50%);
-  width: 58%;
-  max-width: 820px;
-  height: 125%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  pointer-events: none;
-  z-index: 6;
-}
-
-.energy-natural__bean-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center right;
-  display: block;
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 35px rgba(245, 186, 44, 0.22));
+  max-width: 500px;
 }
 
 @media (max-width: 1024px) {
-  .energy-natural__visual {
-    width: 54%;
-    right: -4%;
-    opacity: 0.95;
+  .energy-natural__bg-layer {
+    background-position: 75% center;
   }
 }
 
 @media (max-width: 768px) {
   .kallpa-energy-natural-section {
     min-height: auto;
-    padding: 3.5rem 0;
+    padding: 4.5rem 0;
+  }
+  .energy-natural__bg-layer {
+    background-position: center right;
+  }
+  .energy-natural__bg-layer::before {
+    background: linear-gradient(90deg, rgba(3, 4, 6, 0.95) 0%, rgba(3, 4, 6, 0.85) 60%, rgba(3, 4, 6, 0.65) 100%);
   }
   .energy-natural__container {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1.5rem;
+    padding: 0 1.5rem;
     min-height: auto;
   }
   .energy-natural__content {
     max-width: 100%;
-    margin-bottom: 2rem;
   }
-  .energy-natural__visual {
-    position: relative;
-    top: auto;
-    right: auto;
-    transform: none;
-    width: 100%;
-    max-width: 440px;
-    height: auto;
-    margin: 0 auto;
+  .energy-title-line2 {
+    white-space: normal;
   }
 }
