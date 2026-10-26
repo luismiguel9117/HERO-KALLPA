@@ -231,33 +231,6 @@
       <div class="kalpa-hero__backlight-flare"></div>
     </div>
 
-    <!-- Elementos de Cacao con Difuminación jugando con los planos (Bokeh Foreground & Background) -->
-    <div class="cacao-beans-viewport" id="cacao-beans-viewport">
-      <!-- PLANO 1: Primer plano desenfocado izquierdo (Foreground Bokeh) -->
-      <div class="cacao-bean cacao-bean--top-left" data-depth="0.08" data-plane="foreground">
-        <img src="assets/cacao-1.png" alt="" class="cacao-bean__img cacao-anim--float-1" draggable="false">
-      </div>
-      <div class="cacao-bean cacao-bean--bottom-left" data-depth="0.09" data-plane="foreground">
-        <img src="assets/cacao-1.png" alt="" class="cacao-bean__img cacao-anim--float-2" draggable="false">
-      </div>
-
-      <!-- PLANO 2: Bokeh inferior central-izquierdo -->
-      <div class="cacao-bean cacao-bean--bottom-center-1" data-depth="0.06" data-plane="foreground">
-        <img src="assets/cacao-1.png" alt="" class="cacao-bean__img cacao-anim--float-5" draggable="false">
-      </div>
-
-      <!-- PLANO 3: Esquina superior e inferior derecha desenfocadas -->
-      <div class="cacao-bean cacao-bean--top-right" data-depth="0.07" data-plane="foreground">
-        <img src="assets/cacao-1.png" alt="" class="cacao-bean__img cacao-anim--float-7" draggable="false">
-      </div>
-      <div class="cacao-bean cacao-bean--mid-right" data-depth="0.07" data-plane="foreground">
-        <img src="assets/cacao-1.png" alt="" class="cacao-bean__img cacao-anim--float-4" draggable="false">
-      </div>
-      <div class="cacao-bean cacao-bean--bottom-right" data-depth="0.09" data-plane="foreground">
-        <img src="assets/cacao-1.png" alt="" class="cacao-bean__img cacao-anim--float-3" draggable="false">
-      </div>
-    </div>
-
     <!-- Viewport 2D Animada con Canvas Cilíndrico Interactivo (Kallpa Repo) -->
     <div id="kallpa-hero-2d-anim" 
          class="hero-2d-anim-viewport"
@@ -267,9 +240,6 @@
          data-label-gold="assets/kalpa-label-gold.png"
          data-label-citrus="assets/kalpa-label-citrus.png">
     </div>
-
-    <!-- Canvas 2D de micro-partículas -->
-    <canvas id="kallpa-hero-2d" class="hero-2d-canvas"></canvas>
 
     <!-- Diapositivas del Carrusel -->
     <div class="page-width" style="position: relative; z-index: 10; width: 100%; pointer-events: none;">
@@ -1021,7 +991,6 @@
   <script src="assets/motion.js"></script>
   <script src="assets/framer-animations.js"></script>
   <script type="module" src="assets/hero-kallpa-can.js"></script>
-  <script src="assets/hero-2d-canvas.js"></script>
   <script src="assets/theme.js"></script>
 
   <script>
@@ -1148,7 +1117,7 @@
       function startAutoPlay() {
         autoPlayTimer = setInterval(() => {
           goToSlide(currentIndex + 1);
-        }, 6500);
+        }, 4200);
       }
 
       function resetAutoPlay() {

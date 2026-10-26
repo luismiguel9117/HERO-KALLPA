@@ -887,14 +887,9 @@ h1, h2, h3, h4, h5, h6 {
    ELEMENTOS DE CACAO CON DIFUMINACIÓN Y PLANOS DE PROFUNDIDAD
    ========================================================================== */
 .floating-beans-container,
-.cacao-beans-viewport {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 15;
+.cacao-beans-viewport,
+.hero-2d-canvas {
+  display: none !important;
 }
 
 .cacao-bean {

@@ -31,48 +31,6 @@ class SpringValue {
   }
 }
 
-/**
- * Física de seguimiento de cursor para elementos de cacao en planos de profundidad
- */
-class CacaoBeanPhysics {
-  constructor(element) {
-    this.element = element;
-    this.depth = parseFloat(element.dataset.depth || '0.04');
-    // Rigidez y amortiguación según la distancia de cámara (planos bokeh se desplazan más libremente)
-    const stiffness = 38 + this.depth * 140;
-    const damping = 10 + this.depth * 20;
-    this.springX = new SpringValue(0, stiffness, damping);
-    this.springY = new SpringValue(0, stiffness, damping);
-    this.springTiltX = new SpringValue(0, 48, 12);
-    this.springTiltY = new SpringValue(0, 48, 12);
-  }
-
-  updateTarget(normX, normY) {
-    // Escala de desplazamiento por plano:
-    // Foreground (depth ~0.09) -> hasta 35px
-    // Midground (depth ~0.04) -> hasta 15px
-    // Background (depth ~0.02) -> hasta 7px
-    const distanceFactor = this.depth * 380;
-    this.springX.target = normX * distanceFactor;
-    this.springY.target = normY * distanceFactor;
-    this.springTiltX.target = -normY * (this.depth * 95);
-    this.springTiltY.target = normX * (this.depth * 95);
-  }
-
-  update(dt) {
-    const x = this.springX.update(dt);
-    const y = this.springY.update(dt);
-    const rx = this.springTiltX.update(dt);
-    const ry = this.springTiltY.update(dt);
-
-    this.element.style.transform = `
-      translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0)
-      rotateX(${rx.toFixed(2)}deg)
-      rotateY(${ry.toFixed(2)}deg)
-    `;
-  }
-}
-
 export class HeroKallpaCan {
   constructor(containerId = 'kallpa-hero-2d-anim', options = {}) {
     this.container = document.getElementById(containerId);
@@ -88,8 +46,8 @@ export class HeroKallpaCan {
         ds.labelGold || 'assets/kalpa-label-gold.png',       // Slide 2: Extracción 24H / Gold
         ds.labelCitrus || 'assets/kalpa-label-citrus.png'    // Slide 3: Energía Limpia / Citrus
       ],
-      spinDuration: 2400, // ms for 360° turn
-      ambientSpinInterval: 7500 // ms between spontaneous ambient rotations
+      spinDuration: parseInt(ds.spinDuration, 10) || 1800, // ms for 360° turn (más dinámico)
+      ambientSpinInterval: parseInt(ds.ambientInterval, 10) || 3200 // ms entre giros espontáneos (más corto)
     }, options);
 
     // Initial state: Always active interactive cylinder canvas
@@ -120,11 +78,7 @@ export class HeroKallpaCan {
     this.moveYSpring = new SpringValue(0, 48, 11);
     this.floatTime = 0;
 
-    // Elementos de cacao con física
-    this.cacaoBeans = [];
-
     this.initDOM();
-    this.initCacaoPhysics();
     this.initLabels();
     this.bindEvents();
     this.startLoop();
@@ -211,13 +165,6 @@ export class HeroKallpaCan {
     this.wrapper.appendChild(this.compSingleBeanImg);
     this.wrapper.appendChild(this.compRockImg);
     this.container.appendChild(this.wrapper);
-  }
-
-  initCacaoPhysics() {
-    // Si ya existe la escena 3D controlando el parallax del cacao, evitar conflicto
-    if (window.kallpa3D) return;
-    const beanElements = document.querySelectorAll('.cacao-bean');
-    this.cacaoBeans = Array.from(beanElements).map(el => new CacaoBeanPhysics(el));
   }
 
   initLabels() {
@@ -385,11 +332,6 @@ export class HeroKallpaCan {
       const tiltY = this.tiltYSpring.update(dt);
       const moveX = this.moveXSpring.update(dt);
       const moveY = this.moveYSpring.update(dt);
-
-      // 3. Actualización de Resortes Físicos de los Elementos de Cacao (Seguimiento de cursor sincronizado)
-      if (this.cacaoBeans && this.cacaoBeans.length) {
-        this.cacaoBeans.forEach(bean => bean.update(dt));
-      }
 
       // Inercia tras arrastre manual (solo modo 3D)
       if (this.mode === '3d' && !this.isDragging && Math.abs(this.velocity) > 0.0001) {
@@ -745,8 +687,8 @@ export class IntroKallpaCan {
       baseCanUrl: ds.baseCan || 'assets/kalpa-can-base.png',
       dropletsUrl: ds.droplets || 'assets/kalpa-can-droplets.png',
       labelUrl: ds.label || 'assets/kalpa-label.png',
-      spinDuration: 2400,
-      ambientSpinInterval: 6500
+      spinDuration: parseInt(ds.spinDuration, 10) || 1800,
+      ambientSpinInterval: parseInt(ds.ambientInterval, 10) || 3000
     }, options);
 
     this.renderer = new CanRenderer();
