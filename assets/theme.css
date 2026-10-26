@@ -5015,20 +5015,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
-   SECCIÓN: MÁS QUE CAFÉ, ES ENERGÍA NATURAL (DEBAJO DE ORIGEN EXTRAORDINARIO)
-   Exacto al diseño: Fondo de tormenta con rayos dorados + Grano con rayo
+   SECCIÓN: MÁS QUE CAFÉ, ES ENERGÍA NATURAL (Exacto a Mockup)
+   Banner cinematográfico con grano gigante, hendidura de rayo y nubes ámbar
    ========================================================================== */
 .kallpa-energy-natural-section {
   position: relative;
   width: 100%;
-  min-height: clamp(480px, 58vh, 660px);
-  padding: clamp(4rem, 7vw, 6.5rem) 0;
+  min-height: clamp(440px, 50vw, 560px);
+  background-color: #05070a;
   display: flex;
   align-items: center;
   overflow: hidden;
-  background-color: #07090e;
-  border-top: 1px solid rgba(245, 186, 44, 0.12);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(245, 186, 44, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .energy-natural__bg-layer {
@@ -5036,190 +5035,147 @@ h1, h2, h3, h4, h5, h6 {
   inset: 0;
   width: 100%;
   height: 100%;
-  background: url("energy-natural-bg.png") center center / cover no-repeat;
+  background: url("energy-natural-bg.png") center right / cover no-repeat;
   pointer-events: none;
   z-index: 1;
 }
 
-/* Viñetas superior e inferior para transición suave */
+/* Sombra suave a la izquierda para garantizar legibilidad del texto */
 .energy-natural__bg-layer::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(7, 9, 14, 0.88) 0%, rgba(7, 9, 14, 0.15) 30%, rgba(7, 9, 14, 0.15) 70%, rgba(7, 9, 14, 0.90) 100%);
+  background: linear-gradient(90deg, rgba(5, 7, 10, 0.94) 0%, rgba(5, 7, 10, 0.88) 36%, rgba(5, 7, 10, 0.35) 60%, rgba(5, 7, 10, 0.02) 100%);
   pointer-events: none;
 }
 
+/* Viñeta sutil en bordes superior e inferior */
 .energy-natural__bg-layer::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 75% 50%, rgba(245, 158, 11, 0.20) 0%, transparent 60%);
+  background: linear-gradient(180deg, rgba(5, 7, 10, 0.75) 0%, transparent 22%, transparent 78%, rgba(5, 7, 10, 0.75) 100%);
   pointer-events: none;
-}
-
-.energy-natural__ambient-glow {
-  position: absolute;
-  right: 15%;
-  top: 50%;
-  transform: translateY(-50%);
-  width: clamp(280px, 42vw, 560px);
-  height: clamp(280px, 42vw, 560px);
-  background: radial-gradient(circle, rgba(245, 186, 44, 0.24) 0%, rgba(234, 88, 12, 0.12) 45%, transparent 70%);
-  filter: blur(40px);
-  pointer-events: none;
-  z-index: 2;
 }
 
 .energy-natural__container {
   position: relative;
   z-index: 5;
-  display: grid;
-  grid-template-columns: 1.15fr 0.95fr;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3.5rem clamp(2rem, 5vw, 5rem);
+  display: flex;
   align-items: center;
-  gap: clamp(2rem, 5vw, 4.5rem);
+  justify-content: space-between;
+  min-height: clamp(440px, 50vw, 560px);
 }
 
 .energy-natural__content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  max-width: 580px;
+  position: relative;
+  z-index: 10;
+  max-width: 520px;
+  padding: 1rem 0;
 }
 
 .energy-natural__accent-bar {
-  width: 34px;
+  width: 26px;
   height: 3px;
-  background: linear-gradient(90deg, #ea580c, #f5ba2c);
+  background: #ea580c;
   border-radius: 2px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.4rem;
 }
 
 .energy-natural__title {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  margin: 0 0 1.6rem;
-  line-height: 1.12;
+  margin: 0 0 1.25rem;
+  line-height: 1.14;
 }
 
 .energy-title-line1 {
+  display: block;
   font-family: 'Syne', sans-serif;
-  font-size: clamp(2rem, 3.8vw, 3.3rem);
-  font-weight: 500;
+  font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+  font-weight: 300;
   color: #ffffff;
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
 
 .energy-title-line2 {
+  display: block;
   font-family: 'Syne', sans-serif;
-  font-size: clamp(2.1rem, 4.1vw, 3.5rem);
+  font-size: clamp(2.1rem, 3.8vw, 3.25rem);
   font-weight: 900;
   color: #f5ba2c;
   letter-spacing: -0.01em;
   text-transform: uppercase;
-  text-shadow: 0 4px 24px rgba(245, 186, 44, 0.35);
+  text-shadow: 0 4px 25px rgba(245, 186, 44, 0.35);
 }
 
 .energy-natural__text {
-  font-size: clamp(0.95rem, 1.25vw, 1.12rem);
-  line-height: 1.75;
+  font-size: clamp(0.92rem, 1.1vw, 1.05rem);
+  line-height: 1.65;
   color: #d1d5db;
   font-weight: 400;
   margin: 0;
-  text-wrap: pretty;
 }
 
+/* Grano gigante protagonista posicionado en la mitad derecha */
 .energy-natural__visual {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  right: -3%;
+  transform: translateY(-50%);
+  width: 58%;
+  max-width: 820px;
+  height: 125%;
   display: flex;
-  justify-content: center;
   align-items: center;
-}
-
-.energy-natural__bean-wrap {
-  position: relative;
-  width: 100%;
-  max-width: clamp(340px, 42vw, 560px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform-origin: center center;
-  transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
-}
-
-.energy-natural__bean-wrap:hover {
-  transform: scale(1.025) rotate(0.8deg);
+  justify-content: flex-end;
+  pointer-events: none;
+  z-index: 6;
 }
 
 .energy-natural__bean-img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: contain;
+  object-position: center right;
   display: block;
-  filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 35px rgba(245, 186, 44, 0.28));
-  user-select: none;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 35px rgba(245, 186, 44, 0.22));
 }
 
-.energy-natural__bean-glow {
-  position: absolute;
-  top: 45%;
-  left: 55%;
-  transform: translate(-50%, -50%);
-  width: 45%;
-  height: 45%;
-  background: radial-gradient(circle, rgba(255, 245, 200, 0.45) 0%, rgba(245, 186, 44, 0.25) 50%, transparent 75%);
-  filter: blur(20px);
-  mix-blend-mode: screen;
-  pointer-events: none;
-  animation: beanLightningPulse 3.5s ease-in-out infinite alternate;
-}
-
-@keyframes beanLightningPulse {
-  0% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.92); }
-  50% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.05); }
-  70% { opacity: 0.75; transform: translate(-50%, -50%) scale(0.98); }
-  100% { opacity: 1.0; transform: translate(-50%, -50%) scale(1.08); }
-}
-
-@media (max-width: 992px) {
-  .energy-natural__container {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 3rem;
-  }
-  .energy-natural__content {
-    align-items: center;
-    max-width: 100%;
-  }
-  .energy-natural__accent-bar {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .energy-natural__title {
-    align-items: center;
-  }
-  .energy-natural__bean-wrap {
-    max-width: 440px;
+@media (max-width: 1024px) {
+  .energy-natural__visual {
+    width: 54%;
+    right: -4%;
+    opacity: 0.95;
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   .kallpa-energy-natural-section {
+    min-height: auto;
     padding: 3.5rem 0;
   }
-  .energy-title-line1 {
-    font-size: 1.85rem;
+  .energy-natural__container {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem;
+    min-height: auto;
   }
-  .energy-title-line2 {
-    font-size: 1.95rem;
+  .energy-natural__content {
+    max-width: 100%;
+    margin-bottom: 2rem;
   }
-  .energy-natural__text {
-    font-size: 0.95rem;
-    line-height: 1.65;
-  }
-  .hidden-mobile {
-    display: none;
+  .energy-natural__visual {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    width: 100%;
+    max-width: 440px;
+    height: auto;
+    margin: 0 auto;
   }
 }
