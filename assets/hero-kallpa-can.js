@@ -80,7 +80,7 @@ export class HeroKallpaCan {
 
     const ds = this.container.dataset || {};
     this.options = Object.assign({
-      baseCanUrl: ds.baseCan || 'assets/kalpa-can-clean.png',
+      baseCanUrl: ds.baseCan || 'assets/kalpa-can-base.png',
       dropletsUrl: ds.droplets || 'assets/kalpa-can-droplets.png',
       photo2dUrl: ds.photo2d || 'assets/kalpa-can-original.png',
       labels: [
@@ -504,55 +504,55 @@ export class CanElectricArc {
       // Corona superior (Chispas ascendentes desde la tapa hacia el cielo)
       const side = r() > 0.5 ? 1 : -1;
       waypoints = [
-        { u: side * (0.25 + r() * 0.25), v: -0.74 + r() * 0.08, z: 0.2 },
-        { u: side * (0.50 + r() * 0.25), v: -0.88 - r() * 0.12, z: -0.2 },
-        { u: side * (0.75 + r() * 0.35), v: -1.05 - r() * 0.22, z: -0.6 },
-        { u: side * (1.00 + r() * 0.45), v: -1.22 - r() * 0.35, z: -0.9 }
+        { u: side * (0.20 + r() * 0.20), v: -0.78 + r() * 0.06, z: 0.2 },
+        { u: side * (0.42 + r() * 0.18), v: -0.88 - r() * 0.12, z: -0.2 },
+        { u: side * (0.62 + r() * 0.22), v: -1.05 - r() * 0.22, z: -0.6 },
+        { u: side * (0.85 + r() * 0.30), v: -1.22 - r() * 0.35, z: -0.9 }
       ];
     } else if (z === 1) {
       // Descarga basal inferior (Chispas descendentes hacia la base)
       const side = r() > 0.5 ? 1 : -1;
       waypoints = [
-        { u: side * (0.20 + r() * 0.3), v: 0.80 + r() * 0.06, z: 0.3 },
-        { u: side * (0.42 + r() * 0.3), v: 0.95 + r() * 0.10, z: 0.1 },
-        { u: side * (0.68 + r() * 0.35), v: 1.12 + r() * 0.18, z: -0.4 },
-        { u: side * (0.85 + r() * 0.45), v: 1.30 + r() * 0.28, z: -0.8 }
+        { u: side * (0.18 + r() * 0.22), v: 0.78 + r() * 0.06, z: 0.3 },
+        { u: side * (0.38 + r() * 0.22), v: 0.92 + r() * 0.10, z: 0.1 },
+        { u: side * (0.58 + r() * 0.25), v: 1.08 + r() * 0.18, z: -0.4 },
+        { u: side * (0.75 + r() * 0.30), v: 1.25 + r() * 0.28, z: -0.8 }
       ];
     } else if (z === 2) {
-      // Envoltura diagonal descendente (Atrás -> Delante -> Atrás)
+      // Envoltura diagonal descendente (Atrás -> Delante -> Atrás adaptado a lata slim)
       const dir = r() > 0.5 ? 1 : -1;
       waypoints = [
-        { u: -dir * (0.92 + r() * 0.18), v: -0.62 - r() * 0.18, z: -0.7 },
-        { u: -dir * (0.55 + r() * 0.18), v: -0.32 + r() * 0.12, z: -0.1 },
-        { u: 0.0 + (r() - 0.5) * 0.25, v: 0.0 + (r() - 0.5) * 0.18, z: 0.8 },
-        { u: dir * (0.60 + r() * 0.18), v: 0.35 + r() * 0.12, z: 0.2 },
-        { u: dir * (0.98 + r() * 0.20), v: 0.65 + r() * 0.18, z: -0.6 }
+        { u: -dir * (0.68 + r() * 0.10), v: -0.62 - r() * 0.15, z: -0.7 },
+        { u: -dir * (0.38 + r() * 0.12), v: -0.32 + r() * 0.12, z: -0.1 },
+        { u: 0.0 + (r() - 0.5) * 0.20, v: 0.0 + (r() - 0.5) * 0.16, z: 0.8 },
+        { u: dir * (0.42 + r() * 0.12), v: 0.35 + r() * 0.12, z: 0.2 },
+        { u: dir * (0.70 + r() * 0.10), v: 0.65 + r() * 0.15, z: -0.6 }
       ];
     } else if (z === 3) {
-      // Envoltura diagonal ascendente (Atrás -> Delante -> Atrás)
+      // Envoltura diagonal ascendente (Atrás -> Delante -> Atrás adaptado a lata slim)
       const dir = r() > 0.5 ? 1 : -1;
       waypoints = [
-        { u: -dir * (0.95 + r() * 0.18), v: 0.60 + r() * 0.16, z: -0.6 },
-        { u: -dir * (0.52 + r() * 0.18), v: 0.26 + r() * 0.12, z: 0.2 },
-        { u: 0.04 * dir, v: -0.04 + (r() - 0.5) * 0.18, z: 0.9 },
-        { u: dir * (0.58 + r() * 0.18), v: -0.35 + r() * 0.12, z: 0.1 },
-        { u: dir * (0.98 + r() * 0.20), v: -0.68 + r() * 0.16, z: -0.7 }
+        { u: -dir * (0.70 + r() * 0.10), v: 0.60 + r() * 0.15, z: -0.6 },
+        { u: -dir * (0.38 + r() * 0.12), v: 0.26 + r() * 0.12, z: 0.2 },
+        { u: 0.03 * dir, v: -0.04 + (r() - 0.5) * 0.16, z: 0.9 },
+        { u: dir * (0.42 + r() * 0.12), v: -0.35 + r() * 0.12, z: 0.1 },
+        { u: dir * (0.70 + r() * 0.10), v: -0.68 + r() * 0.15, z: -0.7 }
       ];
     } else if (z === 4) {
-      // Flanco lateral izquierdo
+      // Flanco lateral izquierdo ceñido al contorno de la nueva lata slim
       waypoints = [
-        { u: -0.82 - r() * 0.12, v: -0.52 + r() * 0.12, z: -0.3 },
-        { u: -0.98 - r() * 0.16, v: -0.14 + r() * 0.12, z: 0.2 },
-        { u: -0.95 - r() * 0.15, v: 0.20 + r() * 0.12, z: 0.4 },
-        { u: -0.85 - r() * 0.12, v: 0.58 + r() * 0.12, z: -0.2 }
+        { u: -0.64 - r() * 0.08, v: -0.52 + r() * 0.12, z: -0.3 },
+        { u: -0.70 - r() * 0.08, v: -0.14 + r() * 0.12, z: 0.2 },
+        { u: -0.69 - r() * 0.08, v: 0.20 + r() * 0.12, z: 0.4 },
+        { u: -0.65 - r() * 0.08, v: 0.58 + r() * 0.12, z: -0.2 }
       ];
     } else {
-      // Flanco lateral derecho
+      // Flanco lateral derecho ceñido al contorno de la nueva lata slim
       waypoints = [
-        { u: 0.82 + r() * 0.12, v: -0.50 + r() * 0.12, z: -0.3 },
-        { u: 0.98 + r() * 0.16, v: -0.10 + r() * 0.12, z: 0.2 },
-        { u: 0.95 + r() * 0.15, v: 0.22 + r() * 0.12, z: 0.4 },
-        { u: 0.85 + r() * 0.12, v: 0.60 + r() * 0.12, z: -0.2 }
+        { u: 0.64 + r() * 0.08, v: -0.50 + r() * 0.12, z: -0.3 },
+        { u: 0.70 + r() * 0.08, v: -0.10 + r() * 0.12, z: 0.2 },
+        { u: 0.69 + r() * 0.08, v: 0.22 + r() * 0.12, z: 0.4 },
+        { u: 0.65 + r() * 0.08, v: 0.60 + r() * 0.12, z: -0.2 }
       ];
     }
 
@@ -742,7 +742,7 @@ export class IntroKallpaCan {
 
     const ds = this.container.dataset || {};
     this.options = Object.assign({
-      baseCanUrl: ds.baseCan || 'assets/kalpa-can-clean.png',
+      baseCanUrl: ds.baseCan || 'assets/kalpa-can-base.png',
       dropletsUrl: ds.droplets || 'assets/kalpa-can-droplets.png',
       labelUrl: ds.label || 'assets/kalpa-label.png',
       spinDuration: 2400,
@@ -790,12 +790,12 @@ export class IntroKallpaCan {
     if (!baseImg) {
       baseImg = document.createElement('img');
       baseImg.className = 'intro-can__base';
-      baseImg.src = this.options.baseCanUrl;
-      baseImg.alt = 'Lata KALPA Cold Brew 2D Animada';
       baseImg.loading = 'eager';
       baseImg.draggable = false;
       this.container.appendChild(baseImg);
     }
+    baseImg.src = this.options.baseCanUrl;
+    baseImg.alt = 'Lata KALPA Cold Brew 2D Animada';
     this.baseImg = baseImg;
 
     // 2. Canvas 3D de la etiqueta cilíndrica
@@ -815,11 +815,11 @@ export class IntroKallpaCan {
     if (!droplets) {
       droplets = document.createElement('img');
       droplets.className = 'intro-can__droplets';
-      droplets.src = this.options.dropletsUrl;
       droplets.alt = '';
       droplets.draggable = false;
       this.container.appendChild(droplets);
     }
+    droplets.src = this.options.dropletsUrl;
     this.dropletsImg = droplets;
 
     // 3.5 Tapa y aro de aluminio fotográfico (commit 6e46cb5)
@@ -827,11 +827,12 @@ export class IntroKallpaCan {
     if (!rims) {
       rims = document.createElement('img');
       rims.className = 'intro-can__rims';
-      rims.src = 'assets/kalpa-can-rims.png';
-      rims.alt = '';
+      rims.loading = 'eager';
       rims.draggable = false;
       this.container.appendChild(rims);
     }
+    rims.src = 'assets/kalpa-can-rims.png';
+    rims.alt = '';
     this.rimsImg = rims;
 
     // 4. Capa frontal de electricidad
