@@ -167,6 +167,64 @@
   transform: translateY(-8px) scale(1.03);
 }
 
+/* Escenario Central con Roca Volcánica, Hielos y Granos */
+.catalog-card__stage {
+  position: relative;
+  z-index: 2;
+  width: 270px;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.catalog-card__beans-back {
+  position: absolute;
+  top: 4%;
+  left: -22%;
+  width: 145%;
+  height: auto;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.catalog-card__can {
+  position: relative;
+  z-index: 2;
+  max-height: 320px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.4));
+  transition: transform 0.35s ease;
+}
+
+.catalog-item__card:hover .catalog-card__can,
+.product-main-stage:hover .catalog-card__can {
+  transform: translateY(-6px) scale(1.02);
+}
+
+.catalog-card__bean-front {
+  position: absolute;
+  bottom: 20%;
+  right: -6%;
+  width: 25%;
+  height: auto;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.catalog-card__rock {
+  position: absolute;
+  bottom: -4%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 135%;
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+  z-index: 4;
+}
+
 /* Placeholder para Productos Próximos (Orange & Latte) */
 .catalog-card__placeholder {
   position: relative;

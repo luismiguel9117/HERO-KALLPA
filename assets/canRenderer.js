@@ -8,12 +8,12 @@ import * as THREE from 'three';
 export class CanRenderer {
   constructor(config = {}) {
     this.config = {
-      cylTop: 0.092,       // Starts right at silver lid rim crease
-      cylBot: 0.925,       // Ends right at bottom silver chime
-      cylWidth: 0.764,     // Width of straight body (382 / 500)
-      cylCurv: 2.2,        // Downward tilt in degrees matching lid/chime ellipses
+      cylTop: 0.108,       // Tucked under silver lid crease (y = 108 in 1000px)
+      cylBot: 0.892,       // Tucked under bottom silver chime (y = 892 in 1000px)
+      cylWidth: 0.682,     // Width of straight body (341 / 500) - sleek slim can
+      cylCurv: -2.2,       // Upward convex arch (⌒) matching photographic can perspective
       gapLabel: 0.0,       // Full 360 seamless sleeve wrap
-      frontRot: 0.475,     // Centers "KALPA" logo facing camera
+      frontRot: 0.493,     // Centers "KALPA" logo facing camera
       lightInt: 1.8,       // Key light intensity
       lightAmb: 0.42,      // Low ambient preserves deep obsidian black
       lightX: -0.9,        // Key light X position
@@ -79,29 +79,29 @@ export class CanRenderer {
     frontFill.position.set(0, 0, 2);
     this.scene.add(frontFill);
 
-    // 5. Cylindrical Lathe Geometry accurately contoured to the can's shoulder & base
-    const totalH = this.config.cylBot - this.config.cylTop; // 0.925 - 0.092 = 0.833
-    const bodyRadius = (this.config.cylWidth * this.aspect) / 2; // (0.764 * 0.5) / 2 = 0.191
-    const neckRadius = 0.154; // Tight radius at silver lid rim to stay 100% inside silhouette
-    const chimeRadius = 0.182; // Tight radius at bottom chime
+    // 5. Cylindrical Lathe Geometry accurately contoured to the new slim can's shoulder & base
+    const totalH = this.config.cylBot - this.config.cylTop; // 0.892 - 0.108 = 0.784
+    const bodyRadius = (this.config.cylWidth * this.aspect) / 2; // (0.682 * 0.5) / 2 = 0.1705
+    const neckRadius = 0.1565; // Radius tucked under silver lid crease (313 / 500 * 0.5 / 2)
+    const chimeRadius = 0.165; // Radius tucked under bottom chime crease (330 / 500 * 0.5 / 2)
 
     const points = [];
-    const steps = 50;
+    const steps = 60;
 
     for (let i = 0; i <= steps; i++) {
       const t = i / steps; // 0 (bottom) to 1 (top)
       let r = bodyRadius;
 
-      // Top shoulder inward curve towards lid (t from 0.82 to 1.0)
-      if (t > 0.82) {
-        const st = (t - 0.82) / 0.18;
+      // Top shoulder inward curve towards lid (t from 0.89 to 1.0)
+      if (t > 0.89) {
+        const st = (t - 0.89) / 0.11;
         // Smooth Hermite curve
         const curve = st * st * (3.0 - 2.0 * st);
         r = bodyRadius - (bodyRadius - neckRadius) * curve;
       }
-      // Bottom bevel inward curve towards chime (t from 0.0 to 0.08)
-      else if (t < 0.08) {
-        const bt = (0.08 - t) / 0.08;
+      // Bottom bevel inward curve towards chime (t from 0.0 to 0.04)
+      else if (t < 0.04) {
+        const bt = (0.04 - t) / 0.04;
         r = bodyRadius - (bodyRadius - chimeRadius) * bt;
       }
 
@@ -144,7 +144,6 @@ export class CanRenderer {
       texture.wrapT = THREE.ClampToEdgeWrapping;
       texture.colorSpace = THREE.SRGBColorSpace;
       texture.generateMipmaps = true;
-      texture.needsUpdate = true;
       labelState.isLoaded = true;
       if (onReady) onReady(labelState);
     });
@@ -189,8 +188,8 @@ export class CanRenderer {
           // Deepen blacks so dark ink matches the obsidian black brushed can body
           sampledDiffuseColor.rgb = pow(sampledDiffuseColor.rgb, vec3(1.15));
 
-          // Smooth soft edge at top and bottom - eliminates plastic shrinkwrap look
-          float edgeSoftness = smoothstep(1.0, 0.982, vMapUv.y) * smoothstep(0.0, 0.015, vMapUv.y);
+          // Full opacity across entire label, with micro-antialiasing at extreme ends
+          float edgeSoftness = smoothstep(1.0, 0.995, vMapUv.y) * smoothstep(0.0, 0.005, vMapUv.y);
           sampledDiffuseColor.a *= edgeSoftness;
 
           diffuseColor *= sampledDiffuseColor;
@@ -208,7 +207,7 @@ export class CanRenderer {
    * Render the 3D cylinder offscreen with the requested rotation offset
    */
   render(labelObj, offset) {
-    if (!labelObj || !labelObj.material || !labelObj.isLoaded) return false;
+    if (!labelObj || !labelObj.material) return false;
     labelObj.setOffset(offset);
     this.mesh.material = labelObj.material;
     this.renderer.render(this.scene, this.camera);

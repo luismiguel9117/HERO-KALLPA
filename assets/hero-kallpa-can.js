@@ -97,8 +97,8 @@ export class HeroKallpaCan {
     this.activeSlide = 0;
     this.renderer = new CanRenderer();
     this.labelMaterials = [];
-    this.currentOffset = 0.475; // Front logo KALPA
-    this.targetOffset = 0.475;
+    this.currentOffset = 0.493; // Front logo KALPA
+    this.targetOffset = 0.493;
     this.spinCycleStart = -1;
     this.lastAmbientSpinTime = performance.now();
     this.isDragging = false;
@@ -171,6 +171,13 @@ export class HeroKallpaCan {
     this.dropletsImg.alt = '';
     this.dropletsImg.draggable = false;
 
+    // Layer 3.5: Photorealistic aluminum lid & base chime rims (commit 6e46cb5)
+    this.rimsImg = document.createElement('img');
+    this.rimsImg.className = 'hero-kallpa-can__rims';
+    this.rimsImg.src = 'assets/kalpa-can-rims.png';
+    this.rimsImg.alt = '';
+    this.rimsImg.draggable = false;
+
     // Layer 4 (Mid-Front): Focused coffee beans & ice cubes around lower can (Capa 2 copia 2)
     this.compMidImg = document.createElement('img');
     this.compMidImg.className = 'hero-can-comp hero-can-comp__mid';
@@ -196,6 +203,7 @@ export class HeroKallpaCan {
     this.canCard.appendChild(this.baseImg);
     this.canCard.appendChild(this.canvas);
     this.canCard.appendChild(this.dropletsImg);
+    this.canCard.appendChild(this.rimsImg);
 
     this.wrapper.appendChild(this.compBackImg);
     this.wrapper.appendChild(this.canCard);
@@ -390,7 +398,7 @@ export class HeroKallpaCan {
       }
 
       // 4. Rotación 360° en modo 3D
-      const baseFrontOffset = 0.475;
+      const baseFrontOffset = 0.493;
       if (this.mode === '3d') {
         if (this.spinCycleStart > 0) {
           const elapsed = currentTime - this.spinCycleStart;
@@ -745,8 +753,8 @@ export class IntroKallpaCan {
     this.electricEngine = new CanElectricEngine();
 
     this.labelMaterial = null;
-    this.currentOffset = 0.475; // Front logo KALPA
-    this.targetOffset = 0.475;
+    this.currentOffset = 0.493; // Front logo KALPA
+    this.targetOffset = 0.493;
     this.spinCycleStart = -1;
     this.lastAmbientSpinTime = performance.now();
     this.isDragging = false;
@@ -813,6 +821,18 @@ export class IntroKallpaCan {
       this.container.appendChild(droplets);
     }
     this.dropletsImg = droplets;
+
+    // 3.5 Tapa y aro de aluminio fotográfico (commit 6e46cb5)
+    let rims = this.container.querySelector('.intro-can__rims');
+    if (!rims) {
+      rims = document.createElement('img');
+      rims.className = 'intro-can__rims';
+      rims.src = 'assets/kalpa-can-rims.png';
+      rims.alt = '';
+      rims.draggable = false;
+      this.container.appendChild(rims);
+    }
+    this.rimsImg = rims;
 
     // 4. Capa frontal de electricidad
     let frontCanvas = this.container.querySelector('.intro-can__electric-front');
@@ -986,7 +1006,7 @@ export class IntroKallpaCan {
       }
 
       // 2. Rotación 360° ambiental periódica
-      const baseFrontOffset = 0.475;
+      const baseFrontOffset = 0.493;
       if (this.spinCycleStart > 0) {
         const elapsed = currentTime - this.spinCycleStart;
         const progress = Math.min(elapsed / this.options.spinDuration, 1.0);
