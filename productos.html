@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos | KALPA Cold Brew — Energía Real de los Andes</title>
+  <meta name="description" content="Descubre la línea completa de KALPA Cold Brew. Café de Ayacucho en lata, macerado 24 horas en frío. Elige tu formato y sabor.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo-k-symbol-white.png">
+
+  <!-- Estilos Globales -->
+  <link rel="stylesheet" href="assets/theme.css">
+  <link rel="stylesheet" href="assets/products-pages.css">
+</head>
+<body class="bg-black text-white">
+
+  <!-- ==================== 1. ANNOUNCEMENT BAR & NAVBAR ==================== -->
+  <div class="kalpa-announcement-bar">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="announcement-truck-icon">
+      <rect x="1" y="3" width="15" height="13"></rect>
+      <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+      <circle cx="5.5" cy="18.5" r="2.5"></circle>
+      <circle cx="18.5" cy="18.5" r="2.5"></circle>
+    </svg>
+    <span>Envíos a todo el Perú. Compra por unidad o por pack.</span>
+    <a href="producto.html" class="announcement-link-desktop">Ver promoción de lanzamiento</a>
+  </div>
+
+  <header class="kalpa-navbar" id="kallpa-header">
+    <div class="page-width kalpa-navbar__container">
+      <!-- Logo KALPA Oficial -->
+      <a href="index.html" class="kalpa-logo" aria-label="KALPA Cold Brew - Inicio">
+        <img src="assets/logo-kalpa-white.png" alt="KALPA Logo" class="kalpa-logo__img" width="165" height="38">
+      </a>
+
+      <!-- Menú de Navegación (Tienda unificada en Productos) -->
+      <nav class="kalpa-nav-menu">
+        <a href="index.html" class="kalpa-nav-item">Inicio</a>
+        <a href="productos.html" class="kalpa-nav-item is-active">Productos</a>
+        <a href="index.html#origin-section" class="kalpa-nav-item">Promociones</a>
+        <a href="nosotros.html" class="kalpa-nav-item">Nosotros</a>
+      </nav>
+
+      <div class="kalpa-nav-actions">
+        <button type="button" class="kalpa-nav-icon nav-icon--search" aria-label="Buscar" onclick="alert('Buscador activo: busca tu KALPA favorito')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+
+        <button type="button" class="kalpa-nav-icon nav-icon--account" aria-label="Cuenta" onclick="alert('Mi Cuenta KALPA')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+
+        <button type="button" class="kalpa-nav-icon nav-icon--favorites" aria-label="Favoritos" onclick="alert('Tus favoritos guardados')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </button>
+
+        <button type="button" class="kalpa-cart-capsule" onclick="openKallpaCart()" aria-label="Abrir Carrito">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span id="kallpa-cart-count">0</span>
+        </button>
+
+        <a href="producto.html" class="kalpa-nav-cta">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="21" r="1"></circle>
+            <circle cx="19" cy="21" r="1"></circle>
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+          </svg>
+          <span>COMPRAR AHORA</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ==================== 2. HERO DE PRODUCTOS ==================== -->
+  <section class="catalog-hero">
+    <div class="page-width">
+      <span class="catalog-hero__eyebrow">PRODUCTOS</span>
+      <h1 class="catalog-hero__title">
+        <span class="catalog-hero__title-solid">LA LÍNEA</span>
+        <span class="catalog-hero__title-outline">KALPA</span>
+      </h1>
+      <p class="catalog-hero__desc">
+        Café de Ayacucho en lata, hecho para rendir. Cada producto tiene su propia historia. Elige el tuyo.
+      </p>
+
+      <!-- Filtros por Categoría / Sabor -->
+      <div class="catalog-filters">
+        <button type="button" class="catalog-filter-btn is-active" onclick="filterCatalog('all', this)">ORIGINAL</button>
+        <button type="button" class="catalog-filter-btn" onclick="filterCatalog('orange', this)">ORANGE</button>
+        <button type="button" class="catalog-filter-btn" onclick="filterCatalog('latte', this)">LATTE</button>
+        <button type="button" class="catalog-filter-btn" onclick="filterCatalog('all', this)">CAFÉ EN LATA</button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== 3. LISTADO EDITORIAL DE PRODUCTOS ==================== -->
+  <section class="catalog-list">
+    <div class="page-width">
+      
+      <!-- PRODUCTO 1: KALPA COLD BREW ORIGINAL -->
+      <article class="catalog-item" id="item-original">
+        <!-- Tarjeta Visual Izquierda con Lata 3D/HD y Patrón Textil -->
+        <div class="catalog-item__card catalog-item__card--yellow">
+          <div class="catalog-card__pattern"></div>
+          <img src="assets/kalpa-can-original.png" alt="Lata KALPA Cold Brew Original" class="catalog-card__img-can" loading="lazy">
+        </div>
+
+        <!-- Contenido y Especificaciones Derecha -->
+        <div class="catalog-item__content">
+          <span class="catalog-item__status">COLD BREW &mdash; DISPONIBLE</span>
+          <h2 class="catalog-item__title">KALPA COLD BREW ORIGINAL</h2>
+          <p class="catalog-item__desc">
+            El que empezó todo. Café de altura de Ayacucho, preparado en frío y servido bien helado. Cafeína real para rendir cuando importa.
+          </p>
+
+          <!-- 4 Especificaciones Clave -->
+          <div class="catalog-specs-grid">
+            <div class="catalog-spec-box">
+              <span class="catalog-spec-label">ORIGEN</span>
+              <span class="catalog-spec-val">Ayacucho</span>
+            </div>
+            <div class="catalog-spec-box">
+              <span class="catalog-spec-label">FORMATO</span>
+              <span class="catalog-spec-val">Lata de 355 ml</span>
+            </div>
+            <div class="catalog-spec-box">
+              <span class="catalog-spec-label">AZÚCAR Y CALORÍAS</span>
+              <span class="catalog-spec-val">0 azúcar - 0 calorías</span>
+            </div>
+            <div class="catalog-spec-box">
+              <span class="catalog-spec-label">CAFEÍNA</span>
+              <span class="catalog-spec-val">280 mg &middot; Laboratorio VRAEM</span>
+            </div>
+          </div>
+
+          <!-- Acciones de Compra -->
+          <div class="catalog-actions-row">
+            <a href="producto.html" class="btn-catalog-buy">
+              VER Y COMPRAR &ndash; S/ 11.90
+            </a>
+            <button type="button" class="btn-catalog-outline" onclick="addPackToKallpaCart('prod-orig', 'KALPA Cold Brew Original 355ml', 11.90)">
+              AGREGAR AL CARRITO
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- PRODUCTO 2: KALPA COLD BREW ORANGE (Invertido) -->
+      <article class="catalog-item catalog-item--reverse" id="item-orange">
+        <!-- Tarjeta Visual Derecha -->
+        <div class="catalog-item__card catalog-item__card--orange">
+          <div class="catalog-card__pattern"></div>
+          <div class="catalog-card__placeholder">
+            <span class="catalog-card__placeholder-text">RENDER PENDIENTE<br>ETIQUETA ORANGE</span>
+          </div>
+        </div>
+
+        <!-- Contenido y Especificaciones Izquierda -->
+        <div class="catalog-item__content">
+          <span class="catalog-item__status">COLD BREW &mdash; PRÓXIMAMENTE</span>
+          <h2 class="catalog-item__title">KALPA COLD BREW ORANGE</h2>
+          <p class="catalog-item__desc">
+            El mismo café de Ayacucho con un giro cítrico. Infusión equilibrada con notas frescas de naranja y energía sostenida.
+          </p>
+
+          <!-- 4 Especificaciones Clave -->
+          <div class="catalog-specs-grid">
+            <div class="catalog-spec-box">
+              <span class="catalog-spec-label">ORIGEN</span>
+              <span class="catalog-spec-val">Ayacucho</span>
+            </div>
+            <div class="catalog-spec-box">
+              <span class="catalog-spec-label">SABOR</span>
+              <span class="catalog-spec-val">Extracto botánico de naranja</span>
+            </div>
+            <div class="catalog-spec-box">
+              <span class="catalog-spec-label">CAFEÍNA</span>
+              <span class="catalog-spec-val">280 mg &middot; Cold Brew</span>
+            </div>
+            <div class="catalog-spec-box">
+              <span class="catalog-spec-label">LANZAMIENTO</span>
+              <span class="catalog-spec-val">Próxima temporada 2026</span>
+            </div>
+          </div>
+
+          <!-- Acciones -->
+          <div class="catalog-actions-row">
+            <span class="badge-soon-pill">PRÓXIMAMENTE</span>
+            <button type="button" class="btn-catalog-outline" onclick="promptNotify('KALPA Cold Brew Orange')">
+              AVISARME
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- PRODUCTO 3: KALPA COLD BREW LATTE -->
+      <article class="catalog-item" id="item-latte">
+        <!-- Tarjeta Visual Izquierda -->
+        <div class="catalog-item__card catalog-item__card--silver">
+          <div class="catalog-card__pattern"></div>
+          <div class="catalog-card__placeholder">
+            <span class="catalog-card__placeholder-text">RENDER PENDIENTE<br>ETIQUETA LATTE</span>
+          </div>
+        </div>
+
+        <!-- Contenido y Especificaciones Derecha -->
+        <div class="catalog-item__content">
+          <span class="catalog-item__status">COLD BREW &mdash; PRÓXIMAMENTE</span>
+          <h2 class="catalog-item__title">KALPA COLD BREW LATTE</h2>
+          <p class="catalog-item__desc">
+            Fórmula cremosa con leche vegetal de avena y café de especialidad. Textura suave, cuerpo sedoso y sin pesadez digestiva.
+          </p>
+
+          <!-- 4 Especificaciones Clave -->
+          <div class="catalog-specs-grid">
+            <div class="catalog-spec-box">
+              <span class="catalog-spec-label">ORIGEN</span>
+              <span class="catalog-spec-val">Ayacucho</span>
+            </div>
+            <div class="catalog-spec-box">
+              <span class="catalog-spec-label">BASE</span>
+              <span class="catalog-spec-val">Leche vegetal de avena</span>
+            </div>
+            <div class="catalog-spec-box">
+              <span class="catalog-spec-label">CAFEÍNA</span>
+              <span class="catalog-spec-val">220 mg &middot; Energía balanceada</span>
+            </div>
+            <div class="catalog-spec-box">
+              <span class="catalog-spec-label">LANZAMIENTO</span>
+              <span class="catalog-spec-val">Próxima temporada 2026</span>
+            </div>
+          </div>
+
+          <!-- Acciones -->
+          <div class="catalog-actions-row">
+            <span class="badge-soon-pill">PRÓXIMAMENTE</span>
+            <button type="button" class="btn-catalog-outline" onclick="promptNotify('KALPA Cold Brew Latte')">
+              AVISARME
+            </button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== 4. FOOTER OFICIAL CON BANNER NEWSLETTER ==================== -->
+  <footer class="kallpa-footer-wrapper" id="footer-section">
+    <!-- Banner Newsletter Superior -->
+    <div class="kallpa-newsletter-banner">
+      <div class="kallpa-newsletter-banner__pattern" aria-hidden="true"></div>
+      <div class="kallpa-newsletter-banner__vignette" aria-hidden="true"></div>
+
+      <div class="kallpa-newsletter-container">
+        <!-- Lata con Hielos y Salpicadura -->
+        <div class="newsletter-banner__can-box">
+          <img src="assets/footer-banner-can.png" alt="Lata KALPA Cold Brew" class="newsletter-banner__can" draggable="false" loading="lazy">
+        </div>
+
+        <!-- Bloque de Contenido y Formulario -->
+        <div class="newsletter-banner__content-box">
+          <div class="newsletter-banner__header">
+            <h3 class="newsletter-banner__title">SÉ PARTE DE KALPA</h3>
+            <p class="newsletter-banner__desc">Recibe promociones exclusivas, lanzamientos y más historias del VRAEM.</p>
+          </div>
+          <form class="newsletter-banner__form" onsubmit="event.preventDefault(); alert('¡Gracias por unirte a la comunidad KALPA!');">
+            <input type="email" placeholder="Tu correo electrónico" class="newsletter-banner__input" required aria-label="Tu correo electrónico">
+            <button type="submit" class="newsletter-banner__btn">
+              <span>SUSCRIBIRME</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </form>
+        </div>
+
+        <!-- Grano de Café en la Esquina Superior Derecha -->
+        <div class="newsletter-banner__bean-box" aria-hidden="true">
+          <img src="assets/hero-bean-single.png" alt="" class="newsletter-banner__bean" draggable="false">
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra Inferior del Footer -->
+    <div class="kallpa-footer-bottom">
+      <div class="kallpa-footer-bottom__container">
+        <!-- Fila 1: Logo + Navegación + Redes + Envíos -->
+        <div class="footer-bottom__main-row">
+          <a href="index.html" class="footer-logo-link" aria-label="KALPA - Inicio">
+            <img src="assets/logo-kalpa-white.png" alt="KALPA" class="footer-logo-img" width="135" height="30">
+          </a>
+
+          <nav class="footer-horizontal-nav" aria-label="Navegación pie de página">
+            <a href="index.html">Inicio</a>
+            <a href="productos.html">Productos</a>
+            <a href="index.html#origin-section">Promociones</a>
+            <a href="nosotros.html">Nosotros</a>
+          </nav>
+
+          <div class="footer-social-icons">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="TikTok">
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.68 6.34 6.34 0 0 0 9.33 22a6.33 6.33 0 0 0 6.34-6.32V8.92a8.28 8.28 0 0 0 3.92 1V6.69z"></path>
+              </svg>
+            </a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="YouTube">
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path>
+              </svg>
+            </a>
+          </div>
+
+          <div class="footer-shipping-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="footer-shipping-icon">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+            <span>Envíos a todo el Perú.</span>
+          </div>
+        </div>
+
+        <!-- Fila 2: Legal -->
+        <div class="footer-bottom__legal-row">
+          <p class="footer-copyright">&copy; 2026 KALPA. Todos los derechos reservados.</p>
+          <div class="footer-legal-links">
+            <a href="#">Términos y condiciones</a>
+            <span class="legal-sep">|</span>
+            <a href="#">Política de privacidad</a>
+            <span class="legal-sep">|</span>
+            <a href="mailto:ventas@kalpa.pe">Contacto</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== DRAWER DEL CARRITO ==================== -->
+  <div id="kallpa-cart-overlay" class="cart-overlay" onclick="closeKallpaCart()"></div>
+  <div id="kallpa-cart-drawer" class="cart-drawer">
+    <div class="cart-drawer__header">
+      <h3 style="font-size: 1.1rem; font-weight: 800; letter-spacing: 0.1em; color: var(--text-main); margin: 0;">
+        TU SELECCIÓN KALLPA
+      </h3>
+      <button type="button" class="cart-drawer__close" onclick="closeKallpaCart()">&times;</button>
+    </div>
+    <div id="kallpa-cart-items" class="cart-drawer__body"></div>
+    <div id="kallpa-cart-footer"></div>
+  </div>
+
+  <script>
+    function openKallpaCart() {
+      const d = document.getElementById('kallpa-cart-drawer');
+      const o = document.getElementById('kallpa-cart-overlay');
+      if (d && o) { d.classList.add('is-active'); o.classList.add('is-active'); }
+    }
+    function closeKallpaCart() {
+      const d = document.getElementById('kallpa-cart-drawer');
+      const o = document.getElementById('kallpa-cart-overlay');
+      if (d && o) { d.classList.remove('is-active'); o.classList.remove('is-active'); }
+    }
+    function addPackToKallpaCart(id, name, price) {
+      const countEl = document.getElementById('kallpa-cart-count');
+      if (countEl) countEl.textContent = parseInt(countEl.textContent || '0') + 1;
+      const items = document.getElementById('kallpa-cart-items');
+      const footer = document.getElementById('kallpa-cart-footer');
+      if (items) {
+        const item = document.createElement('div');
+        item.style.cssText = 'display:flex; justify-content:space-between; align-items:center; padding:1.2rem; border-bottom:1px solid rgba(255,255,255,0.08);';
+        item.innerHTML = `
+          <div>
+            <strong style="color:#ffffff; font-size:0.95rem; display:block;">⚡ ${name}</strong>
+            <span style="color:#fbd132; font-size:0.85rem; font-weight:700;">S/ ${price.toFixed(2)} PEN</span>
+          </div>
+          <span style="background:rgba(255,255,255,0.08); padding:4px 10px; border-radius:6px; font-size:0.75rem; color:#fff;">1x</span>
+        `;
+        items.appendChild(item);
+      }
+      if (footer) {
+        footer.innerHTML = `
+          <div style="padding:1.5rem; background:#12151e; border-top:1px solid rgba(255,255,255,0.08);">
+            <div style="display:flex; justify-content:space-between; margin-bottom:1rem; font-weight:800; font-size:1.1rem; color:#fff;">
+              <span>TOTAL:</span>
+              <span style="color:#fbd132;">S/ ${price.toFixed(2)} PEN</span>
+            </div>
+            <button type="button" class="btn-catalog-buy" style="width:100%; text-align:center;" onclick="alert('Redirigiendo a pasarela segura de pago...')">
+              INICIAR CHECKOUT SEGURO
+            </button>
+          </div>
+        `;
+      }
+      openKallpaCart();
+    }
+
+    function filterCatalog(type, btn) {
+      document.querySelectorAll('.catalog-filter-btn').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      const orig = document.getElementById('item-original');
+      const orange = document.getElementById('item-orange');
+      const latte = document.getElementById('item-latte');
+      if (type === 'all') {
+        orig.style.display = 'grid';
+        orange.style.display = 'grid';
+        latte.style.display = 'grid';
+      } else if (type === 'orange') {
+        orig.style.display = 'none';
+        orange.style.display = 'grid';
+        latte.style.display = 'none';
+      } else if (type === 'latte') {
+        orig.style.display = 'none';
+        orange.style.display = 'none';
+        latte.style.display = 'grid';
+      }
+    }
+
+    function promptNotify(productName) {
+      const email = prompt(`Ingresa tu correo para avisarte cuando esté disponible ${productName}:`);
+      if (email) alert(`¡Perfecto! Te avisaremos a ${email} apenas salga al mercado.`);
+    }
+  </script>
+</body>
+</html>

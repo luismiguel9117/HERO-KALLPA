@@ -1,0 +1,1018 @@
+/* ==========================================================================
+   PÁGINAS DE PRODUCTOS Y VISTA INTERIOR DE PRODUCTO - KALPA COLD BREW
+   ========================================================================== */
+
+/* 1. HERO DEL CATÁLOGO DE PRODUCTOS */
+.catalog-hero {
+  padding: 3.5rem 0 2.5rem;
+  background-color: #060709;
+}
+
+.catalog-hero__eyebrow {
+  display: block;
+  font-family: var(--font-brand);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--accent-gold);
+  margin-bottom: 0.75rem;
+}
+
+.catalog-hero__title {
+  font-family: var(--font-brand);
+  font-size: clamp(2.8rem, 6.5vw, 4.8rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.95;
+  margin: 0 0 1.25rem 0;
+  text-transform: uppercase;
+}
+
+.catalog-hero__title-solid {
+  display: block;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.catalog-hero__title-outline {
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 2px #fbd132;
+  letter-spacing: -0.01em;
+  text-shadow: 0 0 20px rgba(251, 209, 50, 0.2);
+}
+
+.catalog-hero__desc {
+  font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.5;
+  max-width: 580px;
+  margin-bottom: 2rem;
+}
+
+/* Filtros en Píldoras */
+.catalog-filters {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.catalog-filter-btn {
+  background: #0d0f14;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+  padding: 0.55rem 1.4rem;
+  font-family: var(--font-brand);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.catalog-filter-btn:hover {
+  border-color: #fbd132;
+  color: #fbd132;
+}
+
+.catalog-filter-btn.is-active {
+  background: #fbd132;
+  color: #000000;
+  border-color: #fbd132;
+  box-shadow: 0 4px 15px rgba(251, 209, 50, 0.35);
+}
+
+/* 2. LISTADO DE PRODUCTOS (FILAS ALTERNADAS) */
+.catalog-list {
+  background-color: #08090c;
+  padding: 2.5rem 0 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4.5rem;
+}
+
+.catalog-item {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+.catalog-item--reverse {
+  grid-template-columns: 1.1fr 1fr;
+}
+
+.catalog-item--reverse .catalog-item__card {
+  order: 2;
+}
+
+.catalog-item--reverse .catalog-item__content {
+  order: 1;
+}
+
+/* Tarjeta Gráfica con Patrón Andino y Lata */
+.catalog-item__card {
+  position: relative;
+  border-radius: 14px;
+  min-height: 440px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+}
+
+.catalog-item__card--yellow {
+  background: radial-gradient(circle at 50% 50%, #f6c823 0%, #d89f0a 100%);
+}
+
+.catalog-item__card--orange {
+  background: radial-gradient(circle at 50% 50%, #e6751c 0%, #b8540c 100%);
+}
+
+.catalog-item__card--silver {
+  background: radial-gradient(circle at 50% 50%, #c9ccd5 0%, #9fa5b2 100%);
+}
+
+.catalog-card__pattern {
+  position: absolute;
+  inset: 0;
+  background-image: url('kalpa-pattern.png');
+  background-repeat: repeat;
+  background-size: 260px;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.catalog-card__img-can {
+  position: relative;
+  z-index: 2;
+  max-height: 380px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.45));
+  transition: transform 0.35s ease;
+}
+
+.catalog-item__card:hover .catalog-card__img-can {
+  transform: translateY(-8px) scale(1.03);
+}
+
+/* Placeholder para Productos Próximos (Orange & Latte) */
+.catalog-card__placeholder {
+  position: relative;
+  z-index: 2;
+  border: 2px dashed rgba(255, 255, 255, 0.45);
+  border-radius: 8px;
+  padding: 2.5rem 1.8rem;
+  width: 75%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.catalog-card__placeholder-text {
+  font-family: var(--font-brand);
+  font-size: 0.88rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+}
+
+/* Columna de Contenido y Especificaciones */
+.catalog-item__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.catalog-item__status {
+  font-family: var(--font-brand);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+}
+
+.catalog-item__title {
+  font-family: var(--font-brand);
+  font-size: clamp(2rem, 3.4vw, 3rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1.02;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin: 0;
+  letter-spacing: -0.015em;
+}
+
+.catalog-item__desc {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+/* Cuadrícula de 4 Especificaciones */
+.catalog-specs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.35rem;
+}
+
+.catalog-spec-box {
+  background: rgba(18, 20, 26, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+}
+
+.catalog-spec-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.catalog-spec-val {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Botones de Acción del Item */
+.catalog-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.btn-catalog-buy {
+  background: #fbd132;
+  color: #000000;
+  padding: 0.85rem 1.8rem;
+  border-radius: 4px;
+  font-family: var(--font-brand);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 6px 20px rgba(251, 209, 50, 0.35);
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-catalog-buy:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.4);
+}
+
+.btn-catalog-outline {
+  background: transparent;
+  color: #ffffff;
+  padding: 0.85rem 1.6rem;
+  border-radius: 4px;
+  font-family: var(--font-brand);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-catalog-outline:hover {
+  border-color: #fbd132;
+  color: #fbd132;
+}
+
+.badge-soon-pill {
+  background: rgba(251, 209, 50, 0.12);
+  border: 1px solid #fbd132;
+  color: #fbd132;
+  padding: 0.85rem 1.5rem;
+  border-radius: 4px;
+  font-family: var(--font-brand);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ==========================================================================
+   VISTA INTERIOR DE CADA PRODUCTO (PRODUCT DETAIL PAGE)
+   ========================================================================== */
+
+/* Breadcrumb */
+.product-breadcrumb {
+  background: #060709;
+  padding: 1.25rem 0 0.5rem;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.product-breadcrumb a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.product-breadcrumb a:hover {
+  color: #fbd132;
+}
+
+.product-breadcrumb .sep {
+  margin: 0 0.45rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Escenario Principal del Producto */
+.product-showcase-section {
+  background: #060709;
+  padding: 1.5rem 0 4rem;
+}
+
+.product-showcase-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(2rem, 4.5vw, 4rem);
+  align-items: start;
+}
+
+/* Columna Izquierda: Galería de Miniaturas + Escenario Grande */
+.product-gallery-layout {
+  display: flex;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.product-thumbnails-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.product-thumb-btn {
+  width: 65px;
+  height: 80px;
+  background: #111319;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.22s ease;
+}
+
+.product-thumb-btn:hover {
+  border-color: rgba(251, 209, 50, 0.5);
+}
+
+.product-thumb-btn.is-active {
+  border-color: #fbd132;
+  box-shadow: 0 0 12px rgba(251, 209, 50, 0.35);
+}
+
+.product-thumb-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.product-main-stage {
+  flex: 1;
+  position: relative;
+  border-radius: 14px;
+  min-height: 480px;
+  background: radial-gradient(circle at 50% 50%, #f6c823 0%, #d89f0a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+}
+
+.product-main-stage__can {
+  position: relative;
+  z-index: 2;
+  max-height: 410px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.45));
+  transition: transform 0.4s ease;
+}
+
+.product-main-stage:hover .product-main-stage__can {
+  transform: scale(1.04) rotate(-2deg);
+}
+
+.product-stage-badge {
+  position: absolute;
+  bottom: 18px;
+  left: 20px;
+  z-index: 3;
+  font-family: var(--font-brand);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: rgba(0, 0, 0, 0.6);
+  text-transform: uppercase;
+}
+
+/* Columna Derecha: Configuración y Compra */
+.product-details-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.product-cat-tag {
+  font-family: var(--font-brand);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+}
+
+.product-main-title {
+  font-family: var(--font-brand);
+  font-size: clamp(2.3rem, 4vw, 3.4rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.98;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.product-lead-desc {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.product-price-block {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.product-price-val {
+  font-family: var(--font-brand);
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.product-price-sub {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Selectores: Sabor y Cantidad */
+.selector-group-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.55);
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.flavor-pills-row {
+  display: flex;
+  gap: 0.65rem;
+}
+
+.flavor-pill {
+  padding: 0.55rem 1.4rem;
+  border-radius: 4px;
+  background: #111319;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-family: var(--font-brand);
+  font-size: 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.flavor-pill.is-active {
+  background: #fbd132;
+  color: #000000;
+  border-color: #fbd132;
+}
+
+.pack-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+}
+
+.pack-card-btn {
+  background: #101218;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.pack-card-btn:hover {
+  border-color: rgba(251, 209, 50, 0.5);
+}
+
+.pack-card-btn.is-active {
+  background: #181b24;
+  border-color: #fbd132;
+  box-shadow: 0 0 14px rgba(251, 209, 50, 0.25);
+}
+
+.pack-card-name {
+  font-family: var(--font-brand);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.pack-card-price {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+.btn-product-add {
+  background: #fbd132;
+  color: #000000;
+  border: none;
+  border-radius: 4px;
+  padding: 1.05rem 2rem;
+  font-family: var(--font-brand);
+  font-size: 0.92rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(251, 209, 50, 0.4);
+  transition: all 0.25s ease;
+  text-align: center;
+  width: 100%;
+}
+
+.btn-product-add:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(255, 255, 255, 0.45);
+}
+
+/* Sellos de Entrega y Confianza */
+.product-trust-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.84rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.product-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.product-features-ribbon {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  flex-wrap: wrap;
+}
+
+.product-feature-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+
+/* 3. SECCIÓN EDITORIAL: QUÉ LLEVA E INFORMACIÓN NUTRICIONAL */
+.product-specs-section {
+  background: #090b0f;
+  padding: 4.5rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.product-specs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
+}
+
+.product-info-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.specs-block-title {
+  font-family: var(--font-brand);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.specs-item-header {
+  font-family: var(--font-brand);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.35;
+  margin: 0 0 0.5rem 0;
+}
+
+.specs-item-body {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+}
+
+.specs-warning-card {
+  background: rgba(20, 22, 30, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid #fbd132;
+  border-radius: 4px;
+  padding: 1.2rem;
+}
+
+.specs-warning-title {
+  font-family: var(--font-brand);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: #fbd132;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.specs-warning-text {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+/* Tabla Nutricional */
+.nutrition-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.nutrition-table th {
+  text-align: left;
+  padding: 0.6rem 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.nutrition-table td {
+  padding: 0.65rem 0;
+  color: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.nutrition-table tr td:last-child {
+  text-align: right;
+  font-weight: 600;
+}
+
+.nutrition-table tr:last-child td {
+  color: #fbd132;
+  font-weight: 800;
+}
+
+
+/* 4. SECCIÓN CROSS-SELL: QUE NO SE TE ACABE A MITAD DE SEMANA */
+.product-cross-section {
+  background: #060709;
+  padding: 4.5rem 0 3.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cross-eyebrow {
+  display: block;
+  font-family: var(--font-brand);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.cross-title {
+  font-family: var(--font-brand);
+  font-size: clamp(1.8rem, 3.5vw, 2.7rem);
+  font-weight: 900;
+  font-style: italic;
+  color: #ffffff;
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin: 0 0 2.5rem 0;
+}
+
+.cross-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.cross-pack-card {
+  background: #10131a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  transition: all 0.25s ease;
+}
+
+.cross-pack-card:hover {
+  border-color: rgba(251, 209, 50, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.cross-pack-img {
+  width: 80px;
+  height: 95px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.cross-pack-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.cross-pack-name {
+  font-family: var(--font-brand);
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.cross-pack-sub {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.cross-pack-price {
+  font-family: var(--font-brand);
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin-top: 0.2rem;
+}
+
+.btn-cross-add {
+  background: #fbd132;
+  color: #000000;
+  border: none;
+  border-radius: 4px;
+  padding: 0.75rem 1.6rem;
+  font-family: var(--font-brand);
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.btn-cross-add:hover {
+  background: #ffffff;
+}
+
+
+/* 5. SECCIÓN FAQ: ANTES DE COMPRAR */
+.product-faq-section {
+  background: #080a0e;
+  padding: 4.5rem 0 5.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.faq-eyebrow {
+  display: block;
+  font-family: var(--font-brand);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.faq-title {
+  font-family: var(--font-brand);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 900;
+  font-style: italic;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin: 0 0 2rem 0;
+}
+
+.faq-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.faq-item {
+  background: #10131a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color 0.25s ease;
+}
+
+.faq-item.is-open {
+  border-color: rgba(251, 209, 50, 0.4);
+}
+
+.faq-header {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #ffffff;
+  gap: 1rem;
+}
+
+.faq-icon {
+  font-size: 1.25rem;
+  color: #fbd132;
+  transition: transform 0.25s ease;
+  line-height: 1;
+}
+
+.faq-item.is-open .faq-icon {
+  transform: rotate(45deg);
+}
+
+.faq-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease;
+  padding: 0 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.faq-item.is-open .faq-body {
+  max-height: 250px;
+  padding: 0 1.5rem 1.25rem;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE DESIGN PARA PÁGINAS DE PRODUCTO
+   ========================================================================== */
+@media (max-width: 900px) {
+  .catalog-item,
+  .catalog-item--reverse {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .catalog-item--reverse .catalog-item__card {
+    order: 1;
+  }
+  .catalog-item--reverse .catalog-item__content {
+    order: 2;
+  }
+  .catalog-item__card {
+    min-height: 360px;
+  }
+  
+  .product-showcase-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .product-gallery-layout {
+    flex-direction: column-reverse;
+  }
+  .product-thumbnails-col {
+    flex-direction: row;
+    justify-content: center;
+  }
+  .product-main-stage {
+    min-height: 380px;
+  }
+  .product-specs-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .cross-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .catalog-specs-grid {
+    grid-template-columns: 1fr;
+  }
+  .pack-selector-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .catalog-actions-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btn-catalog-buy,
+  .btn-catalog-outline,
+  .badge-soon-pill {
+    width: 100%;
+  }
+  .cross-pack-card {
+    flex-direction: column;
+    text-align: center;
+  }
+}
