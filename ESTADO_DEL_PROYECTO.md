@@ -35,12 +35,13 @@ Documento técnico del estado actual del proyecto, mejoras aplicadas y especific
   * Tarjeta dual de compra (Unidad a S/ 7.90 con contador y Pack x 6 a S/ 39.90 con descuento).
 
 #### 2. Diapositiva 2: **KALPA CAFÉ MOLIDO (Lata de Especialidad 500g)**
-* **Ajuste solicitado por el usuario:** Se eliminó por completo la barra inferior de especificaciones técnicas y los botones de paginación inferiores que se superponían, dejando el diseño limpio y centrado idéntico al mockup (`media_1793050628873_11fb1e42.png`).
-* **Elementos:**
-  * Fondo panorámico andino en alta definición (`assets/kalpa-molido-bg.jpg`).
-  * Columna editorial: barra de acento ámbar, ceja `NUESTRO PRODUCTO`, título bicolor itálico `KALPA` (blanco) / `CAFÉ MOLIDO` (dorado), descripción y 4 badges circulares de especialidad (100% Obata, Origen VRAEM, Ideal para Cold Brew, Notas sensoriales).
-  * Botón: `VER FICHA TÉCNICA →`.
-  * Tarjeta oscura flotante con selector de presentación (500g / Pack x 6), precio S/ 39.90, stepper de unidades y botón `AGREGAR AL CARRITO 🛒`.
+* **Ajuste de Calidad Visual y Encuadre Exacto:**
+  * **Fondo de Alta Calidad sin opacidad:** Se integró el nuevo fondo HD (`assets/kalpa-molido-bg.png`, 1774x761 px) eliminando capas oscuras opacas artificiales para lucir el amanecer andino, los colores vibrantes y el verdor natural de las montañas.
+  * **Distribución y Espaciado Perfectos:**
+    * **Columna izquierda:** Ancho controlado (375px) situado exactamente sobre la zona oscura/textura inca del fondo, sin invadir la lata central. 4 insignias circulares con borde e iconos en tono ámbar dorado cálido.
+    * **Centro:** Espacio visual despejado que deja ver la lata metálica verde de 500g con su tapa superior y granos en su totalidad.
+    * **Columna derecha (Tarjeta de compra):** Ancho compacto (275px) flotando en la zona superior derecha del valle montañoso, con separación adecuada respecto a la lata, selector 500g / Pack x 6 y botón `AGREGAR AL CARRITO 🛒`.
+  * **Eliminación de elementos sobrantes:** Sin franjas inferiores de texto técnico ni dots invasivos.
 
 #### 3. Controles del Carrusel:
 * **Flechas laterales:** Botones circulares translúcidos (`Prev` / `Next`) centrados verticalmente (`top: 50%`) en ambos lados con efecto hover dorado.
