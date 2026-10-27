@@ -5201,7 +5201,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 
-/* SLIDE 2: KALPA CAFÉ MOLIDO (Exacto a Mockup: 100% Luminoso, proporciones y escala controladas) */
+/* SLIDE 2: KALPA CAFÉ MOLIDO (Altura idéntica a Slide 1 para transición suave sin cambios de tamaño) */
 .kalpa-product-slide--molido {
   background-color: #070c09;
   color: #ffffff;
@@ -5209,8 +5209,9 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: clamp(390px, 32vw, 460px);
-  max-height: 470px;
+  height: clamp(490px, calc(39vw + 21px), 570px);
+  min-height: 490px;
+  max-height: 575px;
   box-sizing: border-box;
 }
 

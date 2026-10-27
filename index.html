@@ -1172,10 +1172,34 @@
     let currentProductSlide = 0;
     const totalProductSlides = 2;
 
+    function syncProductSlideHeights() {
+      if (window.innerWidth <= 860) {
+        const slide1 = document.getElementById('product-slide-1');
+        if (slide1) {
+          slide1.style.height = '';
+          slide1.style.minHeight = '';
+        }
+        return;
+      }
+      const slide0 = document.getElementById('product-slide-0');
+      const slide1 = document.getElementById('product-slide-1');
+      if (slide0 && slide1) {
+        const h0 = slide0.offsetHeight;
+        if (h0 > 350) {
+          slide1.style.height = h0 + 'px';
+          slide1.style.minHeight = h0 + 'px';
+        }
+      }
+    }
+
     function goToProductSlide(index) {
       if (index < 0) index = totalProductSlides - 1;
       if (index >= totalProductSlides) index = 0;
       currentProductSlide = index;
+
+      if (currentProductSlide === 1) {
+        syncProductSlideHeights();
+      }
 
       for (let i = 0; i < totalProductSlides; i++) {
         const slide = document.getElementById(`product-slide-${i}`);
@@ -1199,6 +1223,9 @@
 
     // Touch swipe support for mobile
     document.addEventListener('DOMContentLoaded', () => {
+      syncProductSlideHeights();
+      window.addEventListener('resize', syncProductSlideHeights);
+
       let touchStartX = 0;
       let touchEndX = 0;
       const carousel = document.getElementById('kalpaProductCarousel');

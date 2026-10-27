@@ -39,7 +39,8 @@ Documento técnico del estado actual del proyecto, mejoras aplicadas y especific
 
 #### 2. Diapositiva 2: **KALPA CAFÉ MOLIDO (Lata de Especialidad 500g)**
 * **Control de Escala y Proporción Exacta al Mockup:**
-  * **Corrección de Tamaño:** Se ajustó la altura del contenedor a `clamp(390px, 32vw, 460px)` con `max-height: 470px` y `background-size: contain no-repeat #070c09`, evitando que la lata de 500g se agrande desproporcionadamente o se recorte verticalmente.
+  * **Altura Idéntica y Transición Perfecta:** Se igualó la altura de la diapositiva a la del Producto 1 (`clamp(490px, calc(39vw + 21px), 570px)` en CSS y sincronización dinámica vía JS), eliminando saltos o cambios de tamaño al cambiar de diapositiva.
+  * **Control de Escala de la Lata:** Con `background-size: contain no-repeat #070c09`, la lata mantiene su tamaño normal y centrado sin deformarse ni agrandarse excesivamente.
   * **Integración Visual del Fondo HD:** El fondo panorámico (`assets/kalpa-molido-bg.png`) se muestra con sus proporciones naturales (2.33:1), dejando ver el cielo andino superior (50px+), el valle montañoso y la base de saco de yute con café, exactamente como en la referencia de diseño (`media_1793121547687_678c4fd5.png`).
   * **Distribución de Columnas:**
     * **Columna izquierda:** Bloque editorial (ancho ~340-375px) alineado sobre el fondo oscuro sin invadir la lata central. 4 insignias circulares doradas y botón `VER FICHA TÉCNICA →`.
