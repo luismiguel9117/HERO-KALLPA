@@ -24,29 +24,27 @@ Documento técnico del estado actual del proyecto, mejoras aplicadas y especific
 ---
 
 ### B. Sección: *"NUESTRO PRODUCTO"* (Carrusel Interactivo de Productos)
-* **Objetivo:** Transformar la sección de producto `#products-section` en un carrusel dinámico interactivo con soporte de dos diapositivas completas basadas en los mockups suministrados:
-  
-#### Diapositiva 1: **KALPA ORIGINAL (Cold Brew en Lata 355ml)**
-* **Fondo visual:** Gradiente radial crema/arena cálido.
-* **Composición central:** Lata vertical Kalpa Original 355ml con cubos de hielo, granos flotantes y base de roca volcánica sólida.
-* **Bloque editorial:** Ceja `NUESTRO PRODUCTO`, título `KALPA ORIGINAL`, 4 badges circulares de atributos (0 Calorías, Sin azúcares añadidos, Listo para tomar, Cold Brew refrescante) y botón "Ver ficha completa →".
-* **Tarjeta de compra dual:** Opción Unidad (S/ 7.90) con stepper y Opción Pack x 6 (S/ 39.90, -15% desc.) con miniaturas de 6 latas.
+* **Objetivo:** Transformar la sección `#products-section` en un carrusel dinámico limpio entre los dos productos principales de la marca:
 
-#### Diapositiva 2: **KALPA CAFÉ MOLIDO (Lata Metálica Especialidad 500g)**
-* **Fondo visual:** Fotografía panorámica de los Andes peruanos (`assets/kalpa-molido-bg.jpg`) con la lata de 500g sobre saco de yute y café molido.
-* **Bloque editorial:** Barra de acento dorada, ceja `NUESTRO PRODUCTO`, título bicolor `KALPA` (blanco) / `CAFÉ MOLIDO` (dorado itálico), descripción y 4 badges circulares de especialidad (100% Obata, Origen VRAEM, Ideal para Cold Brew, Notas sensoriales).
-* **Botón de acción:** `VER FICHA TÉCNICA →` en pastilla amarilla/dorada con texto negro.
-* **Tarjeta de compra flotante oscura:**
-  * Selector de variantes interactivo: `500 g` (S/ 39.90) vs `Pack x 6` (S/ 203.50, -15% desc.).
-  * Stepper de cantidad `[-] 1 [+]`.
-  * Botón `AGREGAR AL CARRITO 🛒` conectado al drawer del carrito.
-* **Barra inferior de especificaciones técnicas:** 5 atributos de especialidad (Variedad, Origen, Proceso, Tueste, Ideal para).
+#### 1. Diapositiva 1: **KALPA ORIGINAL (Cold Brew en Lata 355ml)**
+* **Ajuste de Composición:** Se restauró la estructura original con `padding-bottom: 0`, permitiendo que la base de roca volcánica, hielos y granos quede **completamente al ras del borde inferior**, eliminando el espacio en blanco inferior no deseado.
+* **Elementos:**
+  * Fondo crema cálido con gradiente radial.
+  * Composición central de la lata 355 ml con hielos y roca volcánica.
+  * 4 sellos circulares de atributos (0 Calorías, Sin azúcares, Listo para tomar, Cold Brew).
+  * Tarjeta dual de compra (Unidad a S/ 7.90 con contador y Pack x 6 a S/ 39.90 con descuento).
 
-#### Controles del Carrusel:
-* **Flechas de navegación:** Botones circulares translúcidos (`Prev` / `Next`) en los laterales con efecto hover dorado.
-* **Paginación / Tabs inferiores:** Puntos interactivos con nombres de producto y estado activo.
-* **Gestos táctiles:** Soporte de swipe touch para móviles y tablets.
-* **Archivos modificados:** [index.html](file:///c:/Users/Usuario/Desktop/HERO%20ANIMATION/index.html), [assets/theme.css](file:///c:/Users/Usuario/Desktop/HERO%20ANIMATION/assets/theme.css).
+#### 2. Diapositiva 2: **KALPA CAFÉ MOLIDO (Lata de Especialidad 500g)**
+* **Ajuste solicitado por el usuario:** Se eliminó por completo la barra inferior de especificaciones técnicas y los botones de paginación inferiores que se superponían, dejando el diseño limpio y centrado idéntico al mockup (`media_1793050628873_11fb1e42.png`).
+* **Elementos:**
+  * Fondo panorámico andino en alta definición (`assets/kalpa-molido-bg.jpg`).
+  * Columna editorial: barra de acento ámbar, ceja `NUESTRO PRODUCTO`, título bicolor itálico `KALPA` (blanco) / `CAFÉ MOLIDO` (dorado), descripción y 4 badges circulares de especialidad (100% Obata, Origen VRAEM, Ideal para Cold Brew, Notas sensoriales).
+  * Botón: `VER FICHA TÉCNICA →`.
+  * Tarjeta oscura flotante con selector de presentación (500g / Pack x 6), precio S/ 39.90, stepper de unidades y botón `AGREGAR AL CARRITO 🛒`.
+
+#### 3. Controles del Carrusel:
+* **Flechas laterales:** Botones circulares translúcidos (`Prev` / `Next`) centrados verticalmente (`top: 50%`) en ambos lados con efecto hover dorado.
+* **Transición fluida:** Visualización de diapositiva activa con altura independiente y animación suave de entrada (*fade-in*).
 
 ---
 
