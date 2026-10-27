@@ -5220,18 +5220,11 @@ h1, h2, h3, h4, h5, h6 {
   inset: 0;
   width: 100%;
   height: 100%;
-  background: url("kalpa-molido-bg.png") center center / contain no-repeat #070c09;
+  background: url("kalpa-molido-bg.png") center center / cover no-repeat;
   pointer-events: none;
   z-index: 1;
 }
 
-.molido-slide-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, #070c09 0%, transparent 6%, transparent 94%, #070c09 100%);
-  pointer-events: none;
-}
 
 /* Sin overlay oscuro opaco: dejamos el fondo 100% nítido, luminoso y colorido */
 .molido-slide-overlay {
@@ -5629,13 +5622,6 @@ h1, h2, h3, h4, h5, h6 {
   .molido-slide-bg {
     background-size: cover;
     background-position: center 30%;
-  }
-  .molido-slide-bg::after {
-    background: linear-gradient(180deg, 
-      rgba(7, 12, 9, 0.75) 0%, 
-      rgba(7, 12, 9, 0.45) 40%, 
-      rgba(7, 12, 9, 0.88) 100%
-    );
   }
   .kalpa-molido-grid {
     flex-direction: column;
