@@ -4367,9 +4367,10 @@ h1, h2, h3, h4, h5, h6 {
    ========================================================================== */
 .kalpa-product-showcase-sale {
   position: relative;
-  background: radial-gradient(circle at 48% 52%, #fbf4e6 0%, #f4eadb 55%, #ede0ce 100%);
+  background: transparent;
   color: #120f0d;
-  padding: 2.2rem 0 0;
+  padding: 0;
+  margin: 0;
   overflow: hidden;
   z-index: 15;
 }
@@ -4377,16 +4378,15 @@ h1, h2, h3, h4, h5, h6 {
 .kalpa-sale-container {
   position: relative;
   z-index: 5;
-  max-width: 1460px;
-  padding: 0 clamp(1.5rem, 3.5vw, 3.5rem);
+  max-width: 1260px;
+  margin: 0 auto;
 }
 
 .kalpa-sale-grid {
   display: grid;
-  grid-template-columns: 1fr auto 1.18fr;
-  gap: clamp(2.75rem, 5.5vw, 5.25rem);
+  grid-template-columns: 1.05fr 0.92fr 1.25fr;
+  gap: clamp(1rem, 2.2vw, 2rem);
   align-items: center;
-  justify-content: space-between;
 }
 
 /* Columna 1: Información Editorial y 4 Sellos Circulares */
@@ -4516,7 +4516,6 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   align-self: end;
   z-index: 4;
-  transform: translateX(-40px);
 }
 
 .sale-can-stage {
@@ -4865,7 +4864,7 @@ h1, h2, h3, h4, h5, h6 {
    VERSIÓN RESPONSIVE MOBILE (<= 768px) EXACTA A LA SEGUNDA IMAGEN
    ========================================================================== */
 @media (max-width: 768px) {
-  .kalpa-product-showcase-sale {
+  .kalpa-product-slide--original {
     padding: 2.5rem 0 2.75rem;
     background: radial-gradient(circle at 50% 48%, #fdf8ef 0%, #f5ece0 65%, #efe4d4 100%);
   }
@@ -5154,35 +5153,33 @@ h1, h2, h3, h4, h5, h6 {
 /* ==========================================================================
    CARRUSEL DE PRODUCTOS: KALPA ORIGINAL & KALPA CAFÉ MOLIDO
    ========================================================================== */
-.kalpa-product-showcase-sale {
-  position: relative;
-  overflow: hidden;
-  z-index: 15;
-  width: 100%;
-  padding: 0;
-}
-
 .kalpa-product-carousel {
   position: relative;
   width: 100%;
 }
 
-.kalpa-carousel-slides {
+.kalpa-product-carousel-track {
   position: relative;
   width: 100%;
 }
 
+/* Regla estricta de visibilidad: SOLO la diapositiva activa ocupa espacio en el layout */
 .kalpa-product-slide {
   width: 100%;
-  display: none;
+  display: none !important;
   opacity: 0;
 }
 
 .kalpa-product-slide.active {
-  display: block;
+  display: block !important;
   opacity: 1;
   position: relative;
   animation: kalpaSlideFadeIn 0.35s ease forwards;
+}
+
+.kalpa-product-slide--molido.active {
+  display: flex !important;
+  align-items: center;
 }
 
 @keyframes kalpaSlideFadeIn {
@@ -5196,7 +5193,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* SLIDE 1: KALPA ORIGINAL (Exacto al original: roca al ras del borde inferior) */
+/* SLIDE 1: KALPA ORIGINAL (Exacto al commit 4e3199f: roca al ras del borde inferior, sin espacio crema abajo) */
 .kalpa-product-slide--original {
   background: radial-gradient(circle at 48% 52%, #fbf4e6 0%, #f4eadb 55%, #ede0ce 100%);
   color: #120f0d;
@@ -5204,17 +5201,17 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 
-/* SLIDE 2: KALPA CAFÉ MOLIDO (Exacto a Mockup: 100% Luminoso, sin overlay oscuro opaco, proporciones exactas) */
+/* SLIDE 2: KALPA CAFÉ MOLIDO (Exacto a Mockup: 100% Luminoso, proporciones y escala controladas) */
 .kalpa-product-slide--molido {
   background-color: #070c09;
   color: #ffffff;
-  padding: 3rem 0;
+  padding: 1.5rem 0;
   position: relative;
   overflow: hidden;
   width: 100%;
-  min-height: clamp(480px, 42vw, 580px);
-  display: flex;
-  align-items: center;
+  height: clamp(390px, 32vw, 460px);
+  max-height: 470px;
+  box-sizing: border-box;
 }
 
 .molido-slide-bg {
@@ -5222,9 +5219,17 @@ h1, h2, h3, h4, h5, h6 {
   inset: 0;
   width: 100%;
   height: 100%;
-  background: url("kalpa-molido-bg.png") center center / cover no-repeat;
+  background: url("kalpa-molido-bg.png") center center / contain no-repeat #070c09;
   pointer-events: none;
   z-index: 1;
+}
+
+.molido-slide-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #070c09 0%, transparent 6%, transparent 94%, #070c09 100%);
+  pointer-events: none;
 }
 
 /* Sin overlay oscuro opaco: dejamos el fondo 100% nítido, luminoso y colorido */
@@ -5236,9 +5241,9 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   z-index: 5;
   width: 100%;
-  max-width: 1360px;
+  max-width: 1260px;
   margin: 0 auto;
-  padding: 0 clamp(1.5rem, 3.8vw, 3.5rem);
+  padding: 0 clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .kalpa-molido-grid {
@@ -5599,43 +5604,59 @@ h1, h2, h3, h4, h5, h6 {
 
 /* RESPONSIVE DESIGN */
 @media (max-width: 1080px) {
+  .kalpa-molido-container {
+    padding: 0 1.5rem;
+  }
   .kalpa-molido-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1rem;
+  }
+  .kalpa-molido__info {
+    max-width: 340px;
+  }
+  .kalpa-molido__buy-box {
+    width: 260px;
+  }
+}
+
+@media (max-width: 860px) {
+  .kalpa-product-slide--molido {
+    height: auto;
+    min-height: 520px;
+    max-height: none;
+    padding: 2.5rem 0 3rem;
+  }
+  .molido-slide-bg {
+    background-size: cover;
+    background-position: center 30%;
+  }
+  .molido-slide-bg::after {
+    background: linear-gradient(180deg, 
+      rgba(7, 12, 9, 0.75) 0%, 
+      rgba(7, 12, 9, 0.45) 40%, 
+      rgba(7, 12, 9, 0.88) 100%
+    );
+  }
+  .kalpa-molido-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+  }
+  .kalpa-molido__info {
+    width: 100%;
+    max-width: 480px;
+    align-items: center;
   }
   .kalpa-molido__centerpiece {
     display: none;
   }
   .kalpa-molido__buy-box {
-    justify-self: start;
-    max-width: 100%;
+    width: 100%;
+    max-width: 380px;
   }
 }
 
 @media (max-width: 768px) {
-  .kalpa-product-slide--original {
-    padding: 2.5rem 0 0;
-  }
-  .kalpa-product-slide--molido {
-    padding: 3rem 0;
-  }
-  .kalpa-molido-container {
-    padding: 0 1.25rem;
-  }
-  .molido-slide-bg {
-    background-position: center right;
-  }
-  .molido-slide-overlay {
-    background: linear-gradient(180deg, 
-      rgba(5, 12, 8, 0.92) 0%, 
-      rgba(5, 12, 8, 0.82) 40%, 
-      rgba(5, 12, 8, 0.94) 100%
-    );
-  }
-  .molido-features-row {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem 0.8rem;
-  }
   .carousel-arrow {
     width: 38px;
     height: 38px;

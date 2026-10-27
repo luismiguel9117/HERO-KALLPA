@@ -24,28 +24,33 @@ Documento técnico del estado actual del proyecto, mejoras aplicadas y especific
 ---
 
 ### B. Sección: *"NUESTRO PRODUCTO"* (Carrusel Interactivo de Productos)
-* **Objetivo:** Transformar la sección `#products-section` en un carrusel dinámico limpio entre los dos productos principales de la marca:
+* **Objetivo:** Transformar la sección `#products-section` en un carrusel dinámico limpio entre los dos productos principales de la marca, asegurando proporciones idénticas a los mockups:
 
 #### 1. Diapositiva 1: **KALPA ORIGINAL (Cold Brew en Lata 355ml)**
-* **Ajuste de Composición:** Se restauró la estructura original con `padding-bottom: 0`, permitiendo que la base de roca volcánica, hielos y granos quede **completamente al ras del borde inferior**, eliminando el espacio en blanco inferior no deseado.
+* **Corrección de Altura y Base:**
+  * Se restauró la estructura original del commit `4e3199f` con `padding: 2.2rem 0 0` (0 padding inferior).
+  * La base de roca volcánica, hielos y granos queda **completamente al ras del borde inferior** (`align-self: end; margin-bottom: -14px; bottom: -2%`), eliminando cualquier franja o brecha vacía debajo de la lata.
+  * Se eliminó el conflicto de flujo donde la segunda diapositiva ocupaba espacio invisible debajo.
 * **Elementos:**
-  * Fondo crema cálido con gradiente radial.
+  * Fondo crema cálido con gradiente radial exclusivo de la diapositiva.
   * Composición central de la lata 355 ml con hielos y roca volcánica.
   * 4 sellos circulares de atributos (0 Calorías, Sin azúcares, Listo para tomar, Cold Brew).
   * Tarjeta dual de compra (Unidad a S/ 7.90 con contador y Pack x 6 a S/ 39.90 con descuento).
 
 #### 2. Diapositiva 2: **KALPA CAFÉ MOLIDO (Lata de Especialidad 500g)**
-* **Ajuste de Calidad Visual y Encuadre Exacto:**
-  * **Fondo de Alta Calidad sin opacidad:** Se integró el nuevo fondo HD (`assets/kalpa-molido-bg.png`, 1774x761 px) eliminando capas oscuras opacas artificiales para lucir el amanecer andino, los colores vibrantes y el verdor natural de las montañas.
-  * **Distribución y Espaciado Perfectos:**
-    * **Columna izquierda:** Ancho controlado (375px) situado exactamente sobre la zona oscura/textura inca del fondo, sin invadir la lata central. 4 insignias circulares con borde e iconos en tono ámbar dorado cálido.
-    * **Centro:** Espacio visual despejado que deja ver la lata metálica verde de 500g con su tapa superior y granos en su totalidad.
-    * **Columna derecha (Tarjeta de compra):** Ancho compacto (275px) flotando en la zona superior derecha del valle montañoso, con separación adecuada respecto a la lata, selector 500g / Pack x 6 y botón `AGREGAR AL CARRITO 🛒`.
-  * **Eliminación de elementos sobrantes:** Sin franjas inferiores de texto técnico ni dots invasivos.
+* **Control de Escala y Proporción Exacta al Mockup:**
+  * **Corrección de Tamaño:** Se ajustó la altura del contenedor a `clamp(390px, 32vw, 460px)` con `max-height: 470px` y `background-size: contain no-repeat #070c09`, evitando que la lata de 500g se agrande desproporcionadamente o se recorte verticalmente.
+  * **Integración Visual del Fondo HD:** El fondo panorámico (`assets/kalpa-molido-bg.png`) se muestra con sus proporciones naturales (2.33:1), dejando ver el cielo andino superior (50px+), el valle montañoso y la base de saco de yute con café, exactamente como en la referencia de diseño (`media_1793121547687_678c4fd5.png`).
+  * **Distribución de Columnas:**
+    * **Columna izquierda:** Bloque editorial (ancho ~340-375px) alineado sobre el fondo oscuro sin invadir la lata central. 4 insignias circulares doradas y botón `VER FICHA TÉCNICA →`.
+    * **Centro:** Espacio visual despejado que encuadra la lata metálica verde de 500g.
+    * **Columna derecha:** Tarjeta flotante compacta de compra (ancho ~260-275px) con selector 500g / Pack x 6 (-15%) y botón `AGREGAR AL CARRITO 🛒`.
 
-#### 3. Controles del Carrusel:
-* **Flechas laterales:** Botones circulares translúcidos (`Prev` / `Next`) centrados verticalmente (`top: 50%`) en ambos lados con efecto hover dorado.
-* **Transición fluida:** Visualización de diapositiva activa con altura independiente y animación suave de entrada (*fade-in*).
+#### 3. Arquitectura del Carrusel:
+* **Aislamiento de Clases:** Se utiliza `.kalpa-product-carousel-track` para evitar colisiones con el carrusel del Hero.
+* **Visibilidad Estricta:** Regla `display: none !important;` en diapositivas inactivas para que no interfieran en la altura ni en el flujo del layout de la diapositiva activa.
+* **Flechas Laterales:** Botones circulares translúcidos `<` y `>` con efecto hover ámbar para navegar entre productos.
+* **Soporte Táctil:** Gesto swipe en dispositivos móviles.
 
 ---
 
