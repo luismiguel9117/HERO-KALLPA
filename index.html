@@ -444,147 +444,344 @@
     </div>
   </div>
 
-  <!-- ==================== 4. NUESTRO PRODUCTO: KALPA ORIGINAL (VENTA UNIDAD Y PACK X 6) ==================== -->
-  <section class="kalpa-product-showcase-sale" id="products-section">
-    <div class="page-width kalpa-sale-container">
-      <div class="kalpa-sale-grid">
-        
-        <!-- Columna 1: Información Editorial y 4 Sellos Circulares -->
-        <div class="kalpa-sale__info">
-          <span class="sale-top-line"></span>
-          <span class="sale-eyebrow">NUESTRO PRODUCTO</span>
-          <h2 class="sale-giant-title">
-            <span class="sale-title-main">KALPA</span>
-            <span class="sale-title-sub">ORIGINAL</span>
-          </h2>
-          <p class="sale-description">
-            Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar.
-          </p>
-          <div style="margin: 0.4rem 0 1rem;">
-            <a href="producto.html" style="display: inline-flex; align-items: center; gap: 0.45rem; color: #fbd132; font-family: var(--font-brand); font-size: 0.78rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s;">
-              <span>Ver ficha completa</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </a>
-          </div>
+  <!-- ==================== 4. NUESTRO PRODUCTO: CARRUSEL DE PRODUCTOS (KALPA ORIGINAL & KALPA CAFÉ MOLIDO) ==================== -->
+  <section class="kalpa-product-showcase-sale" id="products-section" aria-label="Nuestros Productos">
+    
+    <!-- Carousel Track Wrapper -->
+    <div class="kalpa-product-carousel" id="kalpaProductCarousel">
+      
+      <!-- Flechas de navegación -->
+      <button type="button" class="carousel-arrow carousel-arrow--prev" onclick="prevProductSlide()" aria-label="Producto anterior">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
 
-          <!-- 4 Iconos de Atributos Circulares -->
-          <div class="sale-features-row">
-            <div class="sale-feature-badge">
-              <div class="sale-feature-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
-                </svg>
-                <span class="drop-zero">0</span>
-              </div>
-              <span class="sale-feature-label">CALORÍAS</span>
-            </div>
+      <button type="button" class="carousel-arrow carousel-arrow--next" onclick="nextProductSlide()" aria-label="Producto siguiente">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
 
-            <div class="sale-feature-badge">
-              <div class="sale-feature-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
-                  <line x1="4" y1="4" x2="20" y2="20"></line>
-                </svg>
-              </div>
-              <span class="sale-feature-label">SIN AZÚCARES<br>AÑADIDOS</span>
-            </div>
+      <!-- Slides Container -->
+      <div class="kalpa-carousel-slides">
 
-            <div class="sale-feature-badge">
-              <div class="sale-feature-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="6" y="4" width="10" height="17" rx="2"></rect>
-                  <path d="M16 8h2a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"></path>
-                  <line x1="8" y1="2" x2="14" y2="2"></line>
-                </svg>
-              </div>
-              <span class="sale-feature-label">LISTO<br>PARA TOMAR</span>
-            </div>
+        <!-- ================= SLIDE 1: KALPA ORIGINAL ================= -->
+        <div class="kalpa-product-slide kalpa-product-slide--original active" id="product-slide-0" data-slide-index="0">
+          <div class="page-width kalpa-sale-container">
+            <div class="kalpa-sale-grid">
+              
+              <!-- Columna 1: Información Editorial y 4 Sellos Circulares -->
+              <div class="kalpa-sale__info">
+                <span class="sale-top-line"></span>
+                <span class="sale-eyebrow">NUESTRO PRODUCTO</span>
+                <h2 class="sale-giant-title">
+                  <span class="sale-title-main">KALPA</span>
+                  <span class="sale-title-sub">ORIGINAL</span>
+                </h2>
+                <p class="sale-description">
+                  Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar.
+                </p>
+                <div style="margin: 0.4rem 0 1rem;">
+                  <a href="producto.html" style="display: inline-flex; align-items: center; gap: 0.45rem; color: #fbd132; font-family: var(--font-brand); font-size: 0.78rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s;">
+                    <span>Ver ficha completa</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                  </a>
+                </div>
 
-            <div class="sale-feature-badge">
-              <div class="sale-feature-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="2" y1="12" x2="22" y2="12"></line>
-                  <line x1="12" y1="2" x2="12" y2="22"></line>
-                  <path d="m20 16-4-4 4-4"></path>
-                  <path d="m4 8 4 4-4 4"></path>
-                  <path d="m16 4-4 4-4-4"></path>
-                  <path d="m8 20 4-4 4 4"></path>
-                </svg>
+                <!-- 4 Iconos de Atributos Circulares -->
+                <div class="sale-features-row">
+                  <div class="sale-feature-badge">
+                    <div class="sale-feature-circle">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                      </svg>
+                      <span class="drop-zero">0</span>
+                    </div>
+                    <span class="sale-feature-label">CALORÍAS</span>
+                  </div>
+
+                  <div class="sale-feature-badge">
+                    <div class="sale-feature-circle">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+                        <line x1="4" y1="4" x2="20" y2="20"></line>
+                      </svg>
+                    </div>
+                    <span class="sale-feature-label">SIN AZÚCARES<br>AÑADIDOS</span>
+                  </div>
+
+                  <div class="sale-feature-badge">
+                    <div class="sale-feature-circle">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="6" y="4" width="10" height="17" rx="2"></rect>
+                        <path d="M16 8h2a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"></path>
+                        <line x1="8" y1="2" x2="14" y2="2"></line>
+                      </svg>
+                    </div>
+                    <span class="sale-feature-label">LISTO<br>PARA TOMAR</span>
+                  </div>
+
+                  <div class="sale-feature-badge">
+                    <div class="sale-feature-circle">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <line x1="12" y1="2" x2="12" y2="22"></line>
+                        <path d="m20 16-4-4 4-4"></path>
+                        <path d="m4 8 4 4-4 4"></path>
+                        <path d="m16 4-4 4-4-4"></path>
+                        <path d="m8 20 4-4 4 4"></path>
+                      </svg>
+                    </div>
+                    <span class="sale-feature-label">COLD BREW<br>REFRESCANTE</span>
+                  </div>
+                </div>
               </div>
-              <span class="sale-feature-label">COLD BREW<br>REFRESCANTE</span>
+
+              <!-- Columna 2: Composición Central Integrada -->
+              <div class="kalpa-sale__centerpiece">
+                <div class="sale-can-stage">
+                  <img src="assets/hero-beans-ice-back.png" alt="" class="sale-stage__beans-back" draggable="false">
+                  <img src="assets/hero-beans-ice-front.png" alt="" class="sale-stage__beans-mid" draggable="false">
+                  <img src="assets/kalpa-can-original.png" alt="KALPA Café Cold Brew Original 355ml" class="sale-stage__can" draggable="false">
+                  <img src="assets/hero-bean-single.png" alt="" class="sale-stage__bean-front" draggable="false">
+                  <img src="assets/hero-rock-base.png" alt="" class="sale-stage__rock" draggable="false">
+                </div>
+              </div>
+
+              <!-- Columna 3: Tarjeta Dual de Compra -->
+              <div class="kalpa-sale__buy-box">
+                <!-- Opción A: Compra por Unidad -->
+                <div class="sale-buy-col sale-buy-col--unit">
+                  <div class="sale-unit-header">Unidad</div>
+                  <div class="sale-price-block">
+                    <div class="sale-price-main">S/ 7.90</div>
+                    <div class="sale-volume-sub">355 ml</div>
+                  </div>
+                  <div class="sale-qty-stepper" aria-label="Cantidad de unidades">
+                    <button type="button" class="qty-btn" onclick="updateSaleUnitQty(-1)" aria-label="Disminuir cantidad">&minus;</button>
+                    <span id="sale-unit-qty" class="qty-val">1</span>
+                    <button type="button" class="qty-btn" onclick="updateSaleUnitQty(1)" aria-label="Aumentar cantidad">+</button>
+                  </div>
+                  <button type="button" class="btn-sale-add" onclick="addSaleUnitToCart()">
+                    <span>AGREGAR</span>
+                    <svg class="sale-add-arrow-mobile" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Opción B: Compra Pack x 6 (-15%) -->
+                <div class="sale-buy-col sale-buy-col--pack">
+                  <div class="sale-pack-header">
+                    <span class="sale-pack-title">Pack x 6</span>
+                    <span class="sale-pack-discount">-15%</span>
+                  </div>
+                  <div class="sale-pack-body">
+                    <div class="sale-pack-pricing">
+                      <span class="sale-pack-old-price">S/ 47.40</span>
+                      <div class="sale-price-main sale-price-main--pack">S/ 39.90</div>
+                      <div class="sale-volume-sub">6 latas de 355 ml</div>
+                    </div>
+                    <div class="sale-pack-cans-visual" aria-hidden="true">
+                      <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--b1" draggable="false">
+                      <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--b2" draggable="false">
+                      <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--b3" draggable="false">
+                      <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--f1" draggable="false">
+                      <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--f2" draggable="false">
+                      <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--f3" draggable="false">
+                    </div>
+                  </div>
+                  <button type="button" class="btn-sale-add" onclick="addPackToKallpaCart('pack-6-original', 'Pack x 6 KALPA Original (6x355ml)', 39.90)">
+                    <span>AGREGAR</span>
+                  </button>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
 
-        <!-- Columna 2: Composición Central Integrada (Lata + Hielos + Granos + Piedra Volcánica) -->
-        <div class="kalpa-sale__centerpiece">
-          <div class="sale-can-stage">
-            <!-- Capa Trasera: Granos de café y cubos de hielo abrazando la lata -->
-            <img src="assets/hero-beans-ice-back.png" alt="" class="sale-stage__beans-back" draggable="false">
-            <!-- Capa Hielos Mobile (visible solo en mobile cuando se oculta la piedra) -->
-            <img src="assets/hero-beans-ice-front.png" alt="" class="sale-stage__beans-mid" draggable="false">
-            <!-- Lata Central KALPA Original Vertical -->
-            <img src="assets/kalpa-can-original.png" alt="KALPA Café Cold Brew Original 355ml" class="sale-stage__can" draggable="false">
-            <!-- Grano frontal superpuesto a la derecha de la lata -->
-            <img src="assets/hero-bean-single.png" alt="" class="sale-stage__bean-front" draggable="false">
-            <!-- Base de Piedra Volcánica, Hielos y Granos integrada en la base de la lata -->
-            <img src="assets/hero-rock-base.png" alt="" class="sale-stage__rock" draggable="false">
-          </div>
-        </div>
+        <!-- ================= SLIDE 2: KALPA CAFÉ MOLIDO ================= -->
+        <div class="kalpa-product-slide kalpa-product-slide--molido" id="product-slide-1" data-slide-index="1">
+          <!-- Fondo fotográfico con la lata 500g sobre saco de yute y amanecer andino -->
+          <div class="molido-slide-bg" aria-hidden="true"></div>
+          <div class="molido-slide-overlay" aria-hidden="true"></div>
 
-        <!-- Columna 3: Tarjeta Dual de Compra (Unidad y Pack x 6) -->
-        <div class="kalpa-sale__buy-box">
-          <!-- Opción A: Compra por Unidad -->
-          <div class="sale-buy-col sale-buy-col--unit">
-            <div class="sale-unit-header">Unidad</div>
-            <div class="sale-price-block">
-              <div class="sale-price-main">S/ 7.90</div>
-              <div class="sale-volume-sub">355 ml</div>
-            </div>
-            <div class="sale-qty-stepper" aria-label="Cantidad de unidades">
-              <button type="button" class="qty-btn" onclick="updateSaleUnitQty(-1)" aria-label="Disminuir cantidad">&minus;</button>
-              <span id="sale-unit-qty" class="qty-val">1</span>
-              <button type="button" class="qty-btn" onclick="updateSaleUnitQty(1)" aria-label="Aumentar cantidad">+</button>
-            </div>
-            <button type="button" class="btn-sale-add" onclick="addSaleUnitToCart()">
-              <span>AGREGAR</span>
-              <svg class="sale-add-arrow-mobile" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </button>
-          </div>
+          <div class="page-width kalpa-sale-container kalpa-molido-container">
+            <div class="kalpa-molido-grid">
+              
+              <!-- Columna 1: Información Editorial de Especialidad -->
+              <div class="kalpa-molido__info">
+                <span class="molido-top-line"></span>
+                <span class="molido-eyebrow">NUESTRO PRODUCTO</span>
+                <h2 class="molido-giant-title">
+                  <span class="molido-title-main">KALPA</span>
+                  <span class="molido-title-sub">CAFÉ MOLIDO</span>
+                </h2>
+                <p class="molido-description">
+                  Café tostado y molido de especialidad, con notas de cereza, chocolate y manzana. Cultivado en los Andes peruanos para tu Cold Brew.
+                </p>
 
-          <!-- Opción B: Compra Pack x 6 (-15%) con 6 latas visibles -->
-          <div class="sale-buy-col sale-buy-col--pack">
-            <div class="sale-pack-header">
-              <span class="sale-pack-title">Pack x 6</span>
-              <span class="sale-pack-discount">-15%</span>
-            </div>
-            <div class="sale-pack-body">
-              <div class="sale-pack-pricing">
-                <span class="sale-pack-old-price">S/ 47.40</span>
-                <div class="sale-price-main sale-price-main--pack">S/ 39.90</div>
-                <div class="sale-volume-sub">6 latas de 355 ml</div>
+                <!-- 4 Sellos de Atributos Circulares -->
+                <div class="molido-features-row">
+                  <div class="molido-feature-badge">
+                    <div class="molido-feature-circle">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M12 3a9 9 0 0 0 0 18c2-2 3-5 3-9s-1-7-3-9z"></path>
+                      </svg>
+                    </div>
+                    <span class="molido-feature-label">100%<br>OBATA</span>
+                  </div>
+
+                  <div class="molido-feature-badge">
+                    <div class="molido-feature-circle">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m8 3 4 8 5-5 5 11H2L8 3z"></path>
+                      </svg>
+                    </div>
+                    <span class="molido-feature-label">ORIGEN<br>VRAEM</span>
+                  </div>
+
+                  <div class="molido-feature-badge">
+                    <div class="molido-feature-circle">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 3h12l-2 9a4 4 0 0 1-8 0L6 3z"></path>
+                        <path d="M12 16v5"></path>
+                        <path d="M8 21h8"></path>
+                      </svg>
+                    </div>
+                    <span class="molido-feature-label">IDEAL PARA<br>COLD BREW</span>
+                  </div>
+
+                  <div class="molido-feature-badge">
+                    <div class="molido-feature-circle">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+                        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                      </svg>
+                    </div>
+                    <span class="molido-feature-label">NOTAS A<br>CEREZA, CHOCOLATE<br>Y MANZANA</span>
+                  </div>
+                </div>
+
+                <!-- Botón Ver Ficha Técnica -->
+                <div class="molido-action-wrap">
+                  <a href="producto.html" class="btn-molido-ficha">
+                    <span>VER FICHA TÉCNICA</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </a>
+                </div>
+
               </div>
-              <div class="sale-pack-cans-visual" aria-hidden="true">
-                <!-- Fila trasera (3 latas) -->
-                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--b1" draggable="false">
-                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--b2" draggable="false">
-                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--b3" draggable="false">
-                <!-- Fila delantera (3 latas) -->
-                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--f1" draggable="false">
-                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--f2" draggable="false">
-                <img src="assets/kalpa-can-original.png" alt="" class="pack-mini-can pack-mini-can--f3" draggable="false">
+
+              <!-- Columna 2: Centro (Visual de Lata 500g integrada en el fondo) -->
+              <div class="kalpa-molido__centerpiece" aria-hidden="true"></div>
+
+              <!-- Columna 3: Tarjeta Flotante Oscura de Compra -->
+              <div class="kalpa-molido__buy-box">
+                <span class="molido-card-eyebrow">PRESENTACIÓN</span>
+                
+                <!-- Selector 500g / Pack x 6 -->
+                <div class="molido-presentation-tabs">
+                  <button type="button" class="molido-tab-btn active" id="molido-tab-500g" onclick="setMolidoVariant('500g')">
+                    <span>500 g</span>
+                  </button>
+                  <button type="button" class="molido-tab-btn" id="molido-tab-pack6" onclick="setMolidoVariant('pack6')">
+                    <span>Pack x 6</span>
+                    <span class="molido-tab-badge">-15%</span>
+                  </button>
+                </div>
+
+                <!-- Bloque de Precio -->
+                <div class="molido-pricing-block">
+                  <div class="molido-price-main" id="molido-price-val">S/ 39.90</div>
+                  <div class="molido-volume-sub" id="molido-volume-val">Lata de 500 g</div>
+                </div>
+
+                <!-- Stepper de Cantidad -->
+                <div class="molido-qty-stepper" aria-label="Cantidad">
+                  <button type="button" class="molido-qty-btn" onclick="updateMolidoQty(-1)" aria-label="Disminuir">&minus;</button>
+                  <span id="molido-qty-val" class="molido-qty-val">1</span>
+                  <button type="button" class="molido-qty-btn" onclick="updateMolidoQty(1)" aria-label="Aumentar">+</button>
+                </div>
+
+                <!-- Botón Agregar al Carrito -->
+                <button type="button" class="btn-molido-add" onclick="addMolidoToCart()">
+                  <span>AGREGAR AL CARRITO</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                  </svg>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Fila Inferior: 5 Especificaciones Técnicas (Ficha Rápida) -->
+            <div class="molido-tech-specs-bar">
+              <div class="molido-spec-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><path d="M12 3a9 9 0 0 0 0 18c2-2 3-5 3-9s-1-7-3-9z"></path></svg>
+                <div class="molido-spec-text">
+                  <span class="spec-label">VARIEDAD</span>
+                  <strong class="spec-value">100% Obata</strong>
+                </div>
+              </div>
+
+              <div class="molido-spec-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 3 4 8 5-5 5 11H2L8 3z"></path></svg>
+                <div class="molido-spec-text">
+                  <span class="spec-label">ORIGEN</span>
+                  <strong class="spec-value">VRAEM, Ayacucho</strong>
+                </div>
+              </div>
+
+              <div class="molido-spec-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <div class="molido-spec-text">
+                  <span class="spec-label">PROCESO</span>
+                  <strong class="spec-value">Lavado</strong>
+                </div>
+              </div>
+
+              <div class="molido-spec-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                <div class="molido-spec-text">
+                  <span class="spec-label">TUESTE</span>
+                  <strong class="spec-value">Medio Oscuro</strong>
+                </div>
+              </div>
+
+              <div class="molido-spec-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l-2 9a4 4 0 0 1-8 0L6 3z"></path><path d="M12 16v5"></path><path d="M8 21h8"></path></svg>
+                <div class="molido-spec-text">
+                  <span class="spec-label">IDEAL PARA</span>
+                  <strong class="spec-value">Cold Brew (AeroPress, V60)</strong>
+                </div>
               </div>
             </div>
-            <button type="button" class="btn-sale-add" onclick="addPackToKallpaCart('pack-6-original', 'Pack x 6 KALPA Original (6x355ml)', 39.90)">
-              <span>AGREGAR</span>
-            </button>
+
           </div>
         </div>
 
       </div>
+
+      <!-- Indicadores de diapositivas (Dots / Tabs) -->
+      <div class="kalpa-carousel-dots" role="tablist">
+        <button type="button" class="carousel-dot active" id="carousel-dot-0" onclick="goToProductSlide(0)" aria-label="Ver KALPA Original">
+          <span class="dot-indicator"></span>
+          <span class="dot-text">KALPA ORIGINAL</span>
+        </button>
+        <button type="button" class="carousel-dot" id="carousel-dot-1" onclick="goToProductSlide(1)" aria-label="Ver KALPA Café Molido">
+          <span class="dot-indicator"></span>
+          <span class="dot-text">KALPA CAFÉ MOLIDO</span>
+        </button>
+      </div>
+
     </div>
   </section>
 
@@ -1025,6 +1222,114 @@
       btn.classList.add('is-active');
       const target = section.querySelector('#tab-' + tabId);
       if (target) target.classList.add('is-active');
+    }
+
+    // ==========================================
+    // CONTROLADOR DEL CARRUSEL DE PRODUCTOS
+    // ==========================================
+    let currentProductSlide = 0;
+    const totalProductSlides = 2;
+
+    function goToProductSlide(index) {
+      if (index < 0) index = totalProductSlides - 1;
+      if (index >= totalProductSlides) index = 0;
+      currentProductSlide = index;
+
+      for (let i = 0; i < totalProductSlides; i++) {
+        const slide = document.getElementById(`product-slide-${i}`);
+        const dot = document.getElementById(`carousel-dot-${i}`);
+        if (slide) {
+          if (i === currentProductSlide) {
+            slide.classList.add('active');
+          } else {
+            slide.classList.remove('active');
+          }
+        }
+        if (dot) {
+          if (i === currentProductSlide) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        }
+      }
+    }
+
+    function nextProductSlide() {
+      goToProductSlide(currentProductSlide + 1);
+    }
+
+    function prevProductSlide() {
+      goToProductSlide(currentProductSlide - 1);
+    }
+
+    // Touch swipe support for mobile
+    document.addEventListener('DOMContentLoaded', () => {
+      let touchStartX = 0;
+      let touchEndX = 0;
+      const carousel = document.getElementById('kalpaProductCarousel');
+      if (!carousel) return;
+
+      carousel.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      carousel.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchEndX - touchStartX;
+        if (Math.abs(diff) > 45) {
+          if (diff < 0) nextProductSlide();
+          else prevProductSlide();
+        }
+      }, { passive: true });
+    });
+
+    // ==========================================
+    // CONTROLADORES DE KALPA CAFÉ MOLIDO
+    // ==========================================
+    let currentMolidoVariant = '500g';
+    const molidoPrices = {
+      '500g': { price: 39.90, label: 'Lata de 500 g', name: 'KALPA Café Molido 500g' },
+      'pack6': { price: 203.50, label: 'Pack x 6 latas (3 kg) -15%', name: 'Pack x 6 KALPA Café Molido (6x500g)' }
+    };
+
+    function setMolidoVariant(variantKey) {
+      currentMolidoVariant = variantKey;
+      const btn500 = document.getElementById('molido-tab-500g');
+      const btnPack = document.getElementById('molido-tab-pack6');
+      const priceEl = document.getElementById('molido-price-val');
+      const volumeEl = document.getElementById('molido-volume-val');
+
+      if (btn500 && btnPack) {
+        if (variantKey === '500g') {
+          btn500.classList.add('active');
+          btnPack.classList.remove('active');
+        } else {
+          btnPack.classList.add('active');
+          btn500.classList.remove('active');
+        }
+      }
+
+      const info = molidoPrices[variantKey] || molidoPrices['500g'];
+      if (priceEl) priceEl.textContent = `S/ ${info.price.toFixed(2)}`;
+      if (volumeEl) volumeEl.textContent = info.label;
+    }
+
+    function updateMolidoQty(delta) {
+      const el = document.getElementById('molido-qty-val');
+      if (!el) return;
+      let val = parseInt(el.textContent || '1', 10) + delta;
+      if (val < 1) val = 1;
+      if (val > 24) val = 24;
+      el.textContent = val;
+    }
+
+    function addMolidoToCart() {
+      const qtyEl = document.getElementById('molido-qty-val');
+      const qty = qtyEl ? Math.max(1, parseInt(qtyEl.textContent || '1', 10)) : 1;
+      const info = molidoPrices[currentMolidoVariant] || molidoPrices['500g'];
+      const total = +(info.price * qty).toFixed(2);
+      addPackToKallpaCart(`molido-${currentMolidoVariant}`, `${qty}x ${info.name}`, total);
     }
 
     // Control de cantidad e integración con carrito para la sección KALPA ORIGINAL

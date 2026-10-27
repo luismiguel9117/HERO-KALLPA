@@ -1,6 +1,6 @@
 # ⚡ Bitácora de Desarrollo - HERO-KALLPA
 
-Documento técnico del estado actual del proyecto, mejoras aplicadas y especificación de la siguiente fase de desarrollo.
+Documento técnico del estado actual del proyecto, mejoras aplicadas y especificación de las fases de desarrollo.
 
 ---
 
@@ -23,81 +23,34 @@ Documento técnico del estado actual del proyecto, mejoras aplicadas y especific
 
 ---
 
-## 🚀 2. En Proceso: Carrusel Interactivo en la Sección *"NUESTRO PRODUCTO"*
+### B. Sección: *"NUESTRO PRODUCTO"* (Carrusel Interactivo de Productos)
+* **Objetivo:** Transformar la sección de producto `#products-section` en un carrusel dinámico interactivo con soporte de dos diapositivas completas basadas en los mockups suministrados:
+  
+#### Diapositiva 1: **KALPA ORIGINAL (Cold Brew en Lata 355ml)**
+* **Fondo visual:** Gradiente radial crema/arena cálido.
+* **Composición central:** Lata vertical Kalpa Original 355ml con cubos de hielo, granos flotantes y base de roca volcánica sólida.
+* **Bloque editorial:** Ceja `NUESTRO PRODUCTO`, título `KALPA ORIGINAL`, 4 badges circulares de atributos (0 Calorías, Sin azúcares añadidos, Listo para tomar, Cold Brew refrescante) y botón "Ver ficha completa →".
+* **Tarjeta de compra dual:** Opción Unidad (S/ 7.90) con stepper y Opción Pack x 6 (S/ 39.90, -15% desc.) con miniaturas de 6 latas.
 
-### Objetivo General
-Transformar la actual sección de producto estática (`#products-section`) en un **carrusel de productos interactivo** de dos diapositivas que permita al usuario alternar fluidamente entre las dos líneas principales de la marca:
+#### Diapositiva 2: **KALPA CAFÉ MOLIDO (Lata Metálica Especialidad 500g)**
+* **Fondo visual:** Fotografía panorámica de los Andes peruanos (`assets/kalpa-molido-bg.jpg`) con la lata de 500g sobre saco de yute y café molido.
+* **Bloque editorial:** Barra de acento dorada, ceja `NUESTRO PRODUCTO`, título bicolor `KALPA` (blanco) / `CAFÉ MOLIDO` (dorado itálico), descripción y 4 badges circulares de especialidad (100% Obata, Origen VRAEM, Ideal para Cold Brew, Notas sensoriales).
+* **Botón de acción:** `VER FICHA TÉCNICA →` en pastilla amarilla/dorada con texto negro.
+* **Tarjeta de compra flotante oscura:**
+  * Selector de variantes interactivo: `500 g` (S/ 39.90) vs `Pack x 6` (S/ 203.50, -15% desc.).
+  * Stepper de cantidad `[-] 1 [+]`.
+  * Botón `AGREGAR AL CARRITO 🛒` conectado al drawer del carrito.
+* **Barra inferior de especificaciones técnicas:** 5 atributos de especialidad (Variedad, Origen, Proceso, Tueste, Ideal para).
 
----
-
-### Diapositiva 1: **KALPA ORIGINAL (Café Cold Brew en Lata 355ml)**
-* **Fondo visual:** Gradiente radial cálido en tonos crema/arena (`#fbf4e6` a `#ede0ce`).
-* **Composición central:** 
-  * Lata vertical KALPA Original 355ml.
-  * Hielos flotantes translúcidos y granos de café envolventes.
-  * Base de piedra volcánica sólida y granos tostados.
-* **Bloque editorial (Izquierda):**
-  * Ceja: `NUESTRO PRODUCTO`.
-  * Título: `KALPA ORIGINAL` (estilo itálico impactante).
-  * Descripción de origen VRAEM y 280 mg de cafeína natural.
-  * Enlace: `VER FICHA COMPLETA →` hacia [producto.html](file:///c:/Users/Usuario/Desktop/HERO%20ANIMATION/producto.html).
-  * 4 sellos circulares:
-    * `0 CALORÍAS`
-    * `SIN AZÚCARES AÑADIDOS`
-    * `LISTO PARA TOMAR`
-    * `COLD BREW REFRESCANTE`
-* **Caja de compra dual (Derecha):**
-  * Opción A (Unidad): S/ 7.90 (355 ml) con contador de unidades `[-] [1] [+]`.
-  * Opción B (Pack x 6): S/ 39.90 (antes S/ 47.40, -15% OFF) con render de las 6 latas escalonadas.
+#### Controles del Carrusel:
+* **Flechas de navegación:** Botones circulares translúcidos (`Prev` / `Next`) en los laterales con efecto hover dorado.
+* **Paginación / Tabs inferiores:** Puntos interactivos con nombres de producto y estado activo.
+* **Gestos táctiles:** Soporte de swipe touch para móviles y tablets.
+* **Archivos modificados:** [index.html](file:///c:/Users/Usuario/Desktop/HERO%20ANIMATION/index.html), [assets/theme.css](file:///c:/Users/Usuario/Desktop/HERO%20ANIMATION/assets/theme.css).
 
 ---
 
-### Diapositiva 2: **KALPA CAFÉ MOLIDO (Lata Metálica Especialidad 500g)**
-* **Fondo visual:** Fotografía panorámica andina en alta resolución (`assets/kalpa-molido-bg.jpg` / `Café Kallpa entre montañas andinas.png`):
-  * Paisaje montañoso del VRAEM al amanecer.
-  * Lata metálica verde de 500g reposando sobre saco de yute y granos de café tostados.
-  * Cuchara de madera con café molido grueso especial para Cold Brew.
-* **Bloque editorial (Izquierda):**
-  * Barra de acento dorado superior.
-  * Ceja: `NUESTRO PRODUCTO` en tipografía dorada.
-  * Título: `KALPA` (blanco metálico en cursiva) + `CAFÉ MOLIDO` (amarillo dorado brillante `#f5ba2c`).
-  * Descripción: *"Café tostado y molido de especialidad, con notas de cereza, chocolate y manzana. Cultivado en los Andes peruanos para tu Cold Brew."*
-  * 4 sellos circulares de especialidad:
-    1. `100% OBATA` (icono de grano de café).
-    2. `ORIGEN VRAEM` (icono de cumbres montañosas).
-    3. `IDEAL PARA COLD BREW` (icono de copa / extracción).
-    4. `NOTAS A CEREZA, CHOCOLATE Y MANZANA` (icono de hoja botánica).
-  * Botón de acción: `VER FICHA TÉCNICA →` en pastilla dorada con texto negro.
-* **Caja de compra oscura (Derecha):**
-  * Encabezado: `PRESENTACIÓN`.
-  * Selector de variantes:
-    * `500 g` (seleccionado con borde dorado activo).
-    * `Pack x 6` (con etiqueta roja `-15%`).
-  * Precio: `S/ 39.90`.
-  * Stepper de cantidad: `[-] 1 [+]`.
-  * Botón de compra: `AGREGAR AL CARRITO 🛒` en pastilla amarilla/dorada con icono de carrito.
-
----
-
-## 🛠️ 3. Plan de Implementación Técnica del Carrusel
-
-1. **Estructura HTML (`index.html`):**
-   * Contenedor envolvente `.kalpa-product-carousel` con track deslizable / crossfade.
-   * Dos diapositivas `.kalpa-carousel-slide--original` y `.kalpa-carousel-slide--molido`.
-   * Flechas de navegación lateral (prev / next) con diseño sutil y elegante.
-   * Indicadores de paginación inferiores (dots interactivos).
-2. **Estilos CSS (`assets/theme.css`):**
-   * Transición fluida de opacidad/transformación con aceleración por GPU.
-   * Soporte adaptativo para desktop (1440px+), laptops, tablets y móviles.
-   * Tarjeta oscura flotante con `backdrop-filter: blur(12px)` para la diapositiva de Café Molido.
-3. **Lógica JavaScript (`assets/theme.js` o inline):**
-   * Funciones para navegación por flechas y dots (`goToSlide(index)`).
-   * Soporte de gestos táctiles (swipe) en dispositivos móviles.
-   * Conexión con el carrito existente `addPackToKallpaCart()` para ambos productos.
-
----
-
-## 🌐 4. Entorno de Pruebas
-* **Servidor local:** `http://localhost:3333/`
+## 🌐 2. Entorno de Pruebas
+* **Servidor local:** Activo en `http://localhost:3333/`
 * **Rama Git:** `main`
 * **Repositorio Remoto:** `https://github.com/luismiguel9117/HERO-KALLPA.git`
