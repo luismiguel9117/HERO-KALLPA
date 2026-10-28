@@ -689,8 +689,8 @@
                 
                 <!-- Selector 500g / Pack x 6 -->
                 <div class="molido-presentation-tabs">
-                  <button type="button" class="molido-tab-btn active" id="molido-tab-500g" onclick="setMolidoVariant('500g')">
-                    <span>500 g</span>
+                  <button type="button" class="molido-tab-btn active" id="molido-tab-250g" onclick="setMolidoVariant('250g')">
+                    <span>250 g</span>
                   </button>
                   <button type="button" class="molido-tab-btn" id="molido-tab-pack6" onclick="setMolidoVariant('pack6')">
                     <span>Pack x 6</span>
@@ -701,7 +701,7 @@
                 <!-- Bloque de Precio -->
                 <div class="molido-pricing-block">
                   <div class="molido-price-main" id="molido-price-val">S/ 39.90</div>
-                  <div class="molido-volume-sub" id="molido-volume-val">Lata de 500 g</div>
+                  <div class="molido-volume-sub" id="molido-volume-val">Lata de 250 g</div>
                 </div>
 
                 <!-- Stepper de Cantidad -->
@@ -1367,26 +1367,26 @@
     // ==========================================
     // CONTROLADORES DE KALPA CAFÉ MOLIDO
     // ==========================================
-    let currentMolidoVariant = '500g';
+    let currentMolidoVariant = '250g';
     const molidoPrices = {
-      '500g': { price: 39.90, label: 'Lata de 500 g', name: 'KALPA Café Molido 500g' },
-      'pack6': { price: 203.50, label: 'Pack x 6 latas (3 kg) -15%', name: 'Pack x 6 KALPA Café Molido (6x500g)' }
+      '250g': { price: 39.90, label: 'Lata de 250 g', name: 'KALPA Café Molido 250g' },
+      'pack6': { price: 203.50, label: 'Pack x 6 latas (1.5 kg) -15%', name: 'Pack x 6 KALPA Café Molido (6x250g)' }
     };
 
     function setMolidoVariant(variantKey) {
       currentMolidoVariant = variantKey;
-      const btn500 = document.getElementById('molido-tab-500g');
+      const btn250 = document.getElementById('molido-tab-250g');
       const btnPack = document.getElementById('molido-tab-pack6');
       const priceEl = document.getElementById('molido-price-val');
       const volumeEl = document.getElementById('molido-volume-val');
 
-      if (btn500 && btnPack) {
-        if (variantKey === '500g') {
-          btn500.classList.add('active');
+      if (btn250 && btnPack) {
+        if (variantKey === '250g') {
+          btn250.classList.add('active');
           btnPack.classList.remove('active');
         } else {
           btnPack.classList.add('active');
-          btn500.classList.remove('active');
+          btn250.classList.remove('active');
         }
       }
 

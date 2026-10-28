@@ -49,11 +49,12 @@ Documento técnico del estado actual del proyecto, mejoras aplicadas y especific
 
 ---
 
-### D. Actualización de Imagen de Alta Calidad: KALPA CAFÉ MOLIDO
-* **Objetivo:** Reemplazar el fondo de la segunda diapositiva por la versión de alta definición aportada por el usuario (`media_1793165630753_3415eba3.png`).
+### D. Optimización HD y Cobertura Total del Banner: KALPA CAFÉ MOLIDO
+* **Objetivo:** Resolver el pixelado y eliminar las barras negras laterales para que el arte cubra el 100% del banner (`media_1793166299075_44da00e6.png` y `media_1793166326805_7941bc88.png`).
 * **Implementación:**
-  * Actualizado en [assets/kalpa-molido-bg.png](file:///g:/Descargas/PAGINA%20DE%20KALLPA/assets/kalpa-molido-bg.png).
-  * Resolución nativa optimizada panorámica (1024x341, proporción 3.0:1) con fondo limpio, iluminación de amanecer andino y lata 500g centrada en alta fidelidad.
+  * **Renderizado Ultra HD a 2048x682 px:** Se procesó y remasterizó el archivo [assets/kalpa-molido-bg.png](file:///g:/Descargas/PAGINA%20DE%20KALLPA/assets/kalpa-molido-bg.png) a resolución 2K con interpolación bicúbica de alta precisión para eliminar cualquier borrosidad en pantallas Retina y 1080p/4K.
+  * **Cobertura Edge-to-Edge:** Se cambió `background-size: contain` a `background-size: cover` con `image-rendering: high-quality;` en `.molido-slide-bg`. De este modo la imagen se extiende de borde a borde sin dejar franjas negras a los costados.
+  * **Actualización a 250g:** Se sincronizó la ficha y el selector de compra con la lata física (250g de molienda media-fina para métodos de filtrado).
 
 ---
 

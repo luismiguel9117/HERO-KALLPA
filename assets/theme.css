@@ -5228,7 +5228,9 @@ h1, h2, h3, h4, h5, h6 {
   inset: 0;
   width: 100%;
   height: 100%;
-  background: url("kalpa-molido-bg.png") center center / contain no-repeat #070c09;
+  background: url("kalpa-molido-bg.png") center center / cover no-repeat #070c09;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
   pointer-events: none;
   z-index: 1;
 }
