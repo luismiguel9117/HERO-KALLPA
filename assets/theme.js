@@ -458,3 +458,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 })();
+
+
+// Integración con el Editor de Temas de Shopify (Sincronización en vivo de diapositivas)
+document.addEventListener('shopify:block:select', function(event) {
+  const blockEl = event.target;
+  if (blockEl && blockEl.classList && blockEl.classList.contains('kalpa-product-slide')) {
+    const idx = parseInt(blockEl.getAttribute('data-slide-index'), 10);
+    if (!isNaN(idx) && typeof window.goToProductSlide === 'function') {
+      window.goToProductSlide(idx);
+    }
+  }
+});
+
+document.addEventListener('shopify:section:load', function(event) {
+  if (event.target && event.target.querySelector && event.target.querySelector('.kalpa-product-carousel')) {
+    if (typeof window.goToProductSlide === 'function') {
+      window.goToProductSlide(window.currentProductSlide || 0);
+    }
+    if (typeof syncProductSlideHeights === 'function') {
+      syncProductSlideHeights();
+    }
+  }
+});
