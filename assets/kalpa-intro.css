@@ -50,36 +50,45 @@ body.web-revealed .kalpa-navbar {
   width: 100%;
   height: 85px;
   z-index: 50;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 clamp(1.5rem, 4vw, 4rem);
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
   pointer-events: auto;
 }
 
-.kalpa-intro-nav .kalpa-logo {
-  justify-self: start;
+.kalpa-intro-nav .kalpa-logo,
+.kalpa-intro-nav .intro-brand-logo {
+  z-index: 2;
 }
 
-.kalpa-intro-nav .kalpa-nav-menu {
-  justify-self: center;
+.kalpa-intro-nav .kalpa-nav-menu,
+.kalpa-intro-nav .intro-menu-links {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: none;
   align-items: center;
-  gap: 2.5rem;
+  gap: clamp(1.5rem, 2.2vw, 2.5rem);
+  z-index: 1;
 }
 
 @media (min-width: 860px) {
-  .kalpa-intro-nav .kalpa-nav-menu {
+  .kalpa-intro-nav .kalpa-nav-menu,
+  .kalpa-intro-nav .intro-menu-links {
     display: flex;
   }
 }
 
-.kalpa-intro-nav .kalpa-nav-actions {
-  justify-self: end;
+.kalpa-intro-nav .kalpa-nav-actions,
+.kalpa-intro-nav .intro-nav-right {
   display: flex;
   align-items: center;
   gap: 1.35rem;
+  margin-left: auto;
+  z-index: 2;
 }
 
 @media (max-width: 860px) {
