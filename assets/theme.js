@@ -360,3 +360,97 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: true });
 });
+
+
+// ==========================================
+// CONTROLADOR DE RESEÑAS DE LA COMUNIDAD (SLIDER)
+// ==========================================
+(function() {
+  document.addEventListener('DOMContentLoaded', () => {
+    const cardEl = document.getElementById('communityReviewCard');
+    const headlineEl = document.getElementById('communityReviewHeadline');
+    const textEl = document.getElementById('communityReviewText');
+    const avatarEl = document.getElementById('communityReviewAvatar');
+    const nameEl = document.getElementById('communityReviewName');
+    const metaEl = document.getElementById('communityReviewMeta');
+    const prevBtn = document.getElementById('communityPrevBtn');
+    const nextBtn = document.getElementById('communityNextBtn');
+    const dotsWrap = document.getElementById('communityDotsWrap');
+
+    // Reseñas sincronizables (Google Maps / Comunidad)
+    window.communityReviews = window.communityReviews || [
+      {
+        headline: '“Me da <span class="text-gold">energía limpia</span> para mis fondos de 15K”',
+        text: 'Solía tomar geles o energizantes con taurina y siempre me daban taquicardia o acidez estomacal. Kallpa me da un empuje sostenido durante todo el fondo y sin bajón. Además el sabor a café frío es súper limpio y refrescante.',
+        avatar: 'RA',
+        name: 'Rodrigo Alarcón',
+        meta: 'Triatleta & Runner · Lima'
+      },
+      {
+        headline: '“Enfoque brutal durante <span class="text-gold">horas de código</span>”',
+        text: 'Trabajo como dev y las tardes eran mortales. Tomarme una lata de KALPA helada a las 3 pm me mantiene 100% concentrado sin la ansiedad de los energéticos artificiales. 280 mg de cafeína natural que realmente se notan.',
+        avatar: 'DM',
+        name: 'Diego Mendoza',
+        meta: 'Software Engineer · Arequipa'
+      },
+      {
+        headline: '“Como barista me sorprendió <span class="text-gold">el perfil del VRAEM</span>”',
+        text: 'Muchos cold brew enlatados saben planos o quemados. KALPA conserva notas achocolatadas y acidez brillante balanceada. Sin azúcar añadida y listo para tomar directamente de la lata helada. Gran nivel.',
+        avatar: 'VT',
+        name: 'Valeria Torres',
+        meta: 'Barista & Sommelier · Cusco'
+      },
+      {
+        headline: '“El pack de 6 es <span class="text-gold">mi infaltable</span> semanal”',
+        text: 'Pido el pack todas las semanas. Lo llevo a la oficina y al gimnasio. Cero calorías, cero azúcar y me ahorro preparar café por la mañana. La lata mantiene el gas y el frío perfecto.',
+        avatar: 'CS',
+        name: 'Camila Silva',
+        meta: 'CrossFit Athlete · Miraflores'
+      }
+    ];
+
+    let reviewIndex = 0;
+
+    function showReview(idx) {
+      const list = window.communityReviews;
+      if (!list || !list.length) return;
+      if (idx < 0) idx = list.length - 1;
+      if (idx >= list.length) idx = 0;
+      reviewIndex = idx;
+
+      if (cardEl) {
+        cardEl.style.opacity = '0.4';
+        cardEl.style.transform = 'translateY(4px)';
+      }
+
+      setTimeout(() => {
+        const r = list[reviewIndex];
+        if (headlineEl) headlineEl.innerHTML = r.headline;
+        if (textEl) textEl.textContent = r.text;
+        if (avatarEl) avatarEl.textContent = r.avatar;
+        if (nameEl) nameEl.textContent = r.name;
+        if (metaEl) metaEl.textContent = r.meta;
+
+        if (dotsWrap) {
+          dotsWrap.querySelectorAll('.review-dot').forEach((dot, i) => {
+            dot.classList.toggle('is-active', i === reviewIndex);
+          });
+        }
+
+        if (cardEl) {
+          cardEl.style.opacity = '1';
+          cardEl.style.transform = 'translateY(0)';
+        }
+      }, 150);
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => showReview(reviewIndex - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => showReview(reviewIndex + 1));
+
+    if (dotsWrap) {
+      dotsWrap.querySelectorAll('.review-dot').forEach((dot, i) => {
+        dot.addEventListener('click', () => showReview(i));
+      });
+    }
+  });
+})();
