@@ -4526,7 +4526,8 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 4;
 }
 
-.sale-can-stage {
+.sale-can-stage,
+  .sale-can-stage--molido {
   position: relative;
   width: clamp(235px, 19.5vw, 275px);
   height: clamp(470px, 39vw, 550px);
@@ -4872,7 +4873,8 @@ h1, h2, h3, h4, h5, h6 {
    VERSIÓN RESPONSIVE MOBILE (<= 768px) EXACTA A LA SEGUNDA IMAGEN
    ========================================================================== */
 @media (max-width: 768px) {
-  .kalpa-product-slide--original {
+.kalpa-product-slide--original,
+.kalpa-product-slide--molido {
     padding: 2.5rem 0 2.75rem;
     background: radial-gradient(circle at 50% 48%, #fdf8ef 0%, #f5ece0 65%, #efe4d4 100%);
   }
@@ -4930,7 +4932,8 @@ h1, h2, h3, h4, h5, h6 {
     align-self: center;
   }
 
-  .sale-can-stage {
+  .sale-can-stage,
+  .sale-can-stage--molido {
     width: 185px;
     height: 340px;
     margin-bottom: 0;
@@ -5185,10 +5188,6 @@ h1, h2, h3, h4, h5, h6 {
   animation: kalpaSlideFadeIn 0.35s ease forwards;
 }
 
-.kalpa-product-slide--molido.active {
-  display: flex !important;
-  align-items: center;
-}
 
 @keyframes kalpaSlideFadeIn {
   from {
@@ -5202,7 +5201,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* SLIDE 1: KALPA ORIGINAL (Exacto al commit 4e3199f: roca al ras del borde inferior, sin espacio crema abajo) */
-.kalpa-product-slide--original {
+.kalpa-product-slide--original,
+  .kalpa-product-slide--molido {
   background: radial-gradient(circle at 48% 52%, #fbf4e6 0%, #f4eadb 55%, #ede0ce 100%);
   color: #120f0d;
   padding: 2.2rem 0 0;
@@ -5210,17 +5210,29 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* SLIDE 2: KALPA CAFÉ MOLIDO (Altura idéntica a Slide 1 para transición suave sin cambios de tamaño) */
-.kalpa-product-slide--molido {
-  background-color: #070c09;
-  color: #ffffff;
-  padding: 1.5rem 0;
+/* Escenario y Lata de Kalpa Molido */
+.sale-can-stage--molido {
   position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: clamp(490px, calc(39vw + 21px), 570px);
-  min-height: 490px;
-  max-height: 575px;
-  box-sizing: border-box;
+  width: clamp(235px, 19.5vw, 275px);
+  height: clamp(470px, 39vw, 550px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: -14px;
+}
+
+.sale-stage__can--molido {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 18px 32px rgba(40, 18, 4, 0.35));
 }
 
 .molido-slide-bg {

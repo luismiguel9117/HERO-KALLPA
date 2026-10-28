@@ -41,9 +41,9 @@ Documento técnico del estado actual del proyecto, mejoras aplicadas y especific
   2. **Estructura Grid Unificada e Idéntica:**
      * Tanto `.kalpa-sale-grid` como `.kalpa-molido-grid` comparten la misma regla:
        `grid-template-columns: minmax(320px, 360px) 1fr minmax(320px, 440px); gap: clamp(2rem, 4vw, 4.5rem); align-items: center;`
-     * **Columna 1 (Izquierda):** Bloque editorial (`.kalpa-sale__info` y `.kalpa-molido__info`) anclado a `justify-self: start; width: 100%; max-width: 360px; margin: 0; padding: 0;`.
-     * **Columna 2 (Centro):** `1fr` dedicado exclusivamente al producto protagonista (Lata 355ml en Slide 1 y Lata 500g en Slide 2), libre de solapamientos con los textos o las tarjetas.
-     * **Columna 3 (Derecha):** Tarjeta de compra (`.kalpa-sale__buy-box` y `.kalpa-molido__buy-box`) anclada a `justify-self: end; margin: 0;`.
+     * **Columna 1 (Izquierda):** Bloque editorial anclado a `justify-self: start; width: 100%; max-width: 360px; margin: 0; padding: 0;`.
+     * **Columna 2 (Centro):** `1fr` dedicado exclusivamente al producto protagonista (Lata 355ml en Slide 1 y Lata 250g en Slide 2), libre de solapamientos con los textos o las tarjetas.
+     * **Columna 3 (Derecha):** Tarjeta de compra (`.kalpa-sale__buy-box`) anclada a `justify-self: end; margin: 0;`.
   3. **Estabilidad Geométrica al Navegar:**
      * Al cambiar entre productos con las flechas `<` y `>`, ni el bloque de información izquierdo ni la tarjeta de compra derecha saltan o se desfasan en la pantalla: ambos se mantienen en las mismas coordenadas exactas.
 
@@ -54,7 +54,6 @@ Documento técnico del estado actual del proyecto, mejoras aplicadas y especific
 * **Implementación:**
   * **Renderizado Ultra HD a 2048x682 px:** Se procesó y remasterizó el archivo [assets/kalpa-molido-bg.png](file:///g:/Descargas/PAGINA%20DE%20KALLPA/assets/kalpa-molido-bg.png) a resolución 2K con interpolación bicúbica de alta precisión para eliminar cualquier borrosidad en pantallas Retina y 1080p/4K.
   * **Cobertura Edge-to-Edge:** Se cambió `background-size: contain` a `background-size: cover` con `image-rendering: high-quality;` en `.molido-slide-bg`. De este modo la imagen se extiende de borde a borde sin dejar franjas negras a los costados.
-  * **Actualización a 250g:** Se sincronizó la ficha y el selector de compra con la lata física (250g de molienda media-fina para métodos de filtrado).
 
 ---
 
@@ -72,7 +71,58 @@ Documento técnico del estado actual del proyecto, mejoras aplicadas y especific
 
 ---
 
+### F. Corrección Definitiva de Slide 2 (Kalpa Café Molido)
+* **Objetivo:** Solucionar el descuadre visual y recorte reportado en `media_1793169526908_87997b64.png`, igualando la fidelidad del mockup `media_1793167809150_633c387d.png`.
+* **Mejoras aplicadas:**
+  1. **Pieza Central Erguida y Proporcionada:**
+     * Se sustituyó el recorte y escalado erróneo por `.sale-can-stage--molido` y `.sale-stage__can--molido` con anclaje inferior absoluto (`bottom: 0; left: 50%; transform: translateX(-50%); height: 100%; width: auto;`).
+     * La lata alcanza la misma altura de tapa que Slide 1, reposando sobre su base de roca volcánica, hojas y cerezas de café sin cubos de hielo.
+  2. **Tarjeta de Compra Glassmorphism Crema Unificada:**
+     * Se eliminó el estilo oscuro heredado de `.kalpa-molido__buy-box`, adoptando `.kalpa-sale__buy-box` con fondo translúcido crema (`rgba(255, 252, 247, 0.74)`), borde sutil y tipografía oscura de máximo contraste.
+  3. **Cluster de Latas Mini en Pack x 6:**
+     * Se generó un asset individual aislado [assets/kalpa-molido-can-solo.png](file:///g:/Descargas/PAGINA%20DE%20KALLPA/assets/kalpa-molido-can-solo.png) para las miniaturas del pack, luciendo nítidas y limpias.
+  4. **Adaptabilidad Mobile:**
+     * Calibrado responsive completo en pantallas móviles (<= 768px).
+
+---
+
+### G. Nueva Vista de Productos Oficial: `productos.html`
+* **Objetivo:** Implementar la página de catálogo general basada en `media_1793169161491_d3982f04.jpg` y `media_1793168011779_f0f982b8.jpg`.
+* **Componentes implementados:**
+  1. **Hero Panorámico de Productos:** Imagen panorámica ultra HD [assets/productos-hero-bg.png](file:///g:/Descargas/PAGINA%20DE%20KALLPA/assets/productos-hero-bg.png) (2560x852 px) con frutos de cacao y amanecer en la cordillera, breadcrumb de navegación y kicker dorado.
+  2. **Barra de Controles y Filtros:** Píldoras interactivas con SVG (*Todos los productos*, *Cold Brew*, *Café Molido*, *Accesorios*) con filtrado en tiempo real y selector de ordenamiento.
+  3. **Tarjeta Destacada 01 (Cold Brew 355ml):** Con buy-box dual interactivo para unidad (S/ 7.90) y pack x 6 (S/ 39.90, -15%).
+  4. **Cuadrícula Duo de Café Molido:**
+     * Tarjeta 02: KALLPA CAFÉ MOLIDO 250G con visual remasterizado [assets/product-card-250g.png](file:///g:/Descargas/PAGINA%20DE%20KALLPA/assets/product-card-250g.png).
+     * Tarjeta 03: KALLPA CAFÉ MOLIDO 500G con visual remasterizado [assets/product-card-500g.png](file:///g:/Descargas/PAGINA%20DE%20KALLPA/assets/product-card-500g.png).
+  5. **Carrito Lateral Integrado:** Drawer AJAX completamente funcional con conteo dinámico, resumen de items y botón de checkout.
+* **Archivos:** [productos.html](file:///g:/Descargas/PAGINA%20DE%20KALLPA/productos.html), [assets/products-pages.css](file:///g:/Descargas/PAGINA%20DE%20KALLPA/assets/products-pages.css).
+
+---
+
+### H. Nueva Vista de Nosotros: `nosotros.html`
+* **Objetivo:** Implementar la página editorial de marca basada en la referencia del Hero `media_1793169380967_47daa4b1.png` y los textos del manifiesto oficial.
+* **Estructura y narrativa desarrollada:**
+  1. **Hero del Arco Andino:** Fondo remasterizado en alta resolución [assets/nosotros-hero-bg-hd.jpg](file:///g:/Descargas/PAGINA%20DE%20KALLPA/assets/nosotros-hero-bg-hd.jpg) (2048x1152 px) que enmarca la lata de Kalpa al amanecer. Tipografía a ambos lados del arco:
+     * Izquierda: `CAFÉ DE ALTURA` / `E N E R G Í A` (blanco con tracking extendido).
+     * Derecha: `V R A E M` / `N A T U R A L` (dorado brillante con tracking extendido).
+     * Botón inferior: `DESCUBRE KALPA →` en cápsula dorada.
+  2. **Sección: Energía de los Andes:** Significado de *Kalpa* en quechua (fuerza, energía y poder) y su misión de rendir al máximo sin sacrificar el cuerpo.
+  3. **Sección: La Raíz de Kalpa — Ayacucho:** Conexión con el origen, cultura y valor de los insumos andinos, acompañada por fotografía de cosecha en el VRAEM ([assets/vraem-harvest.jpg](file:///g:/Descargas/PAGINA%20DE%20KALLPA/assets/vraem-harvest.jpg)).
+  4. **Bento Grid: Cómo lo Hacemos:** Métrica de Altura (1,800 - 2,200 msnm), Cosecha (Mayo - Sept.), Cafeína Real (280 mg), Origen con Productores y Sin Sacrificar tu Cuerpo (0% azúcar añadida).
+  5. **Sección: Por Qué Existimos (Manifiesto):** Liberar el máximo potencial del cuerpo humano con insumos andinos limpios y de excelencia.
+  6. **Sección: La Gente Detrás del Café:** Tres tarjetas fotográficas editoriales (*Productores de Ayacucho*, *Finca y Cosecha*, *Equipo Kalpa*).
+  7. **Sección CTA: Pruébala Bien Helada:** Cierre de alto impacto con botón directo `ELEGIR MI PACK →` hacia la tienda.
+  8. **Footer Unificado y Carrito:** Conexión completa de navegación y carrito de compras.
+* **Archivos:** [nosotros.html](file:///g:/Descargas/PAGINA%20DE%20KALLPA/nosotros.html), [assets/nosotros.css](file:///g:/Descargas/PAGINA%20DE%20KALLPA/assets/nosotros.css).
+
+---
+
 ## 🌐 2. Entorno de Pruebas
 * **Servidor local:** Activo en `http://localhost:3000/`
+* **Páginas activas:**
+  * `http://localhost:3000/` (Home / Carrusel / Reviews)
+  * `http://localhost:3000/productos.html` (Catálogo de Productos)
+  * `http://localhost:3000/nosotros.html` (Historia y Manifiesto)
 * **Rama Git:** `main`
 * **Repositorio Remoto:** `https://github.com/luismiguel9117/HERO-KALLPA.git`

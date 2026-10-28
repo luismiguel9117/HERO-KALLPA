@@ -3,95 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nosotros | KALPA Cold Brew — El Origen y Nuestra Historia</title>
-  <meta name="description" content="Conoce la historia detrás de KALPA. Café de altura de Ayacucho y del VRAEM, maceración lenta en frío 24H y energía limpia para tu día.">
+  <title>Nosotros | KALPA Cold Brew — Energía de los Andes</title>
+  <meta name="description" content="Kalpa significa fuerza, energía y poder en quechua. Conoce la raíz de KALPA en Ayacucho y cómo liberamos el máximo potencial de tu cuerpo sin sacrificios.">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/logo-k-symbol-white.png">
 
-  <!-- Estilos Globales -->
+  <!-- Tipografías Oficiales -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos Globales y Específicos -->
   <link rel="stylesheet" href="assets/theme.css">
   <link rel="stylesheet" href="assets/products-pages.css">
-  <style>
-    .about-hero {
-      padding: 5rem 0 3.5rem;
-      background: radial-gradient(ellipse at 50% 30%, #151822 0%, #060709 100%);
-      text-align: center;
-    }
-    .about-hero__eyebrow {
-      display: block;
-      font-family: var(--font-brand);
-      font-size: 0.8rem;
-      font-weight: 800;
-      letter-spacing: 0.16em;
-      color: var(--accent-gold);
-      margin-bottom: 0.75rem;
-    }
-    .about-hero__title {
-      font-family: var(--font-brand);
-      font-size: clamp(2.6rem, 6vw, 4.4rem);
-      font-weight: 900;
-      font-style: italic;
-      color: #ffffff;
-      line-height: 1.02;
-      margin: 0 auto 1.5rem;
-      max-width: 820px;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-    }
-    .about-hero__desc {
-      font-size: clamp(1rem, 1.4vw, 1.2rem);
-      color: rgba(255, 255, 255, 0.85);
-      line-height: 1.6;
-      max-width: 680px;
-      margin: 0 auto;
-    }
-    .about-pillars-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      padding: 4rem 0 6rem;
-    }
-    .about-pillar-card {
-      background: #0f1118;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 8px;
-      padding: 2.5rem 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      transition: all 0.25s ease;
-    }
-    .about-pillar-card:hover {
-      border-color: rgba(251, 209, 50, 0.4);
-      transform: translateY(-4px);
-    }
-    .about-pillar-num {
-      font-family: var(--font-brand);
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: #fbd132;
-    }
-    .about-pillar-title {
-      font-family: var(--font-brand);
-      font-size: 1.35rem;
-      font-weight: 900;
-      color: #ffffff;
-      text-transform: uppercase;
-      margin: 0;
-    }
-    .about-pillar-text {
-      font-size: 0.92rem;
-      color: rgba(255, 255, 255, 0.75);
-      line-height: 1.55;
-      margin: 0;
-    }
-    @media (max-width: 900px) {
-      .about-pillars-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/nosotros.css">
 </head>
 <body class="bg-black text-white">
 
@@ -99,7 +25,7 @@
   <div class="kalpa-announcement-bar">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="announcement-truck-icon">
       <rect x="1" y="3" width="15" height="13"></rect>
-      <polygon points="16 8 20 8 23 11 23 16 16 8"></polygon>
+      <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
       <circle cx="5.5" cy="18.5" r="2.5"></circle>
       <circle cx="18.5" cy="18.5" r="2.5"></circle>
     </svg>
@@ -109,15 +35,18 @@
 
   <header class="kalpa-navbar" id="kallpa-header">
     <div class="page-width kalpa-navbar__container">
+      <!-- Logo KALPA Oficial -->
       <a href="index.html" class="kalpa-logo" aria-label="KALPA Cold Brew - Inicio">
         <img src="assets/logo-kalpa-white.png" alt="KALPA Logo" class="kalpa-logo__img" width="165" height="38">
       </a>
 
+      <!-- Menú de Navegación -->
       <nav class="kalpa-nav-menu">
         <a href="index.html" class="kalpa-nav-item">Inicio</a>
         <a href="productos.html" class="kalpa-nav-item">Productos</a>
-        <a href="index.html#origin-section" class="kalpa-nav-item">Promociones</a>
         <a href="nosotros.html" class="kalpa-nav-item is-active">Nosotros</a>
+        <a href="index.html#origin-section" class="kalpa-nav-item">Origen</a>
+        <a href="#footer-section" class="kalpa-nav-item">Contacto</a>
       </nav>
 
       <div class="kalpa-nav-actions">
@@ -137,55 +66,274 @@
     </div>
   </header>
 
+  <!-- ==================== 2. HERO NOSOTROS: EL ARCO ANDINO ==================== -->
+  <section class="nosotros-hero" aria-label="Hero Nosotros">
+    <div class="nosotros-hero__bg" aria-hidden="true"></div>
+    <div class="nosotros-hero__vignette" aria-hidden="true"></div>
 
-  <!-- ==================== 2. HERO NOSOTROS ==================== -->
-  <section class="about-hero">
-    <div class="page-width">
-      <span class="about-hero__eyebrow">NUESTRA HISTORIA</span>
-      <h1 class="about-hero__title">
-        ENERGÍA REAL NACIDA EN LOS ANDES
-      </h1>
-      <p class="about-hero__desc">
-        KALPA nace con una convicción clara: la energía de verdad no necesita taurina, ni químicos, ni excesos de azúcar. Nace de la tierra, de los valles del VRAEM en Ayacucho y de la paciencia de un cold brew perfecto de 24 horas.
-      </p>
+    <div class="nosotros-hero__container">
+      <!-- Fila superior: Texto a ambos lados del arco -->
+      <div class="nosotros-hero__split-text">
+        <!-- Lado Izquierdo -->
+        <div class="nosotros-hero__side nosotros-hero__side--left">
+          <span class="nosotros-hero__subtitle">CAFÉ DE ALTURA</span>
+          <span class="nosotros-hero__giant-word nosotros-hero__giant-word--white">ENERGÍA</span>
+        </div>
+
+        <!-- Lado Derecho -->
+        <div class="nosotros-hero__side nosotros-hero__side--right">
+          <span class="nosotros-hero__subtitle">VRAEM</span>
+          <span class="nosotros-hero__giant-word nosotros-hero__giant-word--gold">NATURAL</span>
+        </div>
+      </div>
+
+      <!-- Fila inferior: Botón Descubre Kalpa a la izquierda -->
+      <div class="nosotros-hero__bottom-row">
+        <a href="#energia-andes" class="btn-hero-descubre">
+          <span>DESCUBRE KALPA</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
     </div>
   </section>
 
-
-  <!-- ==================== 3. TRES PILARES ==================== -->
-  <section class="bg-black">
+  <!-- ==================== 3. SECCIÓN: ENERGÍA DE LOS ANDES ==================== -->
+  <section class="section-nosotros-energia" id="energia-andes">
     <div class="page-width">
-      <div class="about-pillars-grid">
-        <div class="about-pillar-card">
-          <span class="about-pillar-num">01</span>
-          <h3 class="about-pillar-title">Origen VRAEM</h3>
-          <p class="about-pillar-text">
-            Trabajamos mano a mano con caficultores de altura en Ayacucho, cosechando granos arábica seleccionados a más de 1,600 m.s.n.m. para impulsar el desarrollo agroforestal sostenible.
+      <div class="energia-container">
+        <span class="section-kicker-gold">ORIGEN Y SIGNIFICADO</span>
+        <h2 class="energia-giant-title">ENERGÍA DE LOS ANDES</h2>
+        <p class="energia-lead-quote">
+          Kalpa significa fuerza, energía y poder en quechua.
+        </p>
+        <p class="energia-body-text">
+          Nació para que rindas al máximo sin sacrificar tu cuerpo. Una bebida creada a partir de café de especialidad de origen peruano, con cafeína limpia que estimula tu mente y cuerpo de forma continua y natural.
+        </p>
+        <div>
+          <a href="productos.html" class="btn-probar-kalpa">
+            <span>PROBAR KALPA</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 4. SECCIÓN: LA RAÍZ DE KALPA — AYACUCHO ==================== -->
+  <section class="section-nosotros-raiz" id="origen-ayacucho">
+    <div class="page-width">
+      <div class="raiz-grid">
+        <div class="raiz-content">
+          <span class="section-kicker-gold">LA RAÍZ DE KALPA</span>
+          <h2 class="raiz-title">AYACUCHO</h2>
+          <p class="raiz-lead">
+            Ayacucho no es solo de donde viene el café. Es el origen, la cultura y la razón de ser de lo que hacemos.
           </p>
+          <p class="raiz-text">
+            Usamos la energía natural de los insumos andinos: potente, limpia, sin artificios. Insumos andinos que merecen ser reconocidos en el Perú y en el mundo entero por su calidad insuperable.
+          </p>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="productos.html" class="btn-probar-kalpa">
+              <span>VER NUESTROS PRODUCTOS</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
         </div>
 
-        <div class="about-pillar-card">
-          <span class="about-pillar-num">02</span>
-          <h3 class="about-pillar-title">Extracción Criogénica 24H</h3>
-          <p class="about-pillar-text">
-            Maceramos cada lote durante 24 horas continuas a 4°C. Este proceso en frío disuelve las notas a chocolate y nuez, eliminando la acidez agresiva y concentrando 280 mg de cafeína natural.
-          </p>
+        <div class="raiz-visual-card">
+          <img src="assets/vraem-harvest.jpg" alt="Cosecha de café de especialidad en los valles de Ayacucho" loading="lazy">
+          <div class="raiz-badge-overlay">
+            <span class="raiz-badge-val">VRAEM · AYACUCHO</span>
+            <span class="raiz-badge-label">100% Insumos Andinos</span>
+          </div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="about-pillar-card">
-          <span class="about-pillar-num">03</span>
-          <h3 class="about-pillar-title">Rendimiento Limpio</h3>
-          <p class="about-pillar-text">
-            Cero azúcar, cero conservantes artificiales y cero crash. Energía pura para entrenar, crear, programar y rendir al máximo nivel durante todo tu día.
+  <!-- ==================== 5. SECCIÓN BENTO: CÓMO LO HACEMOS ==================== -->
+  <section class="section-nosotros-bento" id="como-lo-hacemos">
+    <div class="page-width">
+      <div class="bento-header">
+        <span class="section-kicker-gold">PROCESO Y RIGOR</span>
+        <h2 class="bento-header__title">CÓMO LO HACEMOS</h2>
+        <div class="bento-header__sub">POTENTE, LIMPIA, SIN ARTIFICIOS</div>
+      </div>
+
+      <div class="nosotros-bento-grid">
+        
+        <!-- Bento 1: ALTURA -->
+        <article class="bento-card bento-card--altura">
+          <div class="bento-card__num">1,800 - 2,200</div>
+          <div class="bento-card__unit">msnm</div>
+          <h3 class="bento-card__title">ALTURA</h3>
+          <p class="bento-card__desc">
+            Cultivado en las laderas más altas del VRAEM, donde la altitud y los microclimas andinos concentran azúcares naturales y acidez brillante.
+          </p>
+        </article>
+
+        <!-- Bento 2: COSECHA -->
+        <article class="bento-card bento-card--cosecha">
+          <div class="bento-card__num">Mayo — Sept.</div>
+          <div class="bento-card__unit">Temporada</div>
+          <h3 class="bento-card__title">COSECHA</h3>
+          <p class="bento-card__desc">
+            Recolección manual selectiva grano a grano, eligiendo exclusivamente cerezas en su punto cumbre de maduración óptima.
+          </p>
+        </article>
+
+        <!-- Bento 3: CAFEÍNA REAL -->
+        <article class="bento-card bento-card--cafeina">
+          <div class="bento-card__pill">280 mg de Energía</div>
+          <h3 class="bento-card__title">CAFEÍNA REAL</h3>
+          <p class="bento-card__desc">
+            Cafeína de la tierra, no de laboratorio. Café de verdad, sin fórmulas que no entiendes. Extraída lentamente en frío durante 24 horas.
+          </p>
+        </article>
+
+        <!-- Bento 4: ORIGEN CON PRODUCTORES -->
+        <article class="bento-card bento-card--productores">
+          <div class="bento-card__pill">Comercio Justo y Directo</div>
+          <h3 class="bento-card__title">ORIGEN CON PRODUCTORES</h3>
+          <p class="bento-card__desc">
+            Café de altura de Ayacucho. Un origen que puedes señalar en el mapa y una razón de ser. Trabajamos mano a mano con familias productoras locales para reconocer su maestría y pagar precios justos por su cosecha.
+          </p>
+        </article>
+
+        <!-- Bento 5: SIN SACRIFICAR TU CUERPO -->
+        <article class="bento-card bento-card--sin-sacrificar">
+          <div class="bento-card__pill">0% Azúcar Añadida</div>
+          <h3 class="bento-card__title">SIN SACRIFICAR TU CUERPO</h3>
+          <p class="bento-card__desc">
+            Sin azúcar. 0 calorías, 0 saborizantes y 0 conservantes. Tu cuerpo merece algo mejor. Una energía sostenida que no te genera caídas ni picos de ansiedad.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 6. SECCIÓN: POR QUÉ EXISTIMOS (MANIFIESTO) ==================== -->
+  <section class="section-nosotros-manifiesto" id="por-que-existimos">
+    <div class="page-width">
+      <div class="manifiesto-container">
+        <span class="manifiesto-kicker">POR QUÉ EXISTIMOS</span>
+        <h2 class="manifiesto-headline">
+          LIBERAR EL MÁXIMO POTENCIAL DE TU CUERPO
+        </h2>
+        <div class="manifiesto-subheading">
+          LAS PERSONAS SIN SACRIFICAR SU CUERPO
+        </div>
+        <div class="manifiesto-card">
+          <p class="manifiesto-quote">
+            "Creemos en un mundo donde puedas liberar tu máximo potencial sin sacrificar tu cuerpo, con insumos andinos que merecen ser reconocidos."
           </p>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ==================== 7. SECCIÓN: LA GENTE DETRÁS DEL CAFÉ ==================== -->
+  <section class="section-nosotros-equipo" id="la-gente">
+    <div class="page-width">
+      <div class="equipo-header">
+        <span class="section-kicker-gold">DEL CAFETAL A TU LATA</span>
+        <h2 class="bento-header__title">LA GENTE DETRÁS DEL CAFÉ</h2>
+        <p style="color: #94a3b8; font-size: 1.05rem; margin-top: 0.5rem;">
+          Conoce a las manos y los paisajes que hacen posible cada lata de KALPA.
+        </p>
+      </div>
 
-  <!-- ==================== 4. FOOTER OFICIAL CON BANNER NEWSLETTER ==================== -->
+      <div class="equipo-cards-grid">
+        
+        <!-- Foto 1: Productores de Ayacucho -->
+        <article class="equipo-photo-card">
+          <div class="equipo-photo-wrap">
+            <img src="assets/product-card-molido-250.jpg" alt="Productores de café de especialidad en Ayacucho" loading="lazy">
+            <div class="equipo-photo-overlay"></div>
+          </div>
+          <div class="equipo-card-info">
+            <span class="equipo-card-kicker">FAMILIAS CAFETALERAS</span>
+            <h3 class="equipo-card-title">PRODUCTORES DE AYACUCHO</h3>
+            <p class="equipo-card-desc">
+              Generaciones de dedicación cultivando café bajo sombra en las quebradas andinas del VRAEM.
+            </p>
+          </div>
+        </article>
+
+        <!-- Foto 2: Finca y Cosecha -->
+        <article class="equipo-photo-card">
+          <div class="equipo-photo-wrap">
+            <img src="assets/kalpa-molido-bg.png" alt="Finca y cosecha de café andino al amanecer" loading="lazy">
+            <div class="equipo-photo-overlay"></div>
+          </div>
+          <div class="equipo-card-info">
+            <span class="equipo-card-kicker">TIERRA Y ALTURA</span>
+            <h3 class="equipo-card-title">FINCA Y COSECHA</h3>
+            <p class="equipo-card-desc">
+              Suelos volcánicos ricos en minerales y secado solar en camas africanas para preservar cada nota de cata.
+            </p>
+          </div>
+        </article>
+
+        <!-- Foto 3: Equipo Kalpa -->
+        <article class="equipo-photo-card">
+          <div class="equipo-photo-wrap">
+            <img src="assets/energy-natural-composition.png" alt="Equipo Kalpa y proceso artesanal de extracción" loading="lazy">
+            <div class="equipo-photo-overlay"></div>
+          </div>
+          <div class="equipo-card-info">
+            <span class="equipo-card-kicker">MAESTROS DEL COLD BREW</span>
+            <h3 class="equipo-card-title">EQUIPO KALPA</h3>
+            <p class="equipo-card-desc">
+              Extracción artesanal en frío durante 24 horas y envasado hermético para que disfrutes la energía más pura.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 8. SECCIÓN CTA: PRUÉBALA BIEN HELADA ==================== -->
+  <section class="section-nosotros-cta" id="cta-helada">
+    <div class="page-width">
+      <div class="nosotros-cta-container">
+        <span class="section-kicker-gold">EXPERIENCIA KALPA</span>
+        <h2 class="cta-giant-title">PRUÉBALA BIEN HELADA</h2>
+        <p class="cta-subtitle">
+          Siente la frescura y la potencia del café de altura en su máxima expresión.
+        </p>
+
+        <div class="cta-can-preview">
+          <img src="assets/kalpa-can-original.png" alt="Lata KALPA Cold Brew bien helada" draggable="false" loading="lazy">
+        </div>
+
+        <div>
+          <a href="productos.html" class="btn-elegir-pack">
+            <span>ELEGIR MI PACK</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 9. FOOTER CON BANNER NEWSLETTER ==================== -->
   <footer class="kallpa-footer-wrapper" id="footer-section">
+    <!-- Banner Newsletter -->
     <div class="kallpa-newsletter-banner">
       <div class="kallpa-newsletter-banner__pattern" aria-hidden="true"></div>
       <div class="kallpa-newsletter-banner__vignette" aria-hidden="true"></div>
@@ -218,87 +366,99 @@
       </div>
     </div>
 
+    <!-- Barra Inferior del Footer -->
     <div class="kallpa-footer-bottom">
       <div class="kallpa-footer-bottom__container">
         <div class="footer-bottom__main-row">
           <a href="index.html" class="footer-logo-link" aria-label="KALPA - Inicio">
-            <img src="assets/logo-kalpa-white.png" alt="KALPA" class="footer-logo-img" width="135" height="30">
+            <img src="assets/logo-kalpa-white.png" alt="KALPA" class="footer-logo-img">
           </a>
-
-          <nav class="footer-horizontal-nav" aria-label="Navegación pie de página">
-            <a href="index.html">Inicio</a>
-            <a href="productos.html">Productos</a>
-            <a href="index.html#origin-section">Promociones</a>
-            <a href="nosotros.html">Nosotros</a>
+          <nav class="footer-nav" aria-label="Navegación pie de página">
+            <a href="index.html" class="footer-nav-link">Inicio</a>
+            <a href="productos.html" class="footer-nav-link">Productos</a>
+            <a href="nosotros.html" class="footer-nav-link is-active">Nosotros</a>
+            <a href="index.html#origin-section" class="footer-nav-link">Origen</a>
+            <a href="#footer-section" class="footer-nav-link">Contacto</a>
           </nav>
-
-          <div class="footer-social-icons">
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Instagram">
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <div class="footer-social-row">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="Instagram de KALPA">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
               </svg>
             </a>
-            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="TikTok">
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.68 6.34 6.34 0 0 0 9.33 22a6.33 6.33 0 0 0 6.34-6.32V8.92a8.28 8.28 0 0 0 3.92 1V6.69z"></path>
+            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="TikTok de KALPA">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.12V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.47V10.81a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.24z"/>
               </svg>
             </a>
-            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="YouTube">
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path>
-              </svg>
-            </a>
-          </div>
-
-          <div class="footer-shipping-badge">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="footer-shipping-icon">
-              <rect x="1" y="3" width="15" height="13"></rect>
-              <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
-              <circle cx="5.5" cy="18.5" r="2.5"></circle>
-              <circle cx="18.5" cy="18.5" r="2.5"></circle>
-            </svg>
-            <span>Envíos a todo el Perú.</span>
           </div>
         </div>
-
         <div class="footer-bottom__legal-row">
-          <p class="footer-copyright">&copy; 2026 KALPA. Todos los derechos reservados.</p>
-          <div class="footer-legal-links">
-            <a href="#">Términos y condiciones</a>
-            <span class="legal-sep">|</span>
-            <a href="#">Política de privacidad</a>
-            <span class="legal-sep">|</span>
-            <a href="mailto:ventas@kalpa.pe">Contacto</a>
-          </div>
+          <p class="footer-copy">&copy; 2026 KALPA Cold Brew. Todos los derechos reservados.</p>
         </div>
       </div>
     </div>
   </footer>
 
-  <div id="kallpa-cart-overlay" class="cart-overlay" onclick="closeKallpaCart()"></div>
-  <div id="kallpa-cart-drawer" class="cart-drawer">
+  <!-- ==================== DRAWER DEL CARRITO ==================== -->
+  <div class="cart-drawer-overlay" id="kallpa-cart-overlay" onclick="closeKallpaCart()"></div>
+  <aside class="cart-drawer" id="kallpa-cart-drawer" aria-label="Tu Carrito KALPA">
     <div class="cart-drawer__header">
-      <h3 style="font-size: 1.1rem; font-weight: 800; letter-spacing: 0.1em; color: var(--text-main); margin: 0;">
-        TU SELECCIÓN KALLPA
-      </h3>
-      <button type="button" class="cart-drawer__close" onclick="closeKallpaCart()">&times;</button>
+      <h3 class="cart-drawer__title">TU CARRITO</h3>
+      <button type="button" class="cart-drawer__close" onclick="closeKallpaCart()" aria-label="Cerrar Carrito">&times;</button>
     </div>
-    <div id="kallpa-cart-items" class="cart-drawer__body"></div>
-    <div id="kallpa-cart-footer"></div>
-  </div>
+    <div class="cart-drawer__items" id="kallpa-cart-items">
+      <div style="padding: 2.5rem 1.5rem; text-align: center; color: #94a3b8;">Tu carrito está vacío</div>
+    </div>
+    <div class="cart-drawer__footer" id="kallpa-cart-footer">
+      <button type="button" class="btn-checkout" onclick="alert('Iniciando Checkout Seguro KALPA...')">FINALIZAR COMPRA</button>
+    </div>
+  </aside>
 
+  <!-- JavaScript Global del Carrito -->
   <script>
     function openKallpaCart() {
-      const d = document.getElementById('kallpa-cart-drawer');
-      const o = document.getElementById('kallpa-cart-overlay');
-      if (d && o) { d.classList.add('is-active'); o.classList.add('is-active'); }
+      const drawer = document.getElementById('kallpa-cart-drawer');
+      const overlay = document.getElementById('kallpa-cart-overlay');
+      if (drawer && overlay) {
+        drawer.classList.add('is-open');
+        overlay.classList.add('is-open');
+      }
     }
+
     function closeKallpaCart() {
-      const d = document.getElementById('kallpa-cart-drawer');
-      const o = document.getElementById('kallpa-cart-overlay');
-      if (d && o) { d.classList.remove('is-active'); o.classList.remove('is-active'); }
+      const drawer = document.getElementById('kallpa-cart-drawer');
+      const overlay = document.getElementById('kallpa-cart-overlay');
+      if (drawer && overlay) {
+        drawer.classList.remove('is-open');
+        overlay.classList.remove('is-open');
+      }
+    }
+
+    function addPackToKallpaCart(id, name, price) {
+      const countEl = document.getElementById('kallpa-cart-count');
+      if (countEl) {
+        countEl.textContent = parseInt(countEl.textContent || '0', 10) + 1;
+      }
+      const itemsContainer = document.getElementById('kallpa-cart-items');
+      if (itemsContainer) {
+        if (itemsContainer.children.length === 1 && itemsContainer.children[0].textContent.includes('vacío')) {
+          itemsContainer.innerHTML = '';
+        }
+        const itemEl = document.createElement('div');
+        itemEl.style.cssText = 'display:flex; justify-content:space-between; align-items:center; padding:1rem 1.2rem; border-bottom:1px solid rgba(255,255,255,0.08);';
+        itemEl.innerHTML = `
+          <div>
+            <div style="font-weight:700; font-size:0.92rem; color:#fff;">${name}</div>
+            <div style="color:#f5ba2c; font-size:0.85rem; font-weight:800; margin-top:0.2rem;">S/ ${price.toFixed(2)}</div>
+          </div>
+          <button style="background:none; border:none; color:#ef4444; font-size:1.2rem; cursor:pointer;" onclick="this.parentElement.remove();">&times;</button>
+        `;
+        itemsContainer.appendChild(itemEl);
+      }
+      openKallpaCart();
     }
   </script>
 </body>

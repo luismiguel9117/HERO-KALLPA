@@ -1,1076 +1,820 @@
 /* ==========================================================================
-   PÁGINAS DE PRODUCTOS Y VISTA INTERIOR DE PRODUCTO - KALPA COLD BREW
+   PÁGINA DE PRODUCTOS (LA LÍNEA KALLPA) - ESTILOS OFICIALES SEGÚN MOCKUP
    ========================================================================== */
 
-/* 1. HERO DEL CATÁLOGO DE PRODUCTOS */
-.catalog-hero {
-  padding: 3.5rem 0 2.5rem;
-  background-color: #060709;
-}
-
-.catalog-hero__eyebrow {
-  display: block;
-  font-family: var(--font-brand);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  color: var(--accent-gold);
-  margin-bottom: 0.75rem;
-}
-
-.catalog-hero__title {
-  font-family: var(--font-brand);
-  font-size: clamp(2.8rem, 6.5vw, 4.8rem);
-  font-weight: 900;
-  font-style: italic;
-  line-height: 0.95;
-  margin: 0 0 1.25rem 0;
-  text-transform: uppercase;
-}
-
-.catalog-hero__title-solid {
-  display: block;
-  color: #ffffff;
-  letter-spacing: -0.02em;
-}
-
-.catalog-hero__title-outline {
-  display: block;
-  color: transparent;
-  -webkit-text-stroke: 2px #fbd132;
-  letter-spacing: -0.01em;
-  text-shadow: 0 0 20px rgba(251, 209, 50, 0.2);
-}
-
-.catalog-hero__desc {
-  font-size: clamp(0.95rem, 1.3vw, 1.15rem);
-  color: rgba(255, 255, 255, 0.82);
-  line-height: 1.5;
-  max-width: 580px;
-  margin-bottom: 2rem;
-}
-
-/* Filtros en Píldoras */
-.catalog-filters {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.catalog-filter-btn {
-  background: #0d0f14;
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 4px;
-  padding: 0.55rem 1.4rem;
-  font-family: var(--font-brand);
-  font-size: 0.78rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.22s ease;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.catalog-filter-btn:hover {
-  border-color: #fbd132;
-  color: #fbd132;
-}
-
-.catalog-filter-btn.is-active {
-  background: #fbd132;
-  color: #000000;
-  border-color: #fbd132;
-  box-shadow: 0 4px 15px rgba(251, 209, 50, 0.35);
-}
-
-/* 2. LISTADO DE PRODUCTOS (FILAS ALTERNADAS) */
-.catalog-list {
-  background-color: #08090c;
-  padding: 2.5rem 0 5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 4.5rem;
-}
-
-.catalog-item {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: clamp(2rem, 5vw, 4.5rem);
-  align-items: center;
-}
-
-.catalog-item--reverse {
-  grid-template-columns: 1.1fr 1fr;
-}
-
-.catalog-item--reverse .catalog-item__card {
-  order: 2;
-}
-
-.catalog-item--reverse .catalog-item__content {
-  order: 1;
-}
-
-/* Tarjeta Gráfica con Patrón Andino y Lata */
-.catalog-item__card {
+/* 1. HERO DE PRODUCTOS (FONDO PANORÁMICO DE CACAO Y AMANECER ANDINO) */
+.kallpa-products-hero {
   position: relative;
-  border-radius: 14px;
-  min-height: 440px;
-  overflow: hidden;
+  width: 100%;
+  min-height: clamp(340px, 32vw, 440px);
+  padding: clamp(2.5rem, 4vw, 4rem) 0 3rem;
+  background-color: #06080b;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.catalog-item__card--yellow {
-  background: radial-gradient(circle at 50% 50%, #f6c823 0%, #d89f0a 100%);
-}
-
-.catalog-item__card--orange {
-  background: radial-gradient(circle at 50% 50%, #e6751c 0%, #b8540c 100%);
-}
-
-.catalog-item__card--silver {
-  background: radial-gradient(circle at 50% 50%, #c9ccd5 0%, #9fa5b2 100%);
-}
-
-.catalog-card__pattern {
+.products-hero__bg-layer {
   position: absolute;
   inset: 0;
-  background-image: url('kalpa-pattern.png');
-  background-repeat: repeat;
-  background-size: 260px;
-  opacity: 0.16;
-  mix-blend-mode: overlay;
-  pointer-events: none;
-}
-
-.catalog-card__img-can {
-  position: relative;
-  z-index: 2;
-  max-height: 380px;
-  width: auto;
-  display: block;
-  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.45));
-  transition: transform 0.35s ease;
-}
-
-.catalog-item__card:hover .catalog-card__img-can {
-  transform: translateY(-8px) scale(1.03);
-}
-
-/* Escenario Central con Roca Volcánica, Hielos y Granos */
-.catalog-card__stage {
-  position: relative;
-  z-index: 2;
-  width: 270px;
-  height: 380px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.catalog-card__beans-back {
-  position: absolute;
-  top: 4%;
-  left: -22%;
-  width: 145%;
-  height: auto;
+  width: 100%;
+  height: 100%;
+  background: url("productos-hero-bg.png") center 30% / cover no-repeat #080c09;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
   pointer-events: none;
   z-index: 1;
 }
 
-.catalog-card__can {
-  position: relative;
-  z-index: 2;
-  max-height: 320px;
-  width: auto;
-  display: block;
-  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.4));
-  transition: transform 0.35s ease;
-}
-
-.catalog-item__card:hover .catalog-card__can,
-.product-main-stage:hover .catalog-card__can {
-  transform: translateY(-6px) scale(1.02);
-}
-
-.catalog-card__bean-front {
+.products-hero__vignette {
   position: absolute;
-  bottom: 20%;
-  right: -6%;
-  width: 25%;
-  height: auto;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(6, 8, 11, 0.88) 0%, rgba(6, 8, 11, 0.65) 42%, rgba(6, 8, 11, 0.25) 75%, rgba(6, 8, 11, 0.5) 100%),
+              linear-gradient(180deg, rgba(6, 8, 11, 0.75) 0%, transparent 30%, transparent 70%, rgba(6, 8, 11, 0.95) 100%);
   pointer-events: none;
-  z-index: 3;
-}
-
-.catalog-card__rock {
-  position: absolute;
-  bottom: -4%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 135%;
-  max-width: none;
-  height: auto;
-  pointer-events: none;
-  z-index: 4;
-}
-
-/* Placeholder para Productos Próximos (Orange & Latte) */
-.catalog-card__placeholder {
-  position: relative;
   z-index: 2;
-  border: 2px dashed rgba(255, 255, 255, 0.45);
-  border-radius: 8px;
-  padding: 2.5rem 1.8rem;
-  width: 75%;
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.08);
 }
 
-.catalog-card__placeholder-text {
-  font-family: var(--font-brand);
-  font-size: 0.88rem;
-  font-weight: 900;
-  letter-spacing: 0.14em;
-  color: rgba(255, 255, 255, 0.85);
-  text-transform: uppercase;
-}
-
-/* Columna de Contenido y Especificaciones */
-.catalog-item__content {
-  display: flex;
-  flex-direction: column;
-  gap: 1.1rem;
-}
-
-.catalog-item__status {
-  font-family: var(--font-brand);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  color: var(--accent-gold);
-  text-transform: uppercase;
-}
-
-.catalog-item__title {
-  font-family: var(--font-brand);
-  font-size: clamp(2rem, 3.4vw, 3rem);
-  font-weight: 900;
-  font-style: italic;
-  line-height: 1.02;
-  color: #ffffff;
-  text-transform: uppercase;
-  margin: 0;
-  letter-spacing: -0.015em;
-}
-
-.catalog-item__desc {
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.85);
-  margin: 0;
-}
-
-/* Cuadrícula de 4 Especificaciones */
-.catalog-specs-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-  margin-top: 0.35rem;
-}
-
-.catalog-spec-box {
-  background: rgba(18, 20, 26, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 6px;
-  padding: 0.75rem 1rem;
-}
-
-.catalog-spec-label {
-  display: block;
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.5);
-  text-transform: uppercase;
-  margin-bottom: 0.25rem;
-}
-
-.catalog-spec-val {
-  display: block;
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: #ffffff;
-}
-
-/* Botones de Acción del Item */
-.catalog-actions-row {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  margin-top: 0.6rem;
-  flex-wrap: wrap;
-}
-
-.btn-catalog-buy {
-  background: #fbd132;
-  color: #000000;
-  padding: 0.85rem 1.8rem;
-  border-radius: 4px;
-  font-family: var(--font-brand);
-  font-size: 0.82rem;
-  font-weight: 900;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-decoration: none;
-  cursor: pointer;
-  border: none;
-  box-shadow: 0 6px 20px rgba(251, 209, 50, 0.35);
-  transition: all 0.25s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-catalog-buy:hover {
-  background: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.4);
-}
-
-.btn-catalog-outline {
-  background: transparent;
-  color: #ffffff;
-  padding: 0.85rem 1.6rem;
-  border-radius: 4px;
-  font-family: var(--font-brand);
-  font-size: 0.82rem;
-  font-weight: 900;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-decoration: none;
-  cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  transition: all 0.25s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-catalog-outline:hover {
-  border-color: #fbd132;
-  color: #fbd132;
-}
-
-.badge-soon-pill {
-  background: rgba(251, 209, 50, 0.12);
-  border: 1px solid #fbd132;
-  color: #fbd132;
-  padding: 0.85rem 1.5rem;
-  border-radius: 4px;
-  font-family: var(--font-brand);
-  font-size: 0.82rem;
-  font-weight: 900;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-/* ==========================================================================
-   VISTA INTERIOR DE CADA PRODUCTO (PRODUCT DETAIL PAGE)
-   ========================================================================== */
-
-/* Breadcrumb */
-.product-breadcrumb {
-  background: #060709;
-  padding: 1.25rem 0 0.5rem;
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.product-breadcrumb a {
-  color: rgba(255, 255, 255, 0.7);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.product-breadcrumb a:hover {
-  color: #fbd132;
-}
-
-.product-breadcrumb .sep {
-  margin: 0 0.45rem;
-  color: rgba(255, 255, 255, 0.3);
-}
-
-/* Escenario Principal del Producto */
-.product-showcase-section {
-  background: #060709;
-  padding: 1.5rem 0 4rem;
-}
-
-.product-showcase-grid {
-  display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  gap: clamp(2rem, 4.5vw, 4rem);
-  align-items: start;
-}
-
-/* Columna Izquierda: Galería de Miniaturas + Escenario Grande */
-.product-gallery-layout {
-  display: flex;
-  gap: 1.25rem;
-  align-items: stretch;
-}
-
-.product-thumbnails-col {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.product-thumb-btn {
-  width: 65px;
-  height: 80px;
-  background: #111319;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 6px;
-  padding: 6px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.22s ease;
-}
-
-.product-thumb-btn:hover {
-  border-color: rgba(251, 209, 50, 0.5);
-}
-
-.product-thumb-btn.is-active {
-  border-color: #fbd132;
-  box-shadow: 0 0 12px rgba(251, 209, 50, 0.35);
-}
-
-.product-thumb-img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.product-main-stage {
-  flex: 1;
+.products-hero__container {
   position: relative;
-  border-radius: 14px;
-  min-height: 480px;
-  background: radial-gradient(circle at 50% 50%, #f6c823 0%, #d89f0a 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
-}
-
-.product-main-stage__can {
-  position: relative;
-  z-index: 2;
-  max-height: 410px;
-  width: auto;
-  display: block;
-  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.45));
-  transition: transform 0.4s ease;
-}
-
-.product-main-stage:hover .product-main-stage__can {
-  transform: scale(1.04) rotate(-2deg);
-}
-
-.product-stage-badge {
-  position: absolute;
-  bottom: 18px;
-  left: 20px;
-  z-index: 3;
-  font-family: var(--font-brand);
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  color: rgba(0, 0, 0, 0.6);
-  text-transform: uppercase;
-}
-
-/* Columna Derecha: Configuración y Compra */
-.product-details-col {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.product-cat-tag {
-  font-family: var(--font-brand);
-  font-size: 0.74rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  color: var(--accent-gold);
-  text-transform: uppercase;
-}
-
-.product-main-title {
-  font-family: var(--font-brand);
-  font-size: clamp(2.3rem, 4vw, 3.4rem);
-  font-weight: 900;
-  font-style: italic;
-  line-height: 0.98;
-  color: #ffffff;
-  text-transform: uppercase;
-  margin: 0;
-  letter-spacing: -0.02em;
-}
-
-.product-lead-desc {
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.85);
-  margin: 0;
-}
-
-.product-price-block {
-  display: flex;
-  align-items: baseline;
-  gap: 0.85rem;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.product-price-val {
-  font-family: var(--font-brand);
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: #ffffff;
-}
-
-.product-price-sub {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.55);
-}
-
-/* Selectores: Sabor y Cantidad */
-.selector-group-label {
-  display: block;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.55);
-  text-transform: uppercase;
-  margin-bottom: 0.6rem;
-}
-
-.flavor-pills-row {
-  display: flex;
-  gap: 0.65rem;
-}
-
-.flavor-pill {
-  padding: 0.55rem 1.4rem;
-  border-radius: 4px;
-  background: #111319;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: #ffffff;
-  font-family: var(--font-brand);
-  font-size: 0.8rem;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.flavor-pill.is-active {
-  background: #fbd132;
-  color: #000000;
-  border-color: #fbd132;
-}
-
-.pack-selector-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.6rem;
-}
-
-.pack-card-btn {
-  background: #101218;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 6px;
-  padding: 0.75rem 0.5rem;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.22s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.pack-card-btn:hover {
-  border-color: rgba(251, 209, 50, 0.5);
-}
-
-.pack-card-btn.is-active {
-  background: #181b24;
-  border-color: #fbd132;
-  box-shadow: 0 0 14px rgba(251, 209, 50, 0.25);
-}
-
-.pack-card-name {
-  font-family: var(--font-brand);
-  font-size: 0.82rem;
-  font-weight: 800;
-  color: #ffffff;
-  text-transform: uppercase;
-}
-
-.pack-card-price {
-  font-size: 0.74rem;
-  font-weight: 700;
-  color: var(--accent-gold);
-}
-
-.btn-product-add {
-  background: #fbd132;
-  color: #000000;
-  border: none;
-  border-radius: 4px;
-  padding: 1.05rem 2rem;
-  font-family: var(--font-brand);
-  font-size: 0.92rem;
-  font-weight: 900;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(251, 209, 50, 0.4);
-  transition: all 0.25s ease;
-  text-align: center;
+  z-index: 5;
   width: 100%;
 }
 
-.btn-product-add:hover {
-  background: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(255, 255, 255, 0.45);
-}
-
-/* Sellos de Entrega y Confianza */
-.product-trust-row {
+.products-hero__breadcrumb {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 0.5rem;
-  font-size: 0.84rem;
-  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #94a3b8;
+  margin-bottom: 1.5rem;
 }
 
-.product-trust-item {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
+.products-hero__breadcrumb a {
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: color 0.2s;
 }
 
-.product-features-ribbon {
+.products-hero__breadcrumb a:hover {
+  color: #f5ba2c;
+}
+
+.breadcrumb-separator {
+  color: #64748b;
+  font-size: 0.75rem;
+}
+
+.breadcrumb-current {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.products-hero__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-brand);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #f5ba2c;
+  text-transform: uppercase;
+  margin-bottom: 0.85rem;
+}
+
+.kicker-dash {
+  width: 26px;
+  height: 3px;
+  background-color: #f5ba2c;
+  border-radius: 2px;
+}
+
+.products-hero__title {
+  margin: 0 0 1rem;
+  line-height: 0.95;
+  font-family: var(--font-brand);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+}
+
+.title-line-white {
+  display: block;
+  font-size: clamp(2.6rem, 5.2vw, 4.4rem);
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.title-line-gold {
+  display: block;
+  font-size: clamp(3.2rem, 6.4vw, 5.2rem);
+  color: #f5ba2c;
+  letter-spacing: -0.01em;
+  text-shadow: 0 4px 28px rgba(245, 186, 44, 0.4);
+}
+
+.products-hero__desc {
+  font-size: clamp(0.95rem, 1.25vw, 1.15rem);
+  color: #e2e8f0;
+  line-height: 1.55;
+  max-width: 520px;
+  margin: 0;
+}
+
+/* 2. BARRA DE FILTROS Y ORDENAMIENTO */
+.products-controls-bar {
+  background-color: #0b0e14;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  position: sticky;
+  top: 72px;
+  z-index: 40;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.products-controls__container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1.5rem;
-  padding-top: 0.8rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
   flex-wrap: wrap;
 }
 
-.product-feature-tag {
+.products-filter-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  font-size: 0.82rem;
+  gap: 0.55rem;
+  background: rgba(22, 27, 34, 0.85);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 0.55rem 1.25rem;
+  font-family: var(--font-brand);
+  font-size: 0.8rem;
   font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  user-select: none;
+}
+
+.filter-pill:hover {
+  border-color: #f5ba2c;
+  color: #f5ba2c;
+  transform: translateY(-1px);
+}
+
+.filter-pill.is-active {
+  background: #f5ba2c;
+  color: #0b0908;
+  border-color: #f5ba2c;
+  box-shadow: 0 4px 18px rgba(245, 186, 44, 0.4);
+}
+
+.products-sort-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sort-label {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.sort-select-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.sort-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(22, 27, 34, 0.9);
   color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  padding: 0.5rem 2.2rem 0.5rem 1.15rem;
+  font-family: var(--font-brand);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
 }
 
-
-/* 3. SECCIÓN EDITORIAL: QUÉ LLEVA E INFORMACIÓN NUTRICIONAL */
-.product-specs-section {
-  background: #090b0f;
-  padding: 4.5rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+.sort-select:hover,
+.sort-select:focus {
+  border-color: #f5ba2c;
 }
 
-.product-specs-grid {
+.sort-select-arrow {
+  position: absolute;
+  right: 12px;
+  pointer-events: none;
+  color: #94a3b8;
+}
+
+/* 3. MAIN CATALOG CONTAINER */
+.products-catalog-main {
+  background-color: #05070a;
+  padding: clamp(2.5rem, 5vw, 4rem) 0 6rem;
+}
+
+/* 4. PRODUCTO DESTACADO 01: KALLPA ORIGINAL COLD BREW */
+.featured-product-card {
+  position: relative;
+  width: 100%;
+  border-radius: 24px;
+  background: radial-gradient(circle at 48% 52%, #fbf4e6 0%, #f4eadb 55%, #ede0ce 100%);
+  color: #120f0d;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+  padding: clamp(2rem, 3.5vw, 3rem) clamp(1.5rem, 3vw, 3rem) 0;
+  border: 1px solid rgba(245, 186, 44, 0.25);
+}
+
+.featured-card__bg-pattern {
+  position: absolute;
+  inset: 0;
+  background: url("kalpa-hero-bg.png") center center / cover no-repeat;
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+.featured-card__container {
+  position: relative;
+  z-index: 5;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(2.5rem, 5vw, 5rem);
+  grid-template-columns: minmax(320px, 360px) 1fr minmax(320px, 440px);
+  gap: clamp(2rem, 3.5vw, 4rem);
+  align-items: center;
+  width: 100%;
 }
 
-.product-info-block {
+.featured-card__info {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  align-items: flex-start;
+  padding-bottom: 2.5rem;
 }
 
-.specs-block-title {
+.kicker-tag {
+  display: inline-block;
   font-family: var(--font-brand);
-  font-size: 0.75rem;
-  font-weight: 900;
-  letter-spacing: 0.16em;
-  color: var(--accent-gold);
-  text-transform: uppercase;
-  margin: 0;
-}
-
-.specs-item-header {
-  font-family: var(--font-brand);
-  font-size: 1.15rem;
+  font-size: 0.8rem;
   font-weight: 800;
-  color: #ffffff;
-  line-height: 1.35;
-  margin: 0 0 0.5rem 0;
-}
-
-.specs-item-body {
-  font-size: 0.9rem;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.75);
-  margin: 0;
-}
-
-.specs-warning-card {
-  background: rgba(20, 22, 30, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-left: 3px solid #fbd132;
-  border-radius: 4px;
-  padding: 1.2rem;
-}
-
-.specs-warning-title {
-  font-family: var(--font-brand);
-  font-size: 0.75rem;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  color: #fbd132;
+  letter-spacing: 0.08em;
+  color: #ea580c;
   text-transform: uppercase;
   margin-bottom: 0.4rem;
 }
 
-.specs-warning-text {
-  font-size: 0.82rem;
-  line-height: 1.45;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0;
-}
-
-/* Tabla Nutricional */
-.nutrition-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.88rem;
-}
-
-.nutrition-table th {
-  text-align: left;
-  padding: 0.6rem 0;
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.nutrition-table td {
-  padding: 0.65rem 0;
-  color: rgba(255, 255, 255, 0.85);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.nutrition-table tr td:last-child {
-  text-align: right;
-  font-weight: 600;
-}
-
-.nutrition-table tr:last-child td {
-  color: #fbd132;
-  font-weight: 800;
-}
-
-
-/* 4. SECCIÓN CROSS-SELL: QUE NO SE TE ACABE A MITAD DE SEMANA */
-.product-cross-section {
-  background: #060709;
-  padding: 4.5rem 0 3.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.cross-eyebrow {
-  display: block;
+.featured-card__title {
   font-family: var(--font-brand);
-  font-size: 0.75rem;
-  font-weight: 900;
-  letter-spacing: 0.16em;
-  color: var(--accent-gold);
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
-
-.cross-title {
-  font-family: var(--font-brand);
-  font-size: clamp(1.8rem, 3.5vw, 2.7rem);
   font-weight: 900;
   font-style: italic;
-  color: #ffffff;
   text-transform: uppercase;
-  line-height: 1.05;
-  margin: 0 0 2.5rem 0;
+  margin: 0 0 0.85rem 0;
+  line-height: 0.88;
 }
 
-.cross-cards-grid {
+.title-kallpa {
+  display: block;
+  font-size: clamp(3rem, 4.6vw, 4.4rem);
+  letter-spacing: -0.03em;
+  color: #0b0908;
+}
+
+.title-product {
+  display: block;
+  font-size: clamp(1.85rem, 2.9vw, 2.7rem);
+  letter-spacing: -0.02em;
+  color: #f5ba2c;
+  text-shadow: 0 4px 18px rgba(245, 186, 44, 0.35);
+  margin-top: 0.12rem;
+}
+
+.featured-card__desc {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #4a4138;
+  margin: 0 0 1.6rem 0;
+  max-width: 360px;
+}
+
+.featured-specs-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  grid-template-columns: repeat(4, 52px);
+  gap: 0.75rem;
+  align-items: start;
 }
 
-.cross-pack-card {
-  background: #10131a;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  padding: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  transition: all 0.25s ease;
-}
-
-.cross-pack-card:hover {
-  border-color: rgba(251, 209, 50, 0.4);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-}
-
-.cross-pack-img {
-  width: 80px;
-  height: 95px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.cross-pack-info {
-  flex: 1;
+.featured-spec-badge {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  align-items: center;
+  text-align: center;
+  gap: 0.4rem;
 }
 
-.cross-pack-name {
-  font-family: var(--font-brand);
-  font-size: 1.15rem;
-  font-weight: 900;
-  color: #ffffff;
-  text-transform: uppercase;
-}
-
-.cross-pack-sub {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.cross-pack-price {
-  font-family: var(--font-brand);
-  font-size: 1.35rem;
-  font-weight: 900;
-  color: #ffffff;
-  margin-top: 0.2rem;
-}
-
-.btn-cross-add {
-  background: #fbd132;
-  color: #000000;
-  border: none;
-  border-radius: 4px;
-  padding: 0.75rem 1.6rem;
-  font-family: var(--font-brand);
-  font-size: 0.8rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.22s ease;
-  margin-top: 0.5rem;
-  width: 100%;
-}
-
-.btn-cross-add:hover {
-  background: #ffffff;
-}
-
-
-/* 5. SECCIÓN FAQ: ANTES DE COMPRAR */
-.product-faq-section {
-  background: #080a0e;
-  padding: 4.5rem 0 5.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.faq-eyebrow {
-  display: block;
-  font-family: var(--font-brand);
-  font-size: 0.75rem;
-  font-weight: 900;
-  letter-spacing: 0.16em;
-  color: var(--accent-gold);
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
-
-.faq-title {
-  font-family: var(--font-brand);
-  font-size: clamp(2rem, 3.5vw, 2.8rem);
-  font-weight: 900;
-  font-style: italic;
-  color: #ffffff;
-  text-transform: uppercase;
-  margin: 0 0 2rem 0;
-}
-
-.faq-accordion {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-}
-
-.faq-item {
-  background: #10131a;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 6px;
-  overflow: hidden;
-  transition: border-color 0.25s ease;
-}
-
-.faq-item.is-open {
-  border-color: rgba(251, 209, 50, 0.4);
-}
-
-.faq-header {
-  width: 100%;
-  background: transparent;
-  border: none;
-  padding: 1.25rem 1.5rem;
-  text-align: left;
+.spec-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(26, 22, 21, 0.18);
+  background: rgba(255, 255, 255, 0.45);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  font-family: var(--font-body);
-  font-size: 1.02rem;
-  font-weight: 700;
-  color: #ffffff;
-  gap: 1rem;
-}
-
-.faq-icon {
-  font-size: 1.25rem;
-  color: #fbd132;
+  justify-content: center;
+  color: #0f0c0a;
   transition: transform 0.25s ease;
+}
+
+.featured-spec-badge:hover .spec-circle {
+  transform: translateY(-2px);
+  border-color: #0f0c0a;
+}
+
+.spec-label {
+  font-family: var(--font-brand);
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  color: #1a1615;
+  text-transform: uppercase;
+}
+
+/* Stage Visual Central */
+.featured-card__visual {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  align-self: end;
+  position: relative;
+  z-index: 4;
+}
+
+.featured-can-stage {
+  position: relative;
+  width: clamp(240px, 20vw, 280px);
+  height: clamp(480px, 40vw, 560px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: -14px;
+}
+
+.lightning-ray-bg {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -10%);
+  width: 150%;
+  height: 80%;
+  background: radial-gradient(ellipse at center, rgba(245, 186, 44, 0.4) 0%, rgba(234, 88, 12, 0.15) 45%, transparent 72%);
+  filter: blur(25px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stage-beans-back {
+  position: absolute;
+  width: 155%;
+  top: -1%;
+  left: -26%;
+  transform: rotate(-13deg);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.stage-can-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 2;
+  filter: drop-shadow(0 18px 32px rgba(40, 18, 4, 0.35));
+}
+
+.stage-bean-front {
+  position: absolute;
+  width: 31%;
+  bottom: 22%;
+  right: -7%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.stage-rock-base {
+  position: absolute;
+  width: 235%;
+  bottom: -2%;
+  left: -82%;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Tarjeta Dual de Compra */
+.featured-card__buy-box {
+  background: rgba(255, 252, 247, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(26, 22, 21, 0.08);
+  border-radius: 20px;
+  padding: 1.35rem 1.45rem;
+  display: grid;
+  grid-template-columns: 0.88fr 1.15fr;
+  gap: 1.15rem;
+  box-shadow: 0 18px 42px rgba(40, 25, 10, 0.05);
+  position: relative;
+  z-index: 6;
+  justify-self: end;
+  width: 100%;
+  max-width: 440px;
+  margin-bottom: 2.5rem;
+}
+
+.buy-box-unit {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.unit-badge-header {
+  background-color: #0f0d0c;
+  color: #ffffff;
+  font-family: var(--font-brand);
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 0.65rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.25rem;
+}
+
+.unit-price-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.85rem;
+}
+
+.unit-price-val {
+  font-family: var(--font-brand);
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: #0b0908;
   line-height: 1;
 }
 
-.faq-item.is-open .faq-icon {
-  transform: rotate(45deg);
+.unit-volume-val {
+  font-size: 0.82rem;
+  color: #6e655c;
+  font-weight: 500;
+  margin-top: 0.2rem;
 }
 
-.faq-body {
-  max-height: 0;
+.qty-stepper-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1fr;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid rgba(26, 22, 21, 0.14);
+  border-radius: 999px;
+  padding: 0.2rem;
+  margin-bottom: 0.95rem;
+}
+
+.qty-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0f0d0c;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qty-num {
+  font-family: var(--font-brand);
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-align: center;
+  color: #0f0d0c;
+}
+
+.btn-buy-gold {
+  background: #f5ba2c;
+  color: #0b0908;
+  border: none;
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  font-family: var(--font-brand);
+  font-size: 0.85rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  width: 100%;
+}
+
+.btn-buy-gold:hover {
+  background: #f5c414;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(245, 186, 44, 0.45);
+}
+
+.buy-box-pack {
+  border-left: 1px solid rgba(26, 22, 21, 0.08);
+  padding-left: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pack-badge-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.pack-title {
+  font-family: var(--font-brand);
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #0b0908;
+}
+
+.pack-discount-tag {
+  background-color: #dc2626;
+  color: #ffffff;
+  font-family: var(--font-brand);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+}
+
+.pack-pricing-area {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75rem;
+}
+
+.pack-old-price {
+  font-size: 0.8rem;
+  color: #8c8278;
+  text-decoration: line-through;
+}
+
+.pack-new-price {
+  font-family: var(--font-brand);
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: #0b0908;
+  line-height: 1;
+}
+
+.pack-volume-desc {
+  font-size: 0.78rem;
+  color: #6e655c;
+  margin-top: 0.2rem;
+}
+
+.pack-cans-cluster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: -8px;
+  height: 48px;
+  margin: 0.4rem 0 0.85rem;
+}
+
+.mini-cluster-can {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  margin-right: -10px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+/* 5. CUADRÍCULA DE CAFÉ MOLIDO (250G Y 500G) */
+.products-grid-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.grid-card-product {
+  position: relative;
+  background-color: #0c0f16;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
   overflow: hidden;
-  transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease;
-  padding: 0 1.5rem;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.92rem;
-  line-height: 1.6;
+  display: flex;
+  align-items: stretch;
+  min-height: 380px;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.faq-item.is-open .faq-body {
-  max-height: 250px;
-  padding: 0 1.5rem 1.25rem;
+.grid-card-product:hover {
+  transform: translateY(-4px);
+  border-color: rgba(245, 186, 44, 0.4);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(245, 186, 44, 0.12);
 }
 
+.grid-card__bg-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.22;
+  pointer-events: none;
+  transition: transform 0.4s ease;
+}
 
-/* ==========================================================================
-   RESPONSIVE DESIGN PARA PÁGINAS DE PRODUCTO
-   ========================================================================== */
-@media (max-width: 900px) {
-  .catalog-item,
-  .catalog-item--reverse {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  .catalog-item--reverse .catalog-item__card {
-    order: 1;
-  }
-  .catalog-item--reverse .catalog-item__content {
-    order: 2;
-  }
-  .catalog-item__card {
-    min-height: 360px;
-  }
-  
-  .product-showcase-grid {
+.grid-card-product:hover .grid-card__bg-image {
+  transform: scale(1.04);
+}
+
+.grid-card__bg--cherries {
+  background-image: url("product-card-molido-250.jpg");
+}
+
+.grid-card__bg--mountains {
+  background-image: url("kalpa-molido-bg.png");
+}
+
+.grid-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(12, 15, 22, 0.96) 0%, rgba(12, 15, 22, 0.88) 52%, rgba(12, 15, 22, 0.35) 100%);
+  pointer-events: none;
+}
+
+.grid-card__content {
+  position: relative;
+  z-index: 5;
+  width: 54%;
+  padding: clamp(2rem, 3.5vw, 2.75rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.grid-card__kicker {
+  display: block;
+  font-family: var(--font-brand);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ea580c;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.grid-card__title {
+  font-family: var(--font-brand);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  margin: 0 0 1rem 0;
+  line-height: 0.92;
+}
+
+.title-molido {
+  display: block;
+  font-size: clamp(1.8rem, 2.5vw, 2.2rem);
+  color: #f5ba2c;
+  letter-spacing: -0.01em;
+  text-shadow: 0 4px 18px rgba(245, 186, 44, 0.35);
+}
+
+.grid-card__desc {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #cbd5e1;
+  margin: 0 0 1.75rem 0;
+}
+
+.btn-grid-product {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f5ba2c;
+  color: #0b0908;
+  font-family: var(--font-brand);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.75rem 1.6rem;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(245, 186, 44, 0.35);
+  transition: all 0.22s ease;
+  align-self: flex-start;
+}
+
+.btn-grid-product:hover {
+  background: #f5c414;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(245, 186, 44, 0.5);
+}
+
+.grid-card__visual {
+  position: relative;
+  z-index: 4;
+  width: 46%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  overflow: hidden;
+}
+
+.grid-product-img {
+  width: 100%;
+  height: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.6));
+  transition: transform 0.35s ease;
+}
+
+.grid-card-product:hover .grid-product-img {
+  transform: scale(1.03);
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1120px) {
+  .featured-card__container {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
-  .product-gallery-layout {
-    flex-direction: column-reverse;
+  .featured-card__info {
+    align-items: center;
+    text-align: center;
+    padding-bottom: 0;
+    max-width: 100%;
   }
-  .product-thumbnails-col {
-    flex-direction: row;
-    justify-content: center;
+  .featured-card__desc {
+    max-width: 500px;
   }
-  .product-main-stage {
-    min-height: 380px;
+  .featured-card__buy-box {
+    justify-self: center;
+    max-width: 480px;
+    margin-bottom: 1.5rem;
   }
-  .product-specs-grid {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+  .grid-card-product {
+    flex-direction: column;
   }
-  .cross-cards-grid {
-    grid-template-columns: 1fr;
+  .grid-card__content {
+    width: 100%;
+  }
+  .grid-card__visual {
+    width: 100%;
+    min-height: 240px;
   }
 }
 
-@media (max-width: 600px) {
-  .catalog-specs-grid {
+@media (max-width: 768px) {
+  .products-grid-duo {
     grid-template-columns: 1fr;
   }
-  .pack-selector-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .catalog-actions-row {
+  .products-controls__container {
     flex-direction: column;
     align-items: stretch;
   }
-  .btn-catalog-buy,
-  .btn-catalog-outline,
-  .badge-soon-pill {
-    width: 100%;
+  .products-filter-pills {
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    flex-wrap: nowrap;
   }
-  .cross-pack-card {
-    flex-direction: column;
-    text-align: center;
+  .filter-pill {
+    flex-shrink: 0;
   }
 }

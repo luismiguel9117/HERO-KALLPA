@@ -1,0 +1,788 @@
+/* ==========================================================================
+   KALPA — PÁGINA NOSOTROS: HISTORIA, ORIGEN Y MANIFIESTO
+   Lineamientos de diseño: Syne + Work Sans, Paleta Andina Oro & Negro Profundo
+   ========================================================================== */
+
+/* 1. HERO ARCH VIEW (Exacto a media_1793169380967_47daa4b1.png) */
+.nosotros-hero {
+  position: relative;
+  width: 100%;
+  min-height: clamp(560px, 68vh, 840px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #050806;
+}
+
+.nosotros-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: url("nosotros-hero-bg-hd.jpg") center center / cover no-repeat;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Viñeta sutil en bordes para integración perfecta con el navbar */
+.nosotros-hero__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 45%, rgba(4, 7, 5, 0.65) 90%),
+              linear-gradient(180deg, rgba(4, 7, 5, 0.8) 0%, transparent 20%, transparent 80%, rgba(4, 7, 5, 0.95) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.nosotros-hero__container {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: clamp(520px, 62vh, 760px);
+  box-sizing: border-box;
+}
+
+/* Bloque Superior del Hero: Distribución a dos columnas separadas por el arco central */
+.nosotros-hero__split-text {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: clamp(1rem, 3vh, 2.5rem);
+}
+
+.nosotros-hero__side {
+  display: flex;
+  flex-direction: column;
+}
+
+.nosotros-hero__side--left {
+  text-align: left;
+  max-width: 440px;
+}
+
+.nosotros-hero__side--right {
+  text-align: right;
+  max-width: 440px;
+}
+
+/* Tipografía de Encabezado Superior: CAFÉ DE ALTURA & VRAEM */
+.nosotros-hero__subtitle {
+  font-family: var(--font-brand);
+  font-size: clamp(1.05rem, 1.8vw, 1.55rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.85);
+}
+
+/* Tipografía Gigante con Espaciado Extendido: E N E R G Í A & N A T U R A L */
+.nosotros-hero__giant-word {
+  font-family: var(--font-brand);
+  font-size: clamp(2.4rem, 4.8vw, 4.6rem);
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: clamp(0.35em, 0.85vw, 0.65em);
+  text-shadow: 0 6px 24px rgba(0, 0, 0, 0.9);
+}
+
+.nosotros-hero__giant-word--white {
+  color: #ffffff;
+}
+
+.nosotros-hero__giant-word--gold {
+  color: #f5ba2c;
+  text-shadow: 0 4px 28px rgba(245, 186, 44, 0.55), 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+/* Bloque Inferior del Hero: Botón DESCUBRE KALPA → a la izquierda */
+.nosotros-hero__bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.btn-hero-descubre {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: #f5ba2c;
+  color: #0b0908;
+  font-family: var(--font-brand);
+  font-size: clamp(0.85rem, 1.05vw, 0.96rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.95rem 2.2rem;
+  border-radius: 999px;
+  box-shadow: 0 10px 28px rgba(245, 186, 44, 0.45);
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.btn-hero-descubre:hover {
+  background: #fbd132;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 36px rgba(245, 186, 44, 0.6);
+}
+
+.btn-hero-descubre svg {
+  transition: transform 0.25s ease;
+}
+
+.btn-hero-descubre:hover svg {
+  transform: translateX(4px);
+}
+
+/* 2. SECCIÓN: ENERGÍA DE LOS ANDES (Significado Quechua de Kalpa) */
+.section-nosotros-energia {
+  position: relative;
+  background: #080c09;
+  padding: clamp(5rem, 8vw, 7.5rem) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.energia-container {
+  max-width: 980px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.section-kicker-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-brand);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #f5ba2c;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.section-kicker-gold::before,
+.section-kicker-gold::after {
+  content: '';
+  width: 24px;
+  height: 2px;
+  background: #f5ba2c;
+  border-radius: 2px;
+}
+
+.energia-giant-title {
+  font-family: var(--font-brand);
+  font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.98;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 1.75rem;
+  letter-spacing: -0.02em;
+}
+
+.energia-lead-quote {
+  font-family: var(--font-brand);
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  font-weight: 800;
+  line-height: 1.45;
+  color: #f5ba2c;
+  margin-bottom: 1.2rem;
+}
+
+.energia-body-text {
+  font-size: clamp(1.05rem, 1.25vw, 1.2rem);
+  line-height: 1.72;
+  color: #cbd5e1;
+  max-width: 720px;
+  margin: 0 auto 2.5rem;
+}
+
+.btn-probar-kalpa {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #f5ba2c;
+  color: #0b0908;
+  font-family: var(--font-brand);
+  font-size: 0.88rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.95rem 2.2rem;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(245, 186, 44, 0.4);
+  transition: all 0.25s ease;
+}
+
+.btn-probar-kalpa:hover {
+  background: #fbd132;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(245, 186, 44, 0.55);
+}
+
+/* 3. SECCIÓN: LA RAÍZ DE KALPA — AYACUCHO */
+.section-nosotros-raiz {
+  position: relative;
+  background: radial-gradient(circle at 75% 40%, rgba(245, 186, 44, 0.08) 0%, transparent 60%),
+              #060807;
+  padding: clamp(5rem, 8vw, 7.5rem) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.raiz-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(2.5rem, 5vw, 5.5rem);
+  align-items: center;
+}
+
+.raiz-title {
+  font-family: var(--font-brand);
+  font-size: clamp(2.8rem, 5vw, 4.6rem);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 0.95;
+  margin: 0 0 1.6rem;
+  letter-spacing: -0.02em;
+}
+
+.raiz-lead {
+  font-size: clamp(1.15rem, 1.4vw, 1.35rem);
+  line-height: 1.6;
+  color: #f1f5f9;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+}
+
+.raiz-text {
+  font-size: 1rem;
+  line-height: 1.72;
+  color: #94a3b8;
+  margin-bottom: 2rem;
+}
+
+.raiz-visual-card {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.7);
+}
+
+.raiz-visual-card img {
+  width: 100%;
+  height: 100%;
+  max-height: 440px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.raiz-visual-card:hover img {
+  transform: scale(1.04);
+}
+
+.raiz-badge-overlay {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  background: rgba(10, 14, 12, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(245, 186, 44, 0.35);
+  padding: 0.75rem 1.25rem;
+  border-radius: 14px;
+}
+
+.raiz-badge-val {
+  display: block;
+  font-family: var(--font-brand);
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #f5ba2c;
+  line-height: 1;
+}
+
+.raiz-badge-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.2rem;
+}
+
+/* 4. SECCIÓN: CÓMO LO HACEMOS (Bento Grid con Métricas) */
+.section-nosotros-bento {
+  position: relative;
+  background: #090e0b;
+  padding: clamp(5rem, 8vw, 7.5rem) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.bento-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto clamp(3rem, 5vw, 4.5rem);
+}
+
+.bento-header__title {
+  font-family: var(--font-brand);
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 1;
+  margin: 0 0 0.85rem;
+}
+
+.bento-header__sub {
+  font-family: var(--font-brand);
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #f5ba2c;
+}
+
+.nosotros-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+}
+
+.bento-card {
+  background: rgba(16, 22, 18, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: clamp(1.8rem, 2.5vw, 2.4rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.28s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.bento-card:hover {
+  border-color: rgba(245, 186, 44, 0.38);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 24px rgba(245, 186, 44, 0.1);
+}
+
+/* Card 1: ALTURA (msnm) */
+.bento-card--altura {
+  grid-column: span 4;
+}
+
+/* Card 2: COSECHA (temporada) */
+.bento-card--cosecha {
+  grid-column: span 4;
+}
+
+/* Card 3: CAFEÍNA REAL */
+.bento-card--cafeina {
+  grid-column: span 4;
+}
+
+/* Card 4: ORIGEN CON PRODUCTORES */
+.bento-card--productores {
+  grid-column: span 7;
+}
+
+/* Card 5: SIN SACRIFICAR TU CUERPO */
+.bento-card--sin-sacrificar {
+  grid-column: span 5;
+}
+
+.bento-card__num {
+  font-family: var(--font-brand);
+  font-size: clamp(2.4rem, 3.8vw, 3.6rem);
+  font-weight: 900;
+  color: #f5ba2c;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.35rem;
+}
+
+.bento-card__unit {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bento-card__title {
+  font-family: var(--font-brand);
+  font-size: clamp(1.2rem, 1.6vw, 1.45rem);
+  font-weight: 800;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin: 1rem 0 0.65rem;
+  line-height: 1.15;
+}
+
+.bento-card__desc {
+  font-size: 0.94rem;
+  line-height: 1.62;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+.bento-card__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  align-self: flex-start;
+  background: rgba(245, 186, 44, 0.12);
+  border: 1px solid rgba(245, 186, 44, 0.3);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-family: var(--font-brand);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #f5ba2c;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+/* 5. SECCIÓN: POR QUÉ EXISTIMOS (Manifiesto) */
+.section-nosotros-manifiesto {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, rgba(234, 88, 12, 0.12) 0%, rgba(6, 8, 7, 0.95) 75%),
+              #050706;
+  padding: clamp(5.5rem, 9vw, 8.5rem) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: center;
+}
+
+.manifiesto-container {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.manifiesto-kicker {
+  display: inline-block;
+  font-family: var(--font-brand);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #f5ba2c;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}
+
+.manifiesto-headline {
+  font-family: var(--font-brand);
+  font-size: clamp(2.4rem, 5vw, 4.4rem);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  line-height: 1.02;
+  color: #ffffff;
+  margin: 0 0 0.85rem;
+  letter-spacing: -0.02em;
+}
+
+.manifiesto-subheading {
+  font-family: var(--font-brand);
+  font-size: clamp(1.4rem, 2.8vw, 2.4rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #f5ba2c;
+  margin: 0 0 2rem;
+  letter-spacing: 0.02em;
+}
+
+.manifiesto-card {
+  background: rgba(18, 24, 20, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(245, 186, 44, 0.28);
+  border-radius: 24px;
+  padding: clamp(2.2rem, 4vw, 3.5rem);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.6);
+  margin-top: 1rem;
+}
+
+.manifiesto-quote {
+  font-family: var(--font-brand);
+  font-size: clamp(1.25rem, 2.2vw, 1.85rem);
+  font-weight: 800;
+  line-height: 1.45;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* 6. SECCIÓN: LA GENTE DETRÁS DEL CAFÉ (Galería 3 Fotos) */
+.section-nosotros-equipo {
+  position: relative;
+  background: #080c09;
+  padding: clamp(5rem, 8vw, 7.5rem) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.equipo-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto clamp(3rem, 5vw, 4.5rem);
+}
+
+.equipo-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.equipo-photo-card {
+  position: relative;
+  background: #101412;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.28s ease;
+}
+
+.equipo-photo-card:hover {
+  border-color: rgba(245, 186, 44, 0.4);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.6);
+}
+
+.equipo-photo-wrap {
+  position: relative;
+  width: 100%;
+  height: clamp(240px, 22vw, 320px);
+  overflow: hidden;
+}
+
+.equipo-photo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.equipo-photo-card:hover .equipo-photo-wrap img {
+  transform: scale(1.06);
+}
+
+.equipo-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(10, 14, 12, 0.95) 100%);
+  pointer-events: none;
+}
+
+.equipo-card-info {
+  padding: 1.5rem 1.75rem 1.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.equipo-card-kicker {
+  font-family: var(--font-brand);
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #f5ba2c;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.equipo-card-title {
+  font-family: var(--font-brand);
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.equipo-card-desc {
+  font-size: 0.92rem;
+  line-height: 1.56;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* 7. SECCIÓN CTA: PRUÉBALA BIEN HELADA */
+.section-nosotros-cta {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, rgba(245, 186, 44, 0.16) 0%, transparent 65%),
+              #050806;
+  padding: clamp(5rem, 8vw, 7.5rem) 0;
+  text-align: center;
+  overflow: hidden;
+}
+
+.nosotros-cta-container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 4vw, 2.5rem);
+  position: relative;
+  z-index: 5;
+}
+
+.cta-giant-title {
+  font-family: var(--font-brand);
+  font-size: clamp(3rem, 6vw, 5.2rem);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 0.95;
+  margin: 0 0 1.2rem;
+  letter-spacing: -0.02em;
+}
+
+.cta-subtitle {
+  font-size: clamp(1.1rem, 1.4vw, 1.35rem);
+  line-height: 1.6;
+  color: #cbd5e1;
+  max-width: 620px;
+  margin: 0 auto 2.5rem;
+}
+
+.cta-can-preview {
+  margin: 1.5rem auto 2.5rem;
+  max-width: 220px;
+}
+
+.cta-can-preview img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 20px 35px rgba(245, 186, 44, 0.35));
+}
+
+.btn-elegir-pack {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: #f5ba2c;
+  color: #0b0908;
+  font-family: var(--font-brand);
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1.15rem 2.8rem;
+  border-radius: 999px;
+  box-shadow: 0 12px 32px rgba(245, 186, 44, 0.5);
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.btn-elegir-pack:hover {
+  background: #fbd132;
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 16px 42px rgba(245, 186, 44, 0.65);
+}
+
+/* ==========================================================================
+   RESPONSIVE MOBILE (<= 768px)
+   ========================================================================== */
+@media (max-width: 960px) {
+  .nosotros-bento-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .bento-card--altura {
+    grid-column: span 3;
+  }
+  .bento-card--cosecha {
+    grid-column: span 3;
+  }
+  .bento-card--cafeina {
+    grid-column: span 6;
+  }
+  .bento-card--productores {
+    grid-column: span 6;
+  }
+  .bento-card--sin-sacrificar {
+    grid-column: span 6;
+  }
+  .equipo-cards-grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .raiz-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .raiz-visual-card {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .nosotros-hero {
+    min-height: 520px;
+  }
+  .nosotros-hero__container {
+    padding: 2.5rem 1.25rem 2rem;
+    min-height: 480px;
+  }
+  .nosotros-hero__split-text {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+  }
+  .nosotros-hero__side--left,
+  .nosotros-hero__side--right {
+    text-align: center;
+    max-width: 100%;
+  }
+  .nosotros-hero__giant-word {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+    letter-spacing: 0.35em;
+  }
+  .nosotros-hero__bottom-row {
+    justify-content: center;
+    width: 100%;
+    margin-top: 2rem;
+  }
+  .nosotros-bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .bento-card--altura,
+  .bento-card--cosecha,
+  .bento-card--cafeina,
+  .bento-card--productores,
+  .bento-card--sin-sacrificar {
+    grid-column: span 1;
+  }
+}
