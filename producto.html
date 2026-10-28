@@ -27,6 +27,7 @@
     <a href="#cross-sell-section" class="announcement-link-desktop">Ver promoción de lanzamiento</a>
   </div>
 
+    <!-- ==================== BARRA DE NAVEGACIÓN KALPA (COMPONENTE ÚNICO) ==================== -->
   <header class="kalpa-navbar" id="kallpa-header">
     <div class="page-width kalpa-navbar__container">
       <!-- Logo KALPA Oficial -->
@@ -34,7 +35,7 @@
         <img src="assets/logo-kalpa-white.png" alt="KALPA Logo" class="kalpa-logo__img" width="165" height="38">
       </a>
 
-      <!-- Menú de Navegación -->
+      <!-- Menú de Navegación Unificado -->
       <nav class="kalpa-nav-menu">
         <a href="index.html" class="kalpa-nav-item">Inicio</a>
         <a href="productos.html" class="kalpa-nav-item is-active">Productos</a>
@@ -42,8 +43,9 @@
         <a href="nosotros.html" class="kalpa-nav-item">Nosotros</a>
       </nav>
 
+      <!-- Acciones de Navegación Unificadas -->
       <div class="kalpa-nav-actions">
-        <button type="button" class="kalpa-nav-icon nav-icon--search" aria-label="Buscar" onclick="alert('Buscador activo: busca tu KALPA favorito')">
+        <button type="button" class="kalpa-nav-icon nav-icon--search" aria-label="Buscar" onclick="alert('Buscador activo: encuentra tu KALPA favorito')">
           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -71,9 +73,46 @@
           </svg>
           <span id="kallpa-cart-count">0</span>
         </button>
+
+        <a href="productos.html" class="kalpa-nav-cta">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="21" r="1"></circle>
+            <circle cx="19" cy="21" r="1"></circle>
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+          </svg>
+          <span>COMPRAR AHORA</span>
+        </a>
+
+        <button type="button" class="kalpa-nav-hamburger" id="kalpa-mobile-menu-btn" aria-label="Abrir Menú">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
       </div>
     </div>
   </header>
+
+  <!-- ==================== MENÚ MÓVIL KALPA (COMPONENTE ÚNICO) ==================== -->
+  <div class="kalpa-mobile-menu-overlay" id="kalpa-mobile-menu-overlay" onclick="closeKallpaMobileMenu()"></div>
+  <aside class="kalpa-mobile-menu-drawer" id="kalpa-mobile-menu-drawer" aria-label="Menú Móvil KALPA">
+    <div class="kalpa-mobile-menu-header">
+      <img src="assets/logo-kalpa-white.png" alt="KALPA Logo" width="135" height="32">
+      <button type="button" class="kalpa-mobile-menu-close" onclick="closeKallpaMobileMenu()" aria-label="Cerrar Menú">&times;</button>
+    </div>
+    <nav class="kalpa-mobile-menu-links">
+      <a href="index.html" class="kalpa-mobile-menu-link"><span>Inicio</span> <span>&rarr;</span></a>
+      <a href="productos.html" class="kalpa-mobile-menu-link"><span>Productos</span> <span>&rarr;</span></a>
+      <a href="index.html#origin-section" class="kalpa-mobile-menu-link"><span>Promociones</span> <span>&rarr;</span></a>
+      <a href="nosotros.html" class="kalpa-mobile-menu-link"><span>Nosotros</span> <span>&rarr;</span></a>
+    </nav>
+    <div class="kalpa-mobile-menu-bottom">
+      <a href="productos.html" class="kalpa-nav-cta" style="display: flex; justify-content: center; width: 100%; margin: 0;">
+        <span>COMPRAR AHORA</span>
+      </a>
+    </div>
+  </aside>
 
 
   <!-- ==================== 2. BREADCRUMB ==================== -->
@@ -372,14 +411,18 @@
 
 
   <!-- ==================== 7. FOOTER OFICIAL CON BANNER NEWSLETTER ==================== -->
+    <!-- ==================== FOOTER KALPA CON NEWSLETTER (COMPONENTE ÚNICO) ==================== -->
   <footer class="kallpa-footer-wrapper" id="footer-section">
-    <!-- Banner Newsletter Superior -->
+    
+    <!-- BANNER NEWSLETTER SUPERIOR: SÉ PARTE DE KALPA -->
     <div class="kallpa-newsletter-banner">
+      <!-- Marca de agua con patrón textil andino del hero -->
       <div class="kallpa-newsletter-banner__pattern" aria-hidden="true"></div>
       <div class="kallpa-newsletter-banner__vignette" aria-hidden="true"></div>
 
       <div class="kallpa-newsletter-container">
-        <!-- Lata con Hielos y Salpicadura -->
+        
+        <!-- Lata con Hielos y Salpicadura en Primer Plano Izquierdo -->
         <div class="newsletter-banner__can-box">
           <img src="assets/footer-banner-can.png" alt="Lata KALPA Cold Brew" class="newsletter-banner__can" draggable="false" loading="lazy">
         </div>
@@ -402,22 +445,27 @@
           </form>
         </div>
 
-        <!-- Grano de Café en la Esquina Superior Derecha -->
+        <!-- Grano de Café en la Esquina Superior Derecha (sobre el botón) -->
         <div class="newsletter-banner__bean-box" aria-hidden="true">
           <img src="assets/hero-bean-single.png" alt="" class="newsletter-banner__bean" draggable="false">
         </div>
+
       </div>
     </div>
 
-    <!-- Barra Inferior del Footer -->
+    <!-- BARRA INFERIOR DEL FOOTER: LOGO, MENÚ, REDES, ENVÍOS Y LEGAL -->
     <div class="kallpa-footer-bottom">
       <div class="kallpa-footer-bottom__container">
-        <!-- Fila 1: Logo + Navegación + Redes + Envíos -->
+        
+        <!-- Fila 1: Logo + Navegación + Redes Sociales + Envíos a todo el Perú -->
         <div class="footer-bottom__main-row">
+          
+          <!-- Logo KALPA -->
           <a href="index.html" class="footer-logo-link" aria-label="KALPA - Inicio">
-            <img src="assets/logo-kalpa-white.png" alt="KALPA" class="footer-logo-img" width="135" height="30">
+            <img src="assets/logo-kalpa-white.png" alt="KALPA" class="footer-logo-img" width="135" height="32">
           </a>
 
+          <!-- Menú Horizontal de Enlaces -->
           <nav class="footer-horizontal-nav" aria-label="Navegación pie de página">
             <a href="index.html">Inicio</a>
             <a href="productos.html">Productos</a>
@@ -425,6 +473,7 @@
             <a href="nosotros.html">Nosotros</a>
           </nav>
 
+          <!-- Iconos de Redes Sociales -->
           <div class="footer-social-icons">
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Instagram">
               <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -445,30 +494,34 @@
             </a>
           </div>
 
+          <!-- Envíos a todo el Perú -->
           <div class="footer-shipping-badge">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="footer-shipping-icon">
               <rect x="1" y="3" width="15" height="13"></rect>
-              <polygon points="16 8 20 8 23 11 23 16 16 8"></polygon>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
               <circle cx="5.5" cy="18.5" r="2.5"></circle>
               <circle cx="18.5" cy="18.5" r="2.5"></circle>
             </svg>
             <span>Envíos a todo el Perú.</span>
           </div>
+
         </div>
 
-        <!-- Fila 2: Legal -->
+        <!-- Fila 2: Copyright y Enlaces Legales -->
         <div class="footer-bottom__legal-row">
           <p class="footer-copyright">&copy; 2026 KALPA. Todos los derechos reservados.</p>
           <div class="footer-legal-links">
-            <a href="#">Términos y condiciones</a>
+            <a href="#footer-section">Términos y condiciones</a>
             <span class="legal-sep">|</span>
-            <a href="#">Política de privacidad</a>
+            <a href="#footer-section">Política de privacidad</a>
             <span class="legal-sep">|</span>
-            <a href="mailto:ventas@kalpa.pe">Contacto</a>
+            <a href="mailto:Ventas@kalpa.pe">Contacto</a>
           </div>
         </div>
+
       </div>
     </div>
+
   </footer>
 
   <!-- ==================== DRAWER DEL CARRITO ==================== -->
@@ -577,5 +630,6 @@
       openKallpaCart();
     }
   </script>
+  <script src="assets/kalpa-components.js"></script>
 </body>
 </html>

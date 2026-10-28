@@ -118,6 +118,33 @@ Documento técnico del estado actual del proyecto, mejoras aplicadas y especific
 
 ---
 
+---
+
+### I. Catálogo de Productos: Cards 02 y 03 con Glassmorphism y Fondo Completo
+* **Objetivo:** Replicar con fidelidad el diseño de referencia (`media_1793197867535_3124be26.png`) en `productos.html`, utilizando la imagen panorámica de las montañas del VRAEM como fondo de borde a borde (*cover*) con efecto glassmorphism difuminado en el lateral izquierdo.
+* **Archivos modificados:** [productos.html](file:///c:/Users/Usuario/Desktop/HERO%20ANIMATION/productos.html), [assets/theme.css](file:///c:/Users/Usuario/Desktop/HERO%20ANIMATION/assets/theme.css).
+
+---
+
+### J. Componentes Globales Únicos: Navbar y Footer Unificados (Cero Desplazamiento y Menú Móvil)
+* **Objetivo:** Unificar la barra de navegación y el pie de página en un estándar único de componentes reutilizables a lo largo de todas las páginas (`index.html`, `productos.html`, `nosotros.html`, `producto.html`), eliminando enlaces inexistentes ("Origen", "Contacto"), resolviendo cualquier salto de posición (*layout shift*) y dotando al sitio de consistencia absoluta.
+* **Mejoras aplicadas:**
+  1. **Arquitectura CSS Grid en 3 Columnas (`assets/theme.css`):**
+     * `.kalpa-navbar__container` configurado como `grid-template-columns: 1fr auto 1fr; align-items: center;`.
+     * **Logo Izquierdo:** `justify-self: start`.
+     * **Menú Central:** `justify-self: center` con los enlaces oficiales estandarizados: `Inicio`, `Productos`, `Promociones`, `Nosotros`. Se eliminaron enlaces inexistentes que alteraban el centrado entre pantallas.
+     * **Acciones Derechas:** `justify-self: end` con la secuencia canónica completa: Buscar, Mi Cuenta, Favoritos, Cápsula de Carrito con contador interactivo, Botón CTA "COMPRAR AHORA" y Hamburguesa responsive.
+     * **Resultado:** Cero movimiento o salto (*pixel-perfect stability*) al navegar entre cualquiera de las páginas del sitio.
+  2. **Footer Oficial Unificado en Todas las Pestañas:**
+     * Integración del **Banner Newsletter Cinematográfico** superior: arte de lata con hielos y salpicaduras (`assets/footer-banner-can.png`), titular *"SÉ PARTE DE KALPA"*, formulario de suscripción reactivo y grano flotante superior (`assets/hero-bean-single.png`).
+     * Barra inferior estandarizada: Logo oficial KALPA, menú horizontal de 4 enlaces, iconos de redes (Instagram, TikTok, YouTube), insignia de "Envíos a todo el Perú" y bloque legal 2026 con Términos, Privacidad y Contacto.
+  3. **Controlador Reutilizable (`assets/kalpa-components.js`):**
+     * Manejo interactivo del Menú Móvil Lateral (*Drawer*) con apertura y cierre fluidos.
+     * Detección y activación automática del enlace correspondiente (`is-active`) según la URL activa.
+     * Sincronización del contador de productos en el carrito a través de `localStorage` entre todas las pestañas.
+
+---
+
 ## 🌐 2. Entorno de Pruebas
 * **Servidor local:** Activo en `http://localhost:3000/`
 * **Páginas activas:**

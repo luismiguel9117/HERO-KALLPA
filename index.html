@@ -155,36 +155,39 @@
     <a href="#products-section" class="announcement-link-desktop">Compra por unidad o por pack</a>
   </div>
 
+    <!-- ==================== BARRA DE NAVEGACIÓN KALPA (COMPONENTE ÚNICO) ==================== -->
   <header class="kalpa-navbar" id="kallpa-header">
     <div class="page-width kalpa-navbar__container">
       <!-- Logo KALPA Oficial -->
-      <a href="#hero-section" class="kalpa-logo" aria-label="KALPA Cold Brew - Inicio">
+      <a href="index.html" class="kalpa-logo" aria-label="KALPA Cold Brew - Inicio">
         <img src="assets/logo-kalpa-white.png" alt="KALPA Logo" class="kalpa-logo__img" width="165" height="38">
       </a>
 
+      <!-- Menú de Navegación Unificado -->
       <nav class="kalpa-nav-menu">
-        <a href="#hero-section" class="kalpa-nav-item is-active">Inicio</a>
+        <a href="index.html" class="kalpa-nav-item is-active">Inicio</a>
         <a href="productos.html" class="kalpa-nav-item">Productos</a>
-        <a href="#origin-section" class="kalpa-nav-item">Promociones</a>
+        <a href="index.html#origin-section" class="kalpa-nav-item">Promociones</a>
         <a href="nosotros.html" class="kalpa-nav-item">Nosotros</a>
       </nav>
 
+      <!-- Acciones de Navegación Unificadas -->
       <div class="kalpa-nav-actions">
-        <button type="button" class="kalpa-nav-icon nav-icon--search" aria-label="Buscar">
+        <button type="button" class="kalpa-nav-icon nav-icon--search" aria-label="Buscar" onclick="alert('Buscador activo: encuentra tu KALPA favorito')">
           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
         </button>
 
-        <button type="button" class="kalpa-nav-icon nav-icon--account" aria-label="Cuenta">
+        <button type="button" class="kalpa-nav-icon nav-icon--account" aria-label="Cuenta" onclick="alert('Mi Cuenta KALPA')">
           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
             <circle cx="12" cy="7" r="4"></circle>
           </svg>
         </button>
 
-        <button type="button" class="kalpa-nav-icon nav-icon--favorites" aria-label="Favoritos">
+        <button type="button" class="kalpa-nav-icon nav-icon--favorites" aria-label="Favoritos" onclick="alert('Guardado en favoritos')">
           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
           </svg>
@@ -199,7 +202,7 @@
           <span id="kallpa-cart-count">0</span>
         </button>
 
-        <a href="#products-section" class="kalpa-nav-cta">
+        <a href="productos.html" class="kalpa-nav-cta">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="8" cy="21" r="1"></circle>
             <circle cx="19" cy="21" r="1"></circle>
@@ -218,6 +221,26 @@
       </div>
     </div>
   </header>
+
+  <!-- ==================== MENÚ MÓVIL KALPA (COMPONENTE ÚNICO) ==================== -->
+  <div class="kalpa-mobile-menu-overlay" id="kalpa-mobile-menu-overlay" onclick="closeKallpaMobileMenu()"></div>
+  <aside class="kalpa-mobile-menu-drawer" id="kalpa-mobile-menu-drawer" aria-label="Menú Móvil KALPA">
+    <div class="kalpa-mobile-menu-header">
+      <img src="assets/logo-kalpa-white.png" alt="KALPA Logo" width="135" height="32">
+      <button type="button" class="kalpa-mobile-menu-close" onclick="closeKallpaMobileMenu()" aria-label="Cerrar Menú">&times;</button>
+    </div>
+    <nav class="kalpa-mobile-menu-links">
+      <a href="index.html" class="kalpa-mobile-menu-link"><span>Inicio</span> <span>&rarr;</span></a>
+      <a href="productos.html" class="kalpa-mobile-menu-link"><span>Productos</span> <span>&rarr;</span></a>
+      <a href="index.html#origin-section" class="kalpa-mobile-menu-link"><span>Promociones</span> <span>&rarr;</span></a>
+      <a href="nosotros.html" class="kalpa-mobile-menu-link"><span>Nosotros</span> <span>&rarr;</span></a>
+    </nav>
+    <div class="kalpa-mobile-menu-bottom">
+      <a href="productos.html" class="kalpa-nav-cta" style="display: flex; justify-content: center; width: 100%; margin: 0;">
+        <span>COMPRAR AHORA</span>
+      </a>
+    </div>
+  </aside>
 
   <!-- ==================== 2. HERO CAROUSEL KALPA VRAEM ==================== -->
   <section class="kalpa-hero-carousel" id="hero-section">
@@ -1146,6 +1169,7 @@
 
 
   <!-- ==================== 10. FOOTER CON BANNER NEWSLETTER ==================== -->
+    <!-- ==================== FOOTER KALPA CON NEWSLETTER (COMPONENTE ÚNICO) ==================== -->
   <footer class="kallpa-footer-wrapper" id="footer-section">
     
     <!-- BANNER NEWSLETTER SUPERIOR: SÉ PARTE DE KALPA -->
@@ -1195,7 +1219,7 @@
         <div class="footer-bottom__main-row">
           
           <!-- Logo KALPA -->
-          <a href="#hero-section" class="footer-logo-link" aria-label="KALPA - Inicio">
+          <a href="index.html" class="footer-logo-link" aria-label="KALPA - Inicio">
             <img src="assets/logo-kalpa-white.png" alt="KALPA" class="footer-logo-img" width="135" height="32">
           </a>
 
@@ -1203,7 +1227,7 @@
           <nav class="footer-horizontal-nav" aria-label="Navegación pie de página">
             <a href="index.html">Inicio</a>
             <a href="productos.html">Productos</a>
-            <a href="#origin-section">Promociones</a>
+            <a href="index.html#origin-section">Promociones</a>
             <a href="nosotros.html">Nosotros</a>
           </nav>
 
@@ -1243,7 +1267,7 @@
 
         <!-- Fila 2: Copyright y Enlaces Legales -->
         <div class="footer-bottom__legal-row">
-          <p class="footer-copyright">&copy; 2024 KALPA. Todos los derechos reservados.</p>
+          <p class="footer-copyright">&copy; 2026 KALPA. Todos los derechos reservados.</p>
           <div class="footer-legal-links">
             <a href="#footer-section">Términos y condiciones</a>
             <span class="legal-sep">|</span>
@@ -1561,5 +1585,6 @@
     });
   </script>
 
+  <script src="assets/kalpa-components.js"></script>
 </body>
 </html>
