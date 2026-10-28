@@ -1,0 +1,720 @@
+const fs = require('fs');
+
+const liquidContent = `{%- comment -%}
+  SECCIÓN: products-catalog.liquid
+  Catálogo Completo Modular KALPA (Hero, Filtros, Productos Destacados y Cuadrícula Dinámica)
+{%- endcomment -%}
+
+<!-- 1. HERO DE PRODUCTOS -->
+<section class="kallpa-products-hero" aria-label="Catálogo de Productos">
+  <div class="products-hero__bg-layer" aria-hidden="true"></div>
+  <div class="products-hero__vignette" aria-hidden="true"></div>
+
+  <div class="page-width products-hero__container">
+    <!-- Breadcrumb -->
+    <nav class="products-hero__breadcrumb" aria-label="Ruta de navegación">
+      <a href="{{ routes.root_url }}">Inicio</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current">{{ section.settings.breadcrumb_text | default: 'Productos' }}</span>
+    </nav>
+
+    <!-- Kicker con barra dorada -->
+    <div class="products-hero__kicker">
+      <span class="kicker-dash"></span>
+      <span>{{ section.settings.kicker | default: 'NUESTROS PRODUCTOS' }}</span>
+    </div>
+
+    <!-- Título Gigante -->
+    <h1 class="products-hero__title">
+      <span class="title-line-white">{{ section.settings.title_line1 | default: 'LA LÍNEA' }}</span>
+      <span class="title-line-gold">{{ section.settings.title_line2 | default: 'KALLPA' }}</span>
+    </h1>
+
+    <!-- Párrafo Descriptivo -->
+    <p class="products-hero__desc">
+      {{ section.settings.description | default: 'Distintas formas de disfrutar la energía real de los Andes.' }}
+    </p>
+  </div>
+</section>
+
+<!-- 2. BARRA DE FILTROS Y ORDENAMIENTO -->
+<section class="products-controls-bar">
+  <div class="page-width products-controls__container">
+    
+    <!-- Píldoras de Filtro -->
+    <div class="products-filter-pills" role="tablist">
+      <button type="button" class="filter-pill is-active" data-filter="all" onclick="filterProducts('all', this)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+          <line x1="6" y1="1" x2="6" y2="4"></line>
+          <line x1="10" y1="1" x2="10" y2="4"></line>
+          <line x1="14" y1="1" x2="14" y2="4"></line>
+        </svg>
+        <span>Todos los productos</span>
+      </button>
+
+      <button type="button" class="filter-pill" data-filter="cold-brew" onclick="filterProducts('cold-brew', this)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="6" y="4" width="12" height="16" rx="2"></rect>
+          <line x1="6" y1="9" x2="18" y2="9"></line>
+          <line x1="9" y1="2" x2="15" y2="2"></line>
+        </svg>
+        <span>Cold Brew</span>
+      </button>
+
+      <button type="button" class="filter-pill" data-filter="cafe-molido" onclick="filterProducts('cafe-molido', this)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M12 3a9 9 0 0 0 0 18c2-2 3-5 3-9s-1-7-3-9z"></path>
+        </svg>
+        <span>Café Molido</span>
+      </button>
+
+      <button type="button" class="filter-pill" data-filter="accesorios" onclick="filterProducts('accesorios', this)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span>Accesorios</span>
+      </button>
+    </div>
+
+    <!-- Selector de Ordenamiento -->
+    <div class="products-sort-wrap">
+      <label for="products-sort-select" class="sort-label">Ordenar por:</label>
+      <div class="sort-select-wrapper">
+        <select id="products-sort-select" class="sort-select" onchange="sortProducts(this.value)">
+          <option value="recent">Más recientes</option>
+          <option value="price-low">Precio: menor a mayor</option>
+          <option value="price-high">Precio: mayor a menor</option>
+          <option value="popular">Más populares</option>
+        </select>
+        <svg class="sort-select-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 3. LISTADO PRINCIPAL DE PRODUCTOS -->
+<main class="products-catalog-main">
+  <div class="page-width">
+    
+    {%- comment -%} Renderizado de Bloques de Productos Destacados {%- endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'featured_product' -%}
+        <article class="featured-product-card" data-category="{{ block.settings.category | default: 'cold-brew' }}" {{ block.shopify_attributes }}>
+          <div class="featured-card__bg-pattern" aria-hidden="true"></div>
+          
+          <div class="featured-card__container">
+            <!-- Columna 1: Información Editorial -->
+            <div class="featured-card__info">
+              <div class="featured-card__kicker">
+                <span class="kicker-tag">{{ block.settings.kicker | default: '01 — COLD BREW' }}</span>
+              </div>
+              
+              <h2 class="featured-card__title">
+                <span class="title-kallpa">{{ block.settings.title_main | default: 'KALLPA' }}</span>
+                <span class="title-product">{{ block.settings.title_sub | default: 'ORIGINAL' }}</span>
+              </h2>
+
+              <p class="featured-card__desc">
+                {{ block.settings.description | default: 'Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar.' }}
+              </p>
+
+              <!-- 4 Atributos Circulares -->
+              <div class="featured-specs-row">
+                <div class="featured-spec-badge">
+                  <div class="spec-circle">
+                    {% render 'kallpa-feature-icon', icon: block.settings.spec_1_icon, custom_image: block.settings.spec_1_custom_icon %}
+                  </div>
+                  <span class="spec-label">{{ block.settings.spec_1 | default: '280 mg<br>de cafeína' }}</span>
+                </div>
+
+                <div class="featured-spec-badge">
+                  <div class="spec-circle">
+                    {% render 'kallpa-feature-icon', icon: block.settings.spec_2_icon, custom_image: block.settings.spec_2_custom_icon %}
+                  </div>
+                  <span class="spec-label">{{ block.settings.spec_2 | default: 'Café de origen<br>VRAEM' }}</span>
+                </div>
+
+                <div class="featured-spec-badge">
+                  <div class="spec-circle">
+                    {% render 'kallpa-feature-icon', icon: block.settings.spec_3_icon, custom_image: block.settings.spec_3_custom_icon %}
+                  </div>
+                  <span class="spec-label">{{ block.settings.spec_3 | default: 'Sin azúcares<br>añadidos' }}</span>
+                </div>
+
+                <div class="featured-spec-badge">
+                  <div class="spec-circle">
+                    {% render 'kallpa-feature-icon', icon: block.settings.spec_4_icon, custom_image: block.settings.spec_4_custom_icon %}
+                  </div>
+                  <span class="spec-label">{{ block.settings.spec_4 | default: 'Listo<br>para tomar' }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Columna 2: Visual Central de la Lata con Hielos, Rayo y Roca -->
+            <div class="featured-card__visual">
+              <div class="featured-can-stage">
+                <div class="lightning-ray-bg" aria-hidden="true"></div>
+                <img src="{{ 'hero-beans-ice-back.png' | asset_url }}" alt="" class="stage-beans-back" draggable="false" width="500" height="500">
+                {%- if block.settings.main_image != blank -%}
+                  <img src="{{ block.settings.main_image | image_url: width: 800 }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="stage-can-img" draggable="false" width="400" height="700">
+                {%- elsif block.settings.default_asset_image != blank and block.settings.default_asset_image != 'kalpa-can-clean.png' -%}
+                  <img src="{{ block.settings.default_asset_image | asset_url }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="stage-can-img" draggable="false" width="400" height="700">
+                {%- else -%}
+                  <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="Lata KALPA Cold Brew Original 355ml" class="stage-can-img" draggable="false" width="400" height="700">
+                {%- endif -%}
+                <img src="{{ 'hero-bean-single.png' | asset_url }}" alt="" class="stage-bean-front" draggable="false" width="70" height="70">
+                <img src="{{ 'hero-rock-base.png' | asset_url }}" alt="" class="stage-rock-base" draggable="false" width="500" height="200">
+              </div>
+            </div>
+
+            <!-- Columna 3: Tarjeta Dual de Compra -->
+            <div class="featured-card__buy-box">
+              <!-- Opción Unidad -->
+              <div class="buy-box-unit">
+                <div class="unit-badge-header">{{ block.settings.unit_label | default: 'Unidad' }}</div>
+                <div class="unit-price-row">
+                  <span class="unit-price-val">{{ block.settings.unit_price | default: 'S/ 7.90' }}</span>
+                  <span class="unit-volume-val">{{ block.settings.unit_volume | default: '355 ml' }}</span>
+                </div>
+                <div class="qty-stepper-wrap">
+                  <button type="button" class="qty-btn" onclick="updateFeaturedQty(-1)" aria-label="Disminuir">&minus;</button>
+                  <span id="featured-qty-val" class="qty-num">1</span>
+                  <button type="button" class="qty-btn" onclick="updateFeaturedQty(1)" aria-label="Aumentar">+</button>
+                </div>
+                <button type="button" class="btn-buy-gold" onclick="addFeaturedUnitToCart()">
+                  <span>AGREGAR</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Opción Pack x 6 -->
+              <div class="buy-box-pack">
+                <div class="pack-badge-header">
+                  <span class="pack-title">{{ block.settings.pack_label | default: 'Pack x 6' }}</span>
+                  <span class="pack-discount-tag">{{ block.settings.pack_discount | default: '-15%' }}</span>
+                </div>
+                <div class="pack-pricing-area">
+                  <span class="pack-old-price">{{ block.settings.pack_old_price | default: 'S/ 47.40' }}</span>
+                  <span class="pack-new-price">{{ block.settings.pack_price | default: 'S/ 39.90' }}</span>
+                  <span class="pack-volume-desc">{{ block.settings.pack_volume | default: '6 latas de 355 ml' }}</span>
+                </div>
+                <div class="pack-cans-cluster" aria-hidden="true">
+                  {%- if block.settings.pack_image != blank -%}
+                    <img src="{{ block.settings.pack_image | image_url: width: 120 }}" alt="" class="mini-cluster-can" draggable="false" width="50" height="90">
+                  {%- else -%}
+                    <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="" class="mini-cluster-can" draggable="false" width="50" height="90">
+                    <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="" class="mini-cluster-can" draggable="false" width="50" height="90">
+                    <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="" class="mini-cluster-can" draggable="false" width="50" height="90">
+                  {%- endif -%}
+                </div>
+                <button type="button" class="btn-buy-gold" onclick="addPackToKallpaCart('pack-6-original-cat', 'Pack x 6 KALPA Original 355ml', 39.90)">
+                  <span>AGREGAR</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </article>
+      {%- endif -%}
+    {%- endfor -%}
+
+    <!-- 3.2 CUADRÍCULA DINÁMICA DE PRODUCTOS -->
+    <section class="products-grid-duo" aria-label="Variedades de Productos">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'grid_product' -%}
+          <article class="grid-card-product" data-category="{{ block.settings.category | default: 'cafe-molido' }}" {{ block.shopify_attributes }}>
+            <div class="grid-card__bg" aria-hidden="true" style="{% if block.settings.image != blank %}background-image: url('{{ block.settings.image | image_url: width: 900 }}');{% elsif block.settings.default_bg_image != blank %}background-image: url('{{ block.settings.default_bg_image | asset_url }}');{% endif %}"></div>
+            <div class="grid-card__glass" aria-hidden="true"></div>
+
+            <div class="grid-card__content">
+              <span class="grid-card__kicker">{{ block.settings.kicker | default: 'CAFÉ MOLIDO' }}</span>
+              <h3 class="grid-card__title">
+                <span class="title-kallpa">{{ block.settings.title_main | default: 'KALLPA' }}</span>
+                <span class="title-molido">{{ block.settings.title_sub | default: 'CAFÉ MOLIDO' }}</span>
+              </h3>
+              <p class="grid-card__desc">
+                {{ block.settings.description }}
+              </p>
+
+              <div class="grid-card__action">
+                <a href="{{ block.settings.btn_link | default: block.settings.product.url | default: '#' }}" class="btn-grid-product">
+                  <span>{{ block.settings.btn_text | default: 'VER PRODUCTO' }}</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </section>
+
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "Catálogo de Productos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "breadcrumb_text",
+      "label": "Texto Breadcrumb",
+      "default": "Productos"
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Antetítulo Hero",
+      "default": "NUESTROS PRODUCTOS"
+    },
+    {
+      "type": "text",
+      "id": "title_line1",
+      "label": "Título Línea 1",
+      "default": "LA LÍNEA"
+    },
+    {
+      "type": "text",
+      "id": "title_line2",
+      "label": "Título Línea 2 (Dorado)",
+      "default": "KALLPA"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descripción Hero",
+      "default": "Distintas formas de disfrutar la energía real de los Andes."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "featured_product",
+      "name": "Producto Destacado (Banner)",
+      "settings": [
+        {
+          "type": "select",
+          "id": "category",
+          "label": "Categoría de Filtro",
+          "options": [
+            { "value": "cold-brew", "label": "Cold Brew" },
+            { "value": "cafe-molido", "label": "Café Molido" },
+            { "value": "accesorios", "label": "Accesorios" }
+          ],
+          "default": "cold-brew"
+        },
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "Etiqueta Kicker",
+          "default": "01 — COLD BREW"
+        },
+        {
+          "type": "text",
+          "id": "title_main",
+          "label": "Título Principal",
+          "default": "KALLPA"
+        },
+        {
+          "type": "text",
+          "id": "title_sub",
+          "label": "Subtítulo",
+          "default": "ORIGINAL"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Descripción",
+          "default": "Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar."
+        },
+        {
+          "type": "header",
+          "content": "Imagen Central del Producto"
+        },
+        {
+          "type": "image_picker",
+          "id": "main_image",
+          "label": "Subir Imagen de Producto (Lata / Botella)"
+        },
+        {
+          "type": "text",
+          "id": "default_asset_image",
+          "label": "O nombre del archivo en assets",
+          "default": "kalpa-can-original.png"
+        },
+        {
+          "type": "header",
+          "content": "4 Atributos Circulares"
+        },
+        {
+          "type": "select",
+          "id": "spec_1_icon",
+          "label": "Ícono Atributo 1",
+          "options": [
+            { "value": "lightning", "label": "⚡ Rayo / Energía" },
+            { "value": "leaf", "label": "🌿 Hoja / Arábica" },
+            { "value": "mountain", "label": "⛰️ Montaña / VRAEM" },
+            { "value": "filter", "label": "⌛ Filtro / Molienda" },
+            { "value": "flavor", "label": "🎯 Sabor / Aroma" },
+            { "value": "drop_zero", "label": "💧 Gota 0 Calorías" },
+            { "value": "check", "label": "✓ Check" },
+            { "value": "coffee_can", "label": "🥫 Lata" }
+          ],
+          "default": "lightning"
+        },
+        {
+          "type": "image_picker",
+          "id": "spec_1_custom_icon",
+          "label": "Ícono personalizado 1 (opcional)"
+        },
+        {
+          "type": "text",
+          "id": "spec_1",
+          "label": "Texto Atributo 1",
+          "default": "280 mg<br>de cafeína"
+        },
+        {
+          "type": "select",
+          "id": "spec_2_icon",
+          "label": "Ícono Atributo 2",
+          "options": [
+            { "value": "mountain", "label": "⛰️ Montaña / VRAEM" },
+            { "value": "leaf", "label": "🌿 Hoja / Arábica" },
+            { "value": "check", "label": "✓ Check" },
+            { "value": "lightning", "label": "⚡ Rayo / Energía" }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "image_picker",
+          "id": "spec_2_custom_icon",
+          "label": "Ícono personalizado 2 (opcional)"
+        },
+        {
+          "type": "text",
+          "id": "spec_2",
+          "label": "Texto Atributo 2",
+          "default": "Café de origen<br>VRAEM"
+        },
+        {
+          "type": "select",
+          "id": "spec_3_icon",
+          "label": "Ícono Atributo 3",
+          "options": [
+            { "value": "check", "label": "✓ Check" },
+            { "value": "leaf", "label": "🌿 Hoja / Arábica" },
+            { "value": "drop_zero", "label": "💧 Gota 0 Calorías" },
+            { "value": "heart", "label": "❤️ Salud" }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "image_picker",
+          "id": "spec_3_custom_icon",
+          "label": "Ícono personalizado 3 (opcional)"
+        },
+        {
+          "type": "text",
+          "id": "spec_3",
+          "label": "Texto Atributo 3",
+          "default": "Sin azúcares<br>añadidos"
+        },
+        {
+          "type": "select",
+          "id": "spec_4_icon",
+          "label": "Ícono Atributo 4",
+          "options": [
+            { "value": "coffee_can", "label": "🥫 Lata / Listo para tomar" },
+            { "value": "clock", "label": "🕒 Reloj" },
+            { "value": "snowflake", "label": "❄️ Nieve" }
+          ],
+          "default": "coffee_can"
+        },
+        {
+          "type": "image_picker",
+          "id": "spec_4_custom_icon",
+          "label": "Ícono personalizado 4 (opcional)"
+        },
+        {
+          "type": "text",
+          "id": "spec_4",
+          "label": "Texto Atributo 4",
+          "default": "Listo<br>para tomar"
+        },
+        {
+          "type": "header",
+          "content": "Precios: Unidad"
+        },
+        {
+          "type": "text",
+          "id": "unit_label",
+          "label": "Etiqueta Unidad",
+          "default": "Unidad"
+        },
+        {
+          "type": "text",
+          "id": "unit_price",
+          "label": "Precio Unidad",
+          "default": "S/ 7.90"
+        },
+        {
+          "type": "text",
+          "id": "unit_volume",
+          "label": "Volumen Unidad",
+          "default": "355 ml"
+        },
+        {
+          "type": "header",
+          "content": "Precios: Pack x 6"
+        },
+        {
+          "type": "text",
+          "id": "pack_label",
+          "label": "Etiqueta Pack",
+          "default": "Pack x 6"
+        },
+        {
+          "type": "text",
+          "id": "pack_discount",
+          "label": "Descuento Pack",
+          "default": "-15%"
+        },
+        {
+          "type": "text",
+          "id": "pack_old_price",
+          "label": "Precio Regular Pack",
+          "default": "S/ 47.40"
+        },
+        {
+          "type": "text",
+          "id": "pack_price",
+          "label": "Precio Oferta Pack",
+          "default": "S/ 39.90"
+        },
+        {
+          "type": "text",
+          "id": "pack_volume",
+          "label": "Descripción Pack",
+          "default": "6 latas de 355 ml"
+        },
+        {
+          "type": "image_picker",
+          "id": "pack_image",
+          "label": "Mini Imagen del Pack (opcional)"
+        }
+      ]
+    },
+    {
+      "type": "grid_product",
+      "name": "Tarjeta de Producto (Cuadrícula)",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Vincular Producto de Shopify (opcional)"
+        },
+        {
+          "type": "select",
+          "id": "category",
+          "label": "Categoría de Filtro",
+          "options": [
+            { "value": "cafe-molido", "label": "Café Molido" },
+            { "value": "cold-brew", "label": "Cold Brew" },
+            { "value": "accesorios", "label": "Accesorios" }
+          ],
+          "default": "cafe-molido"
+        },
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "Etiqueta / Kicker",
+          "default": "02 — CAFÉ MOLIDO"
+        },
+        {
+          "type": "text",
+          "id": "title_main",
+          "label": "Título Principal",
+          "default": "KALLPA"
+        },
+        {
+          "type": "text",
+          "id": "title_sub",
+          "label": "Subtítulo / Presentación",
+          "default": "CAFÉ MOLIDO 250G"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Descripción",
+          "default": "Café tostado y molido de especialidad, con notas de cereza, chocolate y manzana. Cultivado en los Andes peruanos para tu día a día."
+        },
+        {
+          "type": "header",
+          "content": "Imagen del Producto"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Subir Imagen del Producto / Empaque"
+        },
+        {
+          "type": "text",
+          "id": "default_bg_image",
+          "label": "O nombre del archivo en assets (ej: product-card-250g.png, product-card-500g.png)",
+          "default": "product-card-250g.png"
+        },
+        {
+          "type": "header",
+          "content": "Botón y Enlace"
+        },
+        {
+          "type": "text",
+          "id": "btn_text",
+          "label": "Texto del Botón",
+          "default": "VER PRODUCTO"
+        },
+        {
+          "type": "url",
+          "id": "btn_link",
+          "label": "Enlace del Botón"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Catálogo de Productos",
+      "blocks": [
+        {
+          "type": "featured_product"
+        },
+        {
+          "type": "grid_product",
+          "settings": {
+            "kicker": "02 — CAFÉ MOLIDO",
+            "title_main": "KALLPA",
+            "title_sub": "CAFÉ MOLIDO 250G",
+            "default_bg_image": "product-card-250g.png"
+          }
+        },
+        {
+          "type": "grid_product",
+          "settings": {
+            "kicker": "03 — CAFÉ MOLIDO",
+            "title_main": "KALLPA",
+            "title_sub": "CAFÉ MOLIDO 500G",
+            "default_bg_image": "product-card-500g.png",
+            "description": "La misma calidad, en una presentación más grande. Café de especialidad, ideal para quienes viven el café todos los días."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+`;
+
+fs.writeFileSync('sections/products-catalog.liquid', liquidContent, 'utf8');
+console.log('Successfully updated sections/products-catalog.liquid with modular blocks');
+
+// 2. Update templates/collection.json and templates/page.productos.json to include initial blocks
+const catalogBlocks = {
+  "catalog": {
+    "type": "products-catalog",
+    "settings": {
+      "breadcrumb_text": "Productos",
+      "kicker": "NUESTROS PRODUCTOS",
+      "title_line1": "LA LÍNEA",
+      "title_line2": "KALLPA",
+      "description": "Distintas formas de disfrutar la energía real de los Andes."
+    },
+    "blocks": {
+      "featured_01": {
+        "type": "featured_product",
+        "settings": {
+          "category": "cold-brew",
+          "kicker": "01 — COLD BREW",
+          "title_main": "KALLPA",
+          "title_sub": "ORIGINAL",
+          "description": "Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar.",
+          "default_asset_image": "kalpa-can-original.png",
+          "spec_1_icon": "lightning",
+          "spec_1": "280 mg<br>de cafeína",
+          "spec_2_icon": "check",
+          "spec_2": "Café de origen<br>VRAEM",
+          "spec_3_icon": "check",
+          "spec_3": "Sin azúcares<br>añadidos",
+          "spec_4_icon": "coffee_can",
+          "spec_4": "Listo<br>para tomar",
+          "unit_label": "Unidad",
+          "unit_price": "S/ 7.90",
+          "unit_volume": "355 ml",
+          "pack_label": "Pack x 6",
+          "pack_discount": "-15%",
+          "pack_old_price": "S/ 47.40",
+          "pack_price": "S/ 39.90",
+          "pack_volume": "6 latas de 355 ml"
+        }
+      },
+      "card_molido_250": {
+        "type": "grid_product",
+        "settings": {
+          "category": "cafe-molido",
+          "kicker": "02 — CAFÉ MOLIDO",
+          "title_main": "KALLPA",
+          "title_sub": "CAFÉ MOLIDO 250G",
+          "description": "Café tostado y molido de especialidad, con notas de cereza, chocolate y manzana. Cultivado en los Andes peruanos para tu día a día.",
+          "default_bg_image": "product-card-250g.png",
+          "btn_text": "VER PRODUCTO",
+          "btn_link": "/products/kalpa-cafe-molido-250g"
+        }
+      },
+      "card_molido_500": {
+        "type": "grid_product",
+        "settings": {
+          "category": "cafe-molido",
+          "kicker": "03 — CAFÉ MOLIDO",
+          "title_main": "KALLPA",
+          "title_sub": "CAFÉ MOLIDO 500G",
+          "description": "La misma calidad, en una presentación más grande. Café de especialidad, ideal para quienes viven el café todos los días.",
+          "default_bg_image": "product-card-500g.png",
+          "btn_text": "VER PRODUCTO",
+          "btn_link": "/products/kalpa-cafe-molido-500g"
+        }
+      }
+    },
+    "block_order": [
+      "featured_01",
+      "card_molido_250",
+      "card_molido_500"
+    ]
+  }
+};
+
+const collectionJson = {
+  "sections": catalogBlocks,
+  "order": ["catalog"]
+};
+fs.writeFileSync('templates/collection.json', JSON.stringify(collectionJson, null, 2), 'utf8');
+console.log('Updated templates/collection.json with default product blocks');
+
+const pageProductosJson = {
+  "sections": catalogBlocks,
+  "order": ["catalog"]
+};
+fs.writeFileSync('templates/page.productos.json', JSON.stringify(pageProductosJson, null, 2), 'utf8');
+console.log('Updated templates/page.productos.json with default product blocks');
