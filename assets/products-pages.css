@@ -629,56 +629,77 @@
 
 .grid-card-product {
   position: relative;
-  background-color: #0c0f16;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #080b10;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 20px;
   overflow: hidden;
   display: flex;
-  align-items: stretch;
-  min-height: 380px;
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  align-items: center;
+  min-height: 400px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .grid-card-product:hover {
-  transform: translateY(-4px);
-  border-color: rgba(245, 186, 44, 0.4);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(245, 186, 44, 0.12);
+  transform: translateY(-5px);
+  border-color: rgba(245, 186, 44, 0.5);
+  box-shadow: 0 24px 55px rgba(0, 0, 0, 0.7), 0 0 35px rgba(245, 186, 44, 0.18);
 }
 
-.grid-card__bg-image {
+/* Fondo completo que abarca toda la tarjeta de borde a borde */
+.grid-card__bg {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   background-size: cover;
-  background-position: center;
-  opacity: 0.22;
+  background-repeat: no-repeat;
+  background-position: right 45%;
+  opacity: 1;
   pointer-events: none;
-  transition: transform 0.4s ease;
+  z-index: 1;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.grid-card-product:hover .grid-card__bg-image {
-  transform: scale(1.04);
+.grid-card-product:hover .grid-card__bg {
+  transform: scale(1.035);
 }
 
-.grid-card__bg--cherries {
-  background-image: url("product-card-molido-250.jpg");
+.grid-card--molido250 .grid-card__bg {
+  background-image: url("product-card-250g.png");
 }
 
-.grid-card__bg--mountains {
-  background-image: url("kalpa-molido-bg.png");
+.grid-card--molido500 .grid-card__bg {
+  background-image: url("product-card-500g.png");
 }
 
-.grid-card__overlay {
+/* Efecto Glassmorphism con difuminado (blur + gradiente suave) en el lado izquierdo */
+.grid-card__glass {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(12, 15, 22, 0.96) 0%, rgba(12, 15, 22, 0.88) 52%, rgba(12, 15, 22, 0.35) 100%);
+  z-index: 2;
   pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(6, 9, 13, 0.95) 0%,
+    rgba(6, 9, 13, 0.88) 38%,
+    rgba(6, 9, 13, 0.58) 58%,
+    rgba(6, 9, 13, 0.18) 78%,
+    transparent 100%
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 42%, rgba(0, 0, 0, 0.5) 62%, transparent 85%);
+  mask-image: linear-gradient(90deg, #000 0%, #000 42%, rgba(0, 0, 0, 0.5) 62%, transparent 85%);
 }
 
+/* Columna editorial izquierda sobre el fondo difuminado */
 .grid-card__content {
   position: relative;
   z-index: 5;
-  width: 54%;
-  padding: clamp(2rem, 3.5vw, 2.75rem);
+  width: 58%;
+  max-width: 380px;
+  padding: clamp(2rem, 3.2vw, 2.75rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -717,6 +738,7 @@
   line-height: 1.55;
   color: #cbd5e1;
   margin: 0 0 1.75rem 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
 
 .btn-grid-product {
@@ -744,31 +766,6 @@
   box-shadow: 0 8px 25px rgba(245, 186, 44, 0.5);
 }
 
-.grid-card__visual {
-  position: relative;
-  z-index: 4;
-  width: 46%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  overflow: hidden;
-}
-
-.grid-product-img {
-  width: 100%;
-  height: 100%;
-  max-height: 320px;
-  object-fit: cover;
-  border-radius: 12px;
-  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.6));
-  transition: transform 0.35s ease;
-}
-
-.grid-card-product:hover .grid-product-img {
-  transform: scale(1.03);
-}
-
 /* RESPONSIVE DESIGN */
 @media (max-width: 1120px) {
   .featured-card__container {
@@ -789,15 +786,16 @@
     max-width: 480px;
     margin-bottom: 1.5rem;
   }
+  .products-grid-duo {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
   .grid-card-product {
-    flex-direction: column;
+    min-height: 360px;
   }
   .grid-card__content {
-    width: 100%;
-  }
-  .grid-card__visual {
-    width: 100%;
-    min-height: 240px;
+    width: 65%;
+    max-width: 440px;
   }
 }
 
