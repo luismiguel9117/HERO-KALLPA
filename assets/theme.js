@@ -216,3 +216,147 @@ document.addEventListener('DOMContentLoaded', () => {
   initBentoGlow();
   initAnimatedCounters();
 });
+
+
+// ==========================================
+// CONTROLADOR DEL CARRUSEL DE PRODUCTOS (SLIDE 1 & SLIDE 2)
+// ==========================================
+let currentProductSlide = 0;
+const totalProductSlides = 2;
+
+function syncProductSlideHeights() {
+  if (window.innerWidth <= 860) {
+    const slide1 = document.getElementById('product-slide-1');
+    if (slide1) {
+      slide1.style.height = '';
+      slide1.style.minHeight = '';
+    }
+    return;
+  }
+  const slide0 = document.getElementById('product-slide-0');
+  const slide1 = document.getElementById('product-slide-1');
+  if (slide0 && slide1) {
+    const h0 = slide0.offsetHeight;
+    if (h0 > 350) {
+      slide1.style.height = h0 + 'px';
+      slide1.style.minHeight = h0 + 'px';
+    }
+  }
+}
+
+window.goToProductSlide = function(index) {
+  if (index < 0) index = totalProductSlides - 1;
+  if (index >= totalProductSlides) index = 0;
+  currentProductSlide = index;
+
+  if (currentProductSlide === 1) {
+    syncProductSlideHeights();
+  }
+
+  for (let i = 0; i < totalProductSlides; i++) {
+    const slide = document.getElementById(`product-slide-${i}`);
+    if (slide) {
+      if (i === currentProductSlide) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    }
+  }
+};
+
+window.nextProductSlide = function() {
+  window.goToProductSlide(currentProductSlide + 1);
+};
+
+window.prevProductSlide = function() {
+  window.goToProductSlide(currentProductSlide - 1);
+};
+
+window.updateSaleUnitQty = function(delta) {
+  const el = document.getElementById('sale-unit-qty');
+  if (!el) return;
+  let val = parseInt(el.textContent || '1', 10) + delta;
+  if (val < 1) val = 1;
+  if (val > 24) val = 24;
+  el.textContent = val;
+};
+
+window.updateMolidoUnitQty = function(delta) {
+  const el = document.getElementById('molido-unit-qty');
+  if (!el) return;
+  let val = parseInt(el.textContent || '1', 10) + delta;
+  if (val < 1) val = 1;
+  if (val > 24) val = 24;
+  el.textContent = val;
+};
+
+window.addSaleUnitToCart = function() {
+  const el = document.getElementById('sale-unit-qty');
+  const qty = el ? Math.max(1, parseInt(el.textContent || '1', 10)) : 1;
+  const total = +(7.90 * qty).toFixed(2);
+  window.addPackToKallpaCart('unit-kalpa-original', `${qty}x KALPA Original 355ml`, total);
+};
+
+window.addMolidoUnitToCart = function() {
+  const el = document.getElementById('molido-unit-qty');
+  const qty = el ? Math.max(1, parseInt(el.textContent || '1', 10)) : 1;
+  const total = +(34.90 * qty).toFixed(2);
+  window.addPackToKallpaCart('unit-kalpa-molido', `${qty}x KALPA Café Molido 250g`, total);
+};
+
+window.addPackToKallpaCart = function(packId, name, price) {
+  document.querySelectorAll('#kallpa-cart-count, #intro-cart-count').forEach(countEl => {
+    const current = parseInt(countEl.textContent || '0');
+    countEl.textContent = current + 1;
+  });
+
+  const drawer = document.getElementById('kallpa-cart-drawer');
+  if (drawer) {
+    const body = drawer.querySelector('.cart-drawer-body');
+    if (body) {
+      const empty = body.querySelector('.cart-empty');
+      if (empty) empty.remove();
+
+      const item = document.createElement('div');
+      item.className = 'cart-drawer-item';
+      item.innerHTML = `
+        <div class="cart-item-info" style="display:flex; justify-content:space-between; align-items:center; width:100%; padding:0.75rem 0; border-bottom:1px solid rgba(255,255,255,0.08);">
+          <div>
+            <div style="font-weight:700; color:#fff;">${name}</div>
+            <div style="font-size:0.8rem; color:#888;">Agregado recientemente</div>
+          </div>
+          <div style="font-weight:800; color:#fdb515;">S/ ${price.toFixed(2)}</div>
+        </div>
+      `;
+      body.appendChild(item);
+    }
+  }
+
+  if (typeof openKallpaCart === 'function') {
+    openKallpaCart();
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  syncProductSlideHeights();
+  window.addEventListener('resize', syncProductSlideHeights);
+
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const carousel = document.getElementById('kalpaProductCarousel');
+  if (!carousel) return;
+
+  carousel.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  carousel.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchEndX - touchStartX;
+    if (Math.abs(diff) > 45) {
+      if (diff < 0) window.nextProductSlide();
+      else window.prevProductSlide();
+    }
+  }, { passive: true });
+});

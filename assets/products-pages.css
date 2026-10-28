@@ -129,11 +129,8 @@
   background-color: #0b0e14;
   padding: 1.25rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  position: sticky;
-  top: 72px;
-  z-index: 40;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  position: relative;
+  z-index: 10;
 }
 
 .products-controls__container {
