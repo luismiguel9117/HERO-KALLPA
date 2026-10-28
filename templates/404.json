@@ -1,40 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "name": "Página No Encontrada",
   "sections": {
     "hero_3d": {
       "type": "hero-kallpa-3d",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "slide_1": {
+          "type": "slide",
           "settings": {
-            "title_line_1": "ERROR 404",
-            "title_line_2": "ENERGÍA EXTRAVIADA"
-          }
-        },
-        "description": {
-          "type": "description",
-          "settings": {
-            "text": "La coordenada dimensional que buscas no existe o ha sido reconfigurada."
-          }
-        },
-        "buttons": {
-          "type": "buttons",
-          "settings": {
-            "btn_1_text": "Volver al Origen",
-            "btn_1_url": "/"
+            "lead_title": "ERROR 404",
+            "giant_title": "EXTRAVIADA",
+            "description": "La coordenada que buscas no existe o ha sido reconfigurada.",
+            "btn_text": "VOLVER AL INICIO",
+            "btn_url": "/"
           }
         }
       },
       "block_order": [
-        "heading",
-        "description",
-        "buttons"
+        "slide_1"
       ],
-      "settings": {
-        "energy_color": "#ff3b30",
-        "secondary_color": "#fdb515",
-        "particle_count": 800
-      }
+      "settings": {}
     }
   },
   "order": [

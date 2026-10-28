@@ -34,16 +34,10 @@
 
     <!-- Menú Central Rigurosamente Centrado al 50% -->
     <nav class="kalpa-nav-menu" aria-label="Navegación principal">
-      {%- if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 -%}
-        {%- for link in linklists[section.settings.menu].links -%}
-          <a href="{{ link.url }}" class="kalpa-nav-item{% if link.active %} is-active{% endif %}">{{ link.title }}</a>
-        {%- endfor -%}
-      {%- else -%}
-        <a href="{{ routes.root_url }}" class="kalpa-nav-item{% if request.path == routes.root_url %} is-active{% endif %}">Inicio</a>
-        <a href="{{ routes.all_products_collection_url }}" class="kalpa-nav-item{% if request.path contains 'collections' or request.path contains 'productos' %} is-active{% endif %}">Productos</a>
-        <a href="{{ routes.root_url }}#origin-section" class="kalpa-nav-item">Promociones</a>
-        <a href="/pages/nosotros" class="kalpa-nav-item{% if request.path contains 'nosotros' or request.path contains 'about' %} is-active{% endif %}">Nosotros</a>
-      {%- endif -%}
+      <a href="{{ routes.root_url }}" class="kalpa-nav-item{% if request.path == routes.root_url %} is-active{% endif %}">Inicio</a>
+      <a href="{{ routes.all_products_collection_url }}" class="kalpa-nav-item{% if request.path contains 'collections' or request.path contains 'productos' %} is-active{% endif %}">Productos</a>
+      <a href="{{ routes.root_url }}#origin-section" class="kalpa-nav-item">Promociones</a>
+      <a href="/pages/nosotros" class="kalpa-nav-item{% if request.path contains 'nosotros' or request.path contains 'about' %} is-active{% endif %}">Nosotros</a>
     </nav>
 
     <!-- Acciones Derecha (Búsqueda, Cuenta, Wishlist, Carrito, CTA, Hamburger) -->

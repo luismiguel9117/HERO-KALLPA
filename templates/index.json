@@ -1,5 +1,13 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "name": "Home Page",
   "sections": {
     "intro_preloader": {
       "type": "kalpa-intro",
@@ -18,7 +26,6 @@
         "slide_1": {
           "type": "slide",
           "settings": {
-            "eyebrow": "ENERGÍA NATURAL DE LOS ANDES",
             "lead_title": "CAFÉ DE",
             "giant_title": "VRAEM",
             "description": "Energía natural para tu día. Café cold brew listo para tomar, hecho con granos del VRAEM y con todo el sabor de los Andes.",
@@ -29,7 +36,6 @@
         "slide_2": {
           "type": "slide",
           "settings": {
-            "eyebrow": "EXTRACCIÓN CRIOGÉNICA 24H",
             "lead_title": "COLD",
             "giant_title": "BREW",
             "description": "Macerado lentamente en frío durante 24 horas continuas a 4°C. Preserva las notas más finas a cacao y elimina por completo la acidez punzante.",
@@ -40,7 +46,6 @@
         "slide_3": {
           "type": "slide",
           "settings": {
-            "eyebrow": "RENDIMIENTO SIN CRASH",
             "lead_title": "ENERGÍA",
             "giant_title": "LIMPIA",
             "description": "280mg de cafeína natural de altura con antioxidantes botánicos. Rendimiento sostenido y enfoque mental prolongado para todo tu día.",

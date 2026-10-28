@@ -1,3 +1,11 @@
+
+function resolveAsset(filename) {
+  if (typeof window !== 'undefined' && window.ShopifyAssetUrls && window.ShopifyAssetUrls[filename]) {
+    return window.ShopifyAssetUrls[filename];
+  }
+  return 'assets/' + filename;
+}
+
 /**
  * HERO-KALLPA : Interactive 3D Cylindrical Hero Can Controller
  * Basado en la arquitectura híbrida 2D + 3D de alta fidelidad (Offscreen Blitting)
@@ -95,7 +103,7 @@ export class HeroKallpaCan {
     // Layer 0 (Behind Can): Focused coffee beans & ice cubes splash (Capa 3)
     this.compBackImg = document.createElement('img');
     this.compBackImg.className = 'hero-can-comp hero-can-comp__back';
-    this.compBackImg.src = 'assets/hero-beans-ice-back.png';
+    this.compBackImg.src = resolveAsset('hero-beans-ice-back.png');
     this.compBackImg.alt = '';
     this.compBackImg.draggable = false;
 
@@ -128,28 +136,28 @@ export class HeroKallpaCan {
     // Layer 3.5: Photorealistic aluminum lid & base chime rims (commit 6e46cb5)
     this.rimsImg = document.createElement('img');
     this.rimsImg.className = 'hero-kallpa-can__rims';
-    this.rimsImg.src = 'assets/kalpa-can-rims.png';
+    this.rimsImg.src = resolveAsset('kalpa-can-rims.png');
     this.rimsImg.alt = '';
     this.rimsImg.draggable = false;
 
     // Layer 4 (Mid-Front): Focused coffee beans & ice cubes around lower can (Capa 2 copia 2)
     this.compMidImg = document.createElement('img');
     this.compMidImg.className = 'hero-can-comp hero-can-comp__mid';
-    this.compMidImg.src = 'assets/hero-beans-ice-front.png';
+    this.compMidImg.src = resolveAsset('hero-beans-ice-front.png');
     this.compMidImg.alt = '';
     this.compMidImg.draggable = false;
 
     // Layer 5 (Front Bean): Single sharp coffee bean overlapping right side of can (Capa 4)
     this.compSingleBeanImg = document.createElement('img');
     this.compSingleBeanImg.className = 'hero-can-comp hero-can-comp__bean-single';
-    this.compSingleBeanImg.src = 'assets/hero-bean-single.png';
+    this.compSingleBeanImg.src = resolveAsset('hero-bean-single.png');
     this.compSingleBeanImg.alt = '';
     this.compSingleBeanImg.draggable = false;
 
     // Layer 6 (Foreground Base): Volcanic rock pedestal with ice and coffee beans (Capa 2 copia)
     this.compRockImg = document.createElement('img');
     this.compRockImg.className = 'hero-can-comp hero-can-comp__rock';
-    this.compRockImg.src = 'assets/hero-rock-base.png';
+    this.compRockImg.src = resolveAsset('hero-rock-base.png');
     this.compRockImg.alt = '';
     this.compRockImg.draggable = false;
 
@@ -773,7 +781,7 @@ export class IntroKallpaCan {
       rims.draggable = false;
       this.container.appendChild(rims);
     }
-    rims.src = 'assets/kalpa-can-rims.png';
+    rims.src = resolveAsset('kalpa-can-rims.png');
     rims.alt = '';
     this.rimsImg = rims;
 
