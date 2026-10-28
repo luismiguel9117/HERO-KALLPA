@@ -1,8 +1,77 @@
 {%- comment -%}
   SECCIÓN: kallpa-ticker.liquid
-  Marquee Banner Infinito de Marca KALPA VRAEM
+  Barra de Beneficios de Confianza y Marquee Banner Infinito KALPA
 {%- endcomment -%}
 
+<!-- 1. Barra de Beneficios / Badges de Confianza -->
+{%- if section.settings.show_features_bar -%}
+<section class="kalpa-hero-features-bar">
+  <div class="page-width kalpa-hero-features-grid">
+    <!-- 1. Granos del VRAEM -->
+    <div class="hero-feature-item">
+      <div class="hero-feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+        </svg>
+      </div>
+      <div class="hero-feature-text">
+        <span>{{ section.settings.feat1_line1 | default: 'GRANOS' }}</span>
+        <span>{{ section.settings.feat1_line2 | default: 'DEL VRAEM' }}</span>
+      </div>
+    </div>
+
+    <!-- 2. Energía Natural -->
+    <div class="hero-feature-item">
+      <div class="hero-feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
+      </div>
+      <div class="hero-feature-text">
+        <span>{{ section.settings.feat2_line1 | default: 'ENERGÍA' }}</span>
+        <span>{{ section.settings.feat2_line2 | default: 'NATURAL' }}</span>
+      </div>
+    </div>
+
+    <!-- 3. Cold Brew 24H -->
+    <div class="hero-feature-item">
+      <div class="hero-feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <line x1="12" y1="2" x2="12" y2="22"></line>
+          <path d="m20 16-4-4 4-4"></path>
+          <path d="m4 8 4 4-4 4"></path>
+          <path d="m16 4-4 4-4-4"></path>
+          <path d="m8 20 4-4 4 4"></path>
+        </svg>
+      </div>
+      <div class="hero-feature-text">
+        <span>{{ section.settings.feat3_line1 | default: 'COLD BREW' }}</span>
+        <span>{{ section.settings.feat3_line2 | default: '24H' }}</span>
+      </div>
+    </div>
+
+    <!-- 4. Envíos a todo el Perú -->
+    <div class="hero-feature-item">
+      <div class="hero-feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="3" width="15" height="13"></rect>
+          <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+          <circle cx="5.5" cy="18.5" r="2.5"></circle>
+          <circle cx="18.5" cy="18.5" r="2.5"></circle>
+        </svg>
+      </div>
+      <div class="hero-feature-text">
+        <span>{{ section.settings.feat4_line1 | default: 'ENVÍOS A' }}</span>
+        <span>{{ section.settings.feat4_line2 | default: 'TODO EL PERÚ' }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+<!-- 2. Marquee Ticker Banner Infinito -->
 <div class="kallpa-ticker-section" id="ticker-section">
   <div class="kallpa-ticker-track">
     <div class="kallpa-ticker-content">
@@ -46,7 +115,67 @@
 
 {% schema %}
 {
-  "name": "Marquee Ticker KALPA",
-  "settings": []
+  "name": "Features & Ticker",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_features_bar",
+      "label": "Mostrar Barra de Beneficios",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "feat1_line1",
+      "label": "Beneficio 1 Línea 1",
+      "default": "GRANOS"
+    },
+    {
+      "type": "text",
+      "id": "feat1_line2",
+      "label": "Beneficio 1 Línea 2",
+      "default": "DEL VRAEM"
+    },
+    {
+      "type": "text",
+      "id": "feat2_line1",
+      "label": "Beneficio 2 Línea 1",
+      "default": "ENERGÍA"
+    },
+    {
+      "type": "text",
+      "id": "feat2_line2",
+      "label": "Beneficio 2 Línea 2",
+      "default": "NATURAL"
+    },
+    {
+      "type": "text",
+      "id": "feat3_line1",
+      "label": "Beneficio 3 Línea 1",
+      "default": "COLD BREW"
+    },
+    {
+      "type": "text",
+      "id": "feat3_line2",
+      "label": "Beneficio 3 Línea 2",
+      "default": "24H"
+    },
+    {
+      "type": "text",
+      "id": "feat4_line1",
+      "label": "Beneficio 4 Línea 1",
+      "default": "ENVÍOS A"
+    },
+    {
+      "type": "text",
+      "id": "feat4_line2",
+      "label": "Beneficio 4 Línea 2",
+      "default": "TODO EL PERÚ"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Features & Ticker"
+    }
+  ]
 }
 {% endschema %}

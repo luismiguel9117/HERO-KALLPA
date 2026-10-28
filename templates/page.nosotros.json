@@ -1,0 +1,12 @@
+{
+  "name": "Nosotros Kallpa",
+  "sections": {
+    "nosotros": {
+      "type": "page-nosotros",
+      "settings": {}
+    }
+  },
+  "order": [
+    "nosotros"
+  ]
+}

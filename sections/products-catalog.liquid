@@ -1,0 +1,342 @@
+{%- comment -%}
+  SECCIÓN: products-catalog.liquid
+  Catálogo Completo Oficial KALPA (Hero, Filtros, Producto Destacado 01 y Duo Cards 02 & 03)
+{%- endcomment -%}
+
+<!-- 1. HERO DE PRODUCTOS -->
+<section class="kallpa-products-hero" aria-label="Catálogo de Productos">
+  <div class="products-hero__bg-layer" aria-hidden="true"></div>
+  <div class="products-hero__vignette" aria-hidden="true"></div>
+
+  <div class="page-width products-hero__container">
+    <!-- Breadcrumb -->
+    <nav class="products-hero__breadcrumb" aria-label="Ruta de navegación">
+      <a href="{{ routes.root_url }}">Inicio</a>
+      <span class="breadcrumb-separator">&gt;</span>
+      <span class="breadcrumb-current">{{ section.settings.breadcrumb_text | default: 'Productos' }}</span>
+    </nav>
+
+    <!-- Kicker con barra dorada -->
+    <div class="products-hero__kicker">
+      <span class="kicker-dash"></span>
+      <span>{{ section.settings.kicker | default: 'NUESTROS PRODUCTOS' }}</span>
+    </div>
+
+    <!-- Título Gigante -->
+    <h1 class="products-hero__title">
+      <span class="title-line-white">{{ section.settings.title_line1 | default: 'LA LÍNEA' }}</span>
+      <span class="title-line-gold">{{ section.settings.title_line2 | default: 'KALLPA' }}</span>
+    </h1>
+
+    <!-- Párrafo Descriptivo -->
+    <p class="products-hero__desc">
+      {{ section.settings.description | default: 'Distintas formas de disfrutar la energía real de los Andes.' }}
+    </p>
+  </div>
+</section>
+
+<!-- 2. BARRA DE FILTROS Y ORDENAMIENTO -->
+<section class="products-controls-bar">
+  <div class="page-width products-controls__container">
+    
+    <!-- Píldoras de Filtro -->
+    <div class="products-filter-pills" role="tablist">
+      <button type="button" class="filter-pill is-active" data-filter="all" onclick="filterProducts('all', this)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+          <line x1="6" y1="1" x2="6" y2="4"></line>
+          <line x1="10" y1="1" x2="10" y2="4"></line>
+          <line x1="14" y1="1" x2="14" y2="4"></line>
+        </svg>
+        <span>Todos los productos</span>
+      </button>
+
+      <button type="button" class="filter-pill" data-filter="cold-brew" onclick="filterProducts('cold-brew', this)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="6" y="4" width="12" height="16" rx="2"></rect>
+          <line x1="6" y1="9" x2="18" y2="9"></line>
+          <line x1="9" y1="2" x2="15" y2="2"></line>
+        </svg>
+        <span>Cold Brew</span>
+      </button>
+
+      <button type="button" class="filter-pill" data-filter="cafe-molido" onclick="filterProducts('cafe-molido', this)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M12 3a9 9 0 0 0 0 18c2-2 3-5 3-9s-1-7-3-9z"></path>
+        </svg>
+        <span>Café Molido</span>
+      </button>
+
+      <button type="button" class="filter-pill" data-filter="accesorios" onclick="filterProducts('accesorios', this)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span>Accesorios</span>
+      </button>
+    </div>
+
+    <!-- Selector de Ordenamiento -->
+    <div class="products-sort-wrap">
+      <label for="products-sort-select" class="sort-label">Ordenar por:</label>
+      <div class="sort-select-wrapper">
+        <select id="products-sort-select" class="sort-select" onchange="sortProducts(this.value)">
+          <option value="recent">Más recientes</option>
+          <option value="price-low">Precio: menor a mayor</option>
+          <option value="price-high">Precio: mayor a menor</option>
+          <option value="popular">Más populares</option>
+        </select>
+        <svg class="sort-select-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 3. LISTADO PRINCIPAL DE PRODUCTOS -->
+<main class="products-catalog-main">
+  <div class="page-width">
+    
+    <!-- 3.1 PRODUCTO DESTACADO 01: KALLPA ORIGINAL COLD BREW (Banner Panorámico) -->
+    <article class="featured-product-card" id="featured-product" data-category="cold-brew">
+      <div class="featured-card__bg-pattern" aria-hidden="true"></div>
+      
+      <div class="featured-card__container">
+        
+        <!-- Columna 1: Información Editorial -->
+        <div class="featured-card__info">
+          <div class="featured-card__kicker">
+            <span class="kicker-tag">01 — COLD BREW</span>
+          </div>
+          
+          <h2 class="featured-card__title">
+            <span class="title-kallpa">KALLPA</span>
+            <span class="title-product">ORIGINAL</span>
+          </h2>
+
+          <p class="featured-card__desc">
+            Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar.
+          </p>
+
+          <!-- 4 Atributos Circulares -->
+          <div class="featured-specs-row">
+            <div class="featured-spec-badge">
+              <div class="spec-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+              </div>
+              <span class="spec-label">280 mg<br>de cafeína</span>
+            </div>
+
+            <div class="featured-spec-badge">
+              <div class="spec-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+              </div>
+              <span class="spec-label">Café de origen<br>VRAEM</span>
+            </div>
+
+            <div class="featured-spec-badge">
+              <div class="spec-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+              </div>
+              <span class="spec-label">Sin azúcares<br>añadidos</span>
+            </div>
+
+            <div class="featured-spec-badge">
+              <div class="spec-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="6" y="4" width="12" height="16" rx="2"></rect>
+                  <line x1="6" y1="9" x2="18" y2="9"></line>
+                </svg>
+              </div>
+              <span class="spec-label">Listo<br>para tomar</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna 2: Visual Central de la Lata con Hielos, Rayo y Roca -->
+        <div class="featured-card__visual">
+          <div class="featured-can-stage">
+            <div class="lightning-ray-bg" aria-hidden="true"></div>
+            <img src="{{ 'hero-beans-ice-back.png' | asset_url }}" alt="" class="stage-beans-back" draggable="false" width="500" height="500">
+            <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="Lata KALPA Cold Brew Original 355ml" class="stage-can-img" draggable="false" width="400" height="700">
+            <img src="{{ 'hero-bean-single.png' | asset_url }}" alt="" class="stage-bean-front" draggable="false" width="70" height="70">
+            <img src="{{ 'hero-rock-base.png' | asset_url }}" alt="" class="stage-rock-base" draggable="false" width="500" height="200">
+          </div>
+        </div>
+
+        <!-- Columna 3: Tarjeta Dual de Compra -->
+        <div class="featured-card__buy-box">
+          <!-- Opción Unidad -->
+          <div class="buy-box-unit">
+            <div class="unit-badge-header">Unidad</div>
+            <div class="unit-price-row">
+              <span class="unit-price-val">S/ 7.90</span>
+              <span class="unit-volume-val">355 ml</span>
+            </div>
+            <div class="qty-stepper-wrap">
+              <button type="button" class="qty-btn" onclick="updateFeaturedQty(-1)" aria-label="Disminuir">&minus;</button>
+              <span id="featured-qty-val" class="qty-num">1</span>
+              <button type="button" class="qty-btn" onclick="updateFeaturedQty(1)" aria-label="Aumentar">+</button>
+            </div>
+            <button type="button" class="btn-buy-gold" onclick="addFeaturedUnitToCart()">
+              <span>AGREGAR</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Opción Pack x 6 -->
+          <div class="buy-box-pack">
+            <div class="pack-badge-header">
+              <span class="pack-title">Pack x 6</span>
+              <span class="pack-discount-tag">-15%</span>
+            </div>
+            <div class="pack-pricing-area">
+              <span class="pack-old-price">S/ 47.40</span>
+              <span class="pack-new-price">S/ 39.90</span>
+              <span class="pack-volume-desc">6 latas de 355 ml</span>
+            </div>
+            <div class="pack-cans-cluster" aria-hidden="true">
+              <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="" class="mini-cluster-can" draggable="false" width="50" height="90">
+              <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="" class="mini-cluster-can" draggable="false" width="50" height="90">
+              <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="" class="mini-cluster-can" draggable="false" width="50" height="90">
+            </div>
+            <button type="button" class="btn-buy-gold" onclick="addPackToKallpaCart('pack-6-original-cat', 'Pack x 6 KALPA Original 355ml', 39.90)">
+              <span>AGREGAR</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+    <!-- 3.2 CUADRÍCULA DE CAFÉ MOLIDO: 250G Y 500G -->
+    <section class="products-grid-duo" aria-label="Variedades de Café Molido">
+      
+      <!-- Tarjeta 02: KALLPA CAFÉ MOLIDO 250G -->
+      <article class="grid-card-product grid-card--molido250" data-category="cafe-molido">
+        <div class="grid-card__bg" aria-hidden="true"></div>
+        <div class="grid-card__glass" aria-hidden="true"></div>
+
+        <div class="grid-card__content">
+          <span class="grid-card__kicker">02 — CAFÉ MOLIDO</span>
+          <h3 class="grid-card__title">
+            <span class="title-kallpa">KALLPA</span>
+            <span class="title-molido">CAFÉ MOLIDO</span>
+          </h3>
+          <p class="grid-card__desc">
+            Café tostado y molido de especialidad, con notas de cereza, chocolate y manzana. Cultivado en los Andes peruanos para tu día a día.
+          </p>
+
+          <div class="grid-card__action">
+            <a href="{{ section.settings.product2_url | default: '/products/kalpa-cafe-molido-250g' }}" class="btn-grid-product">
+              <span>VER PRODUCTO</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tarjeta 03: KALLPA CAFÉ MOLIDO 500G -->
+      <article class="grid-card-product grid-card--molido500" data-category="cafe-molido">
+        <div class="grid-card__bg" aria-hidden="true"></div>
+        <div class="grid-card__glass" aria-hidden="true"></div>
+
+        <div class="grid-card__content">
+          <span class="grid-card__kicker">03 — CAFÉ MOLIDO</span>
+          <h3 class="grid-card__title">
+            <span class="title-kallpa">KALLPA</span>
+            <span class="title-molido">CAFÉ MOLIDO</span>
+          </h3>
+          <p class="grid-card__desc">
+            La misma calidad, en una presentación más grande. Café de especialidad, ideal para quienes viven el café todos los días.
+          </p>
+
+          <div class="grid-card__action">
+            <a href="{{ section.settings.product3_url | default: '/products/kalpa-cafe-molido-500g' }}" class="btn-grid-product">
+              <span>VER PRODUCTO</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "Catálogo de Productos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "breadcrumb_text",
+      "label": "Texto Breadcrumb",
+      "default": "Productos"
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Antetítulo Hero",
+      "default": "NUESTROS PRODUCTOS"
+    },
+    {
+      "type": "text",
+      "id": "title_line1",
+      "label": "Título Línea 1",
+      "default": "LA LÍNEA"
+    },
+    {
+      "type": "text",
+      "id": "title_line2",
+      "label": "Título Línea 2 (Dorado)",
+      "default": "KALLPA"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descripción Hero",
+      "default": "Distintas formas de disfrutar la energía real de los Andes."
+    },
+    {
+      "type": "url",
+      "id": "product2_url",
+      "label": "URL Producto 2 (250g)"
+    },
+    {
+      "type": "url",
+      "id": "product3_url",
+      "label": "URL Producto 3 (500g)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Catálogo de Productos"
+    }
+  ]
+}
+{% endschema %}

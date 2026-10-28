@@ -1,24 +1,12 @@
 {
   "name": "Producto Kallpa",
   "sections": {
-    "showcase": {
-      "type": "kallpa-3d-product-showcase",
+    "main_product": {
+      "type": "main-product",
       "settings": {}
-    },
-    "features": {
-      "type": "kallpa-features-grid",
-      "settings": {}
-    },
-    "related": {
-      "type": "product-grid",
-      "settings": {
-        "products_to_show": 3
-      }
     }
   },
   "order": [
-    "showcase",
-    "features",
-    "related"
+    "main_product"
   ]
 }

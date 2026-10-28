@@ -1,0 +1,12 @@
+{
+  "name": "Página Productos",
+  "sections": {
+    "catalog": {
+      "type": "products-catalog",
+      "settings": {}
+    }
+  },
+  "order": [
+    "catalog"
+  ]
+}

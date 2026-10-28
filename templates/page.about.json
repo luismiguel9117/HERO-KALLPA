@@ -1,22 +1,12 @@
 {
-  "name": "Manifiesto Kallpa",
+  "name": "Nosotros Kallpa",
   "sections": {
-    "features": {
-      "type": "kallpa-features-grid",
-      "settings": {
-        "kicker": "ORIGEN & CIENCIA",
-        "title_1": "EL MANIFIESTO",
-        "title_2": "DE ENERGÍA KALLPA",
-        "subtitle": "Kallpa es la palabra quechua para fuerza vital y energía activa. No creamos suplementos convencionales; creamos ingeniería de rendimiento humano."
-      }
-    },
-    "showcase": {
-      "type": "kallpa-3d-product-showcase",
+    "nosotros": {
+      "type": "page-nosotros",
       "settings": {}
     }
   },
   "order": [
-    "features",
-    "showcase"
+    "nosotros"
   ]
 }

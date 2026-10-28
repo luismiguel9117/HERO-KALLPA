@@ -7,10 +7,11 @@
     "dev": "npx serve . -l 3000",
     "merge:can": "git subtree pull --prefix=lata-3d lata-repo main --squash && node scripts/sync-can-assets.js",
     "sync:can": "node scripts/sync-can-assets.js",
-    "shopify:dev": "shopify theme dev --theme-editor-sync",
-    "shopify:pull": "shopify theme pull",
-    "shopify:push": "shopify theme push --unpublished --theme \"HERO-KALLPA v1.0\"",
-    "shopify:publish": "shopify theme publish"
+    "shopify:check": "npx @shopify/cli theme check",
+    "shopify:dev": "npx @shopify/cli theme dev --theme-editor-sync",
+    "shopify:pull": "npx @shopify/cli theme pull",
+    "shopify:push": "npx @shopify/cli theme push --unpublished --theme \"HERO-KALLPA v1.0\"",
+    "shopify:publish": "npx @shopify/cli theme publish"
   },
   "keywords": [
     "shopify",

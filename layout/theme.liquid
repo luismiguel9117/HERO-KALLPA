@@ -7,7 +7,7 @@
     <link rel="canonical" href="{{ canonical_url }}">
     <link rel="icon" type="image/png" href="{{ 'logo-k-symbol-white.png' | asset_url }}">
     
-    <!-- Google Fonts: Outfit (Tipografía de Alta Legibilidad y Estilo Moderno) -->
+    <!-- Google Fonts: Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -28,8 +28,10 @@
     <!-- Estilos Principales -->
     {{ 'theme.css' | asset_url | stylesheet_tag }}
     {{ 'kalpa-intro.css' | asset_url | stylesheet_tag }}
+    {{ 'products-pages.css' | asset_url | stylesheet_tag }}
+    {{ 'nosotros.css' | asset_url | stylesheet_tag }}
 
-    <!-- Three.js ES Modules & Addons Importmap (Idéntico a Lata-3d-) -->
+    <!-- Three.js ES Modules & Addons Importmap -->
     <script type="importmap">
       {
         "imports": {
@@ -46,6 +48,7 @@
     <script type="module" src="{{ 'hero-3d-scene.js' | asset_url }}"></script>
     <script src="{{ 'hero-2d-canvas.js' | asset_url }}" defer></script>
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    <script src="{{ 'kalpa-components.js' | asset_url }}" defer></script>
   </head>
   <body>
 

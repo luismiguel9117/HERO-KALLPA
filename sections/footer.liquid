@@ -15,7 +15,7 @@
       
       <!-- Lata con Hielos y Salpicadura en Primer Plano Izquierdo -->
       <div class="newsletter-banner__can-box">
-        <img src="{{ 'footer-banner-can.png' | asset_url }}" alt="Lata KALPA Cold Brew" class="newsletter-banner__can" draggable="false" loading="lazy">
+        <img src="{{ 'footer-banner-can.png' | asset_url }}" alt="Lata KALPA Cold Brew" class="newsletter-banner__can" draggable="false" loading="lazy" width="450" height="450">
       </div>
 
       <!-- Bloque de Contenido y Formulario -->
@@ -38,7 +38,7 @@
 
       <!-- Grano de Café en la Esquina Superior Derecha (sobre el botón) -->
       <div class="newsletter-banner__bean-box" aria-hidden="true">
-        <img src="{{ 'hero-bean-single.png' | asset_url }}" alt="" class="newsletter-banner__bean" draggable="false">
+        <img src="{{ 'hero-bean-single.png' | asset_url }}" alt="" class="newsletter-banner__bean" draggable="false" width="70" height="70">
       </div>
 
     </div>
@@ -52,16 +52,16 @@
       <div class="footer-bottom__main-row">
         
         <!-- Logo KALPA -->
-        <a href="/" class="footer-logo-link" aria-label="KALPA - Inicio">
+        <a href="{{ routes.root_url }}" class="footer-logo-link" aria-label="KALPA - Inicio">
           <img src="{{ 'logo-kalpa-white.png' | asset_url }}" alt="KALPA" class="footer-logo-img" width="135" height="32">
         </a>
 
         <!-- Menú Horizontal de Enlaces -->
         <nav class="footer-horizontal-nav" aria-label="Navegación pie de página">
-          <a href="index.html">Inicio</a>
-          <a href="productos.html">Productos</a>
-          <a href="#origin-section">Promociones</a>
-          <a href="nosotros.html">Nosotros</a>
+          <a href="{{ routes.root_url }}">Inicio</a>
+          <a href="{{ routes.all_products_collection_url }}">Productos</a>
+          <a href="{{ routes.root_url }}#origin-section">Promociones</a>
+          <a href="/pages/nosotros">Nosotros</a>
         </nav>
 
         <!-- Iconos de Redes Sociales -->
@@ -98,15 +98,17 @@
 
       </div>
 
-      <!-- Fila 2: Copyright y Enlaces Legales -->
-      <div class="footer-bottom__legal-row">
-        <p class="footer-copyright">&copy; 2024 KALPA. Todos los derechos reservados.</p>
+      <!-- Fila 2: Separador Sutil y Copyright con Políticas -->
+      <div class="footer-bottom__sub-row">
+        <p class="footer-copyright">
+          © {{ 'now' | date: '%Y' }} {{ shop.name | default: 'KALPA' }}®. Todos los derechos reservados. Café Cold Brew 100% Orgánico del VRAEM.
+        </p>
         <div class="footer-legal-links">
-          <a href="#footer-section">Términos y condiciones</a>
-          <span class="legal-sep">|</span>
-          <a href="#footer-section">Política de privacidad</a>
-          <span class="legal-sep">|</span>
-          <a href="mailto:Ventas@kalpa.pe">Contacto</a>
+          <a href="#">Términos y Condiciones</a>
+          <span class="legal-sep">•</span>
+          <a href="#">Políticas de Privacidad</a>
+          <span class="legal-sep">•</span>
+          <a href="#">Libro de Reclamaciones</a>
         </div>
       </div>
 
@@ -122,13 +124,13 @@
     {
       "type": "text",
       "id": "newsletter_title",
-      "label": "Título Newsletter",
+      "label": "Título del Newsletter",
       "default": "SÉ PARTE DE KALPA"
     },
     {
       "type": "text",
       "id": "newsletter_desc",
-      "label": "Descripción Newsletter",
+      "label": "Descripción del Newsletter",
       "default": "Recibe promociones exclusivas, lanzamientos y más historias del VRAEM."
     }
   ]

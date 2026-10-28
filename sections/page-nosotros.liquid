@@ -1,0 +1,354 @@
+{%- comment -%}
+  SECCIÓN: page-nosotros.liquid
+  Página de Historia, Origen VRAEM y Manifiesto KALPA (Pixel-Perfect con nosotros.html)
+{%- endcomment -%}
+
+<!-- 1. HERO NOSOTROS: EL ARCO ANDINO -->
+<section class="nosotros-hero" aria-label="Hero Nosotros">
+  <div class="nosotros-hero__bg" aria-hidden="true"></div>
+  <div class="nosotros-hero__vignette" aria-hidden="true"></div>
+
+  <div class="nosotros-hero__container">
+    <!-- Fila superior: Texto a ambos lados del arco -->
+    <div class="nosotros-hero__split-text">
+      <!-- Lado Izquierdo -->
+      <div class="nosotros-hero__side nosotros-hero__side--left">
+        <span class="nosotros-hero__subtitle">{{ section.settings.hero_sub_left | default: 'CAFÉ DE ALTURA' }}</span>
+        <span class="nosotros-hero__giant-word nosotros-hero__giant-word--white">{{ section.settings.hero_title_left | default: 'ENERGÍA' }}</span>
+      </div>
+
+      <!-- Lado Derecho -->
+      <div class="nosotros-hero__side nosotros-hero__side--right">
+        <span class="nosotros-hero__subtitle">{{ section.settings.hero_sub_right | default: 'VRAEM' }}</span>
+        <span class="nosotros-hero__giant-word nosotros-hero__giant-word--gold">{{ section.settings.hero_title_right | default: 'NATURAL' }}</span>
+      </div>
+    </div>
+
+    <!-- Fila inferior: Botón Descubre Kalpa a la izquierda -->
+    <div class="nosotros-hero__bottom-row">
+      <a href="#energia-andes" class="btn-hero-descubre">
+        <span>DESCUBRE KALPA</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 2. SECCIÓN: ENERGÍA DE LOS ANDES -->
+<section class="section-nosotros-energia" id="energia-andes">
+  <div class="page-width">
+    <div class="energia-container">
+      <span class="section-kicker-gold">{{ section.settings.energia_kicker | default: 'ORIGEN Y SIGNIFICADO' }}</span>
+      <h2 class="energia-giant-title">{{ section.settings.energia_title | default: 'ENERGÍA DE LOS ANDES' }}</h2>
+      <p class="energia-lead-quote">
+        {{ section.settings.energia_quote | default: 'Kalpa significa fuerza, energía y poder en quechua.' }}
+      </p>
+      <p class="energia-body-text">
+        {{ section.settings.energia_body | default: 'Nació para que rindas al máximo sin sacrificar tu cuerpo. Una bebida creada a partir de café de especialidad de origen peruano, con cafeína limpia que estimula tu mente y cuerpo de forma continua y natural.' }}
+      </p>
+      <div>
+        <a href="{{ routes.all_products_collection_url }}" class="btn-probar-kalpa">
+          <span>PROBAR KALPA</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. SECCIÓN: LA RAÍZ DE KALPA — AYACUCHO -->
+<section class="section-nosotros-raiz" id="origen-ayacucho">
+  <div class="page-width">
+    <div class="raiz-grid">
+      <div class="raiz-content">
+        <span class="section-kicker-gold">{{ section.settings.raiz_kicker | default: 'LA RAÍZ DE KALPA' }}</span>
+        <h2 class="raiz-title">{{ section.settings.raiz_title | default: 'AYACUCHO' }}</h2>
+        <p class="raiz-lead">
+          {{ section.settings.raiz_lead | default: 'Ayacucho no es solo de donde viene el café. Es el origen, la cultura y la razón de ser de lo que hacemos.' }}
+        </p>
+        <p class="raiz-text">
+          {{ section.settings.raiz_text | default: 'Usamos la energía natural de los insumos andinos: potente, limpia, sin artificios. Insumos andinos que merecen ser reconocidos en el Perú y en el mundo entero por su calidad insuperable.' }}
+        </p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <a href="{{ routes.all_products_collection_url }}" class="btn-probar-kalpa">
+            <span>VER NUESTROS PRODUCTOS</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="raiz-visual-card">
+        <img src="{{ 'vraem-harvest.jpg' | asset_url }}" alt="Cosecha de café de especialidad en los valles de Ayacucho" loading="lazy" width="600" height="400">
+        <div class="raiz-badge-overlay">
+          <span class="raiz-badge-val">VRAEM · AYACUCHO</span>
+          <span class="raiz-badge-label">100% Insumos Andinos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. SECCIÓN BENTO: CÓMO LO HACEMOS -->
+<section class="section-nosotros-bento" id="como-lo-hacemos">
+  <div class="page-width">
+    <div class="bento-header">
+      <span class="section-kicker-gold">PROCESO Y RIGOR</span>
+      <h2 class="bento-header__title">CÓMO LO HACEMOS</h2>
+      <div class="bento-header__sub">POTENTE, LIMPIA, SIN ARTIFICIOS</div>
+    </div>
+
+    <div class="nosotros-bento-grid">
+      
+      <!-- Bento 1: ALTURA -->
+      <article class="bento-card bento-card--altura">
+        <div class="bento-card__num">1,800 - 2,200</div>
+        <div class="bento-card__unit">msnm</div>
+        <h3 class="bento-card__title">ALTURA</h3>
+        <p class="bento-card__desc">
+          Cultivado en las laderas más altas del VRAEM, donde la altitud y los microclimas andinos concentran azúcares naturales y acidez brillante.
+        </p>
+      </article>
+
+      <!-- Bento 2: COSECHA -->
+      <article class="bento-card bento-card--cosecha">
+        <div class="bento-card__num">Mayo — Sept.</div>
+        <div class="bento-card__unit">Temporada</div>
+        <h3 class="bento-card__title">COSECHA</h3>
+        <p class="bento-card__desc">
+          Recolección manual selectiva grano a grano, eligiendo exclusivamente cerezas en su punto cumbre de maduración óptima.
+        </p>
+      </article>
+
+      <!-- Bento 3: CAFEÍNA REAL -->
+      <article class="bento-card bento-card--cafeina">
+        <div class="bento-card__pill">280 mg de Energía</div>
+        <h3 class="bento-card__title">CAFEÍNA REAL</h3>
+        <p class="bento-card__desc">
+          Cafeína de la tierra, no de laboratorio. Café de verdad, sin fórmulas que no entiendes. Extraída lentamente en frío durante 24 horas.
+        </p>
+      </article>
+
+      <!-- Bento 4: ORIGEN CON PRODUCTORES -->
+      <article class="bento-card bento-card--productores">
+        <div class="bento-card__pill">Comercio Justo y Directo</div>
+        <h3 class="bento-card__title">ORIGEN CON PRODUCTORES</h3>
+        <p class="bento-card__desc">
+          Café de altura de Ayacucho. Un origen que puedes señalar en el mapa y una razón de ser. Trabajamos mano a mano con familias productoras locales para reconocer su maestría y pagar precios justos por su cosecha.
+        </p>
+      </article>
+
+      <!-- Bento 5: SIN SACRIFICAR TU CUERPO -->
+      <article class="bento-card bento-card--sin-sacrificar">
+        <div class="bento-card__pill">0% Azúcar Añadida</div>
+        <h3 class="bento-card__title">SIN SACRIFICAR TU CUERPO</h3>
+        <p class="bento-card__desc">
+          Sin azúcar. 0 calorías, 0 saborizantes y 0 conservantes. Tu cuerpo merece algo mejor. Una energía sostenida que no te genera caídas ni picos de ansiedad.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- 5. SECCIÓN: POR QUÉ EXISTIMOS (MANIFIESTO) -->
+<section class="section-nosotros-manifiesto" id="por-que-existimos">
+  <div class="page-width">
+    <div class="manifiesto-container">
+      <span class="manifiesto-kicker">POR QUÉ EXISTIMOS</span>
+      <h2 class="manifiesto-headline">
+        LIBERAR EL MÁXIMO POTENCIAL DE TU CUERPO
+      </h2>
+      <div class="manifiesto-subheading">
+        LAS PERSONAS SIN SACRIFICAR SU CUERPO
+      </div>
+      <div class="manifiesto-card">
+        <p class="manifiesto-quote">
+          "Creemos en un mundo donde puedas liberar tu máximo potencial sin sacrificar tu cuerpo, con insumos andinos que merecen ser reconocidos."
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. SECCIÓN: LA GENTE DETRÁS DEL CAFÉ -->
+<section class="section-nosotros-equipo" id="la-gente">
+  <div class="page-width">
+    <div class="equipo-header">
+      <span class="section-kicker-gold">DEL CAFETAL A TU LATA</span>
+      <h2 class="bento-header__title">LA GENTE DETRÁS DEL CAFÉ</h2>
+      <p style="color: #94a3b8; font-size: 1.05rem; margin-top: 0.5rem;">
+        Conoce a las manos y los paisajes que hacen posible cada lata de KALPA.
+      </p>
+    </div>
+
+    <div class="equipo-cards-grid">
+      
+      <!-- Foto 1: Productores de Ayacucho -->
+      <article class="equipo-photo-card">
+        <div class="equipo-photo-wrap">
+          <img src="{{ 'product-card-molido-250.jpg' | asset_url }}" alt="Productores de café de especialidad en Ayacucho" loading="lazy" width="400" height="260">
+          <div class="equipo-photo-overlay"></div>
+        </div>
+        <div class="equipo-card-info">
+          <span class="equipo-card-kicker">FAMILIAS CAFETALERAS</span>
+          <h3 class="equipo-card-title">PRODUCTORES DE AYACUCHO</h3>
+          <p class="equipo-card-desc">
+            Generaciones de dedicación cultivando café bajo sombra en las quebradas andinas del VRAEM.
+          </p>
+        </div>
+      </article>
+
+      <!-- Foto 2: Finca y Cosecha -->
+      <article class="equipo-photo-card">
+        <div class="equipo-photo-wrap">
+          <img src="{{ 'kalpa-molido-bg.png' | asset_url }}" alt="Finca y cosecha de café andino al amanecer" loading="lazy" width="400" height="260">
+          <div class="equipo-photo-overlay"></div>
+        </div>
+        <div class="equipo-card-info">
+          <span class="equipo-card-kicker">TIERRA Y ALTURA</span>
+          <h3 class="equipo-card-title">FINCA Y COSECHA</h3>
+          <p class="equipo-card-desc">
+            Suelos volcánicos ricos en minerales y secado solar en camas africanas para preservar cada nota de cata.
+          </p>
+        </div>
+      </article>
+
+      <!-- Foto 3: Equipo Kalpa -->
+      <article class="equipo-photo-card">
+        <div class="equipo-photo-wrap">
+          <img src="{{ 'energy-natural-composition.png' | asset_url }}" alt="Equipo Kalpa y proceso artesanal de extracción" loading="lazy" width="400" height="260">
+          <div class="equipo-photo-overlay"></div>
+        </div>
+        <div class="equipo-card-info">
+          <span class="equipo-card-kicker">MAESTROS DEL COLD BREW</span>
+          <h3 class="equipo-card-title">EQUIPO KALPA</h3>
+          <p class="equipo-card-desc">
+            Extracción artesanal en frío durante 24 horas y envasado hermético para que disfrutes la energía más pura.
+          </p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- 7. SECCIÓN CTA: PRUÉBALA BIEN HELADA -->
+<section class="section-nosotros-cta" id="cta-helada">
+  <div class="page-width">
+    <div class="nosotros-cta-container">
+      <span class="section-kicker-gold">EXPERIENCIA KALPA</span>
+      <h2 class="cta-giant-title">PRUÉBALA BIEN HELADA</h2>
+      <p class="cta-subtitle">
+        Siente la frescura y la potencia del café de altura en su máxima expresión.
+      </p>
+
+      <div class="cta-can-preview">
+        <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="Lata KALPA Cold Brew bien helada" draggable="false" loading="lazy" width="220" height="380">
+      </div>
+
+      <div>
+        <a href="{{ routes.all_products_collection_url }}" class="btn-elegir-pack">
+          <span>ELEGIR MI PACK</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Historia & Manifiesto",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_sub_left",
+      "label": "Hero Subtítulo Izquierdo",
+      "default": "CAFÉ DE ALTURA"
+    },
+    {
+      "type": "text",
+      "id": "hero_title_left",
+      "label": "Hero Título Izquierdo",
+      "default": "ENERGÍA"
+    },
+    {
+      "type": "text",
+      "id": "hero_sub_right",
+      "label": "Hero Subtítulo Derecho",
+      "default": "VRAEM"
+    },
+    {
+      "type": "text",
+      "id": "hero_title_right",
+      "label": "Hero Título Derecho",
+      "default": "NATURAL"
+    },
+    {
+      "type": "text",
+      "id": "energia_kicker",
+      "label": "Energía Kicker",
+      "default": "ORIGEN Y SIGNIFICADO"
+    },
+    {
+      "type": "text",
+      "id": "energia_title",
+      "label": "Energía Título",
+      "default": "ENERGÍA DE LOS ANDES"
+    },
+    {
+      "type": "textarea",
+      "id": "energia_quote",
+      "label": "Energía Cita",
+      "default": "Kalpa significa fuerza, energía y poder en quechua."
+    },
+    {
+      "type": "textarea",
+      "id": "energia_body",
+      "label": "Energía Cuerpo",
+      "default": "Nació para que rindas al máximo sin sacrificar tu cuerpo. Una bebida creada a partir de café de especialidad de origen peruano, con cafeína limpia que estimula tu mente y cuerpo de forma continua y natural."
+    },
+    {
+      "type": "text",
+      "id": "raiz_kicker",
+      "label": "Raíz Kicker",
+      "default": "LA RAÍZ DE KALPA"
+    },
+    {
+      "type": "text",
+      "id": "raiz_title",
+      "label": "Raíz Título",
+      "default": "AYACUCHO"
+    },
+    {
+      "type": "textarea",
+      "id": "raiz_lead",
+      "label": "Raíz Lead",
+      "default": "Ayacucho no es solo de donde viene el café. Es el origen, la cultura y la razón de ser de lo que hacemos."
+    },
+    {
+      "type": "textarea",
+      "id": "raiz_text",
+      "label": "Raíz Texto",
+      "default": "Usamos la energía natural de los insumos andinos: potente, limpia, sin artificios. Insumos andinos que merecen ser reconocidos en el Perú y en el mundo entero por su calidad insuperable."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Historia & Manifiesto"
+    }
+  ]
+}
+{% endschema %}

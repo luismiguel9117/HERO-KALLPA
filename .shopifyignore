@@ -1,0 +1,15 @@
+# Files and directories ignored by Shopify CLI
+node_modules/
+temp_shopify_toolkit/
+temp_skeleton_theme/
+lata-3d/
+.agents/
+.cursor/
+scripts/
+components/
+*.html
+*.md
+package.json
+package-lock.json
+theme_check_results.json
+theme_check_raw.txt

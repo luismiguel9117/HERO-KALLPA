@@ -1,6 +1,17 @@
 {
   "name": "Home Page",
   "sections": {
+    "intro_preloader": {
+      "type": "kalpa-intro",
+      "settings": {
+        "title_line1": "ENERGÍA",
+        "title_line2": "REAL",
+        "title_line3": "PARA TU DÍA",
+        "subtitle": "Cold Brew infusionado con nitrógeno y superfoods de los Andes peruanos. Máxima concentración sin caídas de energía.",
+        "btn_cta_text": "Conoce más",
+        "btn_shop_text": "COMPRAR AHORA"
+      }
+    },
     "hero_3d": {
       "type": "hero-kallpa-3d",
       "blocks": {
@@ -47,59 +58,65 @@
     },
     "ticker_1": {
       "type": "kallpa-ticker",
-      "settings": {}
+      "settings": {
+        "show_features_bar": true,
+        "feat1_line1": "GRANOS",
+        "feat1_line2": "DEL VRAEM",
+        "feat2_line1": "ENERGÍA",
+        "feat2_line2": "NATURAL",
+        "feat3_line1": "COLD BREW",
+        "feat3_line2": "24H",
+        "feat4_line1": "ENVÍOS A",
+        "feat4_line2": "TODO EL PERÚ"
+      }
     },
     "products_1": {
       "type": "kallpa-products",
       "settings": {
-        "eyebrow": "NUESTROS PRODUCTOS",
-        "title_part1": "ELIGE CUÁNTA",
-        "title_part2": "ENERGÍA LLEVAS"
+        "slide1_eyebrow": "NUESTRO PRODUCTO",
+        "slide1_title_main": "KALPA",
+        "slide1_title_sub": "ORIGINAL",
+        "slide1_desc": "Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar.",
+        "slide2_eyebrow": "NUESTRO PRODUCTO",
+        "slide2_title_main": "KALPA",
+        "slide2_title_sub": "CAFÉ MOLIDO",
+        "slide2_desc": "Café tostado de origen peruano, 100% Arábica · Variedad Obata. Molienda media fina para métodos de filtrado."
       }
     },
     "vraem_origin_1": {
       "type": "kallpa-vraem-origin",
       "settings": {
-        "eyebrow": "NUESTRO ORIGEN",
-        "title": "VRAEM",
-        "subtitle": "MÁS QUE UN CAFÉ, UNA HISTORIA REAL",
-        "desc": "Granos cultivados por caficultores del VRAEM, una región que impulsa el desarrollo local y un futuro con más oportunidades.",
-        "btn_text": "CONOCE EL ORIGEN",
-        "btn_url": "#origin-section"
+        "title_line1": "UN ORIGEN",
+        "title_line2": "EXTRAORDINARIO",
+        "desc": "El VRAEM es más que un lugar, es el origen de una energía real.<br>Un café que conecta la fuerza de los Andes con tu día a día.",
+        "btn_text": "CONOCE EL VRAEM"
       }
     },
-    "benefits_bento_1": {
-      "type": "kallpa-benefits-bento",
+    "clean_energy_1": {
+      "type": "kallpa-clean-energy",
       "settings": {
-        "eyebrow": "HECHO PARA TU DÍA",
-        "title_part1": "RENDIR AHORA",
-        "title_part2": "Y CUIDARTE DESPUÉS"
-      }
-    },
-    "promo_banner_1": {
-      "type": "kallpa-promo-banner",
-      "settings": {
-        "eyebrow": "PROMOCIÓN DE LANZAMIENTO",
-        "title": "¿TODAVÍA SACRIFICANDO TU CUERPO POR ENERGÍA?",
-        "btn_text": "ELIGE TU PACK",
-        "btn_url": "#products-section"
+        "title_line1": "MÁS QUE CAFÉ,",
+        "title_line2": "ES ENERGÍA NATURAL",
+        "desc": "Granos de origen peruano, seleccionados en el VRAEM.<br>Sin aditivos, sin azúcares añadidos. Solo café frío,<br>con un sabor real y una energía que se siente."
       }
     },
     "reels_1": {
       "type": "kallpa-reels",
       "settings": {
         "eyebrow": "COMUNIDAD KALPA",
-        "title": "NUESTROS REELS"
+        "title_part1": "ENERGÍA QUE",
+        "title_part2": "SE COMPARTE",
+        "desc": "Historias reales de personas que viven la energía de los Andes.<br>Entrena, trabaja, explora. Kallpa te acompaña."
       }
     }
   },
   "order": [
+    "intro_preloader",
     "hero_3d",
     "ticker_1",
     "products_1",
     "vraem_origin_1",
-    "benefits_bento_1",
-    "promo_banner_1",
+    "clean_energy_1",
     "reels_1"
   ]
 }
