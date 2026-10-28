@@ -725,6 +725,15 @@
   line-height: 0.92;
 }
 
+.grid-card-product .title-kallpa,
+.grid-card__title .title-kallpa {
+  display: block;
+  font-size: clamp(2.5rem, 3.8vw, 3.6rem);
+  letter-spacing: -0.03em;
+  color: #ffffff !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
+}
+
 .title-molido {
   display: block;
   font-size: clamp(1.8rem, 2.5vw, 2.2rem);
