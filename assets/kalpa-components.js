@@ -55,16 +55,35 @@
   // 3. Highlight Active Nav item based on pathname
   function highlightActiveNav() {
     const path = window.location.pathname.toLowerCase();
-    const navItems = document.querySelectorAll('.kalpa-nav-item, .kalpa-mobile-menu-link, .footer-horizontal-nav a');
+    const navItems = document.querySelectorAll('.kalpa-nav-item, .kalpa-mobile-menu-link, .kalpa-mobile-item, .footer-horizontal-nav a');
     
-    let activeKey = 'inicio';
-    if (path.includes('productos') || path.includes('producto')) {
+    let activeKey = '';
+    if (
+      path.includes('collections') || 
+      path.includes('collection') || 
+      path.includes('products') || 
+      path.includes('product') || 
+      path.includes('productos') || 
+      path.includes('producto')
+    ) {
       activeKey = 'productos';
-    } else if (path.includes('nosotros')) {
+    } else if (
+      path.includes('nosotros') || 
+      path.includes('about') || 
+      path.includes('contact')
+    ) {
       activeKey = 'nosotros';
-    } else {
+    } else if (
+      path === '/' || 
+      path === '' || 
+      path.endsWith('/index.html') || 
+      path.endsWith('/index') ||
+      path.includes('home')
+    ) {
       activeKey = 'inicio';
     }
+
+    if (!activeKey) return;
 
     navItems.forEach(item => {
       const text = item.textContent.trim().toLowerCase();

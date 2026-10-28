@@ -34,10 +34,10 @@
 
     <!-- Menú Central Rigurosamente Centrado al 50% -->
     <nav class="kalpa-nav-menu" aria-label="Navegación principal">
-      <a href="{{ routes.root_url }}" class="kalpa-nav-item{% if request.path == routes.root_url %} is-active{% endif %}">Inicio</a>
-      <a href="{{ routes.all_products_collection_url }}" class="kalpa-nav-item{% if request.path contains 'collections' or request.path contains 'productos' %} is-active{% endif %}">Productos</a>
+      <a href="{{ routes.root_url }}" class="kalpa-nav-item{% if template.name == 'index' or request.path == routes.root_url %} is-active{% endif %}">Inicio</a>
+      <a href="{{ routes.all_products_collection_url }}" class="kalpa-nav-item{% if template.name == 'collection' or template.name == 'product' or request.path contains 'collections' or request.path contains 'products' or request.path contains 'productos' %} is-active{% endif %}">Productos</a>
       <a href="{{ routes.root_url }}#origin-section" class="kalpa-nav-item">Promociones</a>
-      <a href="/pages/nosotros" class="kalpa-nav-item{% if request.path contains 'nosotros' or request.path contains 'about' %} is-active{% endif %}">Nosotros</a>
+      <a href="/pages/nosotros" class="kalpa-nav-item{% if template.name == 'page' and page.handle contains 'nosotros' or page.handle contains 'contact' or request.path contains 'nosotros' or request.path contains 'about' %} is-active{% endif %}">Nosotros</a>
     </nav>
 
     <!-- Acciones Derecha (Búsqueda, Cuenta, Wishlist, Carrito, CTA, Hamburger) -->
@@ -114,10 +114,10 @@
           <a href="{{ link.url }}" class="kalpa-mobile-item{% if link.active %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">{{ link.title }}</a>
         {%- endfor -%}
       {%- else -%}
-        <a href="{{ routes.root_url }}" class="kalpa-mobile-item{% if request.path == routes.root_url %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Inicio</a>
-        <a href="{{ routes.all_products_collection_url }}" class="kalpa-mobile-item{% if request.path contains 'collections' or request.path contains 'productos' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Productos</a>
+        <a href="{{ routes.root_url }}" class="kalpa-mobile-item{% if template.name == 'index' or request.path == routes.root_url %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Inicio</a>
+        <a href="{{ routes.all_products_collection_url }}" class="kalpa-mobile-item{% if template.name == 'collection' or template.name == 'product' or request.path contains 'collections' or request.path contains 'products' or request.path contains 'productos' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Productos</a>
         <a href="{{ routes.root_url }}#origin-section" class="kalpa-mobile-item" onclick="closeKallpaMobileMenu()">Promociones</a>
-        <a href="/pages/nosotros" class="kalpa-mobile-item{% if request.path contains 'nosotros' or request.path contains 'about' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Nosotros</a>
+        <a href="/pages/nosotros" class="kalpa-mobile-item{% if template.name == 'page' and page.handle contains 'nosotros' or page.handle contains 'contact' or request.path contains 'nosotros' or request.path contains 'about' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Nosotros</a>
       {%- endif -%}
     </nav>
     <div class="kalpa-mobile-menu-footer">
