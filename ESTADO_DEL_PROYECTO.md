@@ -145,6 +145,29 @@ Documento técnico del estado actual del proyecto, mejoras aplicadas y especific
 
 ---
 
+---
+
+### K. Sección Unificada: Comunidad KALPA (Reels & Reseñas en Fila Única)
+* **Objetivo:** Unificar las secciones independientes de Reels y Reseñas en un único bloque de alto impacto visual basado fielmente en la referencia (`media_1793200179357_10acd330.png`).
+* **Implementación y Estructura:**
+  1. **Encabezado Editorial:**
+     * Eyebrow con guion dorado: `— COMUNIDAD KALPA`.
+     * Título principal: `ENERGÍA QUE` (blanco itálica) `SE COMPARTE` (dorado vibrante).
+     * Párrafo descriptivo: *"Historias reales de personas que viven la energía de los Andes. Entrena, trabaja, explora. Kallpa te acompaña."*
+     * Botón de seguimiento: `SEGUIR EN INSTAGRAM >` en cápsula redondeada.
+  2. **Bloque Izquierdo (3 Reels Verticales):**
+     * 3 tarjetas en proporción vertical (`aspect-ratio: 9/13`) con `assets/reel-1.jpg`, `assets/reel-2.jpg` y `assets/reel-3.jpg`.
+     * Botón play circular central con fondo translúcido y aro blanco, activo al hover con resplandor dorado.
+     * Insignia inferior con icono de ojo y contador de visualizaciones (`125K`, `98K`, `210K`).
+  3. **Bloque Derecho (Tarjeta de Reseña Destacada con Glassmorphism):**
+     * 5 estrellas doradas superiores y pill verde esmeralda `✓ COMPRA VERIFICADA`.
+     * Titular con frase destacada dorada: *“Me da <span class="text-gold">energía limpia</span> para mis fondos de 15K”*.
+     * Cita de reseña completa, avatar circular dorado `RA`, nombre (*Rodrigo Alarcón*) y subtítulo (*Triatleta & Runner · Lima*).
+     * Navegación interactiva con flechas `<` `>` y puntos indicadores (*dots*) sincronizados para alternar fluidamente entre las reseñas reales de la comunidad.
+* **Archivos modificados:** [index.html](file:///c:/Users/Usuario/Desktop/HERO%20ANIMATION/index.html), [assets/theme.css](file:///c:/Users/Usuario/Desktop/HERO%20ANIMATION/assets/theme.css).
+
+---
+
 ## 🌐 2. Entorno de Pruebas
 * **Servidor local:** Activo en `http://localhost:3000/`
 * **Páginas activas:**
