@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "nosotros": {
+      "type": "page-nosotros",
+      "settings": {}
+    }
+  },
+  "order": [
+    "nosotros"
+  ]
+}
