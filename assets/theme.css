@@ -4492,16 +4492,16 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   z-index: 5;
   width: 100%;
-  max-width: 1240px;
+  max-width: 1340px;
   margin: 0 auto;
-  padding: 0 clamp(1.25rem, 3vw, 3rem);
+  padding: 0 clamp(1.5rem, 3vw, 3.5rem);
   box-sizing: border-box;
 }
 
 .kalpa-sale-grid {
   display: grid;
-  grid-template-columns: minmax(300px, 340px) 1fr minmax(320px, 420px);
-  gap: clamp(1.25rem, 2.5vw, 2.75rem);
+  grid-template-columns: minmax(310px, 350px) 1fr minmax(320px, 430px);
+  gap: clamp(1.75rem, 3.2vw, 3.5rem);
   align-items: center;
   width: 100%;
   box-sizing: border-box;
@@ -5341,7 +5341,7 @@ h1, h2, h3, h4, h5, h6 {
   bottom: -4px;
   left: 50%;
   transform: translateX(-50%);
-  height: 106%;
+  height: 102%;
   width: auto;
   max-width: none;
   object-fit: contain;
