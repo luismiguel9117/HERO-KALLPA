@@ -26,9 +26,10 @@
   // 2. Cross-Page Cart Count Sync via LocalStorage
   function syncCartCount() {
     const storedCount = localStorage.getItem('kallpa_cart_count');
-    const countEl = document.getElementById('kallpa-cart-count');
-    if (countEl && storedCount !== null) {
-      countEl.textContent = storedCount;
+    if (storedCount !== null) {
+      document.querySelectorAll('#kallpa-cart-count, #intro-cart-count').forEach(el => {
+        el.textContent = storedCount;
+      });
     }
   }
 
@@ -42,7 +43,12 @@
   const observer = new MutationObserver(() => {
     const countEl = document.getElementById('kallpa-cart-count');
     if (countEl) {
-      localStorage.setItem('kallpa_cart_count', countEl.textContent.trim());
+      const val = countEl.textContent.trim();
+      localStorage.setItem('kallpa_cart_count', val);
+      const introEl = document.getElementById('intro-cart-count');
+      if (introEl && introEl.textContent !== val) {
+        introEl.textContent = val;
+      }
     }
   });
 

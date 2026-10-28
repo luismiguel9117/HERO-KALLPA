@@ -117,7 +117,7 @@ window.refreshKallpaCart = function() {
   }
 
   function renderCartUI(cart) {
-    if (countBadge) countBadge.innerText = cart.item_count;
+    document.querySelectorAll('#kallpa-cart-count, #intro-cart-count').forEach(b => b.innerText = cart.item_count);
 
     if (!cart.items || cart.items.length === 0) {
       itemsContainer.innerHTML = `

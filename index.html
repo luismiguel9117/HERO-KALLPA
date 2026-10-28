@@ -37,24 +37,67 @@
   <!-- ==================== 0. CINEMATIC PARALLAX INTRO SCREEN ==================== -->
   <section class="kalpa-intro-container" id="kalpa-intro-section">
     <div class="kalpa-intro-sticky" id="kalpa-intro-sticky">
-      <!-- Header / Navbar de la Intro -->
+            <!-- Header / Navbar de la Intro (Preloader) Sincronizado y Unificado -->
       <nav class="kalpa-intro-nav">
-        <a href="#kalpa-intro-section" class="intro-brand-logo" aria-label="KALPA">
-          <img src="assets/logo-kalpa-white.png" alt="KALPA" class="intro-logo-img">
+        <!-- Logo KALPA Oficial -->
+        <a href="index.html" class="kalpa-logo intro-brand-logo" aria-label="KALPA Cold Brew - Inicio">
+          <img src="assets/logo-kalpa-white.png" alt="KALPA Logo" class="kalpa-logo__img intro-logo-img" width="165" height="38">
         </a>
-        <div class="intro-menu-links">
-          <a href="#products-section" class="intro-menu-link">PRODUCTOS</a>
-          <a href="#features-section" class="intro-menu-link">ORIGEN</a>
-          <a href="#showcase-section" class="intro-menu-link">BENEFICIOS</a>
-          <a href="#footer-section" class="intro-menu-link">CONTACTO</a>
+
+        <!-- Menú de Navegación Unificado -->
+        <div class="kalpa-nav-menu intro-menu-links">
+          <a href="index.html" class="kalpa-nav-item is-active">Inicio</a>
+          <a href="productos.html" class="kalpa-nav-item">Productos</a>
+          <a href="index.html#origin-section" class="kalpa-nav-item">Promociones</a>
+          <a href="nosotros.html" class="kalpa-nav-item">Nosotros</a>
         </div>
-        <div class="intro-nav-right">
-          <a href="#products-section" class="intro-btn-shop">
-            <span>Comprar ahora</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+
+        <!-- Acciones de Navegación Unificadas -->
+        <div class="kalpa-nav-actions intro-nav-right">
+          <button type="button" class="kalpa-nav-icon nav-icon--search" aria-label="Buscar" onclick="alert('Buscador activo: encuentra tu KALPA favorito')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+
+          <button type="button" class="kalpa-nav-icon nav-icon--account" aria-label="Cuenta" onclick="alert('Mi Cuenta KALPA')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </button>
+
+          <button type="button" class="kalpa-nav-icon nav-icon--favorites" aria-label="Favoritos" onclick="alert('Guardado en favoritos')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </button>
+
+          <button type="button" class="kalpa-cart-capsule" onclick="openKallpaCart()" aria-label="Abrir Carrito">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span id="intro-cart-count">0</span>
+          </button>
+
+          <a href="productos.html" class="kalpa-nav-cta">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="8" cy="21" r="1"></circle>
+              <circle cx="19" cy="21" r="1"></circle>
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+            </svg>
+            <span>COMPRAR AHORA</span>
           </a>
-          <button type="button" class="intro-hamburger-btn" aria-label="Menú">
-            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+
+          <button type="button" class="kalpa-nav-hamburger" aria-label="Abrir Menú" onclick="openKallpaMobileMenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
           </button>
         </div>
       </nav>
@@ -1325,11 +1368,10 @@
 
     // Add to Cart Controller for Cold Brew Packs
     function addPackToKallpaCart(packId, name, price) {
-      const countEl = document.getElementById('kallpa-cart-count');
-      if (countEl) {
+      document.querySelectorAll('#kallpa-cart-count, #intro-cart-count').forEach(countEl => {
         const current = parseInt(countEl.textContent || '0');
         countEl.textContent = current + 1;
-      }
+      });
 
       const drawer = document.getElementById('kallpa-cart-drawer');
       const overlay = document.getElementById('kallpa-cart-overlay');
