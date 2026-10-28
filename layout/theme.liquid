@@ -12,7 +12,18 @@
       if (window.location.pathname.includes('/pages/nosotros') || window.location.pathname.includes('/pages/about')) {
         window.location.replace('/pages/contact');
       }
+      (function() {
+        var p = window.location.pathname.toLowerCase();
+        if (p.includes('terminos') || p.includes('privacidad') || p.includes('devolucion') || p.includes('reclamacion') || p.includes('legal')) {
+          document.documentElement.classList.add('is-legal-page-view');
+        }
+      })();
     </script>
+    <style>
+      .kallpa-legal-fallback { display: none; }
+      .is-legal-page-view .kallpa-404-default { display: none !important; }
+      .is-legal-page-view .kallpa-legal-fallback { display: block !important; }
+    </style>
     <link rel="canonical" href="{{ canonical_url }}">
     <link rel="icon" type="image/png" href="{{ 'logo-k-symbol-white.png' | asset_url }}">
     
@@ -91,7 +102,16 @@
 
     <!-- Contenido Dinámico de Páginas y Secciones -->
     <main role="main" id="MainContent">
-      {{ content_for_layout }}
+      {%- if template.name == '404' -%}
+        <div class="kallpa-404-default">
+          {{ content_for_layout }}
+        </div>
+        <div class="kallpa-legal-fallback" id="kallpaLegalFallback">
+          {% section 'main-legal-page' %}
+        </div>
+      {%- else -%}
+        {{ content_for_layout }}
+      {%- endif -%}
     </main>
 
     <!-- Footer Global -->

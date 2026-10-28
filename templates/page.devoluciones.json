@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main_legal": {
+      "type": "main-legal-page",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main_legal"
+  ]
+}
