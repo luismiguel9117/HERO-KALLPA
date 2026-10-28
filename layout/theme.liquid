@@ -64,7 +64,7 @@
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
     <script src="{{ 'kalpa-components.js' | asset_url }}" defer></script>
   </head>
-  <body>
+  <body class="{% if template.name == 'index' %}has-intro{% else %}web-revealed{% endif %}">
 
     <!-- Header Fijo Glassmorphic -->
     {% section 'header' %}
