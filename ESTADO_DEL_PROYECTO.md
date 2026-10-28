@@ -50,10 +50,24 @@ Documento técnico del estado actual del proyecto, mejoras aplicadas y especific
 ---
 
 ### D. Actualización de Imagen de Alta Calidad: KALPA CAFÉ MOLIDO
-* **Objetivo:** Reemplazar el fondo de la segunda diapositiva por la versión de alta definición aportada por el usuario (`media_1793163798284_2dae53e8.png`).
+* **Objetivo:** Reemplazar el fondo de la segunda diapositiva por la versión de alta definición aportada por el usuario (`media_1793165630753_3415eba3.png`).
 * **Implementación:**
   * Actualizado en [assets/kalpa-molido-bg.png](file:///g:/Descargas/PAGINA%20DE%20KALLPA/assets/kalpa-molido-bg.png).
-  * Resolución nativa optimizada panorámica (proporción 3.0:1) con fondo limpio, iluminación de amanecer andino y lata 500g centrada en alta fidelidad.
+  * Resolución nativa optimizada panorámica (1024x341, proporción 3.0:1) con fondo limpio, iluminación de amanecer andino y lata 500g centrada en alta fidelidad.
+
+---
+
+### E. Eliminación de Secciones Antiguas y Creación del Carrusel de Reseñas
+* **Objetivo:** Retirar las secciones obsoletas marcadas por el usuario (`media_1793165473906_77365258.png`) e integrar un carrusel dinámico de opiniones reales de la comunidad ubicado inmediatamente bajo la sección de Reels.
+* **Acciones aplicadas:**
+  1. **Secciones eliminadas:**
+     * `#benefits-section` (*Hecho para tu día / Rendir ahora y cuidarte después*).
+     * `#promo-section` (*Promoción de lanzamiento / ¿Todavía sacrificando tu cuerpo por energía?*).
+  2. **Nuevo Carrusel de Reviews (`#reviews-section`):**
+     * Encabezado con insignia de calificación global (`4.9 / 5` con estrellas doradas y contador de +1,200 reseñas).
+     * 6 tarjetas con diseño glassmorphism oscuro, borde dorado sutil al hover, 5 estrellas, insignia de *Compra verificada*, avatar con iniciales y perfil del comprador (runners, developers, baristas, deportistas).
+     * Control interactivo con flechas circulares `<` y `>`, dots indicadores, swipe táctil y adaptabilidad responsive (3 en desktop, 2 en tablet, 1 en mobile).
+* **Archivos modificados:** [index.html](file:///g:/Descargas/PAGINA%20DE%20KALLPA/index.html), [assets/theme.css](file:///g:/Descargas/PAGINA%20DE%20KALLPA/assets/theme.css).
 
 ---
 
