@@ -1,0 +1,40 @@
+{
+  "sections": {
+    "main_product": {
+      "type": "main-product",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Cuánta cafeína tiene?",
+            "answer": "Cada lata de 355 ml contiene 280 mg de cafeína natural pura, extraída lentamente en frío durante 24 horas continuas a 4°C. Equivale a aproximadamente 3 espressos pero con liberación prolongada gracias a los polifenoles del café.",
+            "open_by_default": true
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Quién no debería tomarla?",
+            "answer": "Debido a su alta concentración de cafeína natural, no está recomendada para niños, personas gestantes o en período de lactancia, ni personas con alta sensibilidad a los estimulantes o afecciones cardíacas."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Envían a provincia?",
+            "answer": "Sí. Despachamos a todas las ciudades y provincias del Perú a través de Olva Courier y Shalom, con empaque protector anti-impacto. El tiempo promedio de entrega en Lima es de 24 a 48 horas, y en provincias de 48 a 72 horas hábiles."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main_product"
+  ]
+}

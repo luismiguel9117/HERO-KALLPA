@@ -47,8 +47,17 @@
                   </p>
                   
                   {%- if block.settings.product_link != blank or block.settings.btn_link_text != blank -%}
+                    {%- assign slide_pdp = block.settings.product_link -%}
+                    {%- if slide_pdp contains '/products/kalpa-' -%}
+                      {%- assign check_handle = slide_pdp | remove: '/products/' -%}
+                      {%- if all_products[check_handle].url == blank -%}
+                        {%- assign slide_pdp = collections['all'].products.first.url | default: '/products/the-collection-snowboard-liquid' -%}
+                      {%- endif -%}
+                    {%- elsif slide_pdp == blank -%}
+                      {%- assign slide_pdp = collections['all'].products.first.url | default: '/products/the-collection-snowboard-liquid' -%}
+                    {%- endif -%}
                     <div style="margin: 0.4rem 0 1rem;">
-                      <a href="{{ block.settings.product_link | default: '/products/kalpa-cold-brew' }}" style="display: inline-flex; align-items: center; gap: 0.45rem; color: #fbd132; font-family: var(--font-brand); font-size: 0.78rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s;">
+                      <a href="{{ slide_pdp }}" style="display: inline-flex; align-items: center; gap: 0.45rem; color: #fbd132; font-family: var(--font-brand); font-size: 0.78rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s;">
                         <span>{{ block.settings.btn_link_text | default: 'Ver ficha completa' }}</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                       </a>

@@ -101,9 +101,16 @@
 <main class="products-catalog-main">
   <div class="page-width">
     
+    {%- liquid
+      assign fallback_pdp = collections['all'].products.first.url
+      if fallback_pdp == blank
+        assign fallback_pdp = '/products/the-collection-snowboard-liquid'
+      endif
+    -%}
     {%- comment -%} Renderizado de Bloques de Productos Destacados {%- endcomment -%}
     {%- for block in section.blocks -%}
       {%- if block.type == 'featured_product' -%}
+        {%- assign featured_pdp = block.settings.product_link | default: block.settings.product.url | default: all_products['kalpa-cold-brew'].url | default: fallback_pdp -%}
         <article class="featured-product-card" data-category="{{ block.settings.category | default: 'cold-brew' }}" {{ block.shopify_attributes }}>
           <div class="featured-card__bg-pattern" aria-hidden="true"></div>
           
@@ -115,13 +122,22 @@
               </div>
               
               <h2 class="featured-card__title">
-                <span class="title-kallpa">{{ block.settings.title_main | default: 'KALLPA' }}</span>
-                <span class="title-product">{{ block.settings.title_sub | default: 'ORIGINAL' }}</span>
+                <a href="{{ featured_pdp }}" style="color:inherit; text-decoration:none;">
+                  <span class="title-kallpa">{{ block.settings.title_main | default: 'KALLPA' }}</span>
+                  <span class="title-product">{{ block.settings.title_sub | default: 'ORIGINAL' }}</span>
+                </a>
               </h2>
 
               <p class="featured-card__desc">
                 {{ block.settings.description | default: 'Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar.' }}
               </p>
+
+              <div style="margin: 0.2rem 0 1.25rem;">
+                <a href="{{ featured_pdp }}" style="display:inline-flex; align-items:center; gap:0.45rem; color:#fbd132; font-family:var(--font-brand); font-size:0.8rem; font-weight:900; letter-spacing:0.08em; text-transform:uppercase; text-decoration:none;">
+                  <span>VER DETALLE DEL PRODUCTO</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+              </div>
 
               <!-- 4 Atributos Circulares -->
               <div class="featured-specs-row">
@@ -247,7 +263,11 @@
               </p>
 
               <div class="grid-card__action">
-                <a href="{{ block.settings.btn_link | default: block.settings.product.url | default: '#' }}" class="btn-grid-product">
+                {%- assign grid_pdp = block.settings.btn_link | default: block.settings.product.url -%}
+                {%- if grid_pdp == blank or grid_pdp contains 'kalpa-cafe-molido' and all_products['kalpa-cafe-molido-250g'].url == blank -%}
+                  {%- assign grid_pdp = fallback_pdp -%}
+                {%- endif -%}
+                <a href="{{ grid_pdp }}" class="btn-grid-product">
                   <span>{{ block.settings.btn_text | default: 'VER PRODUCTO' }}</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -338,6 +358,11 @@
           "id": "description",
           "label": "Descripción",
           "default": "Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar."
+        },
+        {
+          "type": "url",
+          "id": "product_link",
+          "label": "Enlace al detalle del producto"
         },
         {
           "type": "header",

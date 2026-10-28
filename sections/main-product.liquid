@@ -3,6 +3,18 @@
   Página de Detalle de Producto KALPA (Galería, Selector Dinámico, Nutrición, Cross-sell & FAQs)
 {%- endcomment -%}
 
+{%- liquid
+  assign title_display = section.settings.product_title | default: product.title | default: 'KALPA COLD BREW'
+  assign desc_display = section.settings.product_desc | default: product.description | strip_html | default: 'Café de altura de Ayacucho, levemente gasificado, con 280 mg de cafeína real por lata. Sin azúcar.'
+  assign cat_display = section.settings.category_tag | default: 'BEBIDA FUNCIONAL A BASE DE CAFÉ'
+  assign badge_display = section.settings.badge_text | default: '355 ML — LATA'
+
+  assign p_unit = section.settings.price_unit | default: '11.90'
+  assign p_tripack = section.settings.price_tripack | default: '35.70'
+  assign p_sixpack = section.settings.price_sixpack | default: '71.40'
+  assign p_12pack = section.settings.price_12pack | default: '142.80'
+-%}
+
 <!-- 1. BREADCRUMB -->
 <div class="product-breadcrumb">
   <div class="page-width">
@@ -10,7 +22,7 @@
     <span class="sep">/</span>
     <a href="{{ routes.all_products_collection_url }}">Productos</a>
     <span class="sep">/</span>
-    <span style="color:#ffffff;">{{ product.title | default: section.settings.product_title | default: 'KALPA Cold Brew Original' }}</span>
+    <span style="color:#ffffff;">{{ title_display }}</span>
   </div>
 </div>
 
@@ -23,14 +35,32 @@
       <div class="product-gallery-layout">
         <!-- Miniaturas Verticales -->
         <div class="product-thumbnails-col">
-          <button type="button" class="product-thumb-btn is-active" onclick="switchMainImage('{{ 'kalpa-can-original.png' | asset_url }}', this)" aria-label="Vista frontal">
-            <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="Vista Frontal" class="product-thumb-img" width="60" height="100">
+          {%- if section.settings.thumb_1_image != blank -%}
+            {%- assign t1_url = section.settings.thumb_1_image | image_url: width: 600 -%}
+          {%- else -%}
+            {%- assign t1_url = 'kalpa-can-original.png' | asset_url -%}
+          {%- endif -%}
+
+          {%- if section.settings.thumb_2_image != blank -%}
+            {%- assign t2_url = section.settings.thumb_2_image | image_url: width: 600 -%}
+          {%- else -%}
+            {%- assign t2_url = 'kalpa-can-base.png' | asset_url -%}
+          {%- endif -%}
+
+          {%- if section.settings.thumb_3_image != blank -%}
+            {%- assign t3_url = section.settings.thumb_3_image | image_url: width: 600 -%}
+          {%- else -%}
+            {%- assign t3_url = 'can-kalpa-label.png' | asset_url -%}
+          {%- endif -%}
+
+          <button type="button" class="product-thumb-btn is-active" onclick="switchMainImage('{{ t1_url }}', this)" aria-label="Vista frontal">
+            <img src="{{ t1_url }}" alt="Vista Frontal" class="product-thumb-img" width="65" height="80">
           </button>
-          <button type="button" class="product-thumb-btn" onclick="switchMainImage('{{ 'kalpa-can-base.png' | asset_url }}', this)" aria-label="Vista ángulo">
-            <img src="{{ 'kalpa-can-base.png' | asset_url }}" alt="Vista Ángulo" class="product-thumb-img" width="60" height="100">
+          <button type="button" class="product-thumb-btn" onclick="switchMainImage('{{ t2_url }}', this)" aria-label="Vista ángulo">
+            <img src="{{ t2_url }}" alt="Vista Ángulo" class="product-thumb-img" width="65" height="80">
           </button>
-          <button type="button" class="product-thumb-btn" onclick="switchMainImage('{{ 'can-kalpa-label.png' | asset_url }}', this)" aria-label="Vista etiqueta">
-            <img src="{{ 'can-kalpa-label.png' | asset_url }}" alt="Vista Etiqueta" class="product-thumb-img" width="60" height="100">
+          <button type="button" class="product-thumb-btn" onclick="switchMainImage('{{ t3_url }}', this)" aria-label="Vista etiqueta">
+            <img src="{{ t3_url }}" alt="Vista Etiqueta" class="product-thumb-img" width="65" height="80">
           </button>
         </div>
 
@@ -39,34 +69,42 @@
           <div class="catalog-card__pattern"></div>
           <div class="catalog-card__stage">
             <img src="{{ 'hero-beans-ice-back.png' | asset_url }}" alt="" class="catalog-card__beans-back" draggable="false" width="500" height="500">
-            <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="KALPA Cold Brew Original" class="catalog-card__can" id="main-product-img" width="380" height="660">
+            {%- if section.settings.main_image != blank -%}
+              <img src="{{ section.settings.main_image | image_url: width: 800 }}" alt="{{ title_display }}" class="catalog-card__can" id="main-product-img" width="380" height="660">
+            {%- elsif product.featured_image != blank -%}
+              <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ title_display }}" class="catalog-card__can" id="main-product-img" width="380" height="660">
+            {%- else -%}
+              <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="{{ title_display }}" class="catalog-card__can" id="main-product-img" width="380" height="660">
+            {%- endif -%}
             <img src="{{ 'hero-bean-single.png' | asset_url }}" alt="" class="catalog-card__bean-front" draggable="false" width="70" height="70">
             <img src="{{ 'hero-rock-base.png' | asset_url }}" alt="" class="catalog-card__rock" draggable="false" width="500" height="200">
           </div>
-          <span class="product-stage-badge">355 ML &mdash; LATA</span>
+          <span class="product-stage-badge">{{ badge_display }}</span>
         </div>
       </div>
 
       <!-- Columna Derecha: Configuración, Opciones y Botón de Compra -->
       <div class="product-details-col">
-        <span class="product-cat-tag">{{ section.settings.category_tag | default: 'BEBIDA FUNCIONAL A BASE DE CAFÉ' }}</span>
-        <h1 class="product-main-title">{{ product.title | default: section.settings.product_title | default: 'KALPA COLD BREW' }}</h1>
-        <p class="product-lead-desc">
-          {{ product.description | strip_html | default: section.settings.product_desc | default: 'Café de altura de Ayacucho, levemente gasificado, con 280 mg de cafeína real por lata. Sin azúcar.' }}
-        </p>
+        <span class="product-cat-tag">{{ cat_display }}</span>
+        <h1 class="product-main-title">{{ title_display }}</h1>
+        <p class="product-lead-desc">{{ desc_display }}</p>
 
         <!-- Bloque de Precio Dinámico -->
         <div class="product-price-block">
-          <span class="product-price-val" id="display-price">S/ 11.90</span>
-          <span class="product-price-sub" id="display-price-sub">S/ 11.90 por lata</span>
+          <span class="product-price-val" id="display-price">S/ {{ p_unit }}</span>
+          <span class="product-price-sub" id="display-price-sub">S/ {{ p_unit }} por lata</span>
         </div>
 
         <!-- Selector de Sabor -->
         <div class="selector-group">
           <span class="selector-group-label">SABOR</span>
           <div class="flavor-pills-row">
-            <button type="button" class="flavor-pill is-active" onclick="selectFlavor('Original', this)">Original</button>
-            <button type="button" class="flavor-pill" onclick="selectFlavor('Orange', this)">Orange</button>
+            <button type="button" class="flavor-pill is-active" onclick="selectFlavor('{{ section.settings.flavor_1_name | default: 'Original' }}', this)">
+              {{ section.settings.flavor_1_name | default: 'Original' }}
+            </button>
+            <button type="button" class="flavor-pill" onclick="selectFlavor('{{ section.settings.flavor_2_name | default: 'Orange' }}', this)">
+              {{ section.settings.flavor_2_name | default: 'Orange' }}
+            </button>
           </div>
         </div>
 
@@ -74,28 +112,28 @@
         <div class="selector-group">
           <span class="selector-group-label">CANTIDAD</span>
           <div class="pack-selector-grid">
-            <button type="button" class="pack-card-btn is-active" onclick="selectPack(1, 11.90, 'Unidad', this)">
+            <button type="button" class="pack-card-btn is-active" onclick="selectPack(1, {{ p_unit }}, 'Unidad', this)">
               <span class="pack-card-name">Unidad</span>
-              <span class="pack-card-price">S/ 11.90</span>
+              <span class="pack-card-price">S/ {{ p_unit }}</span>
             </button>
-            <button type="button" class="pack-card-btn" onclick="selectPack(3, 35.70, 'Tripack', this)">
+            <button type="button" class="pack-card-btn" onclick="selectPack(3, {{ p_tripack }}, 'Tripack', this)">
               <span class="pack-card-name">Tripack</span>
-              <span class="pack-card-price">S/ 35.70</span>
+              <span class="pack-card-price">S/ {{ p_tripack }}</span>
             </button>
-            <button type="button" class="pack-card-btn" onclick="selectPack(6, 71.40, 'Six-pack', this)">
+            <button type="button" class="pack-card-btn" onclick="selectPack(6, {{ p_sixpack }}, 'Six-pack', this)">
               <span class="pack-card-name">Six-pack</span>
-              <span class="pack-card-price">S/ 71.40</span>
+              <span class="pack-card-price">S/ {{ p_sixpack }}</span>
             </button>
-            <button type="button" class="pack-card-btn" onclick="selectPack(12, 142.80, '12-pack', this)">
+            <button type="button" class="pack-card-btn" onclick="selectPack(12, {{ p_12pack }}, '12-pack', this)">
               <span class="pack-card-name">12-pack</span>
-              <span class="pack-card-price">S/ 142.80</span>
+              <span class="pack-card-price">S/ {{ p_12pack }}</span>
             </button>
           </div>
         </div>
 
         <!-- Botón de Compra / Agregar al Carrito -->
         <button type="button" class="btn-product-add" id="btn-add-main" onclick="handleAddToCart()">
-          AGREGAR AL CARRITO &ndash; S/ 11.90
+          AGREGAR AL CARRITO &ndash; S/ {{ p_unit }}
         </button>
 
         <!-- Sellos de Entrega y Confianza -->
@@ -103,7 +141,7 @@
           <div class="product-trust-item">
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-gold);">
               <rect x="1" y="3" width="15" height="13"></rect>
-              <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+              <polygon points="16 8 20 8 23 11 23 16 16 8"></polygon>
               <circle cx="5.5" cy="18.5" r="2.5"></circle>
               <circle cx="18.5" cy="18.5" r="2.5"></circle>
             </svg>
@@ -147,25 +185,25 @@
       <div class="product-info-block">
         <div>
           <h3 class="specs-block-title">QUÉ LLEVA</h3>
-          <h4 class="specs-item-header">Bebida funcional a base de café levemente gasificado y pasteurizado.</h4>
+          <h4 class="specs-item-header">{{ section.settings.specs_what | default: 'Bebida funcional a base de café levemente gasificado y pasteurizado.' }}</h4>
           <p class="specs-item-body">
-            <strong>Ingredientes:</strong> agua tratada, café de especialidad de Ayacucho y stevia natural.<br>
-            <strong>Contenido neto:</strong> 355 ml.
+            <strong>Ingredientes:</strong> {{ section.settings.specs_ingredients | default: 'agua tratada, café de especialidad de Ayacucho y stevia natural.' }}<br>
+            <strong>Contenido neto:</strong> {{ section.settings.specs_net_content | default: '355 ml.' }}
           </p>
         </div>
 
         <div>
           <h3 class="specs-block-title">CÓMO TOMARLA</h3>
           <p class="specs-item-body">
-            Tómala siempre bien helada. Combínala como quieras: sola directo de la lata o servida con hielo y rodaja de cítrico. Después de abrir el envase, refrigérala.
+            {{ section.settings.specs_how_to_drink | default: 'Tómala siempre bien helada. Combínala como quieras: sola directo de la lata o servida con hielo y rodaja de cítrico. Después de abrir el envase, refrigérala.' }}
           </p>
         </div>
 
         <!-- Tarjeta de Advertencia Alto en Cafeína -->
         <div class="specs-warning-card">
-          <div class="specs-warning-title">ALTO EN CAFEÍNA</div>
+          <div class="specs-warning-title">{{ section.settings.warning_title | default: 'ALTO EN CAFEÍNA' }}</div>
           <p class="specs-warning-text">
-            No recomendado para niños, mujeres embarazadas o personas con extrema sensibilidad a la cafeína.
+            {{ section.settings.warning_text | default: 'No recomendado para niños, mujeres embarazadas o personas con extrema sensibilidad a la cafeína.' }}
           </p>
         </div>
       </div>
@@ -177,7 +215,7 @@
           <thead>
             <tr>
               <th>Nutriente</th>
-              <th>Por porción (355 ml)</th>
+              <th>Por porción ({{ section.settings.specs_net_content | default: '355 ml' }})</th>
             </tr>
           </thead>
           <tbody>
@@ -221,17 +259,21 @@
 <section class="product-cross-section" id="cross-sell-section">
   <div class="page-width">
     <span class="cross-eyebrow">COMPLETA TU PEDIDO</span>
-    <h2 class="cross-title">QUE NO SE TE ACABE A MITAD DE SEMANA</h2>
+    <h2 class="cross-title">{{ section.settings.cross_title | default: 'QUE NO SE TE ACABE A MITAD DE SEMANA' }}</h2>
 
     <div class="cross-cards-grid">
       <!-- Card 1: Tripack -->
       <div class="cross-pack-card">
-        <img src="{{ 'kalpa-can-base.png' | asset_url }}" alt="Tripack KALPA" class="cross-pack-img" width="140" height="240">
+        {%- if section.settings.cross_1_image != blank -%}
+          <img src="{{ section.settings.cross_1_image | image_url: width: 280 }}" alt="{{ section.settings.cross_1_name | default: 'Tripack KALPA' }}" class="cross-pack-img" width="80" height="95">
+        {%- else -%}
+          <img src="{{ 'kalpa-can-base.png' | asset_url }}" alt="Tripack KALPA" class="cross-pack-img" width="80" height="95">
+        {%- endif -%}
         <div class="cross-pack-info">
-          <span class="cross-pack-name">TRIPACK</span>
-          <span class="cross-pack-sub">3 latas &middot; S/ 11.90 por lata</span>
-          <span class="cross-pack-price">S/ 35.70</span>
-          <button type="button" class="btn-cross-add" onclick="addPackToKallpaCart('cross-tripack', 'KALPA Tripack (3 latas)', 35.70)">
+          <span class="cross-pack-name">{{ section.settings.cross_1_name | default: 'TRIPACK' }}</span>
+          <span class="cross-pack-sub">{{ section.settings.cross_1_sub | default: '3 latas · S/ 11.90 por lata' }}</span>
+          <span class="cross-pack-price">S/ {{ section.settings.cross_1_price | default: '35.70' }}</span>
+          <button type="button" class="btn-cross-add" onclick="addPackToKallpaCart('cross-tripack', 'KALPA {{ section.settings.cross_1_name | default: 'Tripack' }}', {{ section.settings.cross_1_price | default: '35.70' }})">
             AGREGAR
           </button>
         </div>
@@ -239,12 +281,16 @@
 
       <!-- Card 2: Six-pack -->
       <div class="cross-pack-card">
-        <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="Sixpack KALPA" class="cross-pack-img" width="140" height="240">
+        {%- if section.settings.cross_2_image != blank -%}
+          <img src="{{ section.settings.cross_2_image | image_url: width: 280 }}" alt="{{ section.settings.cross_2_name | default: 'Sixpack KALPA' }}" class="cross-pack-img" width="80" height="95">
+        {%- else -%}
+          <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="Sixpack KALPA" class="cross-pack-img" width="80" height="95">
+        {%- endif -%}
         <div class="cross-pack-info">
-          <span class="cross-pack-name">SIX-PACK</span>
-          <span class="cross-pack-sub">6 latas &middot; S/ 11.90 por lata</span>
-          <span class="cross-pack-price">S/ 71.40</span>
-          <button type="button" class="btn-cross-add" onclick="addPackToKallpaCart('cross-sixpack', 'KALPA Six-pack (6 latas)', 71.40)">
+          <span class="cross-pack-name">{{ section.settings.cross_2_name | default: 'SIX-PACK' }}</span>
+          <span class="cross-pack-sub">{{ section.settings.cross_2_sub | default: '6 latas · S/ 11.90 por lata' }}</span>
+          <span class="cross-pack-price">S/ {{ section.settings.cross_2_price | default: '71.40' }}</span>
+          <button type="button" class="btn-cross-add" onclick="addPackToKallpaCart('cross-sixpack', 'KALPA {{ section.settings.cross_2_name | default: 'Six-pack' }}', {{ section.settings.cross_2_price | default: '71.40' }})">
             AGREGAR
           </button>
         </div>
@@ -256,39 +302,55 @@
 <!-- 5. PREGUNTAS FRECUENTES (FAQ) -->
 <section class="product-faq-section">
   <div class="page-width">
-    <span class="faq-eyebrow">PREGUNTAS FRECUENTES</span>
-    <h2 class="faq-title">ANTES DE COMPRAR</h2>
+    <span class="faq-eyebrow">{{ section.settings.faq_eyebrow | default: 'PREGUNTAS FRECUENTES' }}</span>
+    <h2 class="faq-title">{{ section.settings.faq_title | default: 'ANTES DE COMPRAR' }}</h2>
 
     <div class="faq-accordion">
-      <div class="faq-item is-open">
-        <button type="button" class="faq-header" onclick="toggleFaq(this)">
-          <span>¿Cuánta cafeína tiene?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-body">
-          Cada lata de 355 ml contiene 280 mg de cafeína natural pura, extraída lentamente en frío durante 24 horas continuas a 4°C. Equivale a aproximadamente 3 espressos pero con liberación prolongada gracias a los polifenoles del café.
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq_item' -%}
+            <div class="faq-item{% if block.settings.open_by_default %} is-open{% endif %}" {{ block.shopify_attributes }}>
+              <button type="button" class="faq-header" onclick="toggleFaq(this)">
+                <span>{{ block.settings.question }}</span>
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-body">
+                {{ block.settings.answer }}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        <div class="faq-item is-open">
+          <button type="button" class="faq-header" onclick="toggleFaq(this)">
+            <span>¿Cuánta cafeína tiene?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-body">
+            Cada lata de 355 ml contiene 280 mg de cafeína natural pura, extraída lentamente en frío durante 24 horas continuas a 4°C. Equivale a aproximadamente 3 espressos pero con liberación prolongada gracias a los polifenoles del café.
+          </div>
         </div>
-      </div>
 
-      <div class="faq-item">
-        <button type="button" class="faq-header" onclick="toggleFaq(this)">
-          <span>¿Quién no debería tomarla?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-body">
-          Debido a su alta concentración de cafeína natural, no está recomendada para niños, personas gestantes o en período de lactancia, ni personas con alta sensibilidad a los estimulantes o afecciones cardíacas.
+        <div class="faq-item">
+          <button type="button" class="faq-header" onclick="toggleFaq(this)">
+            <span>¿Quién no debería tomarla?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-body">
+            Debido a su alta concentración de cafeína natural, no está recomendada para niños, personas gestantes o en período de lactancia, ni personas con alta sensibilidad a los estimulantes o afecciones cardíacas.
+          </div>
         </div>
-      </div>
 
-      <div class="faq-item">
-        <button type="button" class="faq-header" onclick="toggleFaq(this)">
-          <span>¿Envían a provincia?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-body">
-          Sí. Despachamos a todas las ciudades y provincias del Perú a través de Olva Courier y Shalom, con empaque protector anti-impacto. El tiempo promedio de entrega en Lima es de 24 a 48 horas, y en provincias de 48 a 72 horas hábiles.
+        <div class="faq-item">
+          <button type="button" class="faq-header" onclick="toggleFaq(this)">
+            <span>¿Envían a provincia?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-body">
+            Sí. Despachamos a todas las ciudades y provincias del Perú a través de Olva Courier y Shalom, con empaque protector anti-impacto. El tiempo promedio de entrega en Lima es de 24 a 48 horas, y en provincias de 48 a 72 horas hábiles.
+          </div>
         </div>
-      </div>
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -302,9 +364,9 @@
     btn.classList.add('is-active');
   }
 
-  var currentFlavor = 'Original';
+  var currentFlavor = '{{ section.settings.flavor_1_name | default: 'Original' }}';
   var currentPackQty = 1;
-  var currentPackPrice = 11.90;
+  var currentPackPrice = parseFloat('{{ p_unit }}') || 11.90;
   var currentPackName = 'Unidad';
 
   function selectFlavor(f, btn) {
@@ -312,6 +374,15 @@
     var all = document.querySelectorAll('.flavor-pill');
     all.forEach(function(b) { b.classList.remove('is-active'); });
     btn.classList.add('is-active');
+    
+    var card = document.getElementById('product-main-card');
+    if (card) {
+      if (f.toLowerCase().indexOf('orange') !== -1) {
+        card.style.background = 'radial-gradient(circle at 50% 50%, #e6751c 0%, #b8540c 100%)';
+      } else {
+        card.style.background = 'radial-gradient(circle at 50% 50%, #f6c823 0%, #d89f0a 100%)';
+      }
+    }
   }
 
   function selectPack(qty, price, name, btn) {
@@ -328,7 +399,11 @@
     if (pVal) pVal.textContent = 'S/ ' + price.toFixed(2);
     if (pSub) {
       var perCan = (price / qty).toFixed(2);
-      pSub.textContent = 'S/ ' + perCan + ' por lata';
+      if (qty === 1) {
+        pSub.textContent = 'S/ ' + perCan + ' por lata';
+      } else {
+        pSub.textContent = qty + ' latas · S/ ' + perCan + ' por lata';
+      }
     }
     if (btnAdd) {
       btnAdd.textContent = 'AGREGAR AL CARRITO \u2013 S/ ' + price.toFixed(2);
@@ -336,12 +411,23 @@
   }
 
   function handleAddToCart() {
-    var title = 'KALPA Cold Brew ' + currentFlavor + ' (' + currentPackName + ')';
+    var title = '{{ title_display }} ' + currentFlavor + ' (' + currentPackName + ')';
     if (window.addPackToKallpaCart) {
-      window.addPackToKallpaCart('coldbrew-' + currentFlavor.toLowerCase() + '-' + currentPackQty, title, currentPackPrice);
+      window.addPackToKallpaCart('pdp-' + currentFlavor.toLowerCase() + '-' + currentPackQty, title, currentPackPrice);
     } else {
       alert('Agregado al carrito: ' + title);
     }
+
+    {%- if product.selected_or_first_available_variant.id -%}
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: {{ product.selected_or_first_available_variant.id }},
+        quantity: currentPackQty
+      })
+    }).catch(function(e) { console.log('Cart add note:', e); });
+    {%- endif -%}
   }
 
   function toggleFaq(btn) {
@@ -356,6 +442,10 @@
 {
   "name": "Detalle de Producto",
   "settings": [
+    {
+      "type": "header",
+      "content": "Información Principal"
+    },
     {
       "type": "text",
       "id": "category_tag",
@@ -373,11 +463,247 @@
       "id": "product_desc",
       "label": "Descripción Principal",
       "default": "Café de altura de Ayacucho, levemente gasificado, con 280 mg de cafeína real por lata. Sin azúcar."
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Insignia en Escenario",
+      "default": "355 ML — LATA"
+    },
+    {
+      "type": "header",
+      "content": "Imágenes del Producto"
+    },
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Imagen Principal en Escenario"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumb_1_image",
+      "label": "Miniatura 1 (Frontal)"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumb_2_image",
+      "label": "Miniatura 2 (Ángulo)"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumb_3_image",
+      "label": "Miniatura 3 (Etiqueta)"
+    },
+    {
+      "type": "header",
+      "content": "Sabores"
+    },
+    {
+      "type": "text",
+      "id": "flavor_1_name",
+      "label": "Nombre Sabor 1",
+      "default": "Original"
+    },
+    {
+      "type": "text",
+      "id": "flavor_2_name",
+      "label": "Nombre Sabor 2",
+      "default": "Orange"
+    },
+    {
+      "type": "header",
+      "content": "Precios por Pack"
+    },
+    {
+      "type": "text",
+      "id": "price_unit",
+      "label": "Precio Unidad (S/)",
+      "default": "11.90"
+    },
+    {
+      "type": "text",
+      "id": "price_tripack",
+      "label": "Precio Tripack (S/)",
+      "default": "35.70"
+    },
+    {
+      "type": "text",
+      "id": "price_sixpack",
+      "label": "Precio Six-pack (S/)",
+      "default": "71.40"
+    },
+    {
+      "type": "text",
+      "id": "price_12pack",
+      "label": "Precio 12-pack (S/)",
+      "default": "142.80"
+    },
+    {
+      "type": "header",
+      "content": "Especificaciones y Qué Lleva"
+    },
+    {
+      "type": "text",
+      "id": "specs_what",
+      "label": "Subtítulo de Qué Lleva",
+      "default": "Bebida funcional a base de café levemente gasificado y pasteurizado."
+    },
+    {
+      "type": "textarea",
+      "id": "specs_ingredients",
+      "label": "Ingredientes",
+      "default": "agua tratada, café de especialidad de Ayacucho y stevia natural."
+    },
+    {
+      "type": "text",
+      "id": "specs_net_content",
+      "label": "Contenido Neto",
+      "default": "355 ml."
+    },
+    {
+      "type": "textarea",
+      "id": "specs_how_to_drink",
+      "label": "Cómo Tomarla",
+      "default": "Tómala siempre bien helada. Combínala como quieras: sola directo de la lata o servida con hielo y rodaja de cítrico. Después de abrir el envase, refrigérala."
+    },
+    {
+      "type": "text",
+      "id": "warning_title",
+      "label": "Título de Advertencia",
+      "default": "ALTO EN CAFEÍNA"
+    },
+    {
+      "type": "textarea",
+      "id": "warning_text",
+      "label": "Texto de Advertencia",
+      "default": "No recomendado para niños, mujeres embarazadas o personas con extrema sensibilidad a la cafeína."
+    },
+    {
+      "type": "header",
+      "content": "Venta Cruzada (Cross-Sell)"
+    },
+    {
+      "type": "text",
+      "id": "cross_title",
+      "label": "Título Cross-Sell",
+      "default": "QUE NO SE TE ACABE A MITAD DE SEMANA"
+    },
+    {
+      "type": "image_picker",
+      "id": "cross_1_image",
+      "label": "Imagen Pack 1"
+    },
+    {
+      "type": "text",
+      "id": "cross_1_name",
+      "label": "Nombre Pack 1",
+      "default": "TRIPACK"
+    },
+    {
+      "type": "text",
+      "id": "cross_1_sub",
+      "label": "Subtexto Pack 1",
+      "default": "3 latas · S/ 11.90 por lata"
+    },
+    {
+      "type": "text",
+      "id": "cross_1_price",
+      "label": "Precio Pack 1 (S/)",
+      "default": "35.70"
+    },
+    {
+      "type": "image_picker",
+      "id": "cross_2_image",
+      "label": "Imagen Pack 2"
+    },
+    {
+      "type": "text",
+      "id": "cross_2_name",
+      "label": "Nombre Pack 2",
+      "default": "SIX-PACK"
+    },
+    {
+      "type": "text",
+      "id": "cross_2_sub",
+      "label": "Subtexto Pack 2",
+      "default": "6 latas · S/ 11.90 por lata"
+    },
+    {
+      "type": "text",
+      "id": "cross_2_price",
+      "label": "Precio Pack 2 (S/)",
+      "default": "71.40"
+    },
+    {
+      "type": "header",
+      "content": "Preguntas Frecuentes"
+    },
+    {
+      "type": "text",
+      "id": "faq_eyebrow",
+      "label": "Kicker FAQ",
+      "default": "PREGUNTAS FRECUENTES"
+    },
+    {
+      "type": "text",
+      "id": "faq_title",
+      "label": "Título FAQ",
+      "default": "ANTES DE COMPRAR"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "Pregunta FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Pregunta",
+          "default": "¿Cuánta cafeína tiene?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Respuesta",
+          "default": "Cada lata de 355 ml contiene 280 mg de cafeína natural pura, extraída lentamente en frío durante 24 horas continuas a 4°C."
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Abierto por defecto",
+          "default": false
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Detalle de Producto"
+      "name": "Detalle de Producto",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Cuánta cafeína tiene?",
+            "answer": "Cada lata de 355 ml contiene 280 mg de cafeína natural pura, extraída lentamente en frío durante 24 horas continuas a 4°C. Equivale a aproximadamente 3 espressos pero con liberación prolongada gracias a los polifenoles del café.",
+            "open_by_default": true
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Quién no debería tomarla?",
+            "answer": "Debido a su alta concentración de cafeína natural, no está recomendada para niños, personas gestantes o en período de lactancia, ni personas con alta sensibilidad a los estimulantes o afecciones cardíacas."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Envían a provincia?",
+            "answer": "Sí. Despachamos a todas las ciudades y provincias del Perú a través de Olva Courier y Shalom, con empaque protector anti-impacto. El tiempo promedio de entrega en Lima es de 24 a 48 horas, y en provincias de 48 a 72 horas hábiles."
+          }
+        }
+      ]
     }
   ]
 }
