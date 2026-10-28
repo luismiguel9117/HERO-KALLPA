@@ -18,44 +18,46 @@ Documento técnico del estado actual del proyecto, mejoras aplicadas y especific
      * `ES ENERGÍA NATURAL`: fijado estrictamente en **una sola línea** (`white-space: nowrap`), peso ultra bold en tono dorado cálido (`#f5ba2c`) con resplandor ambiental (*drop-shadow/glow*).
      * Barra de acento horizontal superior en tono naranja/cobre.
      * Párrafo descriptivo estructurado en 3 líneas perfectamente balanceadas con contraste optimizado.
-* **Archivos modificados:** [index.html](file:///c:/Users/Usuario/Desktop/HERO%20ANIMATION/index.html), [assets/theme.css](file:///c:/Users/Usuario/Desktop/HERO%20ANIMATION/assets/theme.css).
-* **Commit:** `e8a5a7b` (*fix(banner): align Más que café banner with original mockup composition and typography*).
+* **Archivos modificados:** [index.html](file:///g:/Descargas/PAGINA%20DE%20KALLPA/index.html), [assets/theme.css](file:///g:/Descargas/PAGINA%20DE%20KALLPA/assets/theme.css).
 
 ---
 
-### B. Sección: *"NUESTRO PRODUCTO"* (Carrusel Interactivo de Productos)
-* **Objetivo:** Transformar la sección `#products-section` en un carrusel dinámico limpio entre los dos productos principales de la marca, asegurando proporciones idénticas a los mockups:
+### B. Sección: *"HERO"* (Composición de Lata 2D y Resplandor)
+* **Objetivo:** Equilibrar el espacio visual del Hero y evitar que la lata y sus elementos satélites (cubos de hielo, granos flotantes, base de roca volcánica y flecha de navegación derecha) queden apretados contra el borde derecho de la pantalla (`media_1793163682188_d87b2a56.png`).
+* **Ajustes:**
+  * **Desplazamiento horizontal a la izquierda:**
+    * `.hero-kallpa-can-wrapper`: reposicionado de `right: 13%` a `right: 21%` (y de `6%` a `12%` en tablets).
+    * `.kalpa-hero__glow` / `.kalpa-hero__backlight`: sincronizado de `right: 14%` a `right: 22%` para mantener el halo y flare perfectamente calibrados detrás del rim de la lata.
+  * **Resultado:** Se genera un margen holgado en el lateral derecho, integrando la lata de manera armónica entre el texto editorial y los límites de la pantalla.
 
-#### 1. Diapositiva 1: **KALPA ORIGINAL (Cold Brew en Lata 355ml)**
-* **Corrección de Altura y Base:**
-  * Se restauró la estructura original del commit `4e3199f` con `padding: 2.2rem 0 0` (0 padding inferior).
-  * La base de roca volcánica, hielos y granos queda **completamente al ras del borde inferior** (`align-self: end; margin-bottom: -14px; bottom: -2%`), eliminando cualquier franja o brecha vacía debajo de la lata.
-  * Se eliminó el conflicto de flujo donde la segunda diapositiva ocupaba espacio invisible debajo.
-* **Elementos:**
-  * Fondo crema cálido con gradiente radial exclusivo de la diapositiva.
-  * Composición central de la lata 355 ml con hielos y roca volcánica.
-  * 4 sellos circulares de atributos (0 Calorías, Sin azúcares, Listo para tomar, Cold Brew).
-  * Tarjeta dual de compra (Unidad a S/ 7.90 con contador y Pack x 6 a S/ 39.90 con descuento).
+---
 
-#### 2. Diapositiva 2: **KALPA CAFÉ MOLIDO (Lata de Especialidad 500g)**
-* **Control de Escala y Proporción Exacta al Mockup:**
-  * **Altura Idéntica y Transición Perfecta:** Se igualó la altura de la diapositiva a la del Producto 1 (`clamp(490px, calc(39vw + 21px), 570px)` en CSS y sincronización dinámica vía JS), eliminando saltos o cambios de tamaño al cambiar de diapositiva.
-  * **Control de Escala de la Lata:** Con `background-size: contain no-repeat #070c09`, la lata mantiene su tamaño normal y centrado sin deformarse ni agrandarse excesivamente.
-  * **Integración Visual del Fondo HD:** El fondo panorámico (`assets/kalpa-molido-bg.png`) se muestra con sus proporciones naturales (2.33:1), dejando ver el cielo andino superior (50px+), el valle montañoso y la base de saco de yute con café, exactamente como en la referencia de diseño (`media_1793121547687_678c4fd5.png`).
-  * **Distribución de Columnas:**
-    * **Columna izquierda:** Bloque editorial (ancho ~340-375px) alineado sobre el fondo oscuro sin invadir la lata central. 4 insignias circulares doradas y botón `VER FICHA TÉCNICA →`.
-    * **Centro:** Espacio visual despejado que encuadra la lata metálica verde de 500g.
-    * **Columna derecha:** Tarjeta flotante compacta de compra (ancho ~260-275px) con selector 500g / Pack x 6 (-15%) y botón `AGREGAR AL CARRITO 🛒`.
+### C. Sección: *"NUESTRO PRODUCTO"* (Separación de Recuadros y Anclaje Fijo entre Diapositivas)
+* **Objetivo:** Responder a la solicitud (`media_1793164058050_abc704cd.png`) de separar significativamente el bloque editorial izquierdo y la tarjeta de compra derecha para despejar por completo la lata central, garantizando que **ambos recuadros salgan siempre en la misma posición** en todas las diapositivas.
+* **Mejoras aplicadas:**
+  1. **Expansión del Contenedor a 1440px:**
+     * Se amplió el ancho de `.kalpa-sale-container` y `.kalpa-molido-container` de `1260px` a `1440px` con padding `0 clamp(1.5rem, 3.5vw, 4rem)`.
+     * Esto otorgó de inmediato más de 180px adicionales de separación lateral.
+  2. **Estructura Grid Unificada e Idéntica:**
+     * Tanto `.kalpa-sale-grid` como `.kalpa-molido-grid` comparten la misma regla:
+       `grid-template-columns: minmax(320px, 360px) 1fr minmax(320px, 440px); gap: clamp(2rem, 4vw, 4.5rem); align-items: center;`
+     * **Columna 1 (Izquierda):** Bloque editorial (`.kalpa-sale__info` y `.kalpa-molido__info`) anclado a `justify-self: start; width: 100%; max-width: 360px; margin: 0; padding: 0;`.
+     * **Columna 2 (Centro):** `1fr` dedicado exclusivamente al producto protagonista (Lata 355ml en Slide 1 y Lata 500g en Slide 2), libre de solapamientos con los textos o las tarjetas.
+     * **Columna 3 (Derecha):** Tarjeta de compra (`.kalpa-sale__buy-box` y `.kalpa-molido__buy-box`) anclada a `justify-self: end; margin: 0;`.
+  3. **Estabilidad Geométrica al Navegar:**
+     * Al cambiar entre productos con las flechas `<` y `>`, ni el bloque de información izquierdo ni la tarjeta de compra derecha saltan o se desfasan en la pantalla: ambos se mantienen en las mismas coordenadas exactas.
 
-#### 3. Arquitectura del Carrusel:
-* **Aislamiento de Clases:** Se utiliza `.kalpa-product-carousel-track` para evitar colisiones con el carrusel del Hero.
-* **Visibilidad Estricta:** Regla `display: none !important;` en diapositivas inactivas para que no interfieran en la altura ni en el flujo del layout de la diapositiva activa.
-* **Flechas Laterales:** Botones circulares translúcidos `<` y `>` con efecto hover ámbar para navegar entre productos.
-* **Soporte Táctil:** Gesto swipe en dispositivos móviles.
+---
+
+### D. Actualización de Imagen de Alta Calidad: KALPA CAFÉ MOLIDO
+* **Objetivo:** Reemplazar el fondo de la segunda diapositiva por la versión de alta definición aportada por el usuario (`media_1793163798284_2dae53e8.png`).
+* **Implementación:**
+  * Actualizado en [assets/kalpa-molido-bg.png](file:///g:/Descargas/PAGINA%20DE%20KALLPA/assets/kalpa-molido-bg.png).
+  * Resolución nativa optimizada panorámica (proporción 3.0:1) con fondo limpio, iluminación de amanecer andino y lata 500g centrada en alta fidelidad.
 
 ---
 
 ## 🌐 2. Entorno de Pruebas
-* **Servidor local:** Activo en `http://localhost:3333/`
+* **Servidor local:** Activo en `http://localhost:3000/`
 * **Rama Git:** `main`
 * **Repositorio Remoto:** `https://github.com/luismiguel9117/HERO-KALLPA.git`

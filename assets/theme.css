@@ -453,7 +453,7 @@ h1, h2, h3, h4, h5, h6 {
 .hero-2d-can-wrapper {
   position: absolute;
   top: 50%;
-  right: 12%;
+  right: 21%;
   transform: translateY(-46%);
   width: clamp(260px, 24vw, 360px);
   height: clamp(520px, 48vw, 720px);
@@ -465,7 +465,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 990px) {
   .hero-2d-can-wrapper {
-    right: 4%;
+    right: 12%;
     transform: translateY(-42%);
     width: 280px;
     height: 560px;
@@ -804,7 +804,7 @@ h1, h2, h3, h4, h5, h6 {
 .kalpa-hero__backlight {
   position: absolute;
   top: 48%;
-  right: 14%;
+  right: 22%;
   transform: translateY(-50%);
   width: clamp(340px, 32vw, 500px);
   height: clamp(520px, 48vw, 720px);
@@ -4138,7 +4138,7 @@ h1, h2, h3, h4, h5, h6 {
 .hero-kallpa-can-wrapper {
   position: absolute;
   top: 52%;
-  right: 13%;
+  right: 21%;
   transform: translateY(-46%);
   width: clamp(290px, 26vw, 390px);
   height: clamp(580px, 52vw, 780px);
@@ -4195,7 +4195,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 990px) {
   .hero-kallpa-can-wrapper {
-    right: 6%;
+    right: 12%;
     transform: translateY(-42%);
     width: 280px;
     height: 560px;
@@ -4378,15 +4378,20 @@ h1, h2, h3, h4, h5, h6 {
 .kalpa-sale-container {
   position: relative;
   z-index: 5;
-  max-width: 1260px;
+  width: 100%;
+  max-width: 1440px;
   margin: 0 auto;
+  padding: 0 clamp(1.5rem, 3.5vw, 4rem);
+  box-sizing: border-box;
 }
 
 .kalpa-sale-grid {
   display: grid;
-  grid-template-columns: 1.05fr 0.92fr 1.25fr;
-  gap: clamp(1rem, 2.2vw, 2rem);
+  grid-template-columns: minmax(320px, 360px) 1fr minmax(320px, 440px);
+  gap: clamp(2rem, 4vw, 4.5rem);
   align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Columna 1: Información Editorial y 4 Sellos Circulares */
@@ -4396,8 +4401,11 @@ h1, h2, h3, h4, h5, h6 {
   align-items: flex-start;
   position: relative;
   z-index: 6;
-  padding-bottom: 2.4rem;
+  width: 100%;
+  max-width: 360px;
   justify-self: start;
+  margin: 0;
+  padding: 0;
 }
 
 .sale-top-line {
@@ -4424,7 +4432,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 900;
   font-style: italic;
   text-transform: uppercase;
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.85rem 0;
   display: flex;
   flex-direction: column;
   line-height: 0.88;
@@ -4432,13 +4440,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sale-title-main {
-  font-size: clamp(3.8rem, 6.2vw, 5.8rem);
+  font-size: clamp(3rem, 4.8vw, 4.4rem);
   letter-spacing: -0.03em;
   display: block;
 }
 
 .sale-title-sub {
-  font-size: clamp(2.1rem, 3.4vw, 3.2rem);
+  font-size: clamp(1.85rem, 2.9vw, 2.7rem);
   letter-spacing: -0.02em;
   display: block;
   margin-top: 0.12rem;
@@ -4613,17 +4621,17 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(26, 22, 21, 0.06);
   border-radius: 20px;
-  padding: 1.6rem 1.75rem;
+  padding: 1.35rem 1.45rem;
   display: grid;
-  grid-template-columns: 0.9fr 1.25fr;
-  gap: 1.4rem;
+  grid-template-columns: 0.88fr 1.15fr;
+  gap: 1.15rem;
   box-shadow: 0 18px 42px rgba(40, 25, 10, 0.05);
   position: relative;
   z-index: 6;
-  margin-bottom: 2.2rem;
+  margin: 0;
   justify-self: end;
   width: 100%;
-  max-width: 500px;
+  max-width: 440px;
 }
 
 .sale-buy-col {
@@ -5235,17 +5243,19 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   z-index: 5;
   width: 100%;
-  max-width: 1260px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 clamp(1.5rem, 3vw, 2.5rem);
+  padding: 0 clamp(1.5rem, 3.5vw, 4rem);
+  box-sizing: border-box;
 }
 
 .kalpa-molido-grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(320px, 360px) 1fr minmax(320px, 440px);
+  gap: clamp(2rem, 4vw, 4.5rem);
   align-items: center;
-  justify-content: space-between;
   width: 100%;
-  gap: 1.5rem;
+  box-sizing: border-box;
 }
 
 /* Columna Izquierda: Bloque Editorial en el área oscura de la izquierda */
@@ -5255,9 +5265,11 @@ h1, h2, h3, h4, h5, h6 {
   align-items: flex-start;
   position: relative;
   z-index: 6;
-  width: 36%;
-  max-width: 375px;
-  flex-shrink: 0;
+  width: 100%;
+  max-width: 360px;
+  justify-self: start;
+  margin: 0;
+  padding: 0;
 }
 
 .molido-top-line {
@@ -5292,14 +5304,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .molido-title-main {
-  font-size: clamp(2.8rem, 4.4vw, 4.2rem);
+  font-size: clamp(3rem, 4.8vw, 4.4rem);
   letter-spacing: -0.03em;
   color: #ffffff;
   text-shadow: 0 4px 18px rgba(0, 0, 0, 0.8);
 }
 
 .molido-title-sub {
-  font-size: clamp(2rem, 3.2vw, 3.1rem);
+  font-size: clamp(1.85rem, 2.9vw, 2.7rem);
   letter-spacing: -0.02em;
   color: #f5ba2c;
   text-shadow: 0 4px 22px rgba(245, 186, 44, 0.45);
@@ -5395,8 +5407,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Espacio Central: Deja la lata de 500g totalmente libre y visible */
 .kalpa-molido__centerpiece {
-  flex: 1;
-  min-width: 260px;
+  width: 100%;
+  min-width: 200px;
   height: 100%;
   pointer-events: none;
 }
@@ -5407,14 +5419,15 @@ h1, h2, h3, h4, h5, h6 {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 1.35rem 1.45rem;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
-  width: 275px;
-  max-width: 290px;
-  flex-shrink: 0;
+  width: 100%;
+  max-width: 300px;
+  justify-self: end;
   position: relative;
   z-index: 6;
+  margin: 0;
 }
 
 .molido-card-eyebrow {
