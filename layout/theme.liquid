@@ -8,6 +8,11 @@
       <meta http-equiv="refresh" content="0; url={{ routes.root_url }}">
       <script>window.location.replace("{{ routes.root_url }}");</script>
     {%- endif -%}
+    <script>
+      if (window.location.pathname.includes('/pages/nosotros') || window.location.pathname.includes('/pages/about')) {
+        window.location.replace('/pages/contact');
+      }
+    </script>
     <link rel="canonical" href="{{ canonical_url }}">
     <link rel="icon" type="image/png" href="{{ 'logo-k-symbol-white.png' | asset_url }}">
     

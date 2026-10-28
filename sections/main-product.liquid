@@ -415,8 +415,8 @@
     var vId = {{ product.selected_or_first_available_variant.id | default: 'null' }};
     if (typeof window.addPackToKallpaCart === 'function') {
       window.addPackToKallpaCart('pdp-' + currentFlavor.toLowerCase() + '-' + currentPackQty, title, currentPackPrice, currentPackQty, vId);
-    } else {
-      alert('Agregado al carrito: ' + title);
+    } else if (typeof window.openKallpaCart === 'function') {
+      window.openKallpaCart();
     }
   }
 

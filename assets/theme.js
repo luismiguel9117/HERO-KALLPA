@@ -470,3 +470,63 @@ document.addEventListener('shopify:section:load', function(event) {
     }
   }
 });
+
+
+// 6. Sistema Global de Notificaciones Toast KALPA
+window.showKallpaToast = function(message, iconSvg) {
+  let container = document.getElementById('kallpa-toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'kallpa-toast-container';
+    container.className = 'kallpa-toast-container';
+    document.body.appendChild(container);
+  }
+
+  const toast = document.createElement('div');
+  toast.className = 'kallpa-toast';
+  
+  const icon = iconSvg ||     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="kallpa-toast-icon">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+    </svg>
+  \;
+
+  toast.innerHTML = \<span>\</span>\;
+  container.appendChild(toast);
+
+  // Trigger animation
+  requestAnimationFrame(() => {
+    toast.classList.add('is-visible');
+  });
+
+  // Auto remove after 3.8s
+  setTimeout(() => {
+    toast.classList.remove('is-visible');
+    setTimeout(() => {
+      if (toast.parentNode) toast.parentNode.removeChild(toast);
+    }, 350);
+  }, 3800);
+};
+
+// 7. Manejador de Favoritos (Wishlist) con Feedback Háptico / Toast
+window.handleKallpaWishlist = function(btn) {
+  if (btn) {
+    btn.classList.toggle('is-favorited');
+    const svg = btn.querySelector('svg');
+    if (svg) {
+      if (btn.classList.contains('is-favorited')) {
+        svg.setAttribute('fill', '#fbd132');
+        svg.setAttribute('stroke', '#fbd132');
+      } else {
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', 'currentColor');
+      }
+    }
+  }
+
+  const heartIcon =     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#fbd132" stroke="#fbd132" stroke-width="2" class="kallpa-toast-icon">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+    </svg>
+  \;
+  window.showKallpaToast('¡Guardado en tu lista de deseos KALPA!', heartIcon);
+};
