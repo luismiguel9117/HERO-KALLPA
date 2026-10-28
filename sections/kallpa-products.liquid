@@ -211,16 +211,15 @@
     const qtyEl = document.getElementById('qty-' + blockId);
     const qty = qtyEl ? Math.max(1, parseInt(qtyEl.textContent || '1', 10)) : 1;
     const price = parseFloat(priceStr) || 7.90;
-    const total = +(price * qty).toFixed(2);
     if (typeof window.addPackToKallpaCart === 'function') {
-      window.addPackToKallpaCart('unit-' + blockId, `${qty}x ${name}`, total);
+      window.addPackToKallpaCart('unit-' + blockId, `${qty}x ${name}`, price, qty);
     }
   }
 
   function addCustomPackToCart(packId, name, priceStr) {
     const price = parseFloat(priceStr) || 39.90;
     if (typeof window.addPackToKallpaCart === 'function') {
-      window.addPackToKallpaCart(packId, name, price);
+      window.addPackToKallpaCart(packId, name, price, 1);
     }
   }
 </script>
