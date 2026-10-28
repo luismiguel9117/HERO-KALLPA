@@ -284,6 +284,53 @@
   </div>
 </main>
 
+<script>
+  function updateFeaturedQty(delta) {
+    var el = document.getElementById('featured-qty-val');
+    if (!el) return;
+    var val = parseInt(el.textContent || '1', 10) + delta;
+    if (val < 1) val = 1;
+    if (val > 24) val = 24;
+    el.textContent = val;
+  }
+
+  function addFeaturedUnitToCart() {
+    var el = document.getElementById('featured-qty-val');
+    var qty = el ? Math.max(1, parseInt(el.textContent || '1', 10)) : 1;
+    var price = +(7.90 * qty).toFixed(2);
+    if (typeof window.addPackToKallpaCart === 'function') {
+      window.addPackToKallpaCart('unit-featured-original', qty + 'x KALPA Cold Brew Original 355ml', price, qty);
+    }
+  }
+
+  function filterProducts(category, btn) {
+    var pills = document.querySelectorAll('.filter-pill');
+    pills.forEach(function(p) { p.classList.remove('is-active'); });
+    if (btn) btn.classList.add('is-active');
+
+    var featured = document.querySelectorAll('.featured-product-card');
+    var duoCards = document.querySelectorAll('.grid-card-product');
+
+    if (category === 'all') {
+      featured.forEach(function(f) { f.style.display = ''; });
+      duoCards.forEach(function(c) { c.style.display = ''; });
+    } else if (category === 'cold-brew') {
+      featured.forEach(function(f) { f.style.display = ''; });
+      duoCards.forEach(function(c) { c.style.display = 'none'; });
+    } else if (category === 'cafe-molido') {
+      featured.forEach(function(f) { f.style.display = 'none'; });
+      duoCards.forEach(function(c) { c.style.display = ''; });
+    } else {
+      featured.forEach(function(f) { f.style.display = 'none'; });
+      duoCards.forEach(function(c) { c.style.display = 'none'; });
+    }
+  }
+
+  function sortProducts(val) {
+    console.log('Sort products:', val);
+  }
+</script>
+
 {% schema %}
 {
   "name": "Catálogo de Productos",

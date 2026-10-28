@@ -412,22 +412,12 @@
 
   function handleAddToCart() {
     var title = '{{ title_display }} ' + currentFlavor + ' (' + currentPackName + ')';
-    if (window.addPackToKallpaCart) {
-      window.addPackToKallpaCart('pdp-' + currentFlavor.toLowerCase() + '-' + currentPackQty, title, currentPackPrice);
+    var vId = {{ product.selected_or_first_available_variant.id | default: 'null' }};
+    if (typeof window.addPackToKallpaCart === 'function') {
+      window.addPackToKallpaCart('pdp-' + currentFlavor.toLowerCase() + '-' + currentPackQty, title, currentPackPrice, currentPackQty, vId);
     } else {
       alert('Agregado al carrito: ' + title);
     }
-
-    {%- if product.selected_or_first_available_variant.id -%}
-    fetch('/cart/add.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        id: {{ product.selected_or_first_available_variant.id }},
-        quantity: currentPackQty
-      })
-    }).catch(function(e) { console.log('Cart add note:', e); });
-    {%- endif -%}
   }
 
   function toggleFaq(btn) {

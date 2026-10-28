@@ -64,7 +64,7 @@ window.openKallpaCart = function() {
   if (overlay) overlay.classList.add('is-active');
   if (drawer) drawer.classList.add('is-active');
   document.body.style.overflow = 'hidden';
-  refreshKallpaCart();
+  window.refreshKallpaCart();
 };
 
 window.closeKallpaCart = function() {
@@ -75,146 +75,166 @@ window.closeKallpaCart = function() {
   document.body.style.overflow = '';
 };
 
-// Formato de moneda adaptable
+// Formato de moneda adaptable en Soles (PEN)
 function formatMoney(cents) {
-  if (typeof cents !== 'number') return cents;
-  return 'S/ ' + (cents / 100).toFixed(2) + ' PEN';
+  if (typeof cents !== 'number') return 'S/ ' + cents;
+  return 'S/ ' + (cents / 100).toFixed(2);
 }
 
-// Actualizar o refrescar contenido del carrito
-window.refreshKallpaCart = function() {
+// Renderizar UI del Carrito
+function renderCartUI(cart) {
   const itemsContainer = document.getElementById('kallpa-cart-items');
   const footerContainer = document.getElementById('kallpa-cart-footer');
-  const countBadge = document.getElementById('kallpa-cart-count');
+
+  // Actualizar contadores globales
+  const count = cart.item_count || 0;
+  document.querySelectorAll('#kallpa-cart-count, #intro-cart-count').forEach(b => {
+    b.innerText = count;
+  });
+  try {
+    localStorage.setItem('kallpa_cart_count', count);
+  } catch (e) {}
 
   if (!itemsContainer) return;
 
-  // Si estamos en entorno Shopify nativo
-  if (window.Shopify && window.Shopify.routes) {
-    fetch('/cart.js')
-      .then(res => res.json())
-      .then(cart => {
-        renderCartUI(cart);
-      })
-      .catch(err => console.warn('Error fetching Shopify cart:', err));
-  } else {
-    // Modo preview local interactivo con datos auténticos KALPA
-    const demoCart = window._demoCart || {
-      item_count: 1,
-      total_price: 10500,
-      items: [
-        {
-          id: 102,
-          title: "KALPA 12-Pack Pro Performance",
-          variant_title: "12 x 355ml Sleek Can • Maceración 24H",
-          price: 10500,
-          quantity: 1,
-          image: "assets/kalpa-hero-bg.png"
-        }
-      ]
-    };
-    renderCartUI(demoCart);
+  if (!cart.items || cart.items.length === 0) {
+    itemsContainer.innerHTML = `
+      <div style="text-align: center; padding: 4.5rem 1.5rem; color: #94a3b8;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.8rem; opacity: 0.8;">⚡</div>
+        <h4 style="font-family: var(--font-brand); color: #ffffff; font-size: 1.15rem; margin: 0 0 0.5rem; font-weight: 800;">TU CARRITO ESTÁ VACÍO</h4>
+        <p style="font-size: 0.88rem; line-height: 1.5; margin: 0 0 1.8rem; color: rgba(255,255,255,0.6);">Descubre el café cold brew de altura con energía limpia y sin azúcar.</p>
+        <button type="button" onclick="closeKallpaCart()" class="btn-checkout-gold" style="display: inline-flex; width: auto; padding: 0.8rem 2rem; font-size: 0.85rem;">
+          <span>EXPLORAR PRODUCTOS</span>
+        </button>
+      </div>
+    `;
+    if (footerContainer) footerContainer.innerHTML = '';
+    return;
   }
 
-  function renderCartUI(cart) {
-    document.querySelectorAll('#kallpa-cart-count, #intro-cart-count').forEach(b => b.innerText = cart.item_count);
+  let itemsHtml = '';
+  cart.items.forEach(item => {
+    const title = (item.properties && item.properties['Producto']) || item.product_title || item.title;
+    const variant = (item.properties && item.properties['Presentación']) || (item.variant_title !== 'Default Title' ? item.variant_title : '');
+    const imgSrc = item.image || (item.featured_image && item.featured_image.url) || 'assets/kalpa-can-original.png';
+    const lineTotal = formatMoney(item.final_line_price || item.line_price);
 
-    if (!cart.items || cart.items.length === 0) {
-      itemsContainer.innerHTML = `
-        <div style="text-align: center; padding: 4rem 1rem; color: var(--text-muted);">
-          <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">Tu selección de energía está vacía.</p>
-          <button onclick="closeKallpaCart()" class="btn-kallpa btn-kallpa--primary" style="padding: 0.8rem 1.8rem; font-size: 0.85rem;">Descubrir Colección</button>
-        </div>
-      `;
-      if (footerContainer) footerContainer.innerHTML = '';
-      return;
-    }
-
-    let itemsHtml = '';
-    cart.items.forEach(item => {
-      itemsHtml += `
-        <div style="display: flex; gap: 1rem; align-items: center; padding: 1.25rem 0; border-bottom: 1px solid var(--border-subtle);">
-          <img src="${item.image}" alt="${item.title}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border-subtle);">
-          <div style="flex: 1;">
-            <h4 style="font-size: 0.95rem; font-weight: 700; margin: 0; color: var(--text-main);">${item.title}</h4>
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.25rem 0 0.5rem;">${item.variant_title || 'Edición Pro'}</p>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-weight: 700; color: var(--accent-gold);">${formatMoney(item.price)}</span>
-              <span style="font-size: 0.85rem; color: var(--text-muted);">Cant: ${item.quantity}</span>
+    itemsHtml += `
+      <div class="kallpa-cart-item" style="display: flex; gap: 1rem; align-items: center; padding: 1.1rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+        <img src="${imgSrc}" alt="${title}" style="width: 64px; height: 64px; object-fit: contain; background: #0c0e14; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 4px; flex-shrink: 0;">
+        <div style="flex: 1; min-width: 0;">
+          <h4 style="font-family: var(--font-brand); font-size: 0.92rem; font-weight: 800; color: #ffffff; margin: 0 0 0.2rem; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${title}</h4>
+          ${variant ? `<p style="font-size: 0.76rem; color: rgba(255,255,255,0.55); margin: 0 0 0.5rem;">${variant}</p>` : ''}
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+            <div style="display: inline-flex; align-items: center; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 6px; overflow: hidden;">
+              <button type="button" onclick="updateKallpaCartItem('${item.key}', ${item.quantity - 1})" style="background: transparent; border: none; color: #fff; width: 28px; height: 26px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem;" aria-label="Reducir">&minus;</button>
+              <span style="padding: 0 0.5rem; font-size: 0.85rem; font-weight: 800; color: #fff;">${item.quantity}</span>
+              <button type="button" onclick="updateKallpaCartItem('${item.key}', ${item.quantity + 1})" style="background: transparent; border: none; color: #fff; width: 28px; height: 26px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem;" aria-label="Aumentar">+</button>
             </div>
+            <span style="font-family: var(--font-brand); font-size: 0.95rem; font-weight: 900; color: #fbd132;">${lineTotal}</span>
           </div>
         </div>
-      `;
-    });
-    itemsContainer.innerHTML = itemsHtml;
-
-    if (footerContainer) {
-      footerContainer.innerHTML = `
-        <div style="padding-top: 1.5rem;">
-          <div style="display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem;">
-            <span>Subtotal</span>
-            <span style="color: var(--accent-gold);">${formatMoney(cart.total_price)}</span>
-          </div>
-          <a href="/checkout" class="btn-kallpa btn-kallpa--primary" style="width: 100%; text-align: center;">
-            Proceder al Checkout
-          </a>
-        </div>
-      `;
-    }
-  }
-};
-
-// Agregar producto al carrito
-window.addToCartKallpa = function(variantId, quantity = 1) {
-  if (window.Shopify && window.Shopify.routes) {
-    fetch('/cart/add.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: variantId, quantity: quantity })
-    })
-    .then(res => res.json())
-    .then(() => {
-      openKallpaCart();
-    })
-    .catch(err => console.error(err));
-  } else {
-    // Demo interactivo local
-    window._demoCart = window._demoCart || { item_count: 0, total_price: 0, items: [] };
-    window._demoCart.item_count += quantity;
-    window._demoCart.total_price += 1190 * quantity;
-    window._demoCart.items.push({
-      id: Date.now(),
-      title: "COLD BREW ORIGINAL",
-      variant_title: "355ml Sleek Can • Maceración 24H",
-      price: 1190,
-      quantity: quantity,
-      image: "assets/prod-original.jpg"
-    });
-    openKallpaCart();
-  }
-};
-
-// Agregar producto individual desde el catálogo del mockup
-window.addKallpaToCart = function(title, priceSol, image) {
-  const priceCents = Math.round(priceSol * 100);
-  window._demoCart = window._demoCart || { item_count: 0, total_price: 0, items: [] };
-  window._demoCart.item_count += 1;
-  window._demoCart.total_price += priceCents;
-  window._demoCart.items.push({
-    id: Date.now(),
-    title: title,
-    variant_title: "355ml Sleek Can • Café del VRAEM",
-    price: priceCents,
-    quantity: 1,
-    image: image || "assets/prod-original.jpg"
+        <button type="button" onclick="updateKallpaCartItem('${item.key}', 0)" style="background: none; border: none; color: rgba(255,255,255,0.4); cursor: pointer; padding: 0.4rem; font-size: 1.2rem; line-height: 1; transition: color 0.2s;" title="Eliminar">&times;</button>
+      </div>
+    `;
   });
-  openKallpaCart();
+  itemsContainer.innerHTML = itemsHtml;
+
+  if (footerContainer) {
+    footerContainer.innerHTML = `
+      <div style="padding-top: 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
+          <span style="font-family: var(--font-brand); font-size: 0.88rem; font-weight: 800; color: rgba(255,255,255,0.7); text-transform: uppercase;">SUBTOTAL</span>
+          <span style="font-family: var(--font-brand); font-size: 1.35rem; font-weight: 900; color: #fbd132;">${formatMoney(cart.total_price)}</span>
+        </div>
+        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.45); margin: 0 0 1.25rem;">
+          Envíos e impuestos calculados en el checkout.
+        </p>
+        <a href="/checkout" class="btn-checkout-gold" id="btn-cart-checkout" style="display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; padding: 1.1rem; background: #f5ba2c; color: #0b0908; border-radius: 999px; font-family: var(--font-brand); font-size: 0.95rem; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; box-shadow: 0 8px 24px rgba(245,186,44,0.35); transition: all 0.25s ease;">
+          <span>PROCEDER AL CHECKOUT</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 0.4rem; margin-top: 0.75rem; font-size: 0.75rem; color: rgba(255,255,255,0.5);">
+          <span>🔒 Pago 100% seguro &middot; Envíos a todo el Perú</span>
+        </div>
+      </div>
+    `;
+  }
+}
+
+// Actualizar o refrescar contenido del carrito vía Shopify /cart.js
+window.refreshKallpaCart = function() {
+  fetch('/cart.js')
+    .then(res => res.json())
+    .then(cart => {
+      renderCartUI(cart);
+    })
+    .catch(err => {
+      console.warn('Error fetching Shopify cart:', err);
+    });
 };
 
+// Modificar cantidad o eliminar item del carrito
+window.updateKallpaCartItem = function(itemKey, qty) {
+  fetch('/cart/change.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: itemKey, quantity: qty })
+  })
+  .then(res => res.json())
+  .then(cart => {
+    renderCartUI(cart);
+  })
+  .catch(err => {
+    console.error('Error updating cart item:', err);
+    window.refreshKallpaCart();
+  });
+};
+
+// Agregar producto al carrito de Shopify
+window.addPackToKallpaCart = function(packId, name, price, qty = 1, variantId = null) {
+  const vId = variantId || (window.Shopify && window.Shopify.default_variant_id) || 67960537088316;
+
+  // Abrir carrito de inmediato
+  window.openKallpaCart();
+
+  fetch('/cart/add.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      id: vId,
+      quantity: qty || 1,
+      properties: {
+        'Producto': name,
+        'Presentación': packId
+      }
+    })
+  })
+  .then(res => res.json())
+  .then(() => {
+    window.refreshKallpaCart();
+  })
+  .catch(err => {
+    console.error('Error adding to Shopify cart:', err);
+    window.refreshKallpaCart();
+  });
+};
+
+window.addToCartKallpa = function(variantId, quantity = 1) {
+  window.addPackToKallpaCart('general', 'KALPA Producto', 11.90, quantity, variantId);
+};
+
+window.addKallpaToCart = function(title, priceSol, image) {
+  window.addPackToKallpaCart('pack', title, priceSol, 1);
+};
 // 4. Inicialización al cargar el DOM
 document.addEventListener('DOMContentLoaded', () => {
   initBentoGlow();
   initAnimatedCounters();
+  window.refreshKallpaCart();
 });
 
 
@@ -309,38 +329,7 @@ window.addMolidoUnitToCart = function() {
   window.addPackToKallpaCart('unit-kalpa-molido', `${qty}x KALPA Café Molido 250g`, total);
 };
 
-window.addPackToKallpaCart = function(packId, name, price) {
-  document.querySelectorAll('#kallpa-cart-count, #intro-cart-count').forEach(countEl => {
-    const current = parseInt(countEl.textContent || '0');
-    countEl.textContent = current + 1;
-  });
 
-  const drawer = document.getElementById('kallpa-cart-drawer');
-  if (drawer) {
-    const body = drawer.querySelector('.cart-drawer-body');
-    if (body) {
-      const empty = body.querySelector('.cart-empty');
-      if (empty) empty.remove();
-
-      const item = document.createElement('div');
-      item.className = 'cart-drawer-item';
-      item.innerHTML = `
-        <div class="cart-item-info" style="display:flex; justify-content:space-between; align-items:center; width:100%; padding:0.75rem 0; border-bottom:1px solid rgba(255,255,255,0.08);">
-          <div>
-            <div style="font-weight:700; color:#fff;">${name}</div>
-            <div style="font-size:0.8rem; color:#888;">Agregado recientemente</div>
-          </div>
-          <div style="font-weight:800; color:#fdb515;">S/ ${price.toFixed(2)}</div>
-        </div>
-      `;
-      body.appendChild(item);
-    }
-  }
-
-  if (typeof openKallpaCart === 'function') {
-    openKallpaCart();
-  }
-};
 
 document.addEventListener('DOMContentLoaded', () => {
   syncProductSlideHeights();
