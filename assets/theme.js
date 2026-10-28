@@ -222,7 +222,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // CONTROLADOR DEL CARRUSEL DE PRODUCTOS (SLIDE 1 & SLIDE 2)
 // ==========================================
 let currentProductSlide = 0;
-const totalProductSlides = 2;
+function getTotalProductSlides() {
+  return document.querySelectorAll('.kalpa-product-slide').length || 1;
+}
 
 function syncProductSlideHeights() {
   if (window.innerWidth <= 860) {
@@ -245,15 +247,17 @@ function syncProductSlideHeights() {
 }
 
 window.goToProductSlide = function(index) {
-  if (index < 0) index = totalProductSlides - 1;
-  if (index >= totalProductSlides) index = 0;
+  const total = getTotalProductSlides();
+  if (index < 0) index = total - 1;
+  if (index >= total) index = 0;
   currentProductSlide = index;
 
   if (currentProductSlide === 1) {
     syncProductSlideHeights();
   }
 
-  for (let i = 0; i < totalProductSlides; i++) {
+  const slides = document.querySelectorAll(".kalpa-product-slide");
+  for (let i = 0; i < slides.length; i++) {
     const slide = document.getElementById(`product-slide-${i}`);
     if (slide) {
       if (i === currentProductSlide) {
