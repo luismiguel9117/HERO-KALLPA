@@ -208,8 +208,8 @@
           "type": "reel",
           "settings": {
             "title": "Atleta Mujer",
-            "default_image": "reel-1.webp",
-            "views": "125K",
+            "default_image": "reel-ig-1.webp",
+            "views": "2795",
             "reel_url": "https://www.instagram.com/reel/Db4TrF8iLq0/"
           }
         },
@@ -217,8 +217,8 @@
           "type": "reel",
           "settings": {
             "title": "Runner Hombre",
-            "default_image": "reel-2.webp",
-            "views": "98K",
+            "default_image": "reel-ig-2.webp",
+            "views": "1195",
             "reel_url": "https://www.instagram.com/reel/DbowFyXTNxp/"
           }
         },
@@ -226,8 +226,8 @@
           "type": "reel",
           "settings": {
             "title": "Lata KALPA",
-            "default_image": "reel-3.webp",
-            "views": "210K",
+            "default_image": "reel-ig-3.webp",
+            "views": "4401",
             "reel_url": "https://www.instagram.com/reel/DbHT96LCtn7/"
           }
         },
@@ -235,8 +235,8 @@
           "type": "reel",
           "settings": {
             "title": "Reel KALPA 4",
-            "default_image": "reel-1.webp",
-            "views": "",
+            "default_image": "reel-ig-4.webp",
+            "views": "3753",
             "reel_url": "https://www.instagram.com/reel/DajN4LvNS5M/"
           }
         },
@@ -244,8 +244,8 @@
           "type": "reel",
           "settings": {
             "title": "Reel KALPA 5",
-            "default_image": "reel-2.webp",
-            "views": "",
+            "default_image": "reel-ig-5.webp",
+            "views": "3253",
             "reel_url": "https://www.instagram.com/reel/DY0dAFiJCIR/"
           }
         }
