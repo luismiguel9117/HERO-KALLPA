@@ -459,6 +459,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 150);
     }
 
+    // Si las reseñas vienen de los bloques del tema, pinta la primera sin animación
+    const first = window.communityReviews && window.communityReviews[0];
+    if (first && nameEl && nameEl.textContent.trim() !== first.name) {
+      if (headlineEl) headlineEl.innerHTML = first.headline;
+      if (textEl) textEl.textContent = first.text;
+      if (avatarEl) avatarEl.textContent = first.avatar;
+      nameEl.textContent = first.name;
+      if (metaEl) metaEl.textContent = first.meta;
+    }
+
     if (prevBtn) prevBtn.addEventListener('click', () => showReview(reviewIndex - 1));
     if (nextBtn) nextBtn.addEventListener('click', () => showReview(reviewIndex + 1));
 
