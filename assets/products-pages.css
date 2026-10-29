@@ -227,8 +227,28 @@
 
 /* 3. MAIN CATALOG CONTAINER */
 .products-catalog-main {
+  position: relative;
   background-color: #05070a;
-  padding: clamp(2.5rem, 5vw, 4rem) 0 6rem;
+  padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(9rem, 16vw, 15rem);
+  overflow: hidden;
+}
+
+/* Hojas desenfocadas decorativas en el borde inferior de la sección */
+.products-catalog-main::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(160px, 26vw, 420px);
+  background: url("catalog-leaves-bottom.webp") center bottom / 100% auto no-repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.products-catalog-main > .page-width {
+  position: relative;
+  z-index: 1;
 }
 
 /* 4. PRODUCTO DESTACADO 01: KALLPA ORIGINAL COLD BREW */
