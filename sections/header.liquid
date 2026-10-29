@@ -13,7 +13,7 @@
     <circle cx="18.5" cy="18.5" r="2.5"></circle>
   </svg>
   <span>{{ section.settings.announcement_text | default: 'Envíos a todo el Perú. Compra por unidad o por pack.' }}</span>
-  <a href="{{ section.settings.announcement_link | default: routes.all_products_collection_url }}" class="announcement-link-desktop">
+  <a href="{{ section.settings.announcement_link | default: '/pages/promociones' }}" class="announcement-link-desktop">
     {{ section.settings.announcement_link_text | default: 'Ver promoción de lanzamiento' }}
   </a>
 </div>
