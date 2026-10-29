@@ -139,11 +139,8 @@
             <button type="button" class="product-thumb-btn is-active" onclick="switchMainImage('assets/kalpa-can-original.png', this)" aria-label="Vista frontal">
               <img src="assets/kalpa-can-original.png" alt="Vista Frontal" class="product-thumb-img">
             </button>
-            <button type="button" class="product-thumb-btn" onclick="switchMainImage('assets/kalpa-can-base.png', this)" aria-label="Vista ángulo">
-              <img src="assets/kalpa-can-base.png" alt="Vista Ángulo" class="product-thumb-img">
-            </button>
-            <button type="button" class="product-thumb-btn" onclick="switchMainImage('assets/can-kalpa-label.png', this)" aria-label="Vista etiqueta">
-              <img src="assets/can-kalpa-label.png" alt="Vista Etiqueta" class="product-thumb-img">
+            <button type="button" class="product-thumb-btn" data-fit="cover" onclick="switchMainImage('assets/kalpa-original-label.webp', this)" aria-label="Etiqueta completa">
+              <img src="assets/kalpa-original-label.webp" alt="Etiqueta completa" class="product-thumb-img product-thumb-img--cover">
             </button>
           </div>
 
@@ -151,10 +148,7 @@
           <div class="product-main-stage" id="product-main-card">
             <div class="catalog-card__pattern"></div>
             <div class="catalog-card__stage">
-              <img src="assets/hero-beans-ice-back.png" alt="" class="catalog-card__beans-back" draggable="false">
               <img src="assets/kalpa-can-original.png" alt="KALPA Cold Brew Original" class="catalog-card__can" id="main-product-img">
-              <img src="assets/hero-bean-single.png" alt="" class="catalog-card__bean-front" draggable="false">
-              <img src="assets/hero-rock-base.png" alt="" class="catalog-card__rock" draggable="false">
             </div>
             <span class="product-stage-badge">355 ML &mdash; LATA</span>
           </div>
@@ -162,7 +156,7 @@
 
         <!-- Columna Derecha: Configuración, Opciones y Botón de Compra -->
         <div class="product-details-col">
-          <span class="product-cat-tag">BEBIDA FUNCIONAL A BASE DE CAFÉ</span>
+          <span class="product-cat-tag">COLD BREW · LATA 355 ML</span>
           <h1 class="product-main-title">KALPA COLD BREW</h1>
           <p class="product-lead-desc">
             Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural por lata. Listo para tomar, en cualquier momento y lugar.
@@ -179,12 +173,19 @@
             <span class="selector-group-label">CANTIDAD</span>
             <div class="pack-selector-grid">
               <button type="button" class="pack-card-btn is-active" onclick="selectPack(1, 7.90, 'Unidad', this)">
-                <span class="pack-card-name">Unidad</span>
+                <span class="pack-card-main">
+                  <span class="pack-card-name">Unidad</span>
+                  <span class="pack-card-meta">1 lata · 355 ml</span>
+                </span>
                 <span class="pack-card-price">S/ 7.90</span>
               </button>
               <button type="button" class="pack-card-btn" onclick="selectPack(6, 39.90, 'Pack x 6', this)">
-                <span class="pack-card-name">Pack x 6 · -15%</span>
-                <span class="pack-card-price">S/ 39.90</span>
+                <span class="pack-card-save">Ahorra 15%</span>
+                <span class="pack-card-main">
+                  <span class="pack-card-name">Pack x 6</span>
+                  <span class="pack-card-meta">6 latas de 355 ml</span>
+                </span>
+                <span class="pack-card-price"><s>S/ 47.40</s> S/ 39.90</span>
               </button>
             </div>
           </div>
@@ -217,15 +218,9 @@
 
           <!-- 3 Sellos de Beneficios Clave -->
           <div class="product-features-ribbon">
-            <span class="product-feature-tag">
-              <span style="color:#fbd132;">⚡</span> Energía limpia
-            </span>
-            <span class="product-feature-tag">
-              <span style="color:#fbd132;">🚫</span> Sin azúcar
-            </span>
-            <span class="product-feature-tag">
-              <span style="color:#fbd132;">☕</span> Café de altura
-            </span>
+            <span class="product-feature-tag"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Energía limpia</span>
+            <span class="product-feature-tag"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line></svg> Sin azúcar</span>
+            <span class="product-feature-tag"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 3 4 8 5-5 5 11H2L8 3z"></path></svg> Café de altura</span>
           </div>
 
         </div>
@@ -558,7 +553,10 @@
       document.querySelectorAll('.product-thumb-btn').forEach(b => b.classList.remove('is-active'));
       btn.classList.add('is-active');
       const img = document.getElementById('main-product-img');
-      if (img) img.src = src;
+      if (img) {
+        img.src = src;
+        img.classList.toggle('is-cover', btn.dataset.fit === 'cover');
+      }
     }
 
     function handleAddToCart() {

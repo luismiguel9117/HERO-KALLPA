@@ -6,7 +6,7 @@
 {%- liquid
   assign title_display = section.settings.product_title | default: product.title | default: 'KALPA COLD BREW'
   assign desc_display = section.settings.product_desc | default: product.description | strip_html | default: 'Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural por lata. Listo para tomar, en cualquier momento y lugar.'
-  assign cat_display = section.settings.category_tag | default: 'BEBIDA FUNCIONAL A BASE DE CAFÉ'
+  assign cat_display = section.settings.category_tag | default: 'COLD BREW · LATA 355 ML'
   assign badge_display = section.settings.badge_text | default: '355 ML — LATA'
 
   assign p_unit = section.settings.price_unit | default: '7.90'
@@ -44,23 +44,14 @@
           {%- if section.settings.thumb_2_image != blank -%}
             {%- assign t2_url = section.settings.thumb_2_image | image_url: width: 600 -%}
           {%- else -%}
-            {%- assign t2_url = 'kalpa-can-base.png' | asset_url -%}
-          {%- endif -%}
-
-          {%- if section.settings.thumb_3_image != blank -%}
-            {%- assign t3_url = section.settings.thumb_3_image | image_url: width: 600 -%}
-          {%- else -%}
-            {%- assign t3_url = 'can-kalpa-label.png' | asset_url -%}
+            {%- assign t2_url = 'kalpa-original-label.webp' | asset_url -%}
           {%- endif -%}
 
           <button type="button" class="product-thumb-btn is-active" onclick="switchMainImage('{{ t1_url }}', this)" aria-label="Vista frontal">
             <img src="{{ t1_url }}" alt="Vista Frontal" class="product-thumb-img" width="65" height="80">
           </button>
-          <button type="button" class="product-thumb-btn" onclick="switchMainImage('{{ t2_url }}', this)" aria-label="Vista ángulo">
-            <img src="{{ t2_url }}" alt="Vista Ángulo" class="product-thumb-img" width="65" height="80">
-          </button>
-          <button type="button" class="product-thumb-btn" onclick="switchMainImage('{{ t3_url }}', this)" aria-label="Vista etiqueta">
-            <img src="{{ t3_url }}" alt="Vista Etiqueta" class="product-thumb-img" width="65" height="80">
+          <button type="button" class="product-thumb-btn" data-fit="cover" onclick="switchMainImage('{{ t2_url }}', this)" aria-label="Etiqueta completa">
+            <img src="{{ t2_url }}" alt="Etiqueta completa" class="product-thumb-img product-thumb-img--cover" width="65" height="80">
           </button>
         </div>
 
@@ -68,7 +59,6 @@
         <div class="product-main-stage" id="product-main-card">
           <div class="catalog-card__pattern"></div>
           <div class="catalog-card__stage">
-            <img src="{{ 'hero-beans-ice-back.png' | asset_url }}" alt="" class="catalog-card__beans-back" draggable="false" width="500" height="500">
             {%- if section.settings.main_image != blank -%}
               <img src="{{ section.settings.main_image | image_url: width: 800 }}" alt="{{ title_display }}" class="catalog-card__can" id="main-product-img" width="380" height="660">
             {%- elsif product.featured_image != blank -%}
@@ -76,8 +66,6 @@
             {%- else -%}
               <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="{{ title_display }}" class="catalog-card__can" id="main-product-img" width="380" height="660">
             {%- endif -%}
-            <img src="{{ 'hero-bean-single.png' | asset_url }}" alt="" class="catalog-card__bean-front" draggable="false" width="70" height="70">
-            <img src="{{ 'hero-rock-base.png' | asset_url }}" alt="" class="catalog-card__rock" draggable="false" width="500" height="200">
           </div>
           <span class="product-stage-badge">{{ badge_display }}</span>
         </div>
@@ -100,12 +88,19 @@
           <span class="selector-group-label">CANTIDAD</span>
           <div class="pack-selector-grid">
             <button type="button" class="pack-card-btn is-active" onclick="selectPack(1, {{ p_unit }}, 'Unidad', this)">
-              <span class="pack-card-name">Unidad</span>
+              <span class="pack-card-main">
+                <span class="pack-card-name">Unidad</span>
+                <span class="pack-card-meta">1 lata · 355 ml</span>
+              </span>
               <span class="pack-card-price">S/ {{ p_unit }}</span>
             </button>
             <button type="button" class="pack-card-btn" onclick="selectPack(6, {{ p_sixpack }}, 'Pack x 6', this)">
-              <span class="pack-card-name">Pack x 6 · -15%</span>
-              <span class="pack-card-price">S/ {{ p_sixpack }}</span>
+              <span class="pack-card-save">Ahorra 15%</span>
+              <span class="pack-card-main">
+                <span class="pack-card-name">Pack x 6</span>
+                <span class="pack-card-meta">6 latas de 355 ml</span>
+              </span>
+              <span class="pack-card-price"><s>S/ {{ p_unit | times: 6 | round: 2 }}</s> S/ {{ p_sixpack }}</span>
             </button>
           </div>
         </div>
@@ -138,15 +133,9 @@
 
         <!-- 3 Sellos de Beneficios Clave -->
         <div class="product-features-ribbon">
-          <span class="product-feature-tag">
-            <span style="color:#fbd132;">⚡</span> Energía limpia
-          </span>
-          <span class="product-feature-tag">
-            <span style="color:#fbd132;">🚫</span> Sin azúcar
-          </span>
-          <span class="product-feature-tag">
-            <span style="color:#fbd132;">☕</span> Café de altura
-          </span>
+          <span class="product-feature-tag"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Energía limpia</span>
+          <span class="product-feature-tag"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line></svg> Sin azúcar</span>
+          <span class="product-feature-tag"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 3 4 8 5-5 5 11H2L8 3z"></path></svg> Café de altura</span>
         </div>
 
       </div>
@@ -337,7 +326,10 @@
 <script>
   function switchMainImage(src, btn) {
     var img = document.getElementById('main-product-img');
-    if (img) img.src = src;
+    if (img) {
+      img.src = src;
+      img.classList.toggle('is-cover', btn.getAttribute('data-fit') === 'cover');
+    }
     var all = document.querySelectorAll('.product-thumb-btn');
     all.forEach(function(b) { b.classList.remove('is-active'); });
     btn.classList.add('is-active');
@@ -456,12 +448,7 @@
     {
       "type": "image_picker",
       "id": "thumb_2_image",
-      "label": "Miniatura 2 (Ángulo)"
-    },
-    {
-      "type": "image_picker",
-      "id": "thumb_3_image",
-      "label": "Miniatura 3 (Etiqueta)"
+      "label": "Miniatura 2 (Etiqueta)"
     },
     {
       "type": "header",

@@ -1598,3 +1598,309 @@
     text-align: center;
   }
 }
+
+/* ==========================================================================
+   PDP REFRESH — jerarquía tipo retail premium (ref. Nike PDP de awesome-design-md):
+   escenario de producto amplio, bloque de compra con precio protagonista,
+   tarjetas de pack tipo radio, CTA en píldora y sellos de confianza agrupados.
+   ========================================================================== */
+.product-showcase-grid {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(2rem, 4.5vw, 4.5rem);
+  align-items: start;
+}
+
+.product-gallery-layout {
+  gap: 1rem;
+  position: sticky;
+  top: 96px;
+}
+
+.product-thumbnails-col {
+  gap: 0.7rem;
+}
+
+.product-thumb-btn {
+  width: 76px;
+  height: 92px;
+  border-radius: 12px;
+  background: radial-gradient(circle at 50% 45%, #2a2410 0%, #121317 75%);
+  padding: 8px;
+}
+
+.product-thumb-btn.is-active {
+  border-color: #fbd132;
+  box-shadow: 0 0 0 2px rgba(251, 209, 50, 0.25);
+}
+
+.product-main-stage {
+  border-radius: 24px;
+  min-height: 0;
+  aspect-ratio: 1 / 1;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55);
+}
+
+.catalog-card__stage {
+  min-height: 0;
+}
+
+.catalog-card__can {
+  max-height: 72%;
+}
+
+.product-stage-badge {
+  bottom: 20px;
+  left: 22px;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.78);
+  color: #fbd132;
+  font-size: 0.66rem;
+}
+
+/* Bloque de compra */
+.product-details-col {
+  gap: 1.1rem;
+  padding-top: 0.5rem;
+}
+
+.product-main-title {
+  font-size: clamp(2.6rem, 4.6vw, 4rem);
+  line-height: 0.92;
+}
+
+.product-lead-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 34rem;
+}
+
+.product-price-block {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  padding: 0.4rem 0 1.25rem;
+}
+
+.product-price-val {
+  font-size: clamp(2.4rem, 3.6vw, 3rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.product-price-sub {
+  font-size: 0.86rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Tarjetas de pack tipo radio */
+.pack-selector-grid {
+  grid-template-columns: 1fr;
+  gap: 0.7rem;
+}
+
+.pack-card-btn {
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.15rem 1rem 3rem;
+  border-radius: 16px;
+  background: #0e1015;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  text-align: left;
+}
+
+.pack-card-btn::before {
+  content: "";
+  position: absolute;
+  left: 1.1rem;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin-top: -9px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+}
+
+.pack-card-btn.is-active {
+  background: linear-gradient(135deg, rgba(251, 209, 50, 0.1), rgba(251, 209, 50, 0.02));
+  border-color: #fbd132;
+  box-shadow: none;
+}
+
+.pack-card-btn.is-active::before {
+  border-color: #fbd132;
+  background: radial-gradient(circle, #fbd132 0 45%, transparent 50%);
+}
+
+.pack-card-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.pack-card-name {
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+.pack-card-meta {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.pack-card-price {
+  font-family: var(--font-brand);
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.pack-card-price s {
+  margin-right: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.pack-card-save {
+  position: absolute;
+  top: -0.6rem;
+  right: 1rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: #e0322b;
+  color: #ffffff;
+  font-family: var(--font-brand);
+  font-size: 0.64rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* CTA en píldora con icono de carrito */
+.btn-product-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 0.4rem;
+  padding: 1.15rem 2rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  box-shadow: 0 12px 30px rgba(251, 209, 50, 0.28);
+}
+
+.btn-product-add::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='21' r='1'/%3E%3Ccircle cx='20' cy='21' r='1'/%3E%3Cpath d='M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='21' r='1'/%3E%3Ccircle cx='20' cy='21' r='1'/%3E%3Cpath d='M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.btn-product-add:hover {
+  background: #ffe066;
+  box-shadow: 0 14px 34px rgba(251, 209, 50, 0.4);
+}
+
+/* Confianza y beneficios agrupados en un panel */
+.product-trust-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-top: 0.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.product-trust-item {
+  padding: 0.95rem 1rem;
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.product-trust-item + .product-trust-item {
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.product-features-ribbon {
+  gap: 0.6rem;
+  padding-top: 0.2rem;
+  border-top: 0;
+}
+
+.product-feature-tag {
+  gap: 0.45rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: #12141a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.78rem;
+}
+
+.product-feature-tag svg {
+  color: #fbd132;
+}
+
+@media (max-width: 900px) {
+  .product-showcase-grid {
+    grid-template-columns: 1fr;
+  }
+  .product-gallery-layout {
+    position: static;
+  }
+  .product-main-stage {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+@media (max-width: 600px) {
+  .pack-selector-grid {
+    grid-template-columns: 1fr;
+  }
+  .product-trust-row {
+    grid-template-columns: 1fr;
+  }
+  .product-trust-item + .product-trust-item {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* Galería de 2 vistas: lata limpia sobre el escenario + etiqueta completa a sangre */
+.catalog-card__can {
+  max-height: 82%;
+  margin-bottom: 0;
+}
+
+.catalog-card__can.is-cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: contain;
+  background: #1c1d21;
+  z-index: 5;
+  filter: none;
+}
+
+.product-main-stage:hover .catalog-card__can.is-cover {
+  transform: none;
+}
+
+.product-thumb-img--cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
