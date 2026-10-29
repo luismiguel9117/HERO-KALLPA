@@ -857,6 +857,7 @@
   max-width: 1480px;
   min-height: 0;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto 1fr auto;
   padding: clamp(2.5rem, 7vh, 5rem) clamp(3.5rem, 6vw, 7rem) clamp(2rem, 6vh, 4rem) clamp(1.5rem, 5vw, 6rem);
 }
@@ -992,8 +993,8 @@
 }
 
 @keyframes nosotrosHeroWordIn {
-  from { opacity: 0; filter: blur(8px); letter-spacing: 0.8em; }
-  to { opacity: 1; filter: blur(0); letter-spacing: 0.5em; }
+  from { opacity: 0; filter: blur(8px); transform: scale(1.04); }
+  to { opacity: 1; filter: blur(0); transform: scale(1); }
 }
 
 @keyframes nosotrosHeroFloat {
@@ -1096,27 +1097,29 @@
 
 .nosotros-hero__headline {
   display: grid;
-  grid-template-columns: 1fr calc(var(--arch-w) + 4vw) 1fr;
+  grid-template-columns: minmax(0, 1fr) calc(var(--arch-w) + 4vw) minmax(0, 1fr);
   gap: 0;
   width: 100%;
 }
 
 .nosotros-hero__giant-word {
-  font-size: clamp(2rem, 3.3vw, 3.9rem);
+  font-size: clamp(1.8rem, 2.9vw, 3.5rem);
   letter-spacing: 0.45em;
+  white-space: nowrap;
   margin-right: 0;
 }
 
 .nosotros-hero__giant-word--white {
   grid-column: 1;
   justify-self: end;
-  margin-right: -0.45em;
+  /* el espaciado final de la última letra queda como aire antes del arco */
+  margin-right: 0;
 }
 
 .nosotros-hero__giant-word--gold {
   grid-column: 3;
   justify-self: start;
-  margin-right: -0.45em;
+  margin-right: 0;
 }
 
 @media (max-width: 900px) {
@@ -1129,7 +1132,9 @@
   .nosotros-hero__giant-word--white,
   .nosotros-hero__giant-word--gold {
     justify-self: auto;
-    margin-right: -0.35em;
+    /* compensa el espaciado tras la última letra para centrar visualmente */
+    margin-right: 0;
+    padding-left: 0.35em;
   }
   .nosotros-hero__top {
     justify-content: center;
@@ -1144,7 +1149,7 @@
     transform: translateX(-50%);
   }
   .nosotros-hero__container {
-    padding-top: 2.2rem;
+    padding: 2.2rem 1.25rem 2rem;
   }
 }
 
