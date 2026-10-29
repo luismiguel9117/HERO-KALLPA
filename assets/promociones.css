@@ -515,3 +515,39 @@
     background: linear-gradient(180deg, var(--promo-ink) 0%, var(--promo-ink) 46%, rgba(13, 13, 14, 0.2) 60%, transparent 80%);
   }
 }
+
+/* Heros: en escritorio la imagen se ajusta a la altura del bloque y se ancla a la
+   derecha con su proporción real, así la lata nunca se recorta; el borde izquierdo
+   se funde con el negro. */
+@media (min-width: 769px) {
+  .promo-hero {
+    min-height: clamp(560px, 40vw, 820px);
+  }
+  .promo-cta {
+    min-height: clamp(460px, 34vw, 700px);
+  }
+  .promo-hero__bg,
+  .promo-cta__bg {
+    inset: 0 0 0 auto;
+    width: auto;
+    height: 100%;
+    max-width: none;
+    background-size: cover;
+    background-position: center;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 22%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 22%);
+  }
+  .promo-hero__bg {
+    aspect-ratio: 1775 / 886;
+  }
+  .promo-cta__bg {
+    aspect-ratio: 1983 / 793;
+  }
+  .promo-hero__shade {
+    background: linear-gradient(90deg, rgba(8, 7, 6, 0.9) 0%, rgba(8, 7, 6, 0.55) 32%, transparent 58%),
+      linear-gradient(180deg, transparent 75%, rgba(13, 13, 14, 0.85) 100%);
+  }
+  .promo-cta__shade {
+    background: linear-gradient(90deg, rgba(8, 6, 4, 0.9) 0%, rgba(8, 6, 4, 0.5) 34%, transparent 58%);
+  }
+}
