@@ -230,10 +230,31 @@ window.addToCartKallpa = function(variantId, quantity = 1) {
 window.addKallpaToCart = function(title, priceSol, image) {
   window.addPackToKallpaCart('pack', title, priceSol, 1);
 };
+// Aparición de bloques en Nosotros para navegadores sin animation-timeline (Safari/iOS)
+function initNosotrosReveal() {
+  if (window.CSS && CSS.supports('animation-timeline: view()')) return;
+  const story = document.querySelector('.nos-story');
+  if (!story || !('IntersectionObserver' in window)) return;
+
+  const items = story.querySelectorAll('.nos-block__text, .nos-block figure');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-inview');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+
+  story.classList.add('nos-reveal-ready');
+  items.forEach(el => observer.observe(el));
+}
+
 // 4. Inicialización al cargar el DOM
 document.addEventListener('DOMContentLoaded', () => {
   initBentoGlow();
   initAnimatedCounters();
+  initNosotrosReveal();
   window.refreshKallpaCart();
 });
 
