@@ -132,10 +132,10 @@
                 {{ block.settings.description | default: 'Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar.' }}
               </p>
 
-              <div style="margin: 0.2rem 0 1.25rem;">
-                <a href="{{ featured_pdp }}" style="display:inline-flex; align-items:center; gap:0.45rem; color:#fbd132; font-family:var(--font-brand); font-size:0.8rem; font-weight:900; letter-spacing:0.08em; text-transform:uppercase; text-decoration:none;">
-                  <span>VER DETALLE DEL PRODUCTO</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              <div class="featured-card__cta">
+                <a href="{{ featured_pdp }}" class="btn-grid-product">
+                  <span>{{ block.settings.btn_text | default: 'VER PRODUCTO' }}</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </a>
               </div>
 
@@ -185,57 +185,6 @@
                 {%- endif -%}
                 <img src="{{ 'hero-bean-single.png' | asset_url }}" alt="" class="stage-bean-front" draggable="false" width="70" height="70">
                 <img src="{{ 'hero-rock-base.png' | asset_url }}" alt="" class="stage-rock-base" draggable="false" width="500" height="200">
-              </div>
-            </div>
-
-            <!-- Columna 3: Tarjeta Dual de Compra -->
-            <div class="featured-card__buy-box">
-              <!-- Opción Unidad -->
-              <div class="buy-box-unit">
-                <div class="unit-badge-header">{{ block.settings.unit_label | default: 'Unidad' }}</div>
-                <div class="unit-price-row">
-                  <span class="unit-price-val">{{ block.settings.unit_price | default: 'S/ 7.90' }}</span>
-                  <span class="unit-volume-val">{{ block.settings.unit_volume | default: '355 ml' }}</span>
-                </div>
-                <div class="qty-stepper-wrap">
-                  <button type="button" class="qty-btn" onclick="updateFeaturedQty(-1)" aria-label="Disminuir">&minus;</button>
-                  <span id="featured-qty-val" class="qty-num">1</span>
-                  <button type="button" class="qty-btn" onclick="updateFeaturedQty(1)" aria-label="Aumentar">+</button>
-                </div>
-                <button type="button" class="btn-buy-gold" onclick="addFeaturedUnitToCart()">
-                  <span>AGREGAR</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
-                  </svg>
-                </button>
-              </div>
-
-              <!-- Opción Pack x 6 -->
-              <div class="buy-box-pack">
-                <div class="pack-badge-header">
-                  <span class="pack-title">{{ block.settings.pack_label | default: 'Pack x 6' }}</span>
-                  <span class="pack-discount-tag">{{ block.settings.pack_discount | default: '-15%' }}</span>
-                </div>
-                <div class="pack-pricing-area">
-                  <span class="pack-old-price">{{ block.settings.pack_old_price | default: 'S/ 47.40' }}</span>
-                  <span class="pack-new-price">{{ block.settings.pack_price | default: 'S/ 39.90' }}</span>
-                  <span class="pack-volume-desc">{{ block.settings.pack_volume | default: '6 latas de 355 ml' }}</span>
-                </div>
-                <div class="pack-cans-cluster" aria-hidden="true">
-                  {%- if block.settings.pack_image != blank -%}
-                    <img src="{{ block.settings.pack_image | image_url: width: 120 }}" alt="" class="mini-cluster-can" draggable="false" width="50" height="90">
-                  {%- else -%}
-                    <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="" class="mini-cluster-can" draggable="false" width="50" height="90">
-                    <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="" class="mini-cluster-can" draggable="false" width="50" height="90">
-                    <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="" class="mini-cluster-can" draggable="false" width="50" height="90">
-                  {%- endif -%}
-                </div>
-                <button type="button" class="btn-buy-gold" onclick="addPackToKallpaCart('pack-6-original-cat', 'Pack x 6 KALPA Original 355ml', 39.90)">
-                  <span>AGREGAR</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
-                  </svg>
-                </button>
               </div>
             </div>
 

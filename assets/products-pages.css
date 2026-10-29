@@ -257,10 +257,14 @@
   position: relative;
   z-index: 5;
   display: grid;
-  grid-template-columns: minmax(320px, 360px) 1fr minmax(320px, 440px);
+  grid-template-columns: minmax(320px, 420px) 1fr;
   gap: clamp(2rem, 3.5vw, 4rem);
   align-items: center;
   width: 100%;
+}
+
+.featured-card__cta {
+  margin: 0.4rem 0 1.6rem;
 }
 
 .featured-card__info {
@@ -1108,7 +1112,7 @@
 
 .pack-selector-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 0.6rem;
 }
 

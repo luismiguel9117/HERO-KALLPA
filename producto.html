@@ -165,50 +165,33 @@
           <span class="product-cat-tag">BEBIDA FUNCIONAL A BASE DE CAFÉ</span>
           <h1 class="product-main-title">KALPA COLD BREW</h1>
           <p class="product-lead-desc">
-            Café de altura de Ayacucho, levemente gasificado, con 280 mg de cafeína real por lata. Sin azúcar.
+            Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural por lata. Listo para tomar, en cualquier momento y lugar.
           </p>
 
           <!-- Bloque de Precio Dinámico -->
           <div class="product-price-block">
-            <span class="product-price-val" id="display-price">S/ 11.90</span>
-            <span class="product-price-sub" id="display-price-sub">S/ 11.90 por lata</span>
-          </div>
-
-          <!-- Selector de Sabor -->
-          <div class="selector-group">
-            <span class="selector-group-label">SABOR</span>
-            <div class="flavor-pills-row">
-              <button type="button" class="flavor-pill is-active" onclick="selectFlavor('Original', this)">Original</button>
-              <button type="button" class="flavor-pill" onclick="selectFlavor('Orange', this)">Orange</button>
-            </div>
+            <span class="product-price-val" id="display-price">S/ 7.90</span>
+            <span class="product-price-sub" id="display-price-sub">S/ 7.90 por lata</span>
           </div>
 
           <!-- Selector de Cantidad (Packs) -->
           <div class="selector-group">
             <span class="selector-group-label">CANTIDAD</span>
             <div class="pack-selector-grid">
-              <button type="button" class="pack-card-btn is-active" onclick="selectPack(1, 11.90, 'Unidad', this)">
+              <button type="button" class="pack-card-btn is-active" onclick="selectPack(1, 7.90, 'Unidad', this)">
                 <span class="pack-card-name">Unidad</span>
-                <span class="pack-card-price">S/ 11.90</span>
+                <span class="pack-card-price">S/ 7.90</span>
               </button>
-              <button type="button" class="pack-card-btn" onclick="selectPack(3, 35.70, 'Tripack', this)">
-                <span class="pack-card-name">Tripack</span>
-                <span class="pack-card-price">S/ 35.70</span>
-              </button>
-              <button type="button" class="pack-card-btn" onclick="selectPack(6, 71.40, 'Six-pack', this)">
-                <span class="pack-card-name">Six-pack</span>
-                <span class="pack-card-price">S/ 71.40</span>
-              </button>
-              <button type="button" class="pack-card-btn" onclick="selectPack(12, 142.80, '12-pack', this)">
-                <span class="pack-card-name">12-pack</span>
-                <span class="pack-card-price">S/ 142.80</span>
+              <button type="button" class="pack-card-btn" onclick="selectPack(6, 39.90, 'Pack x 6', this)">
+                <span class="pack-card-name">Pack x 6 · -15%</span>
+                <span class="pack-card-price">S/ 39.90</span>
               </button>
             </div>
           </div>
 
           <!-- Botón de Compra / Agregar al Carrito -->
           <button type="button" class="btn-product-add" id="btn-add-main" onclick="handleAddToCart()">
-            AGREGAR AL CARRITO &ndash; S/ 11.90
+            AGREGAR AL CARRITO &ndash; S/ 7.90
           </button>
 
           <!-- Sellos de Entrega y Confianza -->
@@ -261,7 +244,7 @@
         <div class="product-info-block">
           <div>
             <h3 class="specs-block-title">QUÉ LLEVA</h3>
-            <h4 class="specs-item-header">Bebida funcional a base de café levemente gasificado y pasteurizado.</h4>
+            <h4 class="specs-item-header">Café cold brew listo para tomar, macerado en frío durante 24 horas.</h4>
             <p class="specs-item-body">
               <strong>Ingredientes:</strong> agua tratada, café de especialidad de Ayacucho y stevia natural.<br>
               <strong>Contenido neto:</strong> 355 ml.
@@ -339,27 +322,27 @@
       <h2 class="cross-title">QUE NO SE TE ACABE A MITAD DE SEMANA</h2>
 
       <div class="cross-cards-grid">
-        <!-- Card 1: Tripack -->
+        <!-- Card 1: Café Molido 250g -->
         <div class="cross-pack-card">
-          <img src="assets/kalpa-can-base.png" alt="Tripack KALPA" class="cross-pack-img">
+          <img src="assets/kalpa-molido-can-solo.png" alt="KALPA Café Molido 250g" class="cross-pack-img">
           <div class="cross-pack-info">
-            <span class="cross-pack-name">TRIPACK</span>
-            <span class="cross-pack-sub">3 latas &middot; S/ 11.90 por lata</span>
-            <span class="cross-pack-price">S/ 35.70</span>
-            <button type="button" class="btn-cross-add" onclick="addPackToKallpaCart('cross-tripack', 'KALPA Tripack (3 latas)', 35.70)">
+            <span class="cross-pack-name">CAFÉ MOLIDO 250G</span>
+            <span class="cross-pack-sub">100% Arábica &middot; Origen VRAEM</span>
+            <span class="cross-pack-price">S/ 34.90</span>
+            <button type="button" class="btn-cross-add" onclick="addPackToKallpaCart('cross-molido-250', 'KALPA Café Molido 250g', 34.90)">
               AGREGAR
             </button>
           </div>
         </div>
 
-        <!-- Card 2: Six-pack -->
+        <!-- Card 2: Pack x 6 -->
         <div class="cross-pack-card">
-          <img src="assets/kalpa-can-original.png" alt="Sixpack KALPA" class="cross-pack-img">
+          <img src="assets/kalpa-can-original.png" alt="Pack x 6 KALPA Original" class="cross-pack-img">
           <div class="cross-pack-info">
-            <span class="cross-pack-name">SIX-PACK</span>
-            <span class="cross-pack-sub">6 latas &middot; S/ 11.90 por lata</span>
-            <span class="cross-pack-price">S/ 71.40</span>
-            <button type="button" class="btn-cross-add" onclick="addPackToKallpaCart('cross-sixpack', 'KALPA Six-pack (6 latas)', 71.40)">
+            <span class="cross-pack-name">PACK X 6</span>
+            <span class="cross-pack-sub">6 latas de 355 ml &middot; -15%</span>
+            <span class="cross-pack-price">S/ 39.90</span>
+            <button type="button" class="btn-cross-add" onclick="addPackToKallpaCart('pack-6-original', 'Pack x 6 KALPA Original 355ml', 39.90)">
               AGREGAR
             </button>
           </div>
@@ -538,7 +521,7 @@
   </div>
 
   <script>
-    let currentPack = { qty: 1, price: 11.90, name: 'Unidad' };
+    let currentPack = { qty: 1, price: 7.90, name: 'Unidad' };
     let currentFlavor = 'Original';
 
     function selectPack(qty, price, name, btn) {
@@ -552,7 +535,7 @@
       
       if (priceEl) priceEl.textContent = `S/ ${price.toFixed(2)}`;
       if (subEl) {
-        if (qty === 1) subEl.textContent = 'S/ 11.90 por lata';
+        if (qty === 1) subEl.textContent = 'S/ 7.90 por lata';
         else subEl.textContent = `${qty} latas \u00B7 S/ ${(price / qty).toFixed(2)} por lata`;
       }
       if (addBtn) addBtn.textContent = `AGREGAR AL CARRITO \u2013 S/ ${price.toFixed(2)}`;
