@@ -1,0 +1,72 @@
+# Mantiene la rama `shopify-theme` con SOLO las carpetas del tema de Shopify.
+# Shopify se conecta a esa rama (Tienda online → Temas → Conectar desde GitHub),
+# porque su integración no admite los archivos extra de `main` (páginas .html,
+# scripts, .agents, lata-3d...).
+#
+# Nota: los cambios hechos desde el editor de temas de Shopify se guardan como
+# commits en `shopify-theme` y se sobrescriben con el siguiente push a `main`.
+# Edita el tema aquí, en `main`.
+name: Sync Shopify theme branch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "assets/**"
+      - "config/**"
+      - "layout/**"
+      - "locales/**"
+      - "sections/**"
+      - "snippets/**"
+      - "templates/**"
+      - "blocks/**"
+      - ".github/workflows/sync-shopify-theme.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-shopify-theme
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Copy theme folders
+        run: |
+          mkdir -p "$RUNNER_TEMP/theme"
+          for dir in assets config layout locales sections snippets templates blocks; do
+            if [ -d "$dir" ]; then cp -r "$dir" "$RUNNER_TEMP/theme/"; fi
+          done
+
+      - name: Update shopify-theme branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          SRC_SHA="$(git rev-parse --short HEAD)"
+
+          if git ls-remote --exit-code --heads origin shopify-theme >/dev/null; then
+            git fetch origin shopify-theme
+            git checkout -B shopify-theme origin/shopify-theme
+          else
+            git checkout --orphan shopify-theme
+          fi
+
+          git rm -rf --quiet . || true
+          git clean -fdxq
+          cp -r "$RUNNER_TEMP/theme/." .
+
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Theme already up to date."
+            exit 0
+          fi
+          git commit -m "sync: theme from main@${SRC_SHA}"
+          git push origin shopify-theme
