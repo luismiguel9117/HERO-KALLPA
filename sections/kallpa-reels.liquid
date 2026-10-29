@@ -43,8 +43,9 @@
       <!-- Bloque Izquierdo: Fila de Reels Configurables -->
       <div class="community-reels-row">
         
-        {%- if section.blocks.size > 0 -%}
-          {%- for block in section.blocks -%}
+        {%- assign reel_blocks = section.blocks | where: 'type', 'reel' -%}
+        {%- if reel_blocks.size > 0 -%}
+          {%- for block in reel_blocks -%}
             <div class="community-reel-card" 
                  data-video-url="{{ block.settings.video_url }}"
                  data-reel-link="{{ block.settings.reel_url }}"
@@ -113,7 +114,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
               </svg>
-              <span>COMPRA VERIFICADA</span>
+              <span id="communityReviewBadge">{{ section.settings.review_badge | default: 'COMUNIDAD KALPA' }}</span>
             </div>
           </div>
 
@@ -151,15 +152,28 @@
                 </button>
               </div>
               <div class="review-dots-wrap" id="communityDotsWrap">
-                <span class="review-dot is-active" data-index="0"></span>
-                <span class="review-dot" data-index="1"></span>
-                <span class="review-dot" data-index="2"></span>
-                <span class="review-dot" data-index="3"></span>
+                {%- assign review_blocks = section.blocks | where: 'type', 'review' -%}
+                {%- assign dot_count = review_blocks.size -%}
+                {%- if dot_count == 0 -%}{%- assign dot_count = 4 -%}{%- endif -%}
+                {%- for i in (1..dot_count) -%}
+                  <span class="review-dot{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.index0 }}"></span>
+                {%- endfor -%}
               </div>
             </div>
           </div>
 
         </div>
+
+        {%- if section.settings.google_reviews_url != blank or section.settings.google_write_url != blank -%}
+          <div class="review-google-links">
+            {%- if section.settings.google_reviews_url != blank -%}
+              <a href="{{ section.settings.google_reviews_url }}" target="_blank" rel="noopener noreferrer" class="review-google-link">Ver todas en Google Maps</a>
+            {%- endif -%}
+            {%- if section.settings.google_write_url != blank -%}
+              <a href="{{ section.settings.google_write_url }}" target="_blank" rel="noopener noreferrer" class="review-google-link review-google-link--ghost">Dejar una reseña</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
       </div>
 
     </div>
@@ -176,6 +190,25 @@
     </div>
   </div>
 </section>
+
+{%- if review_blocks.size > 0 -%}
+<script>
+  window.communityReviews = [
+    {%- for block in review_blocks -%}
+      {%- assign words = block.settings.name | split: ' ' -%}
+      {%- capture initials -%}{%- for w in words limit: 2 -%}{{ w | slice: 0 | upcase }}{%- endfor -%}{%- endcapture -%}
+      {%- capture headline -%}“{{ block.settings.headline_start | escape }}{% if block.settings.headline_gold != blank %} <span class="text-gold">{{ block.settings.headline_gold | escape }}</span>{% endif %}{% if block.settings.headline_end != blank %} {{ block.settings.headline_end | escape }}{% endif %}”{%- endcapture -%}
+      {
+        headline: {{ headline | json }},
+        text: {{ block.settings.text | json }},
+        avatar: {{ initials | json }},
+        name: {{ block.settings.name | json }},
+        meta: {{ block.settings.meta | json }}
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ];
+</script>
+{%- endif -%}
 
 <script>
   function handleReelClick(card) {
@@ -269,6 +302,29 @@
       "type": "url",
       "id": "instagram_url",
       "label": "URL Perfil de Instagram"
+    },
+    {
+      "type": "header",
+      "content": "Reseñas de Google"
+    },
+    {
+      "type": "text",
+      "id": "review_badge",
+      "label": "Etiqueta de la tarjeta",
+      "default": "COMUNIDAD KALPA",
+      "info": "Cambia a RESEÑA DE GOOGLE solo cuando las reseñas sean copiadas de Google"
+    },
+    {
+      "type": "url",
+      "id": "google_reviews_url",
+      "label": "Enlace a las reseñas en Google Maps",
+      "info": "En Google Maps: tu ficha → Compartir → Copiar enlace"
+    },
+    {
+      "type": "url",
+      "id": "google_write_url",
+      "label": "Enlace para dejar una reseña",
+      "info": "Perfil de Empresa de Google → Pedir reseñas → copiar enlace"
     }
   ],
   "blocks": [
@@ -314,6 +370,48 @@
           "type": "text",
           "id": "inline_video",
           "label": "URL de video para reproducir en la misma tarjeta"
+        }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Reseña",
+      "settings": [
+        {
+          "type": "text",
+          "id": "headline_start",
+          "label": "Título (inicio)",
+          "default": "Me da"
+        },
+        {
+          "type": "text",
+          "id": "headline_gold",
+          "label": "Título (parte dorada)",
+          "default": "energía limpia"
+        },
+        {
+          "type": "text",
+          "id": "headline_end",
+          "label": "Título (final)",
+          "default": "para mis fondos de 15K"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Texto de la reseña",
+          "info": "Copia aquí el texto de la reseña de Google"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nombre de quien la escribió",
+          "default": "Nombre Apellido"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Detalle (ej. Reseña en Google · Lima)",
+          "default": "Reseña en Google"
         }
       ]
     }
