@@ -1,0 +1,182 @@
+{%- comment -%}
+  SECCIÓN: header.liquid
+  Header Global Glassmorphic Oficial KALPA con Navegación Centrada y Drawer Móvil
+{%- endcomment -%}
+
+<!-- 1. Barra Superior de Anuncios Amarillo Oro -->
+{%- if section.settings.show_announcement -%}
+<div class="kalpa-announcement-bar">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="announcement-truck-icon">
+    <rect x="1" y="3" width="15" height="13"></rect>
+    <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+    <circle cx="5.5" cy="18.5" r="2.5"></circle>
+    <circle cx="18.5" cy="18.5" r="2.5"></circle>
+  </svg>
+  <span>{{ section.settings.announcement_text | default: 'Envíos a todo el Perú. Compra por unidad o por pack.' }}</span>
+  <a href="{{ section.settings.announcement_link | default: routes.all_products_collection_url }}" class="announcement-link-desktop">
+    {{ section.settings.announcement_link_text | default: 'Ver promoción de lanzamiento' }}
+  </a>
+</div>
+{%- endif -%}
+
+<!-- 2. Barra de Navegación Negra -->
+<header class="kalpa-navbar kalpa-nav-header" id="kallpa-header">
+  <div class="page-width kalpa-navbar__container">
+    
+    <!-- Logo KALPA Oficial -->
+    <a href="{{ routes.root_url }}" class="kalpa-logo" aria-label="KALPA Cold Brew - Inicio">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 320 }}" alt="{{ shop.name }}" class="kalpa-logo__img" width="165" height="38" />
+      {%- else -%}
+        <img src="{{ 'logo-kalpa-white.png' | asset_url }}" alt="KALPA Logo" class="kalpa-logo__img" width="165" height="38" />
+      {%- endif -%}
+    </a>
+
+    <!-- Menú Central Rigurosamente Centrado al 50% -->
+    <nav class="kalpa-nav-menu" aria-label="Navegación principal">
+      <a href="{{ routes.root_url }}" class="kalpa-nav-item{% if template.name == 'index' or request.path == routes.root_url %} is-active{% endif %}">Inicio</a>
+      <a href="{{ routes.all_products_collection_url }}" class="kalpa-nav-item{% if template.name == 'collection' or template.name == 'product' or request.path contains 'collections' or request.path contains 'products' or request.path contains 'productos' %} is-active{% endif %}">Productos</a>
+      <a href="/pages/promociones" class="kalpa-nav-item">Promociones</a>
+      <a href="/pages/contact" class="kalpa-nav-item{% if template.name == 'page' and page.handle contains 'nosotros' or page.handle contains 'contact' or request.path contains 'nosotros' or request.path contains 'contact' %} is-active{% endif %}">Nosotros</a>
+    </nav>
+
+    <!-- Acciones Derecha (Búsqueda, Cuenta, Wishlist, Carrito, CTA, Hamburger) -->
+    <div class="kalpa-nav-actions">
+      <!-- Búsqueda -->
+      <a href="{{ routes.search_url }}" class="kalpa-nav-icon nav-icon--search" aria-label="Buscar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </a>
+
+      <!-- Cuenta de Usuario -->
+      <a href="{{ routes.account_url }}" class="kalpa-nav-icon nav-icon--account" aria-label="Mi Cuenta">
+        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </a>
+
+      <!-- Lista de Deseos / Favoritos -->
+      <button type="button" class="kalpa-nav-icon nav-icon--favorites" aria-label="Lista de Deseos" onclick="handleKallpaWishlist(this)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+      </button>
+
+      <!-- Carrito Cápsula -->
+      <button type="button" class="kalpa-cart-capsule" onclick="openKallpaCart()" aria-label="Abrir Carrito">
+        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span id="kallpa-cart-count">{{ cart.item_count }}</span>
+      </button>
+
+      <!-- Botón Comprar Ahora -->
+      <a href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" class="kalpa-nav-cta">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="8" cy="21" r="1"></circle>
+          <circle cx="19" cy="21" r="1"></circle>
+          <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+        </svg>
+        <span>{{ section.settings.cta_text | default: 'COMPRAR AHORA' }}</span>
+      </a>
+
+      <!-- Botón de Menú Hamburguesa Móvil -->
+      <button type="button" class="kalpa-nav-hamburger" id="kalpa-mobile-menu-btn" aria-label="Abrir Menú" onclick="openKallpaMobileMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<!-- Drawer Móvil Deslizante Global -->
+<div id="kalpa-mobile-menu-drawer" class="kalpa-mobile-menu-drawer" aria-hidden="true">
+  <div class="kalpa-mobile-menu-overlay" onclick="closeKallpaMobileMenu()"></div>
+  <div class="kalpa-mobile-menu-content">
+    <div class="kalpa-mobile-menu-header">
+      <a href="{{ routes.root_url }}" class="kalpa-logo" aria-label="KALPA - Inicio">
+        <img src="{{ 'logo-kalpa-white.png' | asset_url }}" alt="KALPA Logo" class="kalpa-logo__img" width="135" height="32" />
+      </a>
+      <button type="button" class="kalpa-mobile-menu-close" onclick="closeKallpaMobileMenu()" aria-label="Cerrar Menú">✕</button>
+    </div>
+    <nav class="kalpa-mobile-menu-links">
+      {%- if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 -%}
+        {%- for link in linklists[section.settings.menu].links -%}
+          <a href="{{ link.url }}" class="kalpa-mobile-item{% if link.active %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.root_url }}" class="kalpa-mobile-item{% if template.name == 'index' or request.path == routes.root_url %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Inicio</a>
+        <a href="{{ routes.all_products_collection_url }}" class="kalpa-mobile-item{% if template.name == 'collection' or template.name == 'product' or request.path contains 'collections' or request.path contains 'products' or request.path contains 'productos' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Productos</a>
+        <a href="/pages/promociones" class="kalpa-mobile-item" onclick="closeKallpaMobileMenu()">Promociones</a>
+        <a href="/pages/contact" class="kalpa-mobile-item{% if template.name == 'page' and page.handle contains 'nosotros' or page.handle contains 'contact' or request.path contains 'nosotros' or request.path contains 'contact' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Nosotros</a>
+      {%- endif -%}
+    </nav>
+    <div class="kalpa-mobile-menu-footer">
+      <a href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" class="kalpa-nav-cta kalpa-mobile-cta" onclick="closeKallpaMobileMenu()">
+        <span>{{ section.settings.cta_text | default: 'COMPRAR AHORA' }}</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header KALPA",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Mostrar Barra de Anuncios",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Texto del Anuncio",
+      "default": "Envíos a todo el Perú. Compra por unidad o por pack."
+    },
+    {
+      "type": "text",
+      "id": "announcement_link_text",
+      "label": "Texto del Enlace del Anuncio",
+      "default": "Ver promoción de lanzamiento"
+    },
+    {
+      "type": "url",
+      "id": "announcement_link",
+      "label": "Enlace del Anuncio"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Personalizado"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menú de Navegación",
+      "default": "main-menu"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Texto Botón CTA",
+      "default": "COMPRAR AHORA"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Enlace Botón CTA"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code | default: 'es' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    {%- if template.name == 'cart' -%}
+      <meta http-equiv="refresh" content="0; url={{ routes.root_url }}">
+      <script>window.location.replace("{{ routes.root_url }}");</script>
+    {%- endif -%}
+    <script>
+      if (window.location.pathname.includes('/pages/nosotros') || window.location.pathname.includes('/pages/about')) {
+        window.location.replace('/pages/contact');
+      }
+      (function() {
+        var p = window.location.pathname.toLowerCase();
+        if (p.includes('terminos') || p.includes('privacidad') || p.includes('devolucion') || p.includes('reclamacion') || p.includes('legal')) {
+          document.documentElement.classList.add('is-legal-page-view');
+        }
+      })();
+    </script>
+    <style>
+      .kallpa-legal-fallback { display: none; }
+      .is-legal-page-view .kallpa-404-default { display: none !important; }
+      .is-legal-page-view .kallpa-legal-fallback { display: block !important; }
+    </style>
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="icon" type="image/png" href="{{ 'logo-k-symbol-white.png' | asset_url }}">
+    
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {{ content_for_header }}
+
+    <!-- Estilos Principales -->
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    {{ 'kalpa-intro.css' | asset_url | stylesheet_tag }}
+    {{ 'products-pages.css' | asset_url | stylesheet_tag }}
+    {{ 'nosotros.css' | asset_url | stylesheet_tag }}
+    {{ 'promociones.css' | asset_url | stylesheet_tag }}
+
+    <!-- Shopify Asset Maps para Scripts Modulares -->
+    <script>
+      window.Shopify = window.Shopify || {};
+      window.Shopify.routes = window.Shopify.routes || {
+        root: "{{ routes.root_url }}",
+        cart: "{{ routes.cart_url }}",
+        cart_add_url: "{{ routes.cart_add_url }}",
+        cart_change_url: "{{ routes.cart_change_url }}",
+        cart_clear_url: "{{ routes.cart_clear_url }}"
+      };
+      {%- assign fallback_variant = collections['all'].products.first.variants.first.id -%}
+      window.Shopify.default_variant_id = {{ fallback_variant | default: 67960537088316 }};
+
+      window.ShopifyAssetUrls = {
+        'hero-beans-ice-back.webp': "{{ 'hero-beans-ice-back.webp' | asset_url }}",
+        'kalpa-can-rims.png': "{{ 'kalpa-can-rims.png' | asset_url }}",
+        'hero-beans-ice-front.webp': "{{ 'hero-beans-ice-front.webp' | asset_url }}",
+        'hero-bean-single.png': "{{ 'hero-bean-single.png' | asset_url }}",
+        'hero-rock-base.webp': "{{ 'hero-rock-base.webp' | asset_url }}",
+        'kalpa-can-base.webp': "{{ 'kalpa-can-base.webp' | asset_url }}",
+        'kalpa-can-droplets.png': "{{ 'kalpa-can-droplets.png' | asset_url }}",
+        'kalpa-label.webp': "{{ 'kalpa-label.webp' | asset_url }}"
+      };
+    </script>
+
+    <!-- Three.js ES Modules & Addons Importmap -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+          "./canRenderer.js": "{{ 'canRenderer.js' | asset_url }}"
+        }
+      }
+    </script>
+    <script src="{{ 'gsap.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'ScrollTrigger.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'kalpa-intro.js' | asset_url }}" defer></script>
+    <script src="{{ 'motion.js' | asset_url }}" defer></script>
+    <script src="{{ 'framer-animations.js' | asset_url }}" defer></script>
+    <script type="module" src="{{ 'hero-kallpa-can.js' | asset_url }}"></script>
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    <script src="{{ 'kalpa-components.js' | asset_url }}" defer></script>
+  </head>
+  <body class="{% if template.name == 'index' %}has-intro{% else %}web-revealed{% endif %}">
+
+    <!-- Header Fijo Glassmorphic -->
+    {% section 'header' %}
+
+    <!-- Contenido Dinámico de Páginas y Secciones -->
+    <main role="main" id="MainContent">
+      {%- if template.name == '404' -%}
+        <div class="kallpa-404-default">
+          {{ content_for_layout }}
+        </div>
+        <div class="kallpa-legal-fallback" id="kallpaLegalFallback">
+          {% section 'main-legal-page' %}
+        </div>
+      {%- else -%}
+        {{ content_for_layout }}
+      {%- endif -%}
+    </main>
+
+    <!-- Footer Global -->
+    {% section 'footer' %}
+
+    <!-- Drawer del Carrito AJAX Global -->
+    <div id="kallpa-cart-overlay" class="cart-overlay" onclick="closeKallpaCart()"></div>
+    <div id="kallpa-cart-drawer" class="cart-drawer">
+      <div class="cart-drawer__header">
+        <h3 style="font-size: 1.1rem; font-weight: 800; letter-spacing: 0.1em; color: var(--text-main); margin: 0;">
+          TU SELECCIÓN KALLPA
+        </h3>
+        <button class="cart-drawer__close" onclick="closeKallpaCart()" aria-label="Cerrar Carrito">
+          ✕
+        </button>
+      </div>
+
+      <div id="kallpa-cart-items" style="flex: 1; overflow-y: auto;">
+        <!-- Inyectado dinámicamente por theme.js -->
+      </div>
+
+      <div id="kallpa-cart-footer">
+        <!-- Inyectado dinámicamente por theme.js -->
+      </div>
+    </div>
+
+  </body>
+</html>

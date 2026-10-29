@@ -1,0 +1,28 @@
+{%- comment -%}
+  SECCIÓN: main-cart.liquid
+  Redirecciona automáticamente a la página de Inicio (/)
+{%- endcomment -%}
+
+<div class="cart-redirect-container" style="min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 1.5rem; background: #060709;">
+  <div style="font-size: 3rem; margin-bottom: 1.5rem;">⚡</div>
+  <h1 style="font-family: var(--font-brand); font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: #ffffff; text-transform: uppercase; margin-bottom: 1rem;">
+    VOLVIENDO AL INICIO
+  </h1>
+  <p style="font-size: 1rem; color: rgba(255, 255, 255, 0.65); max-width: 480px; margin-bottom: 2rem;">
+    Te estamos redirigiendo a la pestaña de inicio de KALPA...
+  </p>
+  <a href="{{ routes.root_url }}" class="btn-checkout-gold" style="display: inline-flex; width: auto; padding: 1rem 2.5rem; font-size: 0.9rem; text-decoration: none;">
+    <span>IR AL INICIO</span>
+  </a>
+</div>
+
+<script>
+  window.location.replace("{{ routes.root_url }}");
+</script>
+
+{% schema %}
+{
+  "name": "Redirección de Carrito",
+  "settings": []
+}
+{% endschema %}

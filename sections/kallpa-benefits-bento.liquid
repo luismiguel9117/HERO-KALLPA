@@ -1,0 +1,80 @@
+{%- comment -%}
+  SECCIÓN: kallpa-benefits-bento.liquid
+  Hecho para tu día: Rendir ahora y cuidarte después (2 Bento Cards)
+{%- endcomment -%}
+
+<section class="kallpa-section kallpa-benefits-section" id="benefits-section">
+  <div class="page-width">
+    
+    <div class="benefits-header">
+      <span class="section-eyebrow">{{ section.settings.eyebrow | default: 'HECHO PARA TU DÍA' }}</span>
+      <h2 class="section-main-title">
+        {{ section.settings.title_part1 | default: 'RENDIR AHORA' }}
+        <span class="text-gold">{{ section.settings.title_part2 | default: 'Y CUIDARTE DESPUÉS' }}</span>
+      </h2>
+    </div>
+
+    <div class="benefits-bento-grid">
+      
+      <!-- Tarjeta 1: Cafeína de la Tierra -->
+      <div class="benefit-bento-card">
+        <div class="benefit-icon-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <div class="benefit-card__content">
+          <h3 class="benefit-card__title">CAFEÍNA DE LA TIERRA, NO DE LABORATORIO</h3>
+          <p class="benefit-card__desc">
+            280 mg de cafeína natural para mantener tu enfoque, sin picos ni caídas bruscas.
+          </p>
+        </div>
+      </div>
+
+      <!-- Tarjeta 2: Para Jornadas Reales -->
+      <div class="benefit-bento-card">
+        <div class="benefit-icon-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10S2 17.523 2 12A10 10 0 0 1 12 2z"></path>
+            <path d="M12 6v12"></path>
+            <path d="M8 10l4-4 4 4"></path>
+          </svg>
+        </div>
+        <div class="benefit-card__content">
+          <h3 class="benefit-card__title">PARA JORNADAS REALES</h3>
+          <p class="benefit-card__desc">
+            Energía sostenida, sin azúcar ni conservantes, para que hagas más de lo que te gusta.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Beneficios Bento KALPA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "HECHO PARA TU DÍA"
+    },
+    {
+      "type": "text",
+      "id": "title_part1",
+      "label": "Título Parte 1",
+      "default": "RENDIR AHORA"
+    },
+    {
+      "type": "text",
+      "id": "title_part2",
+      "label": "Título Parte 2 (Dorado)",
+      "default": "Y CUIDARTE DESPUÉS"
+    }
+  ]
+}
+{% endschema %}

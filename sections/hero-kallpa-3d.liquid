@@ -1,0 +1,267 @@
+{%- comment -%}
+  SECCIÓN: hero-kallpa-3d.liquid
+  Hero Carousel de Banners con Lata 3D Ultra-HD en posición diagonal (Pixel-Perfect con Mockup)
+{%- endcomment -%}
+
+<section class="kalpa-hero-carousel" id="hero-section" style="background-image: url('{{ 'kalpa-hero-bg.webp' | asset_url }}');">
+  
+  <!-- 1. Marca de agua con patrón textil andino -->
+  <div class="kalpa-hero__pattern"></div>
+
+  <!-- 2. Resplandor de Luz Dorado posicionado detrás de la lata (Backlight & Rim Flare) -->
+  <div class="kalpa-hero__backlight">
+    <div class="kalpa-hero__backlight-glow"></div>
+    <div class="kalpa-hero__backlight-core"></div>
+    <div class="kalpa-hero__backlight-flare"></div>
+  </div>
+
+  <!-- 3. Elementos de Cacao con Difuminación jugando con los planos (Bokeh Foreground & Background) -->
+  <div class="cacao-beans-viewport" id="cacao-beans-viewport">
+    <!-- PLANO 1: Primer plano desenfocado izquierdo (Foreground Bokeh) -->
+    <div class="cacao-bean cacao-bean--top-left" data-depth="0.08" data-plane="foreground">
+      <img src="{{ 'cacao-1.webp' | asset_url }}" alt="" class="cacao-bean__img cacao-anim--float-1" draggable="false" width="120" height="120">
+    </div>
+    <div class="cacao-bean cacao-bean--bottom-left" data-depth="0.09" data-plane="foreground">
+      <img src="{{ 'cacao-1.webp' | asset_url }}" alt="" class="cacao-bean__img cacao-anim--float-2" draggable="false" width="120" height="120">
+    </div>
+
+    <!-- PLANO 2: Bokeh inferior central-izquierdo -->
+    <div class="cacao-bean cacao-bean--bottom-center-1" data-depth="0.06" data-plane="foreground">
+      <img src="{{ 'cacao-1.webp' | asset_url }}" alt="" class="cacao-bean__img cacao-anim--float-5" draggable="false" width="120" height="120">
+    </div>
+
+    <!-- PLANO 3: Esquina superior e inferior derecha desenfocadas -->
+    <div class="cacao-bean cacao-bean--top-right" data-depth="0.07" data-plane="foreground">
+      <img src="{{ 'cacao-1.webp' | asset_url }}" alt="" class="cacao-bean__img cacao-anim--float-7" draggable="false" width="120" height="120">
+    </div>
+    <div class="cacao-bean cacao-bean--mid-right" data-depth="0.07" data-plane="foreground">
+      <img src="{{ 'cacao-1.webp' | asset_url }}" alt="" class="cacao-bean__img cacao-anim--float-4" draggable="false" width="120" height="120">
+    </div>
+    <div class="cacao-bean cacao-bean--bottom-right" data-depth="0.09" data-plane="foreground">
+      <img src="{{ 'cacao-1.webp' | asset_url }}" alt="" class="cacao-bean__img cacao-anim--float-3" draggable="false" width="120" height="120">
+    </div>
+  </div>
+
+    <!-- Viewport 2D Animada con Canvas Cilíndrico Interactivo (Kallpa Repo) -->
+  <div id="kallpa-hero-2d-anim" 
+       class="hero-2d-anim-viewport"
+       data-base-can="{{ 'kalpa-can-base.webp' | asset_url }}"
+       data-droplets="{{ 'kalpa-can-droplets.png' | asset_url }}"
+       data-label-original="{{ 'kalpa-label.webp' | asset_url }}"
+       data-label-gold="{{ 'kalpa-label-gold.webp' | asset_url }}"
+       data-label-citrus="{{ 'kalpa-label-citrus.webp' | asset_url }}">
+  </div>
+
+  <!-- 6. Carrusel de Banners y Contenido Editorial -->
+  <div class="page-width" style="position: relative; z-index: 10; width: 100%; pointer-events: none;">
+    <div class="kalpa-carousel-slides" id="kalpa-carousel-slides">
+      
+      {%- for block in section.blocks -%}
+        <div class="kalpa-slide {% if forloop.first %}is-active{% endif %}" 
+             data-slide-index="{{ forloop.index0 }}"
+             {{ block.shopify_attributes }}>
+          <div class="kalpa-hero__left-content">
+            <div class="kalpa-hero__kicker">
+              <span class="kicker-line"></span>
+              {{ block.settings.kicker | default: 'ENERGÍA DE LOS ANDES' }}
+            </div>
+            <h1 class="kalpa-hero__giant-title">
+              <span class="title-white">{{ block.settings.lead_title | default: 'CAFÉ DE' }}</span>
+              <span class="title-gold">{{ block.settings.giant_title | default: 'VRAEM' }}</span>
+            </h1>
+            <p class="kalpa-hero__paragraph">{{ block.settings.description | default: 'Energía natural para tu día. Café cold brew listo para tomar, hecho con granos del VRAEM y con todo el sabor de los Andes.' }}</p>
+            
+            <div class="kalpa-hero__actions">
+              <a href="{{ block.settings.btn_url | default: '#products-section' }}" class="btn-pruebala">
+                <span>{{ block.settings.btn_text | default: 'PRUÉBALA AHORA' }}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-arrow">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+
+    </div>
+  </div>
+
+  <!-- 7. Flechas Laterales del Carrusel Hero -->
+  <button type="button" class="carousel-btn-arrow carousel-btn-arrow--left" id="carousel-prev" aria-label="Banner Anterior">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+  <button type="button" class="carousel-btn-arrow carousel-btn-arrow--right" id="carousel-next" aria-label="Siguiente Banner">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+
+  <!-- 8. Controles Inferiores del Carrusel (Paginación Numerada 01-02-03 y Switch 2D/3D) -->
+  <div class="kalpa-carousel-nav">
+    <div class="carousel-dots" id="carousel-dots">
+      {%- for block in section.blocks -%}
+        <button type="button" 
+                class="carousel-dot {% if forloop.first %}is-active{% endif %}" 
+                data-dot-index="{{ forloop.index0 }}" 
+                aria-label="Ir a diapositiva {{ forloop.index }}">
+          <span class="dot-num">0{{ forloop.index }}</span>
+          <span class="dot-bar"></span>
+        </button>
+        {%- unless forloop.last -%}
+          <span class="dot-connector"></span>
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+
+    
+  </div>
+
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const slides = document.querySelectorAll('.kalpa-slide');
+    const dots = document.querySelectorAll('.carousel-dot');
+    const prevBtn = document.getElementById('carousel-prev');
+    const nextBtn = document.getElementById('carousel-next');
+    
+    if (!slides.length) return;
+
+    let currentIndex = 0;
+    let autoPlayTimer = null;
+
+    function goToSlide(index) {
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+
+      slides.forEach((s, idx) => {
+        s.classList.toggle('is-active', idx === index);
+      });
+
+      dots.forEach((d, idx) => {
+        d.classList.toggle('is-active', idx === index);
+      });
+
+      currentIndex = index;
+
+      // Animar y reaccionar la lata 3D al cambio de diapositiva
+      document.dispatchEvent(new CustomEvent('kallpa:slidechange', { detail: { index: currentIndex } }));
+      if (window.kallpa3D && typeof window.kallpa3D.transitionSlide === 'function') {
+        window.kallpa3D.transitionSlide(currentIndex);
+      }
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => {
+      goToSlide(currentIndex - 1);
+      resetAutoPlay();
+    });
+
+    if (nextBtn) nextBtn.addEventListener('click', () => {
+      goToSlide(currentIndex + 1);
+      resetAutoPlay();
+    });
+
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => {
+        goToSlide(idx);
+        resetAutoPlay();
+      });
+    });
+
+    function startAutoPlay() {
+      autoPlayTimer = setInterval(() => {
+        goToSlide(currentIndex + 1);
+      }, 6500);
+    }
+
+    function resetAutoPlay() {
+      clearInterval(autoPlayTimer);
+      startAutoPlay();
+    }
+
+    startAutoPlay();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "⚡ Hero Carousel KALPA",
+  "tag": "section",
+  "class": "section-kallpa-hero-carousel",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Banner Diapositiva",
+      "settings": [
+        {
+          "type": "text",
+          "id": "lead_title",
+          "label": "Título Superior (Blanco)",
+          "default": "CAFÉ DE"
+        },
+        {
+          "type": "text",
+          "id": "giant_title",
+          "label": "Título Principal (Amarillo Gigante)",
+          "default": "VRAEM"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Párrafo Editorial",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis."
+        },
+        {
+          "type": "text",
+          "id": "btn_text",
+          "label": "Texto del Botón",
+          "default": "PRUEBALA AHORA"
+        },
+        {
+          "type": "url",
+          "id": "btn_url",
+          "label": "Enlace del Botón"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "⚡ Hero Carousel KALPA",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "lead_title": "CAFÉ DE",
+            "giant_title": "VRAEM",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.",
+            "btn_text": "PRUEBALA AHORA"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "lead_title": "EXTRACCIÓN",
+            "giant_title": "COLD BREW",
+            "description": "Macerado lentamente en frío durante 24 horas continuas a 4°C. Preserva las notas más finas a cacao y elimina por completo la acidez punzante.",
+            "btn_text": "DESCUBRIR MÁS"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "lead_title": "ENERGÍA PURA",
+            "giant_title": "SIN CRASH",
+            "description": "180mg de cafeína natural de altura con antioxidantes botánicos. Rendimiento sostenido y enfoque mental prolongado para todo tu día.",
+            "btn_text": "COMPRAR PACK"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

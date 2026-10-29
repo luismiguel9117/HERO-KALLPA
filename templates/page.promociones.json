@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "promociones": {
+      "type": "main-promociones",
+      "settings": {}
+    }
+  },
+  "order": [
+    "promociones"
+  ]
+}

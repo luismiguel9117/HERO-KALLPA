@@ -1,0 +1,541 @@
+{%- comment -%}
+  SECCIÓN: kallpa-products.liquid
+  Carrusel Interactivo Modular de Productos KALPA
+  Permite agregar N productos/slides como bloques agrupados en el Theme Editor
+{%- endcomment -%}
+
+<section class="kalpa-product-showcase-sale" id="products-section" aria-label="Nuestros Productos">
+  
+  <!-- Carousel Track Wrapper -->
+  <div class="kalpa-product-carousel" id="kalpaProductCarousel">
+    
+    <!-- Flechas de navegación -->
+    <button type="button" class="carousel-arrow carousel-arrow--prev" onclick="prevProductSlide()" aria-label="Producto anterior">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    <button type="button" class="carousel-arrow carousel-arrow--next" onclick="nextProductSlide()" aria-label="Producto siguiente">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+
+    <!-- Slides Container -->
+    <div class="kalpa-product-carousel-track">
+
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <div class="kalpa-product-slide {% if forloop.first %}active{% endif %} {% if block.type == 'product_molido' or block.settings.theme_variant == 'molido' %}kalpa-product-slide--molido{% else %}kalpa-product-slide--original{% endif %}" 
+               id="product-slide-{{ forloop.index0 }}" 
+               data-slide-index="{{ forloop.index0 }}"
+               {{ block.shopify_attributes }}>
+            <div class="page-width kalpa-sale-container">
+              <div class="kalpa-sale-grid">
+                
+                <!-- Columna 1: Información Editorial -->
+                <div class="kalpa-sale__info">
+                  <span class="sale-top-line"></span>
+                  <span class="sale-eyebrow">{{ block.settings.eyebrow | default: 'NUESTRO PRODUCTO' }}</span>
+                  <h2 class="sale-giant-title">
+                    <span class="sale-title-main">{{ block.settings.title_main | default: 'KALPA' }}</span>
+                    <span class="sale-title-sub">{{ block.settings.title_sub | default: 'ORIGINAL' }}</span>
+                  </h2>
+                  <p class="sale-description">
+                    {{ block.settings.description | default: 'Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar.' }}
+                  </p>
+                  
+                  {%- if block.settings.product_link != blank or block.settings.btn_link_text != blank -%}
+                    {%- assign slide_pdp = block.settings.product_link -%}
+                    {%- if slide_pdp contains '/products/kalpa-' -%}
+                      {%- assign check_handle = slide_pdp | remove: '/products/' -%}
+                      {%- if all_products[check_handle].url == blank -%}
+                        {%- assign slide_pdp = collections['all'].products.first.url | default: '/products/the-collection-snowboard-liquid' -%}
+                      {%- endif -%}
+                    {%- elsif slide_pdp == blank -%}
+                      {%- assign slide_pdp = collections['all'].products.first.url | default: '/products/the-collection-snowboard-liquid' -%}
+                    {%- endif -%}
+                    <div style="margin: 0.4rem 0 1rem;">
+                      <a href="{{ slide_pdp }}" style="display: inline-flex; align-items: center; gap: 0.45rem; color: #fbd132; font-family: var(--font-brand); font-size: 0.78rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s;">
+                        <span>{{ block.settings.btn_link_text | default: 'Ver ficha completa' }}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                      </a>
+                    </div>
+                  {%- endif -%}
+
+                                    <!-- 4 Badges Circulares de Atributos -->
+                  <div class="sale-features-row">
+                    <!-- Badge 1 -->
+                    <div class="sale-feature-badge">
+                      <div class="sale-feature-circle">
+                        {% render 'kallpa-feature-icon', icon: block.settings.feat_1_icon, custom_image: block.settings.feat_1_custom_icon %}
+                      </div>
+                      <span class="sale-feature-label">{{ block.settings.feat_1 | default: '100%<br>ARÁBICA' }}</span>
+                    </div>
+
+                    <!-- Badge 2 -->
+                    <div class="sale-feature-badge">
+                      <div class="sale-feature-circle">
+                        {% render 'kallpa-feature-icon', icon: block.settings.feat_2_icon, custom_image: block.settings.feat_2_custom_icon %}
+                      </div>
+                      <span class="sale-feature-label">{{ block.settings.feat_2 | default: 'ORIGEN<br>VRAEM' }}</span>
+                    </div>
+
+                    <!-- Badge 3 -->
+                    <div class="sale-feature-badge">
+                      <div class="sale-feature-circle">
+                        {% render 'kallpa-feature-icon', icon: block.settings.feat_3_icon, custom_image: block.settings.feat_3_custom_icon %}
+                      </div>
+                      <span class="sale-feature-label">{{ block.settings.feat_3 | default: 'MOLIENDA<br>MEDIA FINA' }}</span>
+                    </div>
+
+                    <!-- Badge 4 -->
+                    <div class="sale-feature-badge">
+                      <div class="sale-feature-circle">
+                        {% render 'kallpa-feature-icon', icon: block.settings.feat_4_icon, custom_image: block.settings.feat_4_custom_icon %}
+                      </div>
+                      <span class="sale-feature-label">{{ block.settings.feat_4 | default: 'NOTAS:<br>CEREZA · CACAO' }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                                <!-- Columna 2: Centro (Visual Principal Heroico) -->
+                <div class="kalpa-sale__centerpiece">
+                  {%- if block.settings.theme_variant == 'original' -%}
+                    <div class="sale-can-stage">
+                      <img src="{{ 'hero-beans-ice-back.webp' | asset_url }}" alt="" class="sale-stage__beans-back" draggable="false" width="400" height="500">
+                      <img src="{{ 'hero-beans-ice-front.webp' | asset_url }}" alt="" class="sale-stage__beans-mid" draggable="false" width="400" height="500">
+                      {%- if block.settings.main_image != blank -%}
+                        <img src="{{ block.settings.main_image | image_url: width: 800 }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="sale-stage__can" draggable="false" width="400" height="700">
+                      {%- elsif block.settings.default_asset_image != blank and block.settings.default_asset_image != 'kalpa-can-clean.webp' -%}
+                        <img src="{{ block.settings.default_asset_image | asset_url }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="sale-stage__can" draggable="false" width="400" height="700">
+                      {%- else -%}
+                        <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="KALPA Café Cold Brew Original 355ml" class="sale-stage__can" draggable="false" width="400" height="700">
+                      {%- endif -%}
+                      <img src="{{ 'hero-bean-single.png' | asset_url }}" alt="" class="sale-stage__bean-front" draggable="false" width="150" height="150">
+                      <img src="{{ 'hero-rock-base.webp' | asset_url }}" alt="" class="sale-stage__rock" draggable="false" width="600" height="200">
+                    </div>
+                  {%- else -%}
+                    <div class="sale-can-stage sale-can-stage--molido">
+                      {%- if block.settings.main_image != blank -%}
+                        <img src="{{ block.settings.main_image | image_url: width: 1400 }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="sale-stage__can sale-stage__can--molido" draggable="false" width="1024" height="682">
+                      {%- elsif block.settings.default_asset_image != blank -%}
+                        <img src="{{ block.settings.default_asset_image | asset_url }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="sale-stage__can sale-stage__can--molido" draggable="false" width="1024" height="682">
+                      {%- else -%}
+                        <img src="{{ 'kalpa-molido-product.webp' | asset_url }}" alt="KALPA Café Molido 250g" class="sale-stage__can sale-stage__can--molido" draggable="false" width="1024" height="682">
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+
+                <!-- Columna 3: Tarjeta Dual de Compra -->
+                <div class="kalpa-sale__buy-box">
+                  <!-- Opción A: Compra por Unidad -->
+                  <div class="sale-buy-col sale-buy-col--unit">
+                    <div class="sale-unit-header">{{ block.settings.unit_label | default: 'Unidad' }}</div>
+                    <div class="sale-price-block">
+                      <div class="sale-price-main">{{ block.settings.unit_price | default: 'S/ 7.90' }}</div>
+                      <div class="sale-volume-sub">{{ block.settings.unit_volume | default: '355 ml' }}</div>
+                    </div>
+                    <div class="sale-qty-stepper" aria-label="Cantidad de unidades">
+                      <button type="button" class="qty-btn" onclick="updateSlideQty('qty-{{ block.id }}', -1)" aria-label="Disminuir cantidad">&minus;</button>
+                      <span id="qty-{{ block.id }}" class="qty-val">1</span>
+                      <button type="button" class="qty-btn" onclick="updateSlideQty('qty-{{ block.id }}', 1)" aria-label="Aumentar cantidad">+</button>
+                    </div>
+                    <button type="button" class="btn-sale-add" onclick="addCustomUnitToCart('{{ block.id }}', '{{ block.settings.title_main }} {{ block.settings.title_sub }}', '{{ block.settings.unit_price | remove: 'S/' | strip }}')">
+                      <span>AGREGAR</span>
+                      <svg class="sale-add-arrow-mobile" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <!-- Opción B: Compra Pack x 6 -->
+                  <div class="sale-buy-col sale-buy-col--pack">
+                    <div class="sale-pack-header">
+                      <span class="sale-pack-title">{{ block.settings.pack_label | default: 'Pack x 6' }}</span>
+                      <span class="sale-pack-discount">{{ block.settings.pack_discount | default: '-15%' }}</span>
+                    </div>
+                    <div class="sale-pack-body">
+                      <div class="sale-pack-pricing">
+                        <span class="sale-pack-old-price">{{ block.settings.pack_old_price | default: 'S/ 47.40' }}</span>
+                        <div class="sale-price-main sale-price-main--pack">{{ block.settings.pack_price | default: 'S/ 39.90' }}</div>
+                        <div class="sale-volume-sub">{{ block.settings.pack_volume | default: '6 unidades' }}</div>
+                      </div>
+                      <div class="sale-pack-cans-visual" aria-hidden="true">
+                        {%- assign mini_can_img = block.settings.pack_mini_image | default: 'kalpa-can-original.webp' -%}
+                        <img src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--b1" draggable="false" width="50" height="90">
+                        <img src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--b2" draggable="false" width="50" height="90">
+                        <img src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--b3" draggable="false" width="50" height="90">
+                        <img src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--f1" draggable="false" width="50" height="90">
+                        <img src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--f2" draggable="false" width="50" height="90">
+                        <img src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--f3" draggable="false" width="50" height="90">
+                      </div>
+                    </div>
+                    <button type="button" class="btn-sale-add" onclick="addCustomPackToCart('pack-{{ block.id }}', '{{ block.settings.pack_label }} {{ block.settings.title_main }} {{ block.settings.title_sub }}', '{{ block.settings.pack_price | remove: 'S/' | strip }}')">
+                      <span>AGREGAR</span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Fallback si no hay bloques -->
+        <div class="kalpa-product-slide active" id="product-slide-0" data-slide-index="0">
+          <div class="page-width kalpa-sale-container">
+            <h2 class="sale-giant-title">Agrega un producto desde el Theme Editor</h2>
+          </div>
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</section>
+
+<script>
+  function updateSlideQty(elementId, delta) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    let val = parseInt(el.textContent || '1', 10) + delta;
+    if (val < 1) val = 1;
+    if (val > 24) val = 24;
+    el.textContent = val;
+  }
+
+  function addCustomUnitToCart(blockId, name, priceStr) {
+    const qtyEl = document.getElementById('qty-' + blockId);
+    const qty = qtyEl ? Math.max(1, parseInt(qtyEl.textContent || '1', 10)) : 1;
+    const price = parseFloat(priceStr) || 7.90;
+    if (typeof window.addPackToKallpaCart === 'function') {
+      window.addPackToKallpaCart('unit-' + blockId, `${qty}x ${name}`, price, qty);
+    }
+  }
+
+  function addCustomPackToCart(packId, name, priceStr) {
+    const price = parseFloat(priceStr) || 39.90;
+    if (typeof window.addPackToKallpaCart === 'function') {
+      window.addPackToKallpaCart(packId, name, price, 1);
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Productos en Venta",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "product_slide",
+      "name": "Slide de Producto",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Estilo y Variación"
+        },
+        {
+          "type": "select",
+          "id": "theme_variant",
+          "label": "Tipo de Fondo / Estilo",
+          "options": [
+            { "value": "original", "label": "Original (Lata / Fondo Claro)" },
+            { "value": "molido", "label": "Café Molido (Fondo Oscuro / Cover)" }
+          ],
+          "default": "original"
+        },
+        {
+          "type": "header",
+          "content": "Información del Producto"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Antetítulo",
+          "default": "NUESTRO PRODUCTO"
+        },
+        {
+          "type": "text",
+          "id": "title_main",
+          "label": "Título Principal",
+          "default": "KALPA"
+        },
+        {
+          "type": "text",
+          "id": "title_sub",
+          "label": "Subtítulo",
+          "default": "ORIGINAL"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Descripción",
+          "default": "Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar."
+        },
+        {
+          "type": "url",
+          "id": "product_link",
+          "label": "Enlace Ficha de Producto"
+        },
+        {
+          "type": "text",
+          "id": "btn_link_text",
+          "label": "Texto del Enlace",
+          "default": "Ver ficha completa"
+        },
+                {
+          "type": "header",
+          "content": "Sellos y Atributos Circulares (Configurables)"
+        },
+        {
+          "type": "select",
+          "id": "feat_1_icon",
+          "label": "Ícono Atributo 1",
+          "options": [
+            { "value": "leaf", "label": "🌿 Hoja / 100% Arábica" },
+            { "value": "mountain", "label": "⛰️ Montaña / Origen VRAEM" },
+            { "value": "filter", "label": "⌛ Filtro / Molienda Media Fina" },
+            { "value": "flavor", "label": "🎯 Notas de Sabor / Aromas" },
+            { "value": "drop_zero", "label": "💧 Gota con Cero (0 Calorías)" },
+            { "value": "check", "label": "✓ Check (Sin Azúcar Añadida)" },
+            { "value": "coffee_can", "label": "🥫 Lata KALPA" },
+            { "value": "snowflake", "label": "❄️ Nieve / Refrescante" },
+            { "value": "lightning", "label": "⚡ Rayo / Energía" },
+            { "value": "clock", "label": "🕒 Reloj / Tiempo" },
+            { "value": "coffee_cup", "label": "☕ Taza de Café" },
+            { "value": "heart", "label": "❤️ Salud / Bienestar" },
+            { "value": "star", "label": "⭐ Calidad Premium" }
+          ],
+          "default": "leaf"
+        },
+        {
+          "type": "image_picker",
+          "id": "feat_1_custom_icon",
+          "label": "Ícono 1 Personalizado (opcional)"
+        },
+        {
+          "type": "text",
+          "id": "feat_1",
+          "label": "Texto Atributo 1",
+          "default": "100%<br>ARÁBICA"
+        },
+        {
+          "type": "select",
+          "id": "feat_2_icon",
+          "label": "Ícono Atributo 2",
+          "options": [
+            { "value": "leaf", "label": "🌿 Hoja / 100% Arábica" },
+            { "value": "mountain", "label": "⛰️ Montaña / Origen VRAEM" },
+            { "value": "filter", "label": "⌛ Filtro / Molienda Media Fina" },
+            { "value": "flavor", "label": "🎯 Notas de Sabor / Aromas" },
+            { "value": "drop_zero", "label": "💧 Gota con Cero (0 Calorías)" },
+            { "value": "check", "label": "✓ Check (Sin Azúcar Añadida)" },
+            { "value": "coffee_can", "label": "🥫 Lata KALPA" },
+            { "value": "snowflake", "label": "❄️ Nieve / Refrescante" },
+            { "value": "lightning", "label": "⚡ Rayo / Energía" },
+            { "value": "clock", "label": "🕒 Reloj / Tiempo" },
+            { "value": "coffee_cup", "label": "☕ Taza de Café" },
+            { "value": "heart", "label": "❤️ Salud / Bienestar" },
+            { "value": "star", "label": "⭐ Calidad Premium" }
+          ],
+          "default": "mountain"
+        },
+        {
+          "type": "image_picker",
+          "id": "feat_2_custom_icon",
+          "label": "Ícono 2 Personalizado (opcional)"
+        },
+        {
+          "type": "text",
+          "id": "feat_2",
+          "label": "Texto Atributo 2",
+          "default": "ORIGEN<br>VRAEM"
+        },
+        {
+          "type": "select",
+          "id": "feat_3_icon",
+          "label": "Ícono Atributo 3",
+          "options": [
+            { "value": "leaf", "label": "🌿 Hoja / 100% Arábica" },
+            { "value": "mountain", "label": "⛰️ Montaña / Origen VRAEM" },
+            { "value": "filter", "label": "⌛ Filtro / Molienda Media Fina" },
+            { "value": "flavor", "label": "🎯 Notas de Sabor / Aromas" },
+            { "value": "drop_zero", "label": "💧 Gota con Cero (0 Calorías)" },
+            { "value": "check", "label": "✓ Check (Sin Azúcar Añadida)" },
+            { "value": "coffee_can", "label": "🥫 Lata KALPA" },
+            { "value": "snowflake", "label": "❄️ Nieve / Refrescante" },
+            { "value": "lightning", "label": "⚡ Rayo / Energía" },
+            { "value": "clock", "label": "🕒 Reloj / Tiempo" },
+            { "value": "coffee_cup", "label": "☕ Taza de Café" },
+            { "value": "heart", "label": "❤️ Salud / Bienestar" },
+            { "value": "star", "label": "⭐ Calidad Premium" }
+          ],
+          "default": "filter"
+        },
+        {
+          "type": "image_picker",
+          "id": "feat_3_custom_icon",
+          "label": "Ícono 3 Personalizado (opcional)"
+        },
+        {
+          "type": "text",
+          "id": "feat_3",
+          "label": "Texto Atributo 3",
+          "default": "MOLIENDA<br>MEDIA FINA"
+        },
+        {
+          "type": "select",
+          "id": "feat_4_icon",
+          "label": "Ícono Atributo 4",
+          "options": [
+            { "value": "leaf", "label": "🌿 Hoja / 100% Arábica" },
+            { "value": "mountain", "label": "⛰️ Montaña / Origen VRAEM" },
+            { "value": "filter", "label": "⌛ Filtro / Molienda Media Fina" },
+            { "value": "flavor", "label": "🎯 Notas de Sabor / Aromas" },
+            { "value": "drop_zero", "label": "💧 Gota con Cero (0 Calorías)" },
+            { "value": "check", "label": "✓ Check (Sin Azúcar Añadida)" },
+            { "value": "coffee_can", "label": "🥫 Lata KALPA" },
+            { "value": "snowflake", "label": "❄️ Nieve / Refrescante" },
+            { "value": "lightning", "label": "⚡ Rayo / Energía" },
+            { "value": "clock", "label": "🕒 Reloj / Tiempo" },
+            { "value": "coffee_cup", "label": "☕ Taza de Café" },
+            { "value": "heart", "label": "❤️ Salud / Bienestar" },
+            { "value": "star", "label": "⭐ Calidad Premium" }
+          ],
+          "default": "flavor"
+        },
+        {
+          "type": "image_picker",
+          "id": "feat_4_custom_icon",
+          "label": "Ícono 4 Personalizado (opcional)"
+        },
+        {
+          "type": "text",
+          "id": "feat_4",
+          "label": "Texto Atributo 4",
+          "default": "NOTAS:<br>CEREZA · CACAO"
+        },
+        {
+          "type": "header",
+          "content": "Imagen Central del Producto"
+        },
+        {
+          "type": "image_picker",
+          "id": "main_image",
+          "label": "Subir Imagen Principal"
+        },
+        {
+          "type": "text",
+          "id": "default_asset_image",
+          "label": "O nombre del archivo en assets (ej: kalpa-can-original.webp)",
+          "default": "kalpa-can-original.webp"
+        },
+        {
+          "type": "header",
+          "content": "Precios: Opción Unidad"
+        },
+        {
+          "type": "text",
+          "id": "unit_label",
+          "label": "Etiqueta Unidad",
+          "default": "Unidad"
+        },
+        {
+          "type": "text",
+          "id": "unit_price",
+          "label": "Precio Unidad",
+          "default": "S/ 7.90"
+        },
+        {
+          "type": "text",
+          "id": "unit_volume",
+          "label": "Volumen / Peso",
+          "default": "355 ml"
+        },
+        {
+          "type": "header",
+          "content": "Precios: Opción Pack x 6"
+        },
+        {
+          "type": "text",
+          "id": "pack_label",
+          "label": "Etiqueta Pack",
+          "default": "Pack x 6"
+        },
+        {
+          "type": "text",
+          "id": "pack_discount",
+          "label": "Insignia Descuento",
+          "default": "-15%"
+        },
+        {
+          "type": "text",
+          "id": "pack_old_price",
+          "label": "Precio Anterior Pack",
+          "default": "S/ 47.40"
+        },
+        {
+          "type": "text",
+          "id": "pack_price",
+          "label": "Precio Oferta Pack",
+          "default": "S/ 39.90"
+        },
+        {
+          "type": "text",
+          "id": "pack_volume",
+          "label": "Descripción Pack",
+          "default": "6 latas de 355 ml"
+        },
+        {
+          "type": "text",
+          "id": "pack_mini_image",
+          "label": "Mini lata para el visual del pack (ej. kalpa-can-original.webp)",
+          "default": "kalpa-can-original.webp"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Productos en Venta",
+      "blocks": [
+        {
+          "type": "product_slide",
+          "settings": {
+            "theme_variant": "original",
+            "title_main": "KALPA",
+            "title_sub": "ORIGINAL",
+            "description": "Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar.",
+            "default_asset_image": "kalpa-can-clean.webp",
+            "unit_price": "S/ 7.90",
+            "unit_volume": "355 ml",
+            "pack_old_price": "S/ 47.40",
+            "pack_price": "S/ 39.90",
+            "pack_volume": "6 latas de 355 ml",
+            "pack_mini_image": "kalpa-can-original.webp"
+          }
+        },
+        {
+          "type": "product_slide",
+          "settings": {
+            "theme_variant": "molido",
+            "title_main": "KALPA",
+            "title_sub": "CAFÉ MOLIDO",
+            "description": "Café tostado de origen peruano, 100% Arábica · Variedad Obata. Molienda media fina para métodos de filtrado.",
+            "default_asset_image": "kalpa-molido-product.webp",
+            "unit_price": "S/ 34.90",
+            "unit_volume": "250 g",
+            "pack_old_price": "S/ 209.40",
+            "pack_price": "S/ 177.90",
+            "pack_volume": "6 latas de 250 g",
+            "pack_mini_image": "kalpa-molido-can-solo.webp"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

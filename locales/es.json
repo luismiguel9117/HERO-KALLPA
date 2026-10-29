@@ -1,0 +1,26 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "general": {
+    "cart": {
+      "view": "Ver Carrito",
+      "checkout": "Proceder al Checkout",
+      "empty": "Tu selección de energía está vacía.",
+      "subtotal": "Subtotal"
+    },
+    "continue_shopping": "Continuar Comprando"
+  },
+  "sections": {
+    "hero": {
+      "explore_3d": "Explorar en 3D",
+      "scroll_hint": "Scroll para explorar"
+    }
+  }
+}

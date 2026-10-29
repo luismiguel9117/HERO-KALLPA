@@ -1,0 +1,54 @@
+{%- comment -%}
+  SECCIÓN: kallpa-clean-energy.liquid
+  Más que café, es energía natural (Filosofía KALPA VRAEM)
+{%- endcomment -%}
+
+<section class="kallpa-energy-natural-section" id="energy-natural-section" aria-label="Más que café, es energía natural">
+  <div class="energy-natural__bg-layer" aria-hidden="true"></div>
+  <div class="energy-natural__container">
+    
+    <!-- Mensaje y Filosofía de Origen -->
+    <div class="energy-natural__content">
+      <div class="energy-natural__accent-bar" aria-hidden="true"></div>
+      <h2 class="energy-natural__title">
+        <span class="energy-title-line1">{{ section.settings.title_line1 | default: 'MÁS QUE CAFÉ,' }}</span>
+        <span class="energy-title-line2">{{ section.settings.title_line2 | default: 'ES ENERGÍA NATURAL' }}</span>
+      </h2>
+      <p class="energy-natural__text">
+        {{ section.settings.desc | default: 'Granos de origen peruano, seleccionados en el VRAEM.<br>Sin aditivos, sin azúcares añadidos. Solo café frío,<br>con un sabor real y una energía que se siente.' }}
+      </p>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Energía Natural KALPA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title_line1",
+      "label": "Título Línea 1",
+      "default": "MÁS QUE CAFÉ,"
+    },
+    {
+      "type": "text",
+      "id": "title_line2",
+      "label": "Título Línea 2 (Dorado)",
+      "default": "ES ENERGÍA NATURAL"
+    },
+    {
+      "type": "textarea",
+      "id": "desc",
+      "label": "Texto Filosofía",
+      "default": "Granos de origen peruano, seleccionados en el VRAEM.<br>Sin aditivos, sin azúcares añadidos. Solo café frío,<br>con un sabor real y una energía que se siente."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Energía Natural KALPA"
+    }
+  ]
+}
+{% endschema %}

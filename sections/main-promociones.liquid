@@ -1,0 +1,124 @@
+{%- comment -%}
+  SECCIÓN: main-promociones.liquid
+  Página de promociones de lanzamiento (Pixel-Perfect con promociones.html).
+  La tarjeta "Oferta especial" muestra sola el primer producto con precio comparado.
+{%- endcomment -%}
+
+<!-- ==================== PROMOCIONES: HERO LANZAMIENTO ==================== -->
+<section class="promo-hero" aria-label="Lanzamiento Kallpa">
+  <div class="promo-hero__bg" style="background-image: url('{{ 'promo-hero.webp' | asset_url }}');" aria-hidden="true"></div>
+  <div class="promo-hero__shade" aria-hidden="true"></div>
+  <div class="promo-hero__inner">
+    <span class="promo-eyebrow">PROMOCIONES</span>
+    <h1 class="promo-hero__title">LANZAMIENTO<br><em>KALLPA</em></h1>
+    <p class="promo-hero__lead">Las primeras latas de Kallpa con precio de lanzamiento. Elige tu pack y pruébala bien helada.</p>
+    <ul class="promo-hero__perks">
+      <li><span class="promo-perk-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18c0-7 4.5-12 13-12 0 8.5-5 13-12 13"></path><path d="M6 18l7-7"></path></svg></span>Energía<br>natural</li>
+      <li><span class="promo-perk-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 19 6.5-11 3.5 5.5 2.5-3.5L21 19z"></path><path d="m7.5 11.5 2 1.5 2-1.5"></path></svg></span>Café de<br>los Andes</li>
+      <li><span class="promo-perk-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3 6 13h5l-1 8 7-10h-5z"></path></svg></span>Sin azúcar<br>ni conservantes</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== PROMOCIONES: OFERTAS ==================== -->
+<section class="promo-offers" id="ofertas" aria-label="Ofertas de lanzamiento">
+  <div class="promo-wrap">
+    <span class="promo-eyebrow">OFERTAS DE LANZAMIENTO</span>
+    <h2 class="promo-title">MIENTRAS MÁS PIDES,<br><em>MÁS AHORRAS</em></h2>
+
+    <div class="promo-cards">
+      <article class="promo-card">
+        <header class="promo-card__head"><span>PARA PROBAR</span><span>3 LATAS</span></header>
+        <h3 class="promo-card__name">TRIPACK</h3>
+        <div class="promo-card__body">
+          <div class="promo-card__pricing">
+            <span class="promo-card__normal">PRECIO NORMAL<s>S/ 23.70</s></span>
+            <span class="promo-card__launch"><small>PRECIO DE LANZAMIENTO</small>S/ 19.90</span>
+          </div>
+          <div class="promo-card__tripack" aria-hidden="true">
+            <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="" loading="lazy">
+            <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="" loading="lazy">
+            <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="" loading="lazy">
+          </div>
+        </div>
+        <button type="button" class="promo-btn" onclick="addPackToKallpaCart('promo-tripack', 'Tripack KALPA Cold Brew (3 latas)', 19.90, 1)">APROVECHAR <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.3"></circle><circle cx="18" cy="20" r="1.3"></circle><path d="M2 3h3l2.6 12.2a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 7H6"></path></svg></button>
+      </article>
+
+      <article class="promo-card">
+        <header class="promo-card__head"><span>PARA TENER SIEMPRE</span><span>12 LATAS</span></header>
+        <h3 class="promo-card__name">12-PACK</h3>
+        <div class="promo-card__body">
+          <div class="promo-card__pricing">
+            <span class="promo-card__normal">PRECIO NORMAL<s>S/ 94.80</s></span>
+            <span class="promo-card__launch"><small>PRECIO DE LANZAMIENTO</small>S/ 79.90</span>
+          </div>
+          <img src="{{ 'promo-pack12.webp' | asset_url }}" alt="Pack de 12 latas KALPA Cold Brew" class="promo-card__pack12" loading="lazy">
+        </div>
+        <button type="button" class="promo-btn" onclick="addPackToKallpaCart('promo-12pack', '12-Pack KALPA Cold Brew (12 latas)', 79.90, 1)">APROVECHAR <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.3"></circle><circle cx="18" cy="20" r="1.3"></circle><path d="M2 3h3l2.6 12.2a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 7H6"></path></svg></button>
+      </article>
+
+      {%- assign promo_offer = nil -%}
+      {%- for p in collections['all'].products limit: 50 -%}
+        {%- if p.compare_at_price > p.price -%}
+          {%- assign promo_offer = p -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+      <article class="promo-card promo-card--special">
+        <header class="promo-card__head"><span>OFERTA ESPECIAL</span></header>
+        {%- if promo_offer -%}
+          <h3 class="promo-card__name">{{ promo_offer.title }}</h3>
+          {%- if promo_offer.featured_image -%}
+            <img src="{{ promo_offer.featured_image | image_url: width: 400 }}" alt="{{ promo_offer.featured_image.alt | escape }}" class="promo-card__offer-img" loading="lazy" width="200" height="200">
+          {%- endif -%}
+          <div class="promo-card__pricing">
+            <span class="promo-card__normal">PRECIO NORMAL<s>{{ promo_offer.compare_at_price | money }}</s></span>
+            <span class="promo-card__launch"><small>PRECIO OFERTA</small>{{ promo_offer.price | money }}</span>
+          </div>
+          <a href="{{ promo_offer.url }}" class="promo-btn">VER OFERTA <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.3"></circle><circle cx="18" cy="20" r="1.3"></circle><path d="M2 3h3l2.6 12.2a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 7H6"></path></svg></a>
+        {%- else -%}
+          <h3 class="promo-card__name">PRODUCTO<br>EN OFERTA</h3>
+          <p class="promo-card__note">¡Cualquier producto con descuento aparece aquí de forma automática, sin tocar la página!</p>
+          <span class="promo-card__tag"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><path d="M30 6h20a8 8 0 0 1 8 8v20L32 60 4 32z" fill="#f5c400"/><circle cx="46" cy="18" r="4" fill="#0d0d0e"/><g stroke="#0d0d0e" stroke-width="4" stroke-linecap="round"><line x1="22" y1="42" x2="38" y2="26"/></g><circle cx="24" cy="29" r="3.5" fill="#0d0d0e"/><circle cx="36" cy="39" r="3.5" fill="#0d0d0e"/></svg></span>
+        {%- endif -%}
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PROMOCIONES: CONDICIONES ==================== -->
+<section class="promo-terms" aria-label="Condiciones de la promoción">
+  <div class="promo-wrap promo-terms__inner">
+    <div>
+      <span class="promo-eyebrow">CONDICIONES</span>
+      <h2 class="promo-terms__title">LETRA CLARA</h2>
+    </div>
+    <div class="promo-terms__box">
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="13" y2="17"></line></svg>
+      <p>Términos de la promoción: vigencia, stock, límite por cliente, si se acumula con otros descuentos y si aplica al envío.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PROMOCIONES: CTA FINAL ==================== -->
+<section class="promo-cta" aria-label="Pruébala bien helada">
+  <div class="promo-cta__bg" style="background-image: url('{{ 'promo-cta-bg.webp' | asset_url }}');" aria-hidden="true"></div>
+  <div class="promo-cta__shade" aria-hidden="true"></div>
+  <div class="promo-wrap promo-cta__inner">
+    <h2 class="promo-cta__title">PRUÉBALA<br><em>BIEN HELADA</em></h2>
+    <p>Siente la energía de los Andes en cada lata. Un café potente, limpio y natural, hecho para acompañarte en cada reto.</p>
+    <a href="{{ routes.all_products_collection_url }}" class="promo-cta__btn">IR A LA TIENDA <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Promociones",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Promociones"
+    }
+  ]
+}
+{% endschema %}

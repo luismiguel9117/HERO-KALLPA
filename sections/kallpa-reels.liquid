@@ -1,0 +1,356 @@
+{%- comment -%}
+  SECCIÓN: kallpa-reels.liquid
+  Comunidad KALPA: Bloques Modulares de Reels con Pop-up Modal y Video Reproducible
+  + Carrusel de Reseñas Glassmorphic Unificado
+{%- endcomment -%}
+
+<section class="kallpa-community-section" id="reels-section" aria-label="Comunidad KALPA">
+  <div class="page-width">
+    
+    <!-- Encabezado de la Sección -->
+    <div class="community-header">
+      <div class="community-header__left">
+        <div class="community-eyebrow">
+          <span class="eyebrow-dash"></span>
+          <span>{{ section.settings.eyebrow | default: 'COMUNIDAD KALPA' }}</span>
+        </div>
+        <h2 class="community-title">
+          {{ section.settings.title_part1 | default: 'ENERGÍA QUE' }} <span class="text-gold">{{ section.settings.title_part2 | default: 'SE COMPARTE' }}</span>
+        </h2>
+        <p class="community-desc">
+          {{ section.settings.desc | default: 'Historias reales de personas que viven la energía de los Andes.<br>Entrena, trabaja, explora. Kallpa te acompaña.' }}
+        </p>
+      </div>
+
+      <div class="community-header__right">
+        <a href="{{ section.settings.instagram_url | default: 'https://instagram.com' }}" target="_blank" rel="noopener noreferrer" class="btn-community-instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+          <span>SEGUIR EN INSTAGRAM</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Cuadrícula Unificada: Reels Modulares + 1 Review Card Destacada -->
+    <div class="community-unified-grid">
+      
+      <!-- Bloque Izquierdo: Fila de Reels Configurables -->
+      <div class="community-reels-row">
+        
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            <div class="community-reel-card" 
+                 data-video-url="{{ block.settings.video_url }}"
+                 data-reel-link="{{ block.settings.reel_url }}"
+                 onclick="handleReelClick(this)"
+                 {{ block.shopify_attributes }}>
+              
+              {%- if block.settings.image != blank -%}
+                <img src="{{ block.settings.image | image_url: width: 440 }}" alt="{{ block.settings.title | default: 'Reel KALPA' }}" class="reel-img" loading="lazy" width="220" height="390">
+              {%- elsif block.settings.default_image != blank -%}
+                <img src="{{ block.settings.default_image | asset_url }}" alt="{{ block.settings.title | default: 'Reel KALPA' }}" class="reel-img" loading="lazy" width="220" height="390">
+              {%- else -%}
+                <img src="{{ 'reel-1.webp' | asset_url }}" alt="Reel KALPA" class="reel-img" loading="lazy" width="220" height="390">
+              {%- endif -%}
+
+              <!-- Video Inline opcional si tiene archivo mp4 directo -->
+              {%- if block.settings.inline_video != blank -%}
+                <video class="reel-inline-video" loop muted playsinline preload="none" src="{{ block.settings.inline_video }}"></video>
+              {%- endif -%}
+
+              <div class="reel-play-btn" aria-label="Reproducir Reel">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="6 4 20 12 6 20 6 4"></polygon>
+                </svg>
+              </div>
+
+              <div class="reel-views-pill">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <span>{{ block.settings.views | default: '120K' }}</span>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Fallback por defecto si no hay bloques en el editor -->
+          <div class="community-reel-card" data-reel-link="https://www.instagram.com" onclick="handleReelClick(this)">
+            <img src="{{ 'reel-1.webp' | asset_url }}" alt="Atleta KALPA en la montaña" class="reel-img" loading="lazy" width="220" height="390">
+            <div class="reel-play-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg></div>
+            <div class="reel-views-pill"><span>125K</span></div>
+          </div>
+          <div class="community-reel-card" data-reel-link="https://www.instagram.com" onclick="handleReelClick(this)">
+            <img src="{{ 'reel-2.webp' | asset_url }}" alt="Runner KALPA en la cumbre" class="reel-img" loading="lazy" width="220" height="390">
+            <div class="reel-play-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg></div>
+            <div class="reel-views-pill"><span>98K</span></div>
+          </div>
+          <div class="community-reel-card" data-reel-link="https://www.instagram.com" onclick="handleReelClick(this)">
+            <img src="{{ 'reel-3.webp' | asset_url }}" alt="Lata KALPA frente al valle andino" class="reel-img" loading="lazy" width="220" height="390">
+            <div class="reel-play-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg></div>
+            <div class="reel-views-pill"><span>210K</span></div>
+          </div>
+        {%- endif -%}
+
+      </div>
+
+      <!-- Bloque Derecho: Tarjeta de Reseña Destacada con Glassmorphism -->
+      <div class="community-review-container">
+        <div class="community-review-card" id="communityReviewCard">
+          
+          <!-- Encabezado: 5 Estrellas + Badge Verificado -->
+          <div class="review-top-row">
+            <div class="review-stars-gold" aria-hidden="true">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <div class="review-verified-tag">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+              <span>COMPRA VERIFICADA</span>
+            </div>
+          </div>
+
+          <!-- Contenido de la Reseña -->
+          <div class="review-content-body">
+            <h3 class="review-headline" id="communityReviewHeadline">
+              “Me da <span class="text-gold">energía limpia</span> para mis fondos de 15K”
+            </h3>
+            <p class="review-quote-text" id="communityReviewText">
+              Solía tomar geles o energizantes con taurina y siempre me daban taquicardia o acidez estomacal. Kallpa me da un empuje sostenido durante todo el fondo y sin bajón. Además el sabor a café frío es súper limpio y refrescante.
+            </p>
+          </div>
+
+          <!-- Fila Inferior: Autor + Flechas y Dots -->
+          <div class="review-bottom-row">
+            <div class="review-author-box">
+              <div class="review-author-avatar" id="communityReviewAvatar">RA</div>
+              <div class="review-author-details">
+                <strong class="review-author-name" id="communityReviewName">Rodrigo Alarcón</strong>
+                <span class="review-author-meta" id="communityReviewMeta">Triatleta & Runner · Lima</span>
+              </div>
+            </div>
+
+            <div class="review-controls-wrap">
+              <div class="review-nav-arrows">
+                <button type="button" class="btn-review-arrow" id="communityPrevBtn" aria-label="Reseña anterior">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+                <button type="button" class="btn-review-arrow" id="communityNextBtn" aria-label="Siguiente reseña">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+              </div>
+              <div class="review-dots-wrap" id="communityDotsWrap">
+                <span class="review-dot is-active" data-index="0"></span>
+                <span class="review-dot" data-index="1"></span>
+                <span class="review-dot" data-index="2"></span>
+                <span class="review-dot" data-index="3"></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL POP-UP PARA REPRODUCIR REEL / VIDEO INLINE -->
+  <div class="reel-modal-overlay" id="reelModalOverlay" onclick="closeReelModal(event)">
+    <div class="reel-modal-container">
+      <button type="button" class="reel-modal-close" onclick="closeReelModal(event)" aria-label="Cerrar video">&times;</button>
+      <div class="reel-modal-body" id="reelModalBody">
+        <!-- Inyección dinámica de Iframe de Instagram o Video HTML5 -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function handleReelClick(card) {
+    const videoUrl = card.getAttribute('data-video-url');
+    const reelLink = card.getAttribute('data-reel-link');
+    const inlineVideo = card.querySelector('.reel-inline-video');
+
+    // 1. Si tiene video inline, reproducirlo directamente en la tarjeta
+    if (inlineVideo) {
+      if (inlineVideo.paused) {
+        card.classList.add('is-playing');
+        inlineVideo.play();
+      } else {
+        card.classList.remove('is-playing');
+        inlineVideo.pause();
+      }
+      return;
+    }
+
+    // 2. Si tiene URL de video o enlace a Instagram/TikTok, abrir en Pop-up Modal interno
+    if (videoUrl || (reelLink && reelLink.includes('instagram.com/reel'))) {
+      openReelModal(videoUrl || reelLink);
+    } else if (reelLink) {
+      window.open(reelLink, '_blank', 'noopener,noreferrer');
+    }
+  }
+
+  function openReelModal(url) {
+    const modal = document.getElementById('reelModalOverlay');
+    const body = document.getElementById('reelModalBody');
+    if (!modal || !body) return;
+
+    body.innerHTML = '';
+
+    if (url.endsWith('.mp4') || url.endsWith('.webm')) {
+      body.innerHTML = `<video src="${url}" controls autoplay playsinline style="width:100%; height:100%; max-height:85vh; border-radius:14px; object-fit:cover;"></video>`;
+    } else if (url.includes('instagram.com')) {
+      // URL de embed limpio de Instagram
+      let embedUrl = url.split('?')[0];
+      if (!embedUrl.endsWith('/')) embedUrl += '/';
+      embedUrl += 'embed';
+      body.innerHTML = `<iframe src="${embedUrl}" width="100%" height="680" frameborder="0" scrolling="no" allowtransparency="true" style="border-radius:14px; border:none; max-width:400px; width:100%;"></iframe>`;
+    } else {
+      body.innerHTML = `<iframe src="${url}" width="100%" height="600" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="border-radius:14px;"></iframe>`;
+    }
+
+    modal.classList.add('is-active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeReelModal(e) {
+    if (e.target.id === 'reelModalOverlay' || e.target.classList.contains('reel-modal-close')) {
+      const modal = document.getElementById('reelModalOverlay');
+      const body = document.getElementById('reelModalBody');
+      if (modal) modal.classList.remove('is-active');
+      if (body) body.innerHTML = '';
+      document.body.style.overflow = '';
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Comunidad KALPA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "COMUNIDAD KALPA"
+    },
+    {
+      "type": "text",
+      "id": "title_part1",
+      "label": "Título Parte 1",
+      "default": "ENERGÍA QUE"
+    },
+    {
+      "type": "text",
+      "id": "title_part2",
+      "label": "Título Parte 2 (Dorado)",
+      "default": "SE COMPARTE"
+    },
+    {
+      "type": "textarea",
+      "id": "desc",
+      "label": "Descripción",
+      "default": "Historias reales de personas que viven la energía de los Andes.<br>Entrena, trabaja, explora. Kallpa te acompaña."
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "URL Perfil de Instagram"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "reel",
+      "name": "Reel / Video",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título / Descripción",
+          "default": "Atleta KALPA"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Portada del Reel (Imagen personalizada)"
+        },
+        {
+          "type": "text",
+          "id": "default_image",
+          "label": "Nombre de archivo asset (ej. reel-1.webp)",
+          "default": "reel-1.webp"
+        },
+        {
+          "type": "text",
+          "id": "views",
+          "label": "Contador de vistas",
+          "default": "125K"
+        },
+        {
+          "type": "url",
+          "id": "reel_url",
+          "label": "Enlace del Reel de Instagram / TikTok",
+          "info": "Si pegas el link de Instagram se abrirá en el Pop-up"
+        },
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "URL directa de video (MP4/Embed)"
+        },
+        {
+          "type": "text",
+          "id": "inline_video",
+          "label": "URL de video para reproducir en la misma tarjeta"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comunidad KALPA",
+      "blocks": [
+        {
+          "type": "reel",
+          "settings": {
+            "title": "Atleta Mujer",
+            "default_image": "reel-1.webp",
+            "views": "125K",
+            "reel_url": "https://www.instagram.com"
+          }
+        },
+        {
+          "type": "reel",
+          "settings": {
+            "title": "Runner Hombre",
+            "default_image": "reel-2.webp",
+            "views": "98K",
+            "reel_url": "https://www.instagram.com"
+          }
+        },
+        {
+          "type": "reel",
+          "settings": {
+            "title": "Lata KALPA",
+            "default_image": "reel-3.webp",
+            "views": "210K",
+            "reel_url": "https://www.instagram.com"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,223 @@
+{% comment %}
+  KALPA CINEMATIC PARALLAX INTRO SECTION (SHOPIFY LIQUID)
+  Depth layers: Cielo, Cancha, Tipografía, Mano y Lata
+{% endcomment %}
+
+<link rel="preload" as="image" href="{{ 'kalpa-can-base.webp' | asset_url }}" fetchpriority="high">
+<link rel="preload" as="image" href="{{ 'kalpa-can-rims.png' | asset_url }}" fetchpriority="high">
+<link rel="preload" as="image" href="{{ 'kalpa-label.webp' | asset_url }}" fetchpriority="high">
+<link rel="preload" as="image" href="{{ 'kalpa-can-droplets.png' | asset_url }}" fetchpriority="high">
+
+<section class="kalpa-intro-container" id="kalpa-intro-section" data-section-id="{{ section.id }}">
+  <div class="kalpa-intro-sticky" id="kalpa-intro-sticky">
+    <!-- Header / Navbar de la Intro (Preloader) Sincronizado y Unificado -->
+    <nav class="kalpa-intro-nav">
+      <!-- Logo KALPA Oficial -->
+      <a href="{{ routes.root_url }}" class="kalpa-logo intro-brand-logo" aria-label="KALPA Cold Brew - Inicio">
+        {% if section.settings.logo != blank %}
+          <img src="{{ section.settings.logo | image_url: width: 320 }}" alt="{{ shop.name }}" class="kalpa-logo__img intro-logo-img" width="165" height="38">
+        {% else %}
+          <img src="{{ 'logo-kalpa-white.png' | asset_url }}" alt="KALPA Logo" class="kalpa-logo__img intro-logo-img" width="165" height="38">
+        {% endif %}
+      </a>
+
+      <!-- Menú de Navegación Unificado y Rigurosamente Centrado -->
+      <div class="kalpa-nav-menu intro-menu-links">
+        <a href="{{ routes.root_url }}" class="kalpa-nav-item is-active">Inicio</a>
+        <a href="{{ routes.all_products_collection_url }}" class="kalpa-nav-item">Productos</a>
+        <a href="/pages/promociones" class="kalpa-nav-item">Promociones</a>
+        <a href="/pages/nosotros" class="kalpa-nav-item">Nosotros</a>
+      </div>
+
+      <!-- Acciones de Navegación Unificadas -->
+      <div class="kalpa-nav-actions intro-nav-right">
+        <a href="{{ routes.search_url }}" class="kalpa-nav-icon nav-icon--search" aria-label="Buscar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </a>
+
+        <a href="{{ routes.account_url }}" class="kalpa-nav-icon nav-icon--account" aria-label="Cuenta">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+
+        <button type="button" class="kalpa-nav-icon nav-icon--favorites" aria-label="Favoritos" onclick="handleKallpaWishlist(this)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </button>
+
+        <button type="button" class="kalpa-cart-capsule" onclick="openKallpaCart()" aria-label="Abrir Carrito">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span id="intro-cart-count">{{ cart.item_count }}</span>
+        </button>
+
+        <a href="{{ section.settings.btn_shop_url | default: routes.all_products_collection_url }}" class="kalpa-nav-cta">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="21" r="1"></circle>
+            <circle cx="19" cy="21" r="1"></circle>
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+          </svg>
+          <span>{{ section.settings.btn_shop_text | default: 'COMPRAR AHORA' }}</span>
+        </a>
+
+        <button type="button" class="kalpa-nav-hamburger" aria-label="Abrir Menú" onclick="openKallpaMobileMenu()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Capas visuales de profundidad con cursor tracking -->
+    <div class="kalpa-intro-visuals" id="kalpa-intro-visuals">
+      <!-- Capa 1: Cielo y destello solar -->
+      <div class="intro-layer intro-layer--cielo">
+        <img src="{{ 'CIELO.webp' | asset_url }}" alt="Cielo Andes" class="intro-img--cielo" loading="eager" width="1920" height="1080">
+        <div class="intro-sun-glow"></div>
+      </div>
+
+      <!-- Capa 2: Cancha / Pista atlética -->
+      <div class="intro-layer intro-layer--cancha">
+        <img src="{{ 'CANCHA.webp' | asset_url }}" alt="Estadio y Pista de Atletismo" class="intro-img--cancha" loading="eager" width="1920" height="1080">
+      </div>
+
+      <!-- Capa 3: Contenido Editorial -->
+      <div class="intro-layer intro-layer--content">
+        <div class="intro-content-wrap">
+          <h1 class="intro-title">
+            <span class="intro-title__line line--white">{{ section.settings.title_line1 | default: 'ENERGÍA' }}</span>
+            <span class="intro-title__line line--brush">{{ section.settings.title_line2 | default: 'REAL' }}</span>
+            <span class="intro-title__line line--white">{{ section.settings.title_line3 | default: 'PARA TU DÍA' }}</span>
+          </h1>
+          <p class="intro-paragraph">{{ section.settings.subtitle | default: 'Cold Brew infusionado con nitrógeno y superfoods de los Andes peruanos. Máxima concentración sin caídas de energía.' }}</p>
+          <a href="#hero-section" class="intro-btn-cta" id="btn-intro-enter">
+            <span>{{ section.settings.btn_cta_text | default: 'Conoce más' }}</span>
+            <svg class="intro-btn-arrow" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Capa 4: Mano en primer plano -->
+      <div class="intro-layer intro-layer--mano">
+        <img src="{{ 'MANO.webp' | asset_url }}" alt="Mano de Atleta" class="intro-img--mano" loading="eager" width="1200" height="1000">
+      </div>
+
+      <!-- Capa 5: Lata Flotante (Lata Animada 2D Cilíndrica Interactiva con Electricidad 3D) -->
+      <div class="intro-layer intro-layer--lata">
+        <div class="intro-can-card" id="intro-can-card"
+             data-base-can="{{ 'kalpa-can-base.webp' | asset_url }}"
+             data-droplets="{{ 'kalpa-can-droplets.png' | asset_url }}"
+             data-label="{{ 'kalpa-label.webp' | asset_url }}">
+          <!-- Capa 0: Electricidad Trasera (Arcos por detrás de la lata) -->
+          <canvas class="intro-can__electric-back" id="intro-electric-back"></canvas>
+          <!-- Capa 1: Base de la Lata Metálica Limpia -->
+          <img src="{{ 'kalpa-can-base.webp' | asset_url }}" alt="Lata KALPA Cold Brew 2D Animada" class="intro-can__base" loading="eager" draggable="false" width="500" height="1000">
+          <!-- Capa 2: Canvas Cilíndrico con la Etiqueta 3D Rotatoria -->
+          <canvas class="intro-can__canvas" id="intro-can-canvas" width="500" height="1000"></canvas>
+          <!-- Capa 3: Gotas de Condensación HD -->
+          <img src="{{ 'kalpa-can-droplets.png' | asset_url }}" alt="" class="intro-can__droplets" loading="eager" draggable="false" width="500" height="1000">
+          <!-- Capa 3.5: Tapa y Aro de Aluminio Fotográfico -->
+          <img src="{{ 'kalpa-can-rims.png' | asset_url }}" alt="" class="intro-can__rims" loading="eager" draggable="false" width="500" height="1000">
+          <!-- Capa 4: Electricidad Frontal (Arcos envolventes por delante de la lata) -->
+          <canvas class="intro-can__electric-front" id="intro-electric-front"></canvas>
+          <div class="intro-can-flare"></div>
+        </div>
+      </div>
+
+      <!-- Capa 6: Bloque Negro Ascendente (Rising Black Plane - Idéntico a Osmo) -->
+      <div class="intro-rising-black" id="intro-rising-black"></div>
+    </div>
+
+    <!-- Indicador de Scroll hacia abajo -->
+    <div class="intro-scroll-indicator" id="intro-scroll-hint">
+      <div class="scroll-mouse-icon">
+        <div class="scroll-wheel"></div>
+      </div>
+      <span class="scroll-text">DESLIZA PARA EXPLORAR</span>
+    </div>
+
+    <!-- Footer de la Intro con métricas y origen -->
+    <footer class="kalpa-intro-footer">
+      <div class="intro-footer-metrics">
+        <span class="metric-step is-active"><span class="step-num">01</span> Energía</span>
+        <span class="metric-sep">/</span>
+        <span class="metric-step"><span class="step-num">02</span> Rendimiento</span>
+        <span class="metric-sep">/</span>
+        <span class="metric-step"><span class="step-num">03</span> Origen</span>
+      </div>
+      <div class="intro-footer-tag">
+        <span class="tag-bolt">⚡</span> 100% ORGÁNICO &middot; VRAEM, PERÚ
+      </div>
+    </footer>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Kallpa Parallax Intro",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Intro"
+    },
+    {
+      "type": "text",
+      "id": "title_line1",
+      "label": "Título Línea 1",
+      "default": "ENERGÍA"
+    },
+    {
+      "type": "text",
+      "id": "title_line2",
+      "label": "Título Línea 2 (Destacada)",
+      "default": "REAL"
+    },
+    {
+      "type": "text",
+      "id": "title_line3",
+      "label": "Título Línea 3",
+      "default": "PARA TU DÍA"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Cold Brew infusionado con nitrógeno y superfoods de los Andes peruanos. Máxima concentración sin caídas de energía."
+    },
+    {
+      "type": "text",
+      "id": "btn_cta_text",
+      "label": "Texto Botón Principal",
+      "default": "Conoce más"
+    },
+    {
+      "type": "text",
+      "id": "btn_shop_text",
+      "label": "Texto Botón Tienda",
+      "default": "COMPRAR AHORA"
+    },
+    {
+      "type": "url",
+      "id": "btn_shop_url",
+      "label": "Enlace Botón Tienda"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Kallpa Parallax Intro"
+    }
+  ]
+}
+{% endschema %}

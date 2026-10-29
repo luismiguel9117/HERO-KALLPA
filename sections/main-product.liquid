@@ -1,0 +1,666 @@
+{%- comment -%}
+  SECCIÓN: main-product.liquid
+  Página de Detalle de Producto KALPA (Galería, Selector Dinámico, Nutrición, Cross-sell & FAQs)
+{%- endcomment -%}
+
+{%- liquid
+  assign title_display = section.settings.product_title | default: product.title | default: 'KALPA COLD BREW'
+  assign desc_display = section.settings.product_desc | default: product.description | strip_html | default: 'Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural por lata. Listo para tomar, en cualquier momento y lugar.'
+  assign cat_display = section.settings.category_tag | default: 'COLD BREW · LATA 355 ML'
+  assign badge_display = section.settings.badge_text | default: '355 ML — LATA'
+
+  assign p_unit = section.settings.price_unit | default: '7.90'
+  assign p_tripack = section.settings.price_tripack | default: '35.70'
+  assign p_sixpack = section.settings.price_sixpack | default: '39.90'
+  assign p_12pack = section.settings.price_12pack | default: '142.80'
+-%}
+
+<!-- 1. BREADCRUMB -->
+<div class="product-breadcrumb">
+  <div class="page-width">
+    <a href="{{ routes.root_url }}">Inicio</a>
+    <span class="sep">/</span>
+    <a href="{{ routes.all_products_collection_url }}">Productos</a>
+    <span class="sep">/</span>
+    <span style="color:#ffffff;">{{ title_display }}</span>
+  </div>
+</div>
+
+<!-- 2. ESCENARIO PRINCIPAL DEL PRODUCTO -->
+<section class="product-showcase-section">
+  <div class="page-width">
+    <div class="product-showcase-grid">
+
+      <!-- Columna Izquierda: Galería Vertical + Gran Escenario con Patrón Andino -->
+      <div class="product-gallery-layout">
+        <!-- Miniaturas Verticales -->
+        <div class="product-thumbnails-col">
+          {%- if section.settings.thumb_1_image != blank -%}
+            {%- assign t1_url = section.settings.thumb_1_image | image_url: width: 600 -%}
+          {%- else -%}
+            {%- assign t1_url = 'kalpa-can-original.webp' | asset_url -%}
+          {%- endif -%}
+
+          {%- if section.settings.thumb_2_image != blank -%}
+            {%- assign t2_url = section.settings.thumb_2_image | image_url: width: 600 -%}
+          {%- else -%}
+            {%- assign t2_url = 'kalpa-original-label.webp' | asset_url -%}
+          {%- endif -%}
+
+          <button type="button" class="product-thumb-btn is-active" onclick="switchMainImage('{{ t1_url }}', this)" aria-label="Vista frontal">
+            <img src="{{ t1_url }}" alt="Vista Frontal" class="product-thumb-img" width="65" height="80">
+          </button>
+          <button type="button" class="product-thumb-btn" data-fit="cover" onclick="switchMainImage('{{ t2_url }}', this)" aria-label="Etiqueta completa">
+            <img src="{{ t2_url }}" alt="Etiqueta completa" class="product-thumb-img product-thumb-img--cover" width="65" height="80">
+          </button>
+        </div>
+
+        <!-- Escenario Principal con Roca Volcánica, Hielos y Granos -->
+        <div class="product-main-stage" id="product-main-card">
+          <div class="catalog-card__pattern"></div>
+          <div class="catalog-card__stage">
+            {%- if section.settings.main_image != blank -%}
+              <img src="{{ section.settings.main_image | image_url: width: 800 }}" alt="{{ title_display }}" class="catalog-card__can" id="main-product-img" width="380" height="660">
+            {%- elsif product.featured_image != blank -%}
+              <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ title_display }}" class="catalog-card__can" id="main-product-img" width="380" height="660">
+            {%- else -%}
+              <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="{{ title_display }}" class="catalog-card__can" id="main-product-img" width="380" height="660">
+            {%- endif -%}
+          </div>
+          <span class="product-stage-badge">{{ badge_display }}</span>
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Configuración, Opciones y Botón de Compra -->
+      <div class="product-details-col">
+        <span class="product-cat-tag">{{ cat_display }}</span>
+        <h1 class="product-main-title">{{ title_display }}</h1>
+        <p class="product-lead-desc">{{ desc_display }}</p>
+
+        <!-- Bloque de Precio Dinámico -->
+        <div class="product-price-block">
+          <span class="product-price-val" id="display-price">S/ {{ p_unit }}</span>
+          <span class="product-price-sub" id="display-price-sub">S/ {{ p_unit }} por lata</span>
+        </div>
+
+        <!-- Selector de Cantidad (Packs) -->
+        <div class="selector-group">
+          <span class="selector-group-label">CANTIDAD</span>
+          <div class="pack-selector-grid">
+            <button type="button" class="pack-card-btn is-active" onclick="selectPack(1, {{ p_unit }}, 'Unidad', this)">
+              <span class="pack-card-main">
+                <span class="pack-card-name">Unidad</span>
+                <span class="pack-card-meta">1 lata · 355 ml</span>
+              </span>
+              <span class="pack-card-price">S/ {{ p_unit }}</span>
+            </button>
+            <button type="button" class="pack-card-btn" onclick="selectPack(6, {{ p_sixpack }}, 'Pack x 6', this)">
+              <span class="pack-card-save">Ahorra 15%</span>
+              <span class="pack-card-main">
+                <span class="pack-card-name">Pack x 6</span>
+                <span class="pack-card-meta">6 latas de 355 ml</span>
+              </span>
+              <span class="pack-card-price"><s>S/ {{ p_unit | times: 6 | round: 2 }}</s> S/ {{ p_sixpack }}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Botón de Compra / Agregar al Carrito -->
+        <button type="button" class="btn-product-add" id="btn-add-main" onclick="handleAddToCart()">
+          AGREGAR AL CARRITO &ndash; S/ {{ p_unit }}
+        </button>
+
+        <!-- Sellos de Entrega y Confianza -->
+        <div class="product-trust-row">
+          <div class="product-trust-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-gold);">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+            <span>Envíos a todo el Perú</span>
+          </div>
+          <div class="product-trust-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-gold);">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span>También disponible en Rappi Turbo</span>
+          </div>
+        </div>
+
+        <!-- 3 Sellos de Beneficios Clave -->
+        <div class="product-features-ribbon">
+          <span class="product-feature-tag"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Energía limpia</span>
+          <span class="product-feature-tag"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line></svg> Sin azúcar</span>
+          <span class="product-feature-tag"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 3 4 8 5-5 5 11H2L8 3z"></path></svg> Café de altura</span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 3. QUÉ LLEVA & INFORMACIÓN NUTRICIONAL -->
+<section class="product-specs-section">
+  <div class="page-width">
+    <div class="product-specs-grid">
+
+      <!-- Columna Izquierda: Qué Lleva, Cómo Tomarla y Advertencia -->
+      <div class="product-info-block">
+        <div>
+          <h3 class="specs-block-title">QUÉ LLEVA</h3>
+          <h4 class="specs-item-header">{{ section.settings.specs_what | default: 'Café cold brew listo para tomar, macerado en frío durante 24 horas.' }}</h4>
+          <p class="specs-item-body">
+            <strong>Ingredientes:</strong> {{ section.settings.specs_ingredients | default: 'agua tratada, café de especialidad de Ayacucho y stevia natural.' }}<br>
+            <strong>Contenido neto:</strong> {{ section.settings.specs_net_content | default: '355 ml.' }}
+          </p>
+        </div>
+
+        <div>
+          <h3 class="specs-block-title">CÓMO TOMARLA</h3>
+          <p class="specs-item-body">
+            {{ section.settings.specs_how_to_drink | default: 'Tómala siempre bien helada. Combínala como quieras: sola directo de la lata o servida con hielo y rodaja de cítrico. Después de abrir el envase, refrigérala.' }}
+          </p>
+        </div>
+
+        <!-- Tarjeta de Advertencia Alto en Cafeína -->
+        <div class="specs-warning-card">
+          <div class="specs-warning-title">{{ section.settings.warning_title | default: 'ALTO EN CAFEÍNA' }}</div>
+          <p class="specs-warning-text">
+            {{ section.settings.warning_text | default: 'No recomendado para niños, mujeres embarazadas o personas con extrema sensibilidad a la cafeína.' }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Tabla de Información Nutricional -->
+      <div class="product-info-block">
+        <h3 class="specs-block-title">INFORMACIÓN NUTRICIONAL</h3>
+        <table class="nutrition-table">
+          <thead>
+            <tr>
+              <th>Nutriente</th>
+              <th>Por porción ({{ section.settings.specs_net_content | default: '355 ml' }})</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Energía</td>
+              <td>0 kcal / 0 kJ</td>
+            </tr>
+            <tr>
+              <td>Grasas totales</td>
+              <td>0 g</td>
+            </tr>
+            <tr>
+              <td>Carbohidratos totales</td>
+              <td>0 g</td>
+            </tr>
+            <tr>
+              <td>Azúcares añadidos</td>
+              <td>0 g</td>
+            </tr>
+            <tr>
+              <td>Proteínas</td>
+              <td>0 g</td>
+            </tr>
+            <tr>
+              <td>Sodio</td>
+              <td>5 mg</td>
+            </tr>
+            <tr>
+              <td>Cafeína</td>
+              <td>280 mg</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 4. CROSS-SELL: QUE NO SE TE ACABE A MITAD DE SEMANA -->
+<section class="product-cross-section" id="cross-sell-section">
+  <div class="page-width">
+    <span class="cross-eyebrow">COMPLETA TU PEDIDO</span>
+    <h2 class="cross-title">{{ section.settings.cross_title | default: 'QUE NO SE TE ACABE A MITAD DE SEMANA' }}</h2>
+
+    <div class="cross-cards-grid">
+      <!-- Card 1: Tripack -->
+      <div class="cross-pack-card">
+        {%- if section.settings.cross_1_image != blank -%}
+          <img src="{{ section.settings.cross_1_image | image_url: width: 280 }}" alt="{{ section.settings.cross_1_name | default: 'Tripack KALPA' }}" class="cross-pack-img" width="80" height="95">
+        {%- else -%}
+          <img src="{{ 'kalpa-molido-can-solo.webp' | asset_url }}" alt="KALPA Café Molido 250g" class="cross-pack-img" width="80" height="95">
+        {%- endif -%}
+        <div class="cross-pack-info">
+          <span class="cross-pack-name">{{ section.settings.cross_1_name | default: 'CAFÉ MOLIDO 250G' }}</span>
+          <span class="cross-pack-sub">{{ section.settings.cross_1_sub | default: '100% Arábica · Origen VRAEM' }}</span>
+          <span class="cross-pack-price">S/ {{ section.settings.cross_1_price | default: '34.90' }}</span>
+          <button type="button" class="btn-cross-add" onclick="addPackToKallpaCart('cross-molido-250', 'KALPA {{ section.settings.cross_1_name | default: 'Café Molido 250g' }}', {{ section.settings.cross_1_price | default: '34.90' }})">
+            AGREGAR
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 2: Six-pack -->
+      <div class="cross-pack-card">
+        {%- if section.settings.cross_2_image != blank -%}
+          <img src="{{ section.settings.cross_2_image | image_url: width: 280 }}" alt="{{ section.settings.cross_2_name | default: 'Sixpack KALPA' }}" class="cross-pack-img" width="80" height="95">
+        {%- else -%}
+          <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="Sixpack KALPA" class="cross-pack-img" width="80" height="95">
+        {%- endif -%}
+        <div class="cross-pack-info">
+          <span class="cross-pack-name">{{ section.settings.cross_2_name | default: 'PACK X 6' }}</span>
+          <span class="cross-pack-sub">{{ section.settings.cross_2_sub | default: '6 latas de 355 ml · -15%' }}</span>
+          <span class="cross-pack-price">S/ {{ section.settings.cross_2_price | default: '39.90' }}</span>
+          <button type="button" class="btn-cross-add" onclick="addPackToKallpaCart('cross-sixpack', 'KALPA {{ section.settings.cross_2_name | default: 'Pack x 6 Original 355ml' }}', {{ section.settings.cross_2_price | default: '39.90' }})">
+            AGREGAR
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. PREGUNTAS FRECUENTES (FAQ) -->
+<section class="product-faq-section">
+  <div class="page-width">
+    <span class="faq-eyebrow">{{ section.settings.faq_eyebrow | default: 'PREGUNTAS FRECUENTES' }}</span>
+    <h2 class="faq-title">{{ section.settings.faq_title | default: 'ANTES DE COMPRAR' }}</h2>
+
+    <div class="faq-accordion">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq_item' -%}
+            <div class="faq-item{% if block.settings.open_by_default %} is-open{% endif %}" {{ block.shopify_attributes }}>
+              <button type="button" class="faq-header" onclick="toggleFaq(this)">
+                <span>{{ block.settings.question }}</span>
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-body">
+                {{ block.settings.answer }}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        <div class="faq-item is-open">
+          <button type="button" class="faq-header" onclick="toggleFaq(this)">
+            <span>¿Cuánta cafeína tiene?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-body">
+            Cada lata de 355 ml contiene 280 mg de cafeína natural pura, extraída lentamente en frío durante 24 horas continuas a 4°C. Equivale a aproximadamente 3 espressos pero con liberación prolongada gracias a los polifenoles del café.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-header" onclick="toggleFaq(this)">
+            <span>¿Quién no debería tomarla?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-body">
+            Debido a su alta concentración de cafeína natural, no está recomendada para niños, personas gestantes o en período de lactancia, ni personas con alta sensibilidad a los estimulantes o afecciones cardíacas.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-header" onclick="toggleFaq(this)">
+            <span>¿Envían a provincia?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-body">
+            Sí. Despachamos a todas las ciudades y provincias del Perú a través de Olva Courier y Shalom, con empaque protector anti-impacto. El tiempo promedio de entrega en Lima es de 24 a 48 horas, y en provincias de 48 a 72 horas hábiles.
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  function switchMainImage(src, btn) {
+    var img = document.getElementById('main-product-img');
+    if (img) {
+      img.src = src;
+      img.classList.toggle('is-cover', btn.getAttribute('data-fit') === 'cover');
+    }
+    var all = document.querySelectorAll('.product-thumb-btn');
+    all.forEach(function(b) { b.classList.remove('is-active'); });
+    btn.classList.add('is-active');
+  }
+
+  var currentFlavor = '{{ section.settings.flavor_1_name | default: 'Original' }}';
+  var currentPackQty = 1;
+  var currentPackPrice = parseFloat('{{ p_unit }}') || 7.90;
+  var currentPackName = 'Unidad';
+
+  function selectFlavor(f, btn) {
+    currentFlavor = f;
+    var all = document.querySelectorAll('.flavor-pill');
+    all.forEach(function(b) { b.classList.remove('is-active'); });
+    btn.classList.add('is-active');
+    
+    var card = document.getElementById('product-main-card');
+    if (card) {
+      if (f.toLowerCase().indexOf('orange') !== -1) {
+        card.style.background = 'radial-gradient(circle at 50% 50%, #e6751c 0%, #b8540c 100%)';
+      } else {
+        card.style.background = 'radial-gradient(circle at 50% 50%, #f6c823 0%, #d89f0a 100%)';
+      }
+    }
+  }
+
+  function selectPack(qty, price, name, btn) {
+    currentPackQty = qty;
+    currentPackPrice = price;
+    currentPackName = name;
+    var all = document.querySelectorAll('.pack-card-btn');
+    all.forEach(function(b) { b.classList.remove('is-active'); });
+    btn.classList.add('is-active');
+
+    var pVal = document.getElementById('display-price');
+    var pSub = document.getElementById('display-price-sub');
+    var btnAdd = document.getElementById('btn-add-main');
+    if (pVal) pVal.textContent = 'S/ ' + price.toFixed(2);
+    if (pSub) {
+      var perCan = (price / qty).toFixed(2);
+      if (qty === 1) {
+        pSub.textContent = 'S/ ' + perCan + ' por lata';
+      } else {
+        pSub.textContent = qty + ' latas · S/ ' + perCan + ' por lata';
+      }
+    }
+    if (btnAdd) {
+      btnAdd.textContent = 'AGREGAR AL CARRITO \u2013 S/ ' + price.toFixed(2);
+    }
+  }
+
+  function handleAddToCart() {
+    var title = '{{ title_display }} ' + currentFlavor + ' (' + currentPackName + ')';
+    var vId = {{ product.selected_or_first_available_variant.id | default: 'null' }};
+    if (typeof window.addPackToKallpaCart === 'function') {
+      window.addPackToKallpaCart('pdp-' + currentFlavor.toLowerCase() + '-' + currentPackQty, title, currentPackPrice, currentPackQty, vId);
+    } else if (typeof window.openKallpaCart === 'function') {
+      window.openKallpaCart();
+    }
+  }
+
+  function toggleFaq(btn) {
+    var item = btn.closest('.faq-item');
+    if (item) {
+      item.classList.toggle('is-open');
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Detalle de Producto",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Información Principal"
+    },
+    {
+      "type": "text",
+      "id": "category_tag",
+      "label": "Tag de Categoría",
+      "default": "BEBIDA FUNCIONAL A BASE DE CAFÉ"
+    },
+    {
+      "type": "text",
+      "id": "product_title",
+      "label": "Título del Producto",
+      "default": "KALPA COLD BREW"
+    },
+    {
+      "type": "textarea",
+      "id": "product_desc",
+      "label": "Descripción Principal",
+      "default": "Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural por lata. Listo para tomar, en cualquier momento y lugar."
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Insignia en Escenario",
+      "default": "355 ML — LATA"
+    },
+    {
+      "type": "header",
+      "content": "Imágenes del Producto"
+    },
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Imagen Principal en Escenario"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumb_1_image",
+      "label": "Miniatura 1 (Frontal)"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumb_2_image",
+      "label": "Miniatura 2 (Etiqueta)"
+    },
+    {
+      "type": "header",
+      "content": "Sabores"
+    },
+    {
+      "type": "text",
+      "id": "flavor_1_name",
+      "label": "Nombre Sabor 1",
+      "default": "Original"
+    },
+    {
+      "type": "text",
+      "id": "flavor_2_name",
+      "label": "Nombre Sabor 2",
+      "default": "Orange"
+    },
+    {
+      "type": "header",
+      "content": "Precios por Pack"
+    },
+    {
+      "type": "text",
+      "id": "price_unit",
+      "label": "Precio Unidad (S/)",
+      "default": "7.90"
+    },
+    {
+      "type": "text",
+      "id": "price_tripack",
+      "label": "Precio Tripack (S/)",
+      "default": "35.70"
+    },
+    {
+      "type": "text",
+      "id": "price_sixpack",
+      "label": "Precio Pack x 6 (S/)",
+      "default": "39.90"
+    },
+    {
+      "type": "text",
+      "id": "price_12pack",
+      "label": "Precio 12-pack (S/)",
+      "default": "142.80"
+    },
+    {
+      "type": "header",
+      "content": "Especificaciones y Qué Lleva"
+    },
+    {
+      "type": "text",
+      "id": "specs_what",
+      "label": "Subtítulo de Qué Lleva",
+      "default": "Café cold brew listo para tomar, macerado en frío durante 24 horas."
+    },
+    {
+      "type": "textarea",
+      "id": "specs_ingredients",
+      "label": "Ingredientes",
+      "default": "agua tratada, café de especialidad de Ayacucho y stevia natural."
+    },
+    {
+      "type": "text",
+      "id": "specs_net_content",
+      "label": "Contenido Neto",
+      "default": "355 ml."
+    },
+    {
+      "type": "textarea",
+      "id": "specs_how_to_drink",
+      "label": "Cómo Tomarla",
+      "default": "Tómala siempre bien helada. Combínala como quieras: sola directo de la lata o servida con hielo y rodaja de cítrico. Después de abrir el envase, refrigérala."
+    },
+    {
+      "type": "text",
+      "id": "warning_title",
+      "label": "Título de Advertencia",
+      "default": "ALTO EN CAFEÍNA"
+    },
+    {
+      "type": "textarea",
+      "id": "warning_text",
+      "label": "Texto de Advertencia",
+      "default": "No recomendado para niños, mujeres embarazadas o personas con extrema sensibilidad a la cafeína."
+    },
+    {
+      "type": "header",
+      "content": "Venta Cruzada (Cross-Sell)"
+    },
+    {
+      "type": "text",
+      "id": "cross_title",
+      "label": "Título Cross-Sell",
+      "default": "QUE NO SE TE ACABE A MITAD DE SEMANA"
+    },
+    {
+      "type": "image_picker",
+      "id": "cross_1_image",
+      "label": "Imagen Pack 1"
+    },
+    {
+      "type": "text",
+      "id": "cross_1_name",
+      "label": "Nombre Pack 1",
+      "default": "CAFÉ MOLIDO 250G"
+    },
+    {
+      "type": "text",
+      "id": "cross_1_sub",
+      "label": "Subtexto Pack 1",
+      "default": "100% Arábica · Origen VRAEM"
+    },
+    {
+      "type": "text",
+      "id": "cross_1_price",
+      "label": "Precio Pack 1 (S/)",
+      "default": "34.90"
+    },
+    {
+      "type": "image_picker",
+      "id": "cross_2_image",
+      "label": "Imagen Pack 2"
+    },
+    {
+      "type": "text",
+      "id": "cross_2_name",
+      "label": "Nombre Pack 2",
+      "default": "PACK X 6"
+    },
+    {
+      "type": "text",
+      "id": "cross_2_sub",
+      "label": "Subtexto Pack 2",
+      "default": "6 latas de 355 ml · -15%"
+    },
+    {
+      "type": "text",
+      "id": "cross_2_price",
+      "label": "Precio Pack 2 (S/)",
+      "default": "39.90"
+    },
+    {
+      "type": "header",
+      "content": "Preguntas Frecuentes"
+    },
+    {
+      "type": "text",
+      "id": "faq_eyebrow",
+      "label": "Kicker FAQ",
+      "default": "PREGUNTAS FRECUENTES"
+    },
+    {
+      "type": "text",
+      "id": "faq_title",
+      "label": "Título FAQ",
+      "default": "ANTES DE COMPRAR"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "Pregunta FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Pregunta",
+          "default": "¿Cuánta cafeína tiene?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Respuesta",
+          "default": "Cada lata de 355 ml contiene 280 mg de cafeína natural pura, extraída lentamente en frío durante 24 horas continuas a 4°C."
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Abierto por defecto",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Detalle de Producto",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Cuánta cafeína tiene?",
+            "answer": "Cada lata de 355 ml contiene 280 mg de cafeína natural pura, extraída lentamente en frío durante 24 horas continuas a 4°C. Equivale a aproximadamente 3 espressos pero con liberación prolongada gracias a los polifenoles del café.",
+            "open_by_default": true
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Quién no debería tomarla?",
+            "answer": "Debido a su alta concentración de cafeína natural, no está recomendada para niños, personas gestantes o en período de lactancia, ni personas con alta sensibilidad a los estimulantes o afecciones cardíacas."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Envían a provincia?",
+            "answer": "Sí. Despachamos a todas las ciudades y provincias del Perú a través de Olva Courier y Shalom, con empaque protector anti-impacto. El tiempo promedio de entrega en Lima es de 24 a 48 horas, y en provincias de 48 a 72 horas hábiles."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

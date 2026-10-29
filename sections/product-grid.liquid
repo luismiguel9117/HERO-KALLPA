@@ -1,0 +1,518 @@
+{%- comment -%}
+  SECCIÓN: product-grid.liquid
+  Arsenal Cold Brew KALPA - Selección de Packs & Quick Add AJAX
+  Diseñado bajo los principios de frontend-design: e-commerce con convicción, cálculo transparente de ahorro y sin rellenos genéricos.
+{%- endcomment -%}
+
+<section class="kallpa-collection-section" id="products-section">
+  <div class="page-width">
+    
+    <!-- Encabezado de la Colección -->
+    <div class="kallpa-collection__header">
+      <div class="collection-kicker">
+        <span class="pulse-dot"></span>
+        <span>ARSENAL DISPONIBLE // COLD BREW 355ML</span>
+      </div>
+      <h2 class="font-heading collection-title">
+        ELIGE TU PACK DE <span class="gradient-text-gold">RENDIMIENTO</span>
+      </h2>
+      <p class="collection-desc">
+        Macerado en frío por 24 horas a 4°C. 180mg de cafeína natural por lata. Envío refrigerado express a todo el Perú.
+      </p>
+    </div>
+
+    <!-- Grid de los 3 Packs Oficiales KALPA -->
+    <div class="kallpa-packs-grid">
+
+      <!-- PACK 1: 6-Pack Iniciación -->
+      <div class="kallpa-pack-card" data-product-id="kalpa-6-pack">
+        <div class="pack-badge pack-badge--standard">INICIACIÓN AL VRAEM</div>
+        
+        <div class="pack-visual">
+          <div class="pack-can-stack stack--6">
+            <div class="mini-can can-center">
+              <span class="mini-can-tag">⚡ 355ML</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pack-info">
+          <h3 class="pack-title">KALPA 6-PACK ORIGINAL</h3>
+          <p class="pack-tagline">El pack ideal para descubrir la pureza y notas de cacao del café del VRAEM.</p>
+          
+          <ul class="pack-perks">
+            <li>✓ 6 latas Sleek Can de 355ml</li>
+            <li>✓ 180mg cafeína natural por servicio</li>
+            <li>✓ 0 calorías / 0 azúcar añadido</li>
+          </ul>
+
+          <div class="pack-pricing">
+            <span class="pack-price">S/ 58.00 PEN</span>
+            <span class="pack-unit-price">S/ 9.66 por lata</span>
+          </div>
+
+          <button type="button" class="btn-pack-add" onclick="addPackToKallpaCart('6-pack', 'KALPA 6-Pack Original', 58.00)">
+            <span>Añadir al Carrito</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- PACK 2: 12-Pack Pro Performance (DESTACADO / MÁS POPULAR) -->
+      <div class="kallpa-pack-card pack-card--featured" data-product-id="kalpa-12-pack">
+        <div class="pack-badge pack-badge--gold">⚡ MÁS POPULAR &bull; ENVÍO GRATIS</div>
+        
+        <div class="pack-visual">
+          <div class="pack-can-stack stack--12">
+            <div class="mini-can can-left"></div>
+            <div class="mini-can can-center is-hero">
+              <span class="mini-can-tag">⚡ 12 PACK</span>
+            </div>
+            <div class="mini-can can-right"></div>
+          </div>
+        </div>
+
+        <div class="pack-info">
+          <div class="pack-savings-tag">AHORRAS 10% + ENVÍO FREE</div>
+          <h3 class="pack-title">KALPA 12-PACK PRO PERFORMANCE</h3>
+          <p class="pack-tagline">El suministro mensual recomendado para atletas y profesionales de alto enfoque.</p>
+          
+          <ul class="pack-perks">
+            <li>✓ 12 latas Sleek Can de 355ml</li>
+            <li>✓ Envío gratuito a todo el Perú</li>
+            <li>✓ 2 semanas de flujo cognitivo diario</li>
+            <li>✓ Cero caída de energía (No crash)</li>
+          </ul>
+
+          <div class="pack-pricing">
+            <span class="pack-price">S/ 105.00 PEN</span>
+            <span class="pack-compare-price">S/ 116.00</span>
+            <span class="pack-unit-price">S/ 8.75 por lata</span>
+          </div>
+
+          <button type="button" class="btn-pack-add btn-pack-add--gold" onclick="addPackToKallpaCart('12-pack', 'KALPA 12-Pack Pro Performance', 105.00)">
+            <span>Añadir al Carrito &bull; Envío Free</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- PACK 3: 24-Pack Master Box -->
+      <div class="kallpa-pack-card" data-product-id="kalpa-24-pack">
+        <div class="pack-badge pack-badge--silver">CLUB ÉLITE &bull; MÁXIMO AHORRO</div>
+        
+        <div class="pack-visual">
+          <div class="pack-can-stack stack--24">
+            <div class="mini-can can-center">
+              <span class="mini-can-tag">⚡ 24 BOX</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pack-info">
+          <div class="pack-savings-tag">AHORRAS 18% &bull; PRECIO MAYORISTA</div>
+          <h3 class="pack-title">KALPA 24-PACK MASTER BOX</h3>
+          <p class="pack-tagline">Para equipos de alto impacto, estudios de desarrollo y boxes de entrenamiento.</p>
+          
+          <ul class="pack-perks">
+            <li>✓ 24 latas Sleek Can de 355ml</li>
+            <li>✓ Envío prioritario refrigerado gratis</li>
+            <li>✓ Acceso a lotes de cosecha limitada</li>
+            <li>✓ Mejor costo por mililitro</li>
+          </ul>
+
+          <div class="pack-pricing">
+            <span class="pack-price">S/ 195.00 PEN</span>
+            <span class="pack-compare-price">S/ 232.00</span>
+            <span class="pack-unit-price">S/ 8.12 por lata</span>
+          </div>
+
+          <button type="button" class="btn-pack-add" onclick="addPackToKallpaCart('24-pack', 'KALPA 24-Pack Master Box', 195.00)">
+            <span>Añadir Master Box</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Garantía de Frescura & Métodos de Pago -->
+    <div class="kallpa-guarantee-bar">
+      <div class="guarantee-item">
+        <span class="guarantee-icon">❄️</span>
+        <div>
+          <strong>Cadena de Frío Garantizada</strong>
+          <p>Enviado en empaque térmico con control de temperatura.</p>
+        </div>
+      </div>
+      <div class="guarantee-item">
+        <span class="guarantee-icon">⚡</span>
+        <div>
+          <strong>Entrega en 24h en Lima</strong>
+          <p>Y 48h a provincias de todo el Perú vía courier express.</p>
+        </div>
+      </div>
+      <div class="guarantee-item">
+        <span class="guarantee-icon">🌱</span>
+        <div>
+          <strong>100% Cosecha Sostenible</strong>
+          <p>Paga justa directa a caficultores del VRAEM.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .kallpa-collection-section {
+    padding: 8rem 0;
+    background-color: #080a0e;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .kallpa-collection__header {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 4.5rem;
+  }
+  .collection-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    color: var(--accent-gold);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+  .collection-title {
+    font-size: clamp(2rem, 3.8vw, 3.4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+  }
+  .collection-desc {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #94a3b8;
+  }
+
+  /* Grid de Packs */
+  .kallpa-packs-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: stretch;
+    margin-bottom: 4.5rem;
+  }
+  @media (min-width: 990px) {
+    .kallpa-packs-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .kallpa-pack-card {
+    background: #0f1117;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 22px;
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .kallpa-pack-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(245, 186, 44, 0.4);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Card Destacada 12-Pack */
+  .pack-card--featured {
+    background: linear-gradient(180deg, #220808 0%, #0f1117 65%);
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 35px rgba(245, 186, 44, 0.15);
+    transform: scale(1.02);
+  }
+  @media (min-width: 990px) {
+    .pack-card--featured:hover {
+      transform: scale(1.04) translateY(-6px);
+    }
+  }
+
+  .pack-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    padding: 5px 14px;
+    border-radius: 999px;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+  .pack-badge--standard {
+    background: #181b24;
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .pack-badge--gold {
+    background: var(--accent-gold);
+    color: #000000;
+    box-shadow: 0 4px 15px rgba(245, 186, 44, 0.4);
+  }
+  .pack-badge--silver {
+    background: #334155;
+    color: #ffffff;
+    border: 1px solid #64748b;
+  }
+
+  /* Visual de Latas */
+  .pack-visual {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1.5rem 0 1rem;
+    position: relative;
+  }
+  .pack-can-stack {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .mini-can {
+    width: 65px;
+    height: 135px;
+    background: linear-gradient(135deg, #27272a 0%, #09090b 70%, #18181b 100%);
+    border-radius: 12px 12px 6px 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .mini-can.is-hero {
+    width: 75px;
+    height: 155px;
+    z-index: 3;
+    border-color: var(--accent-gold);
+    box-shadow: 0 12px 30px rgba(245, 186, 44, 0.25);
+  }
+  .can-left {
+    transform: rotate(-10deg) translateX(15px);
+    opacity: 0.85;
+    z-index: 1;
+  }
+  .can-right {
+    transform: rotate(10deg) translateX(-15px);
+    opacity: 0.85;
+    z-index: 1;
+  }
+  .mini-can-tag {
+    font-size: 0.58rem;
+    font-weight: 800;
+    color: var(--accent-gold);
+    transform: rotate(-90deg);
+    white-space: nowrap;
+    letter-spacing: 0.1em;
+  }
+
+  .pack-savings-tag {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--accent-gold);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
+  }
+  .pack-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.25;
+    margin-bottom: 0.6rem;
+  }
+  .pack-tagline {
+    font-size: 0.88rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+
+  .pack-perks {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+  }
+
+  .pack-pricing {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 1.5rem;
+  }
+  .pack-price {
+    font-size: 1.7rem;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+  }
+  .pack-compare-price {
+    font-size: 1.1rem;
+    color: #64748b;
+    text-decoration: line-through;
+  }
+  .pack-unit-price {
+    font-size: 0.75rem;
+    color: var(--accent-gold);
+    width: 100%;
+    font-weight: 700;
+  }
+
+  .btn-pack-add {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    padding: 0.95rem 1.25rem;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-transform: uppercase;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .btn-pack-add:hover {
+    background: #ffffff;
+    color: #000000;
+    transform: translateY(-2px);
+  }
+  .btn-pack-add--gold {
+    background: var(--accent-gold);
+    color: #000000;
+    border-color: var(--accent-gold);
+  }
+  .btn-pack-add--gold:hover {
+    background: #facc15;
+    color: #000000;
+    box-shadow: 0 8px 25px rgba(245, 186, 44, 0.4);
+  }
+
+  /* Barra de Garantía */
+  .kallpa-guarantee-bar {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    background: #0f1117;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 18px;
+    padding: 2rem;
+  }
+  @media (min-width: 860px) {
+    .kallpa-guarantee-bar {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .guarantee-item {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+  }
+  .guarantee-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+  .guarantee-item strong {
+    display: block;
+    font-size: 0.95rem;
+    color: #ffffff;
+    margin-bottom: 0.2rem;
+  }
+  .guarantee-item p {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin: 0;
+  }
+</style>
+
+<script>
+  function addPackToKallpaCart(packId, name, price) {
+    // Carrito interactivo AJAX de Shopify / Local
+    const countEl = document.getElementById('kallpa-cart-count');
+    if (countEl) {
+      const current = parseInt(countEl.textContent || '0');
+      countEl.textContent = current + 1;
+    }
+
+    const drawer = document.getElementById('kallpa-cart-drawer');
+    const overlay = document.getElementById('kallpa-cart-overlay');
+    const itemsContainer = document.getElementById('kallpa-cart-items');
+    const footerContainer = document.getElementById('kallpa-cart-footer');
+
+    if (itemsContainer) {
+      const itemEl = document.createElement('div');
+      itemEl.style.cssText = 'display:flex; justify-content:space-between; align-items:center; padding:1.2rem; border-bottom:1px solid rgba(255,255,255,0.08);';
+      itemEl.innerHTML = `
+        <div>
+          <strong style="color:#ffffff; font-size:0.95rem; display:block;">⚡ ${name}</strong>
+          <span style="color:var(--accent-gold); font-size:0.85rem; font-weight:700;">S/ ${price.toFixed(2)} PEN</span>
+        </div>
+        <span style="background:rgba(255,255,255,0.08); padding:4px 10px; border-radius:6px; font-size:0.75rem; color:#fff;">1x</span>
+      `;
+      itemsContainer.appendChild(itemEl);
+    }
+
+    if (footerContainer) {
+      footerContainer.innerHTML = `
+        <div style="padding:1.5rem; background:#12151e; border-top:1px solid rgba(255,255,255,0.08);">
+          <div style="display:flex; justify-content:space-between; margin-bottom:1rem; font-weight:800; font-size:1.1rem; color:#fff;">
+            <span>TOTAL:</span>
+            <span style="color:var(--accent-gold);">S/ ${price.toFixed(2)} PEN</span>
+          </div>
+          <button type="button" class="btn-pruebala" style="width:100%; text-align:center;" onclick="window.location.href='/checkout'">
+            INICIAR CHECKOUT SEGURO
+          </button>
+        </div>
+      `;
+    }
+
+    if (drawer && overlay) {
+      drawer.classList.add('is-open');
+      overlay.classList.add('is-open');
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Kallpa Packs Cold Brew",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Kallpa Packs Cold Brew"
+    }
+  ]
+}
+{% endschema %}
