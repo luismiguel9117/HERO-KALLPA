@@ -4758,7 +4758,8 @@ h1, h2, h3, h4, h5, h6 {
 
   .hero-can-comp__rock {
     width: 175%;
-    bottom: -8%;
+    /* Baja hasta el borde del hero (overflow: hidden la recorta) para no dejar franja vacía */
+    bottom: -15%;
     left: -37%;
   }
 }
