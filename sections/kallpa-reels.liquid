@@ -71,13 +71,15 @@
                 </svg>
               </div>
 
+              {%- if block.settings.views != blank -%}
               <div class="reel-views-pill">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                   <circle cx="12" cy="12" r="3"></circle>
                 </svg>
-                <span>{{ block.settings.views | default: '120K' }}</span>
+                <span>{{ block.settings.views }}</span>
               </div>
+              {%- endif -%}
             </div>
           {%- endfor -%}
         {%- else -%}

@@ -6316,10 +6316,21 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Fila de 3 Reels */
 .community-reels-row {
+  --reel-gap: clamp(0.75rem, 1.2vw, 1.2rem);
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(0.75rem, 1.2vw, 1.2rem);
+  /* 3 reels visibles; si hay más, la fila se desliza en horizontal */
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 2 * var(--reel-gap)) / 3);
+  gap: var(--reel-gap);
   height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(245, 186, 44, 0.6) transparent;
+}
+
+.community-reels-row > .community-reel-card {
+  scroll-snap-align: start;
 }
 
 .community-reel-card {
@@ -6641,7 +6652,7 @@ h1, h2, h3, h4, h5, h6 {
     align-items: flex-start;
   }
   .community-reels-row {
-    grid-template-columns: repeat(3, minmax(180px, 1fr));
+    grid-auto-columns: minmax(180px, 46%);
     overflow-x: auto;
     padding-bottom: 0.85rem;
     scroll-snap-type: x mandatory;
