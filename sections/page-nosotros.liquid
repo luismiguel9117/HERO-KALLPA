@@ -30,7 +30,7 @@
 
     <!-- CTA inferior -->
     <div class="nosotros-hero__bottom-row">
-      <a href="#energia-andes" class="btn-hero-descubre">
+      <a href="#origen-ayacucho" class="btn-hero-descubre">
         <span>DESCUBRE KALPA</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
           <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -42,7 +42,7 @@
 
   <!-- Indicador lateral -->
   <nav class="nosotros-hero__steps" aria-label="Secciones">
-    <a href="#energia-andes" class="is-active">01</a>
+    <a href="#origen-ayacucho" class="is-active">01</a>
     <a href="#origen-ayacucho">02</a>
     <a href="#como-lo-hacemos">03</a>
   </nav>
@@ -60,31 +60,6 @@
     window.addEventListener("resize", setOffset);
   })();
 </script>
-
-<!-- 2. SECCIÓN: ENERGÍA DE LOS ANDES -->
-<section class="section-nosotros-energia" id="energia-andes">
-  <div class="page-width">
-    <div class="energia-container">
-      <span class="section-kicker-gold">{{ section.settings.energia_kicker | default: 'ORIGEN Y SIGNIFICADO' }}</span>
-      <h2 class="energia-giant-title">{{ section.settings.energia_title | default: 'ENERGÍA DE LOS ANDES' }}</h2>
-      <p class="energia-lead-quote">
-        {{ section.settings.energia_quote | default: 'Kalpa significa fuerza, energía y poder en quechua.' }}
-      </p>
-      <p class="energia-body-text">
-        {{ section.settings.energia_body | default: 'Nació para que rindas al máximo sin sacrificar tu cuerpo. Una bebida creada a partir de café de especialidad de origen peruano, con cafeína limpia que estimula tu mente y cuerpo de forma continua y natural.' }}
-      </p>
-      <div>
-        <a href="{{ routes.all_products_collection_url }}" class="btn-probar-kalpa">
-          <span>PROBAR KALPA</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ==================== 4–8. HISTORIA KALLPA: RAÍZ · CÓMO · POR QUÉ · GENTE · PRUÉBALA ==================== -->
 <div class="nos-story">
@@ -114,9 +89,7 @@
     <img src="{{ 'nos-hoja-3.png' | asset_url }}" alt="" class="nos-deco nos-como__leaf" loading="lazy" aria-hidden="true">
     <div class="nos-block__inner nos-block__inner--reverse">
       <figure class="nos-como__visual">
-        <img src="{{ 'vraem-harvest.jpg' | asset_url }}" alt="Manos de productora con cerezas de café en Ayacucho" class="nos-como__photo" loading="lazy">
-        <img src="{{ 'nos-cerezas-rama.png' | asset_url }}" alt="" class="nos-como__cherries" loading="lazy" aria-hidden="true">
-        <img src="{{ 'nos-grano.png' | asset_url }}" alt="" class="nos-como__bean" loading="lazy" aria-hidden="true">
+        <img src="{{ 'nos-manos-cerezas.webp' | asset_url }}" alt="Manos de productor con cerezas de café recién cosechadas" loading="lazy" width="1536" height="1024">
       </figure>
       <div class="nos-block__text">
         <span class="nos-eyebrow">CÓMO LO HACEMOS</span>
