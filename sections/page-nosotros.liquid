@@ -86,211 +86,124 @@
   </div>
 </section>
 
-<!-- 3. SECCIÓN: LA RAÍZ DE KALPA — AYACUCHO -->
-<section class="section-nosotros-raiz" id="origen-ayacucho">
-  <div class="page-width">
-    <div class="raiz-grid">
-      <div class="raiz-content">
-        <span class="section-kicker-gold">{{ section.settings.raiz_kicker | default: 'LA RAÍZ DE KALPA' }}</span>
-        <h2 class="raiz-title">{{ section.settings.raiz_title | default: 'AYACUCHO' }}</h2>
-        <p class="raiz-lead">
-          {{ section.settings.raiz_lead | default: 'Ayacucho no es solo de donde viene el café. Es el origen, la cultura y la razón de ser de lo que hacemos.' }}
-        </p>
-        <p class="raiz-text">
-          {{ section.settings.raiz_text | default: 'Usamos la energía natural de los insumos andinos: potente, limpia, sin artificios. Insumos andinos que merecen ser reconocidos en el Perú y en el mundo entero por su calidad insuperable.' }}
-        </p>
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-          <a href="{{ routes.all_products_collection_url }}" class="btn-probar-kalpa">
-            <span>VER NUESTROS PRODUCTOS</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </a>
-        </div>
+<!-- ==================== 4–8. HISTORIA KALLPA: RAÍZ · CÓMO · POR QUÉ · GENTE · PRUÉBALA ==================== -->
+<div class="nos-story">
+
+  <!-- 03 · LA RAÍZ DE KALLPA -->
+  <section class="nos-block nos-raiz" id="origen-ayacucho">
+    <img src="{{ 'nos-hoja-1.png' | asset_url }}" alt="" class="nos-deco nos-raiz__leaf" loading="lazy" aria-hidden="true">
+    <div class="nos-block__inner">
+      <span class="nos-step">03</span>
+      <div class="nos-block__text">
+        <span class="nos-eyebrow">NUESTRO<br>ORIGEN</span>
+        <h2 class="nos-title">LA RAÍZ<br><em>DE KALLPA</em></h2>
+        <p>Ayacucho no es solo de donde viene el café.<br>Es el origen, la cultura y la razón de ser de lo que hacemos.</p>
+        <p>Usamos la energía natural de los insumos andinos: potente, limpia, sin artificios.</p>
+        <p>Insumos andinos que merecen ser reconocidos.</p>
+        <a href="#como-lo-hacemos" class="nos-btn nos-btn--outline">CONOCE AYACUCHO <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
       </div>
-
-      <div class="raiz-visual-card">
-        <img src="{{ 'vraem-harvest.jpg' | asset_url }}" alt="Cosecha de café de especialidad en los valles de Ayacucho" loading="lazy" width="600" height="400">
-        <div class="raiz-badge-overlay">
-          <span class="raiz-badge-val">VRAEM · AYACUCHO</span>
-          <span class="raiz-badge-label">100% Insumos Andinos</span>
-        </div>
-      </div>
+      <figure class="nos-raiz__visual">
+        <img src="{{ 'nos-raiz-collage.png' | asset_url }}" alt="Ayacucho entre montañas y cafetales" loading="lazy" width="1672" height="941">
+        <figcaption class="nos-raiz__tag">Ayacucho<br>Perú</figcaption>
+      </figure>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 4. SECCIÓN BENTO: CÓMO LO HACEMOS -->
-<section class="section-nosotros-bento" id="como-lo-hacemos">
-  <div class="page-width">
-    <div class="bento-header">
-      <span class="section-kicker-gold">PROCESO Y RIGOR</span>
-      <h2 class="bento-header__title">CÓMO LO HACEMOS</h2>
-      <div class="bento-header__sub">POTENTE, LIMPIA, SIN ARTIFICIOS</div>
-    </div>
-
-    <div class="nosotros-bento-grid">
-      
-      <!-- Bento 1: ALTURA -->
-      <article class="bento-card bento-card--altura">
-        <div class="bento-card__num">1,800 - 2,200</div>
-        <div class="bento-card__unit">msnm</div>
-        <h3 class="bento-card__title">ALTURA</h3>
-        <p class="bento-card__desc">
-          Cultivado en las laderas más altas del VRAEM, donde la altitud y los microclimas andinos concentran azúcares naturales y acidez brillante.
-        </p>
-      </article>
-
-      <!-- Bento 2: COSECHA -->
-      <article class="bento-card bento-card--cosecha">
-        <div class="bento-card__num">Mayo — Sept.</div>
-        <div class="bento-card__unit">Temporada</div>
-        <h3 class="bento-card__title">COSECHA</h3>
-        <p class="bento-card__desc">
-          Recolección manual selectiva grano a grano, eligiendo exclusivamente cerezas en su punto cumbre de maduración óptima.
-        </p>
-      </article>
-
-      <!-- Bento 3: CAFEÍNA REAL -->
-      <article class="bento-card bento-card--cafeina">
-        <div class="bento-card__pill">280 mg de Energía</div>
-        <h3 class="bento-card__title">CAFEÍNA REAL</h3>
-        <p class="bento-card__desc">
-          Cafeína de la tierra, no de laboratorio. Café de verdad, sin fórmulas que no entiendes. Extraída lentamente en frío durante 24 horas.
-        </p>
-      </article>
-
-      <!-- Bento 4: ORIGEN CON PRODUCTORES -->
-      <article class="bento-card bento-card--productores">
-        <div class="bento-card__pill">Comercio Justo y Directo</div>
-        <h3 class="bento-card__title">ORIGEN CON PRODUCTORES</h3>
-        <p class="bento-card__desc">
-          Café de altura de Ayacucho. Un origen que puedes señalar en el mapa y una razón de ser. Trabajamos mano a mano con familias productoras locales para reconocer su maestría y pagar precios justos por su cosecha.
-        </p>
-      </article>
-
-      <!-- Bento 5: SIN SACRIFICAR TU CUERPO -->
-      <article class="bento-card bento-card--sin-sacrificar">
-        <div class="bento-card__pill">0% Azúcar Añadida</div>
-        <h3 class="bento-card__title">SIN SACRIFICAR TU CUERPO</h3>
-        <p class="bento-card__desc">
-          Sin azúcar. 0 calorías, 0 saborizantes y 0 conservantes. Tu cuerpo merece algo mejor. Una energía sostenida que no te genera caídas ni picos de ansiedad.
-        </p>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<!-- 5. SECCIÓN: POR QUÉ EXISTIMOS (MANIFIESTO) -->
-<section class="section-nosotros-manifiesto" id="por-que-existimos">
-  <div class="page-width">
-    <div class="manifiesto-container">
-      <span class="manifiesto-kicker">POR QUÉ EXISTIMOS</span>
-      <h2 class="manifiesto-headline">
-        LIBERAR EL MÁXIMO POTENCIAL DE TU CUERPO
-      </h2>
-      <div class="manifiesto-subheading">
-        LAS PERSONAS SIN SACRIFICAR SU CUERPO
-      </div>
-      <div class="manifiesto-card">
-        <p class="manifiesto-quote">
-          "Creemos en un mundo donde puedas liberar tu máximo potencial sin sacrificar tu cuerpo, con insumos andinos que merecen ser reconocidos."
-        </p>
+  <!-- 04 · CÓMO LO HACEMOS -->
+  <section class="nos-block nos-como" id="como-lo-hacemos">
+    <img src="{{ 'nos-hoja-3.png' | asset_url }}" alt="" class="nos-deco nos-como__leaf" loading="lazy" aria-hidden="true">
+    <div class="nos-block__inner nos-block__inner--reverse">
+      <figure class="nos-como__visual">
+        <img src="{{ 'vraem-harvest.jpg' | asset_url }}" alt="Manos de productora con cerezas de café en Ayacucho" class="nos-como__photo" loading="lazy">
+        <img src="{{ 'nos-cerezas-rama.png' | asset_url }}" alt="" class="nos-como__cherries" loading="lazy" aria-hidden="true">
+        <img src="{{ 'nos-grano.png' | asset_url }}" alt="" class="nos-como__bean" loading="lazy" aria-hidden="true">
+      </figure>
+      <div class="nos-block__text">
+        <span class="nos-eyebrow">CÓMO LO HACEMOS</span>
+        <h2 class="nos-title">POTENTE,<br>LIMPIA,<br><em>SIN ARTIFICIOS</em></h2>
+        <ul class="nos-stats">
+          <li><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 20 6.5-11 4 6.5 2.5-4L21 20z"></path><path d="m8 11.5 1.5 1.5 1.5-1.5"></path></svg><span><small>ALTURA</small>1,800 – 2,200 msnm</span></li>
+          <li><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21V9"></path><path d="M12 13c-3 0-5-2-5-5 3 0 5 2 5 5z"></path><path d="M12 10c0-3 2-5 5-5 0 3-2 5-5 5z"></path><path d="M12 17c-2.5 0-4-1.5-4-4 2.5 0 4 1.5 4 4z"></path></svg><span><small>COSECHA</small>Abril – Agosto</span></li>
+          <li><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="7" r="2.5"></circle><circle cx="16" cy="7" r="2.5"></circle><path d="M3.5 20v-3.5A3.5 3.5 0 0 1 7 13h2a3.5 3.5 0 0 1 3.5 3.5V20"></path><path d="M11.5 20v-3.5A3.5 3.5 0 0 1 15 13h2a3.5 3.5 0 0 1 3.5 3.5V20"></path></svg><span><small>ORIGEN CON PRODUCTORES</small>de Ayacucho</span></li>
+        </ul>
+        <ul class="nos-features">
+          <li><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m13 6-4 7h4l-2 5"></path></svg><strong>CAFEÍNA REAL</strong><span>Cafeína de la tierra, no de laboratorio.</span></li>
+          <li><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><ellipse cx="12" cy="12" rx="4" ry="5.5" transform="rotate(30 12 12)"></ellipse><path d="M10 8.5c2 1.5 2 5.5 4 7"></path></svg><strong>CAFÉ DE VERDAD</strong><span>Sin fórmulas que no entiendes.</span></li>
+          <li><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M8 16c0-5 3-8 8-8 0 5-3 8-8 8z"></path><path d="M8 16l5-5"></path></svg><strong>SIN SACRIFICAR TU CUERPO</strong><span>0 calorías, 0 saborizantes y 0 conservantes.</span></li>
+        </ul>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 6. SECCIÓN: LA GENTE DETRÁS DEL CAFÉ -->
-<section class="section-nosotros-equipo" id="la-gente">
-  <div class="page-width">
-    <div class="equipo-header">
-      <span class="section-kicker-gold">DEL CAFETAL A TU LATA</span>
-      <h2 class="bento-header__title">LA GENTE DETRÁS DEL CAFÉ</h2>
-      <p style="color: #94a3b8; font-size: 1.05rem; margin-top: 0.5rem;">
-        Conoce a las manos y los paisajes que hacen posible cada lata de KALPA.
-      </p>
-    </div>
-
-    <div class="equipo-cards-grid">
-      
-      <!-- Foto 1: Productores de Ayacucho -->
-      <article class="equipo-photo-card">
-        <div class="equipo-photo-wrap">
-          <img src="{{ 'product-card-molido-250.jpg' | asset_url }}" alt="Productores de café de especialidad en Ayacucho" loading="lazy" width="400" height="260">
-          <div class="equipo-photo-overlay"></div>
-        </div>
-        <div class="equipo-card-info">
-          <span class="equipo-card-kicker">FAMILIAS CAFETALERAS</span>
-          <h3 class="equipo-card-title">PRODUCTORES DE AYACUCHO</h3>
-          <p class="equipo-card-desc">
-            Generaciones de dedicación cultivando café bajo sombra en las quebradas andinas del VRAEM.
-          </p>
-        </div>
-      </article>
-
-      <!-- Foto 2: Finca y Cosecha -->
-      <article class="equipo-photo-card">
-        <div class="equipo-photo-wrap">
-          <img src="{{ 'kalpa-molido-bg.png' | asset_url }}" alt="Finca y cosecha de café andino al amanecer" loading="lazy" width="400" height="260">
-          <div class="equipo-photo-overlay"></div>
-        </div>
-        <div class="equipo-card-info">
-          <span class="equipo-card-kicker">TIERRA Y ALTURA</span>
-          <h3 class="equipo-card-title">FINCA Y COSECHA</h3>
-          <p class="equipo-card-desc">
-            Suelos volcánicos ricos en minerales y secado solar en camas africanas para preservar cada nota de cata.
-          </p>
-        </div>
-      </article>
-
-      <!-- Foto 3: Equipo Kalpa -->
-      <article class="equipo-photo-card">
-        <div class="equipo-photo-wrap">
-          <img src="{{ 'energy-natural-composition.png' | asset_url }}" alt="Equipo Kalpa y proceso artesanal de extracción" loading="lazy" width="400" height="260">
-          <div class="equipo-photo-overlay"></div>
-        </div>
-        <div class="equipo-card-info">
-          <span class="equipo-card-kicker">MAESTROS DEL COLD BREW</span>
-          <h3 class="equipo-card-title">EQUIPO KALPA</h3>
-          <p class="equipo-card-desc">
-            Extracción artesanal en frío durante 24 horas y envasado hermético para que disfrutes la energía más pura.
-          </p>
-        </div>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<!-- 7. SECCIÓN CTA: PRUÉBALA BIEN HELADA -->
-<section class="section-nosotros-cta" id="cta-helada">
-  <div class="page-width">
-    <div class="nosotros-cta-container">
-      <span class="section-kicker-gold">EXPERIENCIA KALPA</span>
-      <h2 class="cta-giant-title">PRUÉBALA BIEN HELADA</h2>
-      <p class="cta-subtitle">
-        Siente la frescura y la potencia del café de altura en su máxima expresión.
-      </p>
-
-      <div class="cta-can-preview">
-        <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="Lata KALPA Cold Brew bien helada" draggable="false" loading="lazy" width="220" height="380">
+  <!-- 05 · POR QUÉ EXISTIMOS -->
+  <section class="nos-block nos-porque" id="por-que-existimos">
+    <div class="nos-block__inner">
+      <span class="nos-step">04</span>
+      <div class="nos-block__text">
+        <span class="nos-eyebrow">POR QUÉ EXISTIMOS</span>
+        <h2 class="nos-title">LIBERAR EL<br><em>MÁXIMO POTENCIAL<br>DE TU CUERPO</em></h2>
+        <p>Café de altura de Ayacucho.<br>Un origen que puedes señalar en el mapa y una razón de ser.</p>
+        <p>Tu cuerpo merece algo mejor.</p>
       </div>
+      <figure class="nos-porque__visual">
+        <img src="{{ 'nos-porque-aventura.png' | asset_url }}" alt="Montañista bebiendo KALPA Cold Brew en los Andes" loading="lazy" width="1672" height="941">
+        <ul class="nos-zero-list">
+          <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"></rect><line x1="4" y1="20" x2="20" y2="4"></line></svg>Sin azúcar</li>
+          <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"></path><text x="12" y="17" font-size="7" text-anchor="middle" fill="currentColor" stroke="none" font-family="sans-serif">0</text></svg>0 calorías</li>
+          <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6"></path><path d="M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3"></path><line x1="4" y1="20" x2="20" y2="4"></line></svg>0 saborizantes</li>
+          <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6z"></path><line x1="5" y1="19" x2="19" y2="5"></line></svg>0 conservantes</li>
+        </ul>
+      </figure>
+    </div>
+  </section>
 
-      <div>
-        <a href="{{ routes.all_products_collection_url }}" class="btn-elegir-pack">
-          <span>ELEGIR MI PACK</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </a>
+  <!-- 06 · LA GENTE DETRÁS DEL CAFÉ -->
+  <section class="nos-block nos-gente" id="la-gente">
+    <img src="{{ 'nos-hojas-grupo.png' | asset_url }}" alt="" class="nos-deco nos-gente__leaf" loading="lazy" aria-hidden="true">
+    <div class="nos-block__inner">
+      <span class="nos-step">05</span>
+      <div class="nos-block__text">
+        <span class="nos-eyebrow">LA GENTE DETRÁS DEL CAFÉ</span>
+        <h2 class="nos-title">LAS PERSONAS<br><em>SIN SACRIFICAR<br>SU CUERPO</em></h2>
+        <p>Creemos en un mundo donde puedas liberar tu máximo potencial sin sacrificar tu cuerpo, con insumos andinos que merecen ser reconocidos.</p>
+        <a href="#cta-helada" class="nos-btn nos-btn--outline">CONOCE MÁS <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+      </div>
+      <div class="nos-gente__cards">
+        <figure class="nos-card">
+          <img src="{{ 'product-card-molido-250.jpg' | asset_url }}" alt="Productores de café de Ayacucho" loading="lazy">
+          <figcaption>Productores<br>de Ayacucho</figcaption>
+        </figure>
+        <figure class="nos-card">
+          <img src="{{ 'vraem-harvest.jpg' | asset_url }}" alt="Cerezas de café recién cosechadas" loading="lazy">
+          <figcaption>Del cafetal<br>a tu lata</figcaption>
+        </figure>
+        <figure class="nos-card">
+          <img src="{{ 'energy-natural-composition.png' | asset_url }}" alt="Equipo Kallpa" loading="lazy">
+          <figcaption>Equipo<br>Kallpa</figcaption>
+        </figure>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- 07 · PRUÉBALA BIEN HELADA -->
+  <section class="nos-block nos-pruebala" id="cta-helada">
+    <img src="{{ 'nos-cerezas-rama.png' | asset_url }}" alt="" class="nos-deco nos-pruebala__cherries" loading="lazy" aria-hidden="true">
+    <div class="nos-block__inner">
+      <span class="nos-step">06</span>
+      <div class="nos-block__text">
+        <span class="nos-eyebrow">NUESTRO CAFÉ</span>
+        <h2 class="nos-title">PRUÉBALA<br><em>BIEN HELADA</em></h2>
+        <p>Siente la energía de los Andes en cada lata.<br>Un café potente, limpio y natural, hecho para acompañarte en cada reto.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="nos-btn nos-btn--gold">ELEGIR MI PACK <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+      </div>
+      <figure class="nos-pruebala__visual">
+        <span class="nos-pruebala__tag">Energía<br>Natural</span>
+        <img src="{{ 'nos-pruebala-splash.png' | asset_url }}" alt="Lata KALPA Cold Brew con hielo y granos de café" loading="lazy" width="1672" height="941">
+      </figure>
+    </div>
+  </section>
+
+</div>
 
 {% schema %}
 {
