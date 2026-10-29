@@ -1929,3 +1929,44 @@
 .product-gallery-layout > * {
   min-width: 0;
 }
+
+/* Tarjeta destacada: textos más grandes */
+.kicker-tag {
+  font-size: clamp(0.85rem, 0.9vw, 0.98rem);
+}
+
+.featured-card__desc {
+  max-width: 420px;
+  font-size: clamp(1rem, 1.1vw, 1.15rem);
+  line-height: 1.6;
+}
+
+.featured-card__cta .btn-grid-product {
+  padding: 1rem 1.9rem;
+  font-size: 0.9rem;
+}
+
+.featured-specs-row {
+  grid-template-columns: repeat(4, 64px);
+  gap: 0.9rem;
+}
+
+.spec-circle {
+  width: 56px;
+  height: 56px;
+}
+
+.spec-label {
+  font-size: clamp(0.68rem, 0.7vw, 0.76rem);
+}
+
+@media (max-width: 768px) {
+  .featured-specs-row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+  .spec-circle {
+    width: 48px;
+    height: 48px;
+  }
+}
