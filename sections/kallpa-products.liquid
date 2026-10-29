@@ -104,17 +104,17 @@
                 <div class="kalpa-sale__centerpiece">
                   {%- if block.settings.theme_variant == 'original' -%}
                     <div class="sale-can-stage">
-                      <img src="{{ 'hero-beans-ice-back.png' | asset_url }}" alt="" class="sale-stage__beans-back" draggable="false" width="400" height="500">
-                      <img src="{{ 'hero-beans-ice-front.png' | asset_url }}" alt="" class="sale-stage__beans-mid" draggable="false" width="400" height="500">
+                      <img src="{{ 'hero-beans-ice-back.webp' | asset_url }}" alt="" class="sale-stage__beans-back" draggable="false" width="400" height="500">
+                      <img src="{{ 'hero-beans-ice-front.webp' | asset_url }}" alt="" class="sale-stage__beans-mid" draggable="false" width="400" height="500">
                       {%- if block.settings.main_image != blank -%}
                         <img src="{{ block.settings.main_image | image_url: width: 800 }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="sale-stage__can" draggable="false" width="400" height="700">
-                      {%- elsif block.settings.default_asset_image != blank and block.settings.default_asset_image != 'kalpa-can-clean.png' -%}
+                      {%- elsif block.settings.default_asset_image != blank and block.settings.default_asset_image != 'kalpa-can-clean.webp' -%}
                         <img src="{{ block.settings.default_asset_image | asset_url }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="sale-stage__can" draggable="false" width="400" height="700">
                       {%- else -%}
-                        <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="KALPA Café Cold Brew Original 355ml" class="sale-stage__can" draggable="false" width="400" height="700">
+                        <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="KALPA Café Cold Brew Original 355ml" class="sale-stage__can" draggable="false" width="400" height="700">
                       {%- endif -%}
                       <img src="{{ 'hero-bean-single.png' | asset_url }}" alt="" class="sale-stage__bean-front" draggable="false" width="150" height="150">
-                      <img src="{{ 'hero-rock-base.png' | asset_url }}" alt="" class="sale-stage__rock" draggable="false" width="600" height="200">
+                      <img src="{{ 'hero-rock-base.webp' | asset_url }}" alt="" class="sale-stage__rock" draggable="false" width="600" height="200">
                     </div>
                   {%- else -%}
                     <div class="sale-can-stage sale-can-stage--molido">
@@ -123,7 +123,7 @@
                       {%- elsif block.settings.default_asset_image != blank -%}
                         <img src="{{ block.settings.default_asset_image | asset_url }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="sale-stage__can sale-stage__can--molido" draggable="false" width="1024" height="682">
                       {%- else -%}
-                        <img src="{{ 'kalpa-molido-product.png' | asset_url }}" alt="KALPA Café Molido 250g" class="sale-stage__can sale-stage__can--molido" draggable="false" width="1024" height="682">
+                        <img src="{{ 'kalpa-molido-product.webp' | asset_url }}" alt="KALPA Café Molido 250g" class="sale-stage__can sale-stage__can--molido" draggable="false" width="1024" height="682">
                       {%- endif -%}
                     </div>
                   {%- endif -%}
@@ -165,7 +165,7 @@
                         <div class="sale-volume-sub">{{ block.settings.pack_volume | default: '6 unidades' }}</div>
                       </div>
                       <div class="sale-pack-cans-visual" aria-hidden="true">
-                        {%- assign mini_can_img = block.settings.pack_mini_image | default: 'kalpa-can-original.png' -%}
+                        {%- assign mini_can_img = block.settings.pack_mini_image | default: 'kalpa-can-original.webp' -%}
                         <img src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--b1" draggable="false" width="50" height="90">
                         <img src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--b2" draggable="false" width="50" height="90">
                         <img src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--b3" draggable="false" width="50" height="90">
@@ -430,8 +430,8 @@
         {
           "type": "text",
           "id": "default_asset_image",
-          "label": "O nombre del archivo en assets (ej: kalpa-can-original.png)",
-          "default": "kalpa-can-original.png"
+          "label": "O nombre del archivo en assets (ej: kalpa-can-original.webp)",
+          "default": "kalpa-can-original.webp"
         },
         {
           "type": "header",
@@ -492,8 +492,8 @@
         {
           "type": "text",
           "id": "pack_mini_image",
-          "label": "Mini lata para el visual del pack (ej. kalpa-can-original.png)",
-          "default": "kalpa-can-original.png"
+          "label": "Mini lata para el visual del pack (ej. kalpa-can-original.webp)",
+          "default": "kalpa-can-original.webp"
         }
       ]
     }
@@ -509,13 +509,13 @@
             "title_main": "KALPA",
             "title_sub": "ORIGINAL",
             "description": "Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar.",
-            "default_asset_image": "kalpa-can-clean.png",
+            "default_asset_image": "kalpa-can-clean.webp",
             "unit_price": "S/ 7.90",
             "unit_volume": "355 ml",
             "pack_old_price": "S/ 47.40",
             "pack_price": "S/ 39.90",
             "pack_volume": "6 latas de 355 ml",
-            "pack_mini_image": "kalpa-can-original.png"
+            "pack_mini_image": "kalpa-can-original.webp"
           }
         },
         {
@@ -525,13 +525,13 @@
             "title_main": "KALPA",
             "title_sub": "CAFÉ MOLIDO",
             "description": "Café tostado de origen peruano, 100% Arábica · Variedad Obata. Molienda media fina para métodos de filtrado.",
-            "default_asset_image": "kalpa-molido-product.png",
+            "default_asset_image": "kalpa-molido-product.webp",
             "unit_price": "S/ 34.90",
             "unit_volume": "250 g",
             "pack_old_price": "S/ 209.40",
             "pack_price": "S/ 177.90",
             "pack_volume": "6 latas de 250 g",
-            "pack_mini_image": "kalpa-molido-can-solo.png"
+            "pack_mini_image": "kalpa-molido-can-solo.webp"
           }
         }
       ]

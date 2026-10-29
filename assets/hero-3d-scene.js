@@ -22,10 +22,10 @@ class Kallpa3DScene {
     const ds = this.container.dataset || {};
     this.options = Object.assign({
       fbxPath: ds.fbxPath || 'assets/SM_BeerCan_A.fbx',
-      canLabel: ds.canLabel || 'assets/can-kalpa-label.png',
-      canBase: ds.canBase || 'assets/can-base.png',
-      canNormal: ds.canNormal || 'assets/can-normal.png',
-      canRmao: ds.canRmao || 'assets/can-rmao.png',
+      canLabel: ds.canLabel || 'assets/can-kalpa-label.webp',
+      canBase: ds.canBase || 'assets/can-base.webp',
+      canNormal: ds.canNormal || 'assets/can-normal.webp',
+      canRmao: ds.canRmao || 'assets/can-rmao.webp',
       energyColor: ds.energyColor || '#fdb515',
       secondaryColor: ds.secondaryColor || '#ff9100',
       interactive: true,

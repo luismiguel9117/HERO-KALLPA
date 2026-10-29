@@ -20,7 +20,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  background: url("productos-hero-bg.png") center 30% / cover no-repeat #080c09;
+  background: url("productos-hero-bg.webp") center 30% / cover no-repeat #080c09;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: high-quality;
   pointer-events: none;
@@ -268,7 +268,7 @@
 .featured-card__bg-pattern {
   position: absolute;
   inset: 0;
-  background: url("kalpa-hero-bg.png") center center / cover no-repeat;
+  background: url("kalpa-hero-bg.webp") center center / cover no-repeat;
   opacity: 0.04;
   pointer-events: none;
 }
@@ -946,7 +946,7 @@
 .catalog-card__pattern {
   position: absolute;
   inset: 0;
-  background-image: url('kalpa-pattern.png');
+  background-image: url('kalpa-pattern.webp');
   background-repeat: repeat;
   background-size: 260px;
   opacity: 0.16;

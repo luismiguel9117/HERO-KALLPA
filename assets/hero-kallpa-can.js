@@ -46,13 +46,13 @@ export class HeroKallpaCan {
 
     const ds = this.container.dataset || {};
     this.options = Object.assign({
-      baseCanUrl: ds.baseCan || 'assets/kalpa-can-base.png',
+      baseCanUrl: ds.baseCan || 'assets/kalpa-can-base.webp',
       dropletsUrl: ds.droplets || 'assets/kalpa-can-droplets.png',
-      photo2dUrl: ds.photo2d || 'assets/kalpa-can-original.png',
+      photo2dUrl: ds.photo2d || 'assets/kalpa-can-original.webp',
       labels: [
-        ds.labelOriginal || 'assets/kalpa-label.png',        // Slide 1: Original Cold Brew
-        ds.labelGold || 'assets/kalpa-label-gold.png',       // Slide 2: Extracción 24H / Gold
-        ds.labelCitrus || 'assets/kalpa-label-citrus.png'    // Slide 3: Energía Limpia / Citrus
+        ds.labelOriginal || 'assets/kalpa-label.webp',        // Slide 1: Original Cold Brew
+        ds.labelGold || 'assets/kalpa-label-gold.webp',       // Slide 2: Extracción 24H / Gold
+        ds.labelCitrus || 'assets/kalpa-label-citrus.webp'    // Slide 3: Energía Limpia / Citrus
       ],
       spinDuration: parseInt(ds.spinDuration, 10) || 1800, // ms for 360° turn (más dinámico)
       ambientSpinInterval: parseInt(ds.ambientInterval, 10) || 3200 // ms entre giros espontáneos (más corto)
@@ -103,7 +103,7 @@ export class HeroKallpaCan {
     // Layer 0 (Behind Can): Focused coffee beans & ice cubes splash (Capa 3)
     this.compBackImg = document.createElement('img');
     this.compBackImg.className = 'hero-can-comp hero-can-comp__back';
-    this.compBackImg.src = resolveAsset('hero-beans-ice-back.png');
+    this.compBackImg.src = resolveAsset('hero-beans-ice-back.webp');
     this.compBackImg.alt = '';
     this.compBackImg.draggable = false;
 
@@ -143,7 +143,7 @@ export class HeroKallpaCan {
     // Layer 4 (Mid-Front): Focused coffee beans & ice cubes around lower can (Capa 2 copia 2)
     this.compMidImg = document.createElement('img');
     this.compMidImg.className = 'hero-can-comp hero-can-comp__mid';
-    this.compMidImg.src = resolveAsset('hero-beans-ice-front.png');
+    this.compMidImg.src = resolveAsset('hero-beans-ice-front.webp');
     this.compMidImg.alt = '';
     this.compMidImg.draggable = false;
 
@@ -157,7 +157,7 @@ export class HeroKallpaCan {
     // Layer 6 (Foreground Base): Volcanic rock pedestal with ice and coffee beans (Capa 2 copia)
     this.compRockImg = document.createElement('img');
     this.compRockImg.className = 'hero-can-comp hero-can-comp__rock';
-    this.compRockImg.src = resolveAsset('hero-rock-base.png');
+    this.compRockImg.src = resolveAsset('hero-rock-base.webp');
     this.compRockImg.alt = '';
     this.compRockImg.draggable = false;
 
@@ -692,9 +692,9 @@ export class IntroKallpaCan {
 
     const ds = this.container.dataset || {};
     this.options = Object.assign({
-      baseCanUrl: ds.baseCan || 'assets/kalpa-can-base.png',
+      baseCanUrl: ds.baseCan || 'assets/kalpa-can-base.webp',
       dropletsUrl: ds.droplets || 'assets/kalpa-can-droplets.png',
-      labelUrl: ds.label || 'assets/kalpa-label.png',
+      labelUrl: ds.label || 'assets/kalpa-label.webp',
       spinDuration: parseInt(ds.spinDuration, 10) || 1800,
       ambientSpinInterval: parseInt(ds.ambientInterval, 10) || 3000
     }, options);

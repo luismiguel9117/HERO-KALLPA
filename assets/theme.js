@@ -116,7 +116,7 @@ function renderCartUI(cart) {
   cart.items.forEach(item => {
     const title = (item.properties && item.properties['Producto']) || item.product_title || item.title;
     const variant = (item.properties && item.properties['Presentación']) || (item.variant_title !== 'Default Title' ? item.variant_title : '');
-    const imgSrc = item.image || (item.featured_image && item.featured_image.url) || 'assets/kalpa-can-original.png';
+    const imgSrc = item.image || (item.featured_image && item.featured_image.url) || 'assets/kalpa-can-original.webp';
     const lineTotal = formatMoney(item.final_line_price || item.line_price);
 
     itemsHtml += `

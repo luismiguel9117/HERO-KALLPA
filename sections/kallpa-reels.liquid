@@ -56,7 +56,7 @@
               {%- elsif block.settings.default_image != blank -%}
                 <img src="{{ block.settings.default_image | asset_url }}" alt="{{ block.settings.title | default: 'Reel KALPA' }}" class="reel-img" loading="lazy" width="220" height="390">
               {%- else -%}
-                <img src="{{ 'reel-1.jpg' | asset_url }}" alt="Reel KALPA" class="reel-img" loading="lazy" width="220" height="390">
+                <img src="{{ 'reel-1.webp' | asset_url }}" alt="Reel KALPA" class="reel-img" loading="lazy" width="220" height="390">
               {%- endif -%}
 
               <!-- Video Inline opcional si tiene archivo mp4 directo -->
@@ -82,17 +82,17 @@
         {%- else -%}
           <!-- Fallback por defecto si no hay bloques en el editor -->
           <div class="community-reel-card" data-reel-link="https://www.instagram.com" onclick="handleReelClick(this)">
-            <img src="{{ 'reel-1.jpg' | asset_url }}" alt="Atleta KALPA en la montaña" class="reel-img" loading="lazy" width="220" height="390">
+            <img src="{{ 'reel-1.webp' | asset_url }}" alt="Atleta KALPA en la montaña" class="reel-img" loading="lazy" width="220" height="390">
             <div class="reel-play-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg></div>
             <div class="reel-views-pill"><span>125K</span></div>
           </div>
           <div class="community-reel-card" data-reel-link="https://www.instagram.com" onclick="handleReelClick(this)">
-            <img src="{{ 'reel-2.jpg' | asset_url }}" alt="Runner KALPA en la cumbre" class="reel-img" loading="lazy" width="220" height="390">
+            <img src="{{ 'reel-2.webp' | asset_url }}" alt="Runner KALPA en la cumbre" class="reel-img" loading="lazy" width="220" height="390">
             <div class="reel-play-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg></div>
             <div class="reel-views-pill"><span>98K</span></div>
           </div>
           <div class="community-reel-card" data-reel-link="https://www.instagram.com" onclick="handleReelClick(this)">
-            <img src="{{ 'reel-3.jpg' | asset_url }}" alt="Lata KALPA frente al valle andino" class="reel-img" loading="lazy" width="220" height="390">
+            <img src="{{ 'reel-3.webp' | asset_url }}" alt="Lata KALPA frente al valle andino" class="reel-img" loading="lazy" width="220" height="390">
             <div class="reel-play-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg></div>
             <div class="reel-views-pill"><span>210K</span></div>
           </div>
@@ -290,8 +290,8 @@
         {
           "type": "text",
           "id": "default_image",
-          "label": "Nombre de archivo asset (ej. reel-1.jpg)",
-          "default": "reel-1.jpg"
+          "label": "Nombre de archivo asset (ej. reel-1.webp)",
+          "default": "reel-1.webp"
         },
         {
           "type": "text",
@@ -326,7 +326,7 @@
           "type": "reel",
           "settings": {
             "title": "Atleta Mujer",
-            "default_image": "reel-1.jpg",
+            "default_image": "reel-1.webp",
             "views": "125K",
             "reel_url": "https://www.instagram.com"
           }
@@ -335,7 +335,7 @@
           "type": "reel",
           "settings": {
             "title": "Runner Hombre",
-            "default_image": "reel-2.jpg",
+            "default_image": "reel-2.webp",
             "views": "98K",
             "reel_url": "https://www.instagram.com"
           }
@@ -344,7 +344,7 @@
           "type": "reel",
           "settings": {
             "title": "Lata KALPA",
-            "default_image": "reel-3.jpg",
+            "default_image": "reel-3.webp",
             "views": "210K",
             "reel_url": "https://www.instagram.com"
           }

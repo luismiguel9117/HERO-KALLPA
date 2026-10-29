@@ -27,7 +27,7 @@
             "title_main": "KALLPA",
             "title_sub": "ORIGINAL",
             "description": "Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar.",
-            "default_asset_image": "kalpa-can-original.png",
+            "default_asset_image": "kalpa-can-original.webp",
             "spec_1_icon": "lightning",
             "spec_1": "280 mg<br>de cafeína",
             "spec_2_icon": "check",

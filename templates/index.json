@@ -93,7 +93,7 @@
             "feat_2": "SIN AZÚCARES<br>AÑADIDOS",
             "feat_3": "LISTO<br>PARA TOMAR",
             "feat_4": "COLD BREW<br>REFRESCANTE",
-            "default_asset_image": "kalpa-can-original.png",
+            "default_asset_image": "kalpa-can-original.webp",
             "unit_label": "Unidad",
             "unit_price": "S/ 7.90",
             "unit_volume": "355 ml",
@@ -102,7 +102,7 @@
             "pack_old_price": "S/ 47.40",
             "pack_price": "S/ 39.90",
             "pack_volume": "6 latas de 355 ml",
-            "pack_mini_image": "kalpa-can-original.png",
+            "pack_mini_image": "kalpa-can-original.webp",
             "feat_1_icon": "drop_zero",
             "feat_2_icon": "check",
             "feat_3_icon": "coffee_can",
@@ -123,7 +123,7 @@
             "feat_2": "ORIGEN<br>VRAEM",
             "feat_3": "MOLIENDA<br>MEDIA FINA",
             "feat_4": "NOTAS: CEREZA<br>· CHOCOLATE · CACAO",
-            "default_asset_image": "kalpa-molido-product.png",
+            "default_asset_image": "kalpa-molido-product.webp",
             "unit_label": "Unidad",
             "unit_price": "S/ 34.90",
             "unit_volume": "250 g",
@@ -132,7 +132,7 @@
             "pack_old_price": "S/ 209.40",
             "pack_price": "S/ 177.90",
             "pack_volume": "6 latas de 250 g",
-            "pack_mini_image": "kalpa-molido-can-solo.png",
+            "pack_mini_image": "kalpa-molido-can-solo.webp",
             "feat_1_icon": "lightning",
             "feat_2_icon": "mountain",
             "feat_3_icon": "filter",
@@ -162,7 +162,7 @@
             "pack_old_price": "S/ 389.40",
             "pack_price": "S/ 330.90",
             "pack_volume": "6 latas de 500 g",
-            "pack_mini_image": "kalpa-molido-can-solo.png",
+            "pack_mini_image": "kalpa-molido-can-solo.webp",
             "feat_1_icon": "lightning",
             "feat_2_icon": "mountain",
             "feat_3_icon": "filter",
@@ -207,7 +207,7 @@
           "type": "reel",
           "settings": {
             "title": "Atleta Mujer",
-            "default_image": "reel-1.jpg",
+            "default_image": "reel-1.webp",
             "views": "125K",
             "reel_url": "https://www.instagram.com"
           }
@@ -216,7 +216,7 @@
           "type": "reel",
           "settings": {
             "title": "Runner Hombre",
-            "default_image": "reel-2.jpg",
+            "default_image": "reel-2.webp",
             "views": "98K",
             "reel_url": "https://www.instagram.com"
           }
@@ -225,7 +225,7 @@
           "type": "reel",
           "settings": {
             "title": "Lata KALPA",
-            "default_image": "reel-3.jpg",
+            "default_image": "reel-3.webp",
             "views": "210K",
             "reel_url": "https://www.instagram.com"
           }

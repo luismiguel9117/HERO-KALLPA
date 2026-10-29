@@ -3,9 +3,9 @@
   Depth layers: Cielo, Cancha, Tipografía, Mano y Lata
 {% endcomment %}
 
-<link rel="preload" as="image" href="{{ 'kalpa-can-base.png' | asset_url }}" fetchpriority="high">
+<link rel="preload" as="image" href="{{ 'kalpa-can-base.webp' | asset_url }}" fetchpriority="high">
 <link rel="preload" as="image" href="{{ 'kalpa-can-rims.png' | asset_url }}" fetchpriority="high">
-<link rel="preload" as="image" href="{{ 'kalpa-label.png' | asset_url }}" fetchpriority="high">
+<link rel="preload" as="image" href="{{ 'kalpa-label.webp' | asset_url }}" fetchpriority="high">
 <link rel="preload" as="image" href="{{ 'kalpa-can-droplets.png' | asset_url }}" fetchpriority="high">
 
 <section class="kalpa-intro-container" id="kalpa-intro-section" data-section-id="{{ section.id }}">
@@ -83,13 +83,13 @@
     <div class="kalpa-intro-visuals" id="kalpa-intro-visuals">
       <!-- Capa 1: Cielo y destello solar -->
       <div class="intro-layer intro-layer--cielo">
-        <img src="{{ 'CIELO.png' | asset_url }}" alt="Cielo Andes" class="intro-img--cielo" loading="eager" width="1920" height="1080">
+        <img src="{{ 'CIELO.webp' | asset_url }}" alt="Cielo Andes" class="intro-img--cielo" loading="eager" width="1920" height="1080">
         <div class="intro-sun-glow"></div>
       </div>
 
       <!-- Capa 2: Cancha / Pista atlética -->
       <div class="intro-layer intro-layer--cancha">
-        <img src="{{ 'CANCHA.png' | asset_url }}" alt="Estadio y Pista de Atletismo" class="intro-img--cancha" loading="eager" width="1920" height="1080">
+        <img src="{{ 'CANCHA.webp' | asset_url }}" alt="Estadio y Pista de Atletismo" class="intro-img--cancha" loading="eager" width="1920" height="1080">
       </div>
 
       <!-- Capa 3: Contenido Editorial -->
@@ -110,19 +110,19 @@
 
       <!-- Capa 4: Mano en primer plano -->
       <div class="intro-layer intro-layer--mano">
-        <img src="{{ 'MANO.png' | asset_url }}" alt="Mano de Atleta" class="intro-img--mano" loading="eager" width="1200" height="1000">
+        <img src="{{ 'MANO.webp' | asset_url }}" alt="Mano de Atleta" class="intro-img--mano" loading="eager" width="1200" height="1000">
       </div>
 
       <!-- Capa 5: Lata Flotante (Lata Animada 2D Cilíndrica Interactiva con Electricidad 3D) -->
       <div class="intro-layer intro-layer--lata">
         <div class="intro-can-card" id="intro-can-card"
-             data-base-can="{{ 'kalpa-can-base.png' | asset_url }}"
+             data-base-can="{{ 'kalpa-can-base.webp' | asset_url }}"
              data-droplets="{{ 'kalpa-can-droplets.png' | asset_url }}"
-             data-label="{{ 'kalpa-label.png' | asset_url }}">
+             data-label="{{ 'kalpa-label.webp' | asset_url }}">
           <!-- Capa 0: Electricidad Trasera (Arcos por detrás de la lata) -->
           <canvas class="intro-can__electric-back" id="intro-electric-back"></canvas>
           <!-- Capa 1: Base de la Lata Metálica Limpia -->
-          <img src="{{ 'kalpa-can-base.png' | asset_url }}" alt="Lata KALPA Cold Brew 2D Animada" class="intro-can__base" loading="eager" draggable="false" width="500" height="1000">
+          <img src="{{ 'kalpa-can-base.webp' | asset_url }}" alt="Lata KALPA Cold Brew 2D Animada" class="intro-can__base" loading="eager" draggable="false" width="500" height="1000">
           <!-- Capa 2: Canvas Cilíndrico con la Etiqueta 3D Rotatoria -->
           <canvas class="intro-can__canvas" id="intro-can-canvas" width="500" height="1000"></canvas>
           <!-- Capa 3: Gotas de Condensación HD -->

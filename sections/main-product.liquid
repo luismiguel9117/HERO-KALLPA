@@ -38,7 +38,7 @@
           {%- if section.settings.thumb_1_image != blank -%}
             {%- assign t1_url = section.settings.thumb_1_image | image_url: width: 600 -%}
           {%- else -%}
-            {%- assign t1_url = 'kalpa-can-original.png' | asset_url -%}
+            {%- assign t1_url = 'kalpa-can-original.webp' | asset_url -%}
           {%- endif -%}
 
           {%- if section.settings.thumb_2_image != blank -%}
@@ -64,7 +64,7 @@
             {%- elsif product.featured_image != blank -%}
               <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ title_display }}" class="catalog-card__can" id="main-product-img" width="380" height="660">
             {%- else -%}
-              <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="{{ title_display }}" class="catalog-card__can" id="main-product-img" width="380" height="660">
+              <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="{{ title_display }}" class="catalog-card__can" id="main-product-img" width="380" height="660">
             {%- endif -%}
           </div>
           <span class="product-stage-badge">{{ badge_display }}</span>
@@ -235,7 +235,7 @@
         {%- if section.settings.cross_1_image != blank -%}
           <img src="{{ section.settings.cross_1_image | image_url: width: 280 }}" alt="{{ section.settings.cross_1_name | default: 'Tripack KALPA' }}" class="cross-pack-img" width="80" height="95">
         {%- else -%}
-          <img src="{{ 'kalpa-molido-can-solo.png' | asset_url }}" alt="KALPA Café Molido 250g" class="cross-pack-img" width="80" height="95">
+          <img src="{{ 'kalpa-molido-can-solo.webp' | asset_url }}" alt="KALPA Café Molido 250g" class="cross-pack-img" width="80" height="95">
         {%- endif -%}
         <div class="cross-pack-info">
           <span class="cross-pack-name">{{ section.settings.cross_1_name | default: 'CAFÉ MOLIDO 250G' }}</span>
@@ -252,7 +252,7 @@
         {%- if section.settings.cross_2_image != blank -%}
           <img src="{{ section.settings.cross_2_image | image_url: width: 280 }}" alt="{{ section.settings.cross_2_name | default: 'Sixpack KALPA' }}" class="cross-pack-img" width="80" height="95">
         {%- else -%}
-          <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="Sixpack KALPA" class="cross-pack-img" width="80" height="95">
+          <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="Sixpack KALPA" class="cross-pack-img" width="80" height="95">
         {%- endif -%}
         <div class="cross-pack-info">
           <span class="cross-pack-name">{{ section.settings.cross_2_name | default: 'PACK X 6' }}</span>
