@@ -247,21 +247,22 @@ function getTotalProductSlides() {
 }
 
 function syncProductSlideHeights() {
+  const others = document.querySelectorAll('.kalpa-product-slide:not(#product-slide-0)');
   if (window.innerWidth <= 860) {
-    const slide1 = document.getElementById('product-slide-1');
-    if (slide1) {
-      slide1.style.height = '';
-      slide1.style.minHeight = '';
-    }
+    others.forEach(slide => {
+      slide.style.height = '';
+      slide.style.minHeight = '';
+    });
     return;
   }
   const slide0 = document.getElementById('product-slide-0');
-  const slide1 = document.getElementById('product-slide-1');
-  if (slide0 && slide1) {
+  if (slide0) {
     const h0 = slide0.offsetHeight;
     if (h0 > 350) {
-      slide1.style.height = h0 + 'px';
-      slide1.style.minHeight = h0 + 'px';
+      others.forEach(slide => {
+        slide.style.height = h0 + 'px';
+        slide.style.minHeight = h0 + 'px';
+      });
     }
   }
 }
@@ -272,7 +273,7 @@ window.goToProductSlide = function(index) {
   if (index >= total) index = 0;
   currentProductSlide = index;
 
-  if (currentProductSlide === 1) {
+  if (currentProductSlide > 0) {
     syncProductSlideHeights();
   }
 
@@ -485,13 +486,14 @@ window.showKallpaToast = function(message, iconSvg) {
   const toast = document.createElement('div');
   toast.className = 'kallpa-toast';
   
-  const icon = iconSvg ||     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="kallpa-toast-icon">
+  const icon = iconSvg || `
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="kallpa-toast-icon">
       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
       <polyline points="22 4 12 14.01 9 11.01"></polyline>
     </svg>
-  \;
+  `;
 
-  toast.innerHTML = \<span>\</span>\;
+  toast.innerHTML = `${icon}<span>${message}</span>`;
   container.appendChild(toast);
 
   // Trigger animation
@@ -524,9 +526,10 @@ window.handleKallpaWishlist = function(btn) {
     }
   }
 
-  const heartIcon =     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#fbd132" stroke="#fbd132" stroke-width="2" class="kallpa-toast-icon">
+  const heartIcon = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#fbd132" stroke="#fbd132" stroke-width="2" class="kallpa-toast-icon">
       <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
     </svg>
-  \;
+  `;
   window.showKallpaToast('¡Guardado en tu lista de deseos KALPA!', heartIcon);
 };

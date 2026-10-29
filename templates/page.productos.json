@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "catalog": {
@@ -45,7 +54,7 @@
             "title_main": "KALLPA",
             "title_sub": "CAFÉ MOLIDO 250G",
             "description": "Café tostado y molido de especialidad, con notas de cereza, chocolate y manzana. Cultivado en los Andes peruanos para tu día a día.",
-            "default_bg_image": "product-card-250g.png",
+            "default_bg_image": "product-card-250g.webp",
             "btn_text": "VER PRODUCTO",
             "btn_link": "/products/kalpa-cafe-molido-250g"
           }
@@ -58,7 +67,7 @@
             "title_main": "KALLPA",
             "title_sub": "CAFÉ MOLIDO 500G",
             "description": "La misma calidad, en una presentación más grande. Café de especialidad, ideal para quienes viven el café todos los días.",
-            "default_bg_image": "product-card-500g.png",
+            "default_bg_image": "product-card-500g.webp",
             "btn_text": "VER PRODUCTO",
             "btn_link": "/products/kalpa-cafe-molido-500g"
           }

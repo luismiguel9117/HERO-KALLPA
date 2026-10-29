@@ -663,11 +663,11 @@
 }
 
 .grid-card--molido250 .grid-card__bg {
-  background-image: url("product-card-250g.png");
+  background-image: url("product-card-250g.webp");
 }
 
 .grid-card--molido500 .grid-card__bg {
-  background-image: url("product-card-500g.png");
+  background-image: url("product-card-500g.webp");
 }
 
 /* Efecto Glassmorphism con difuminado (blur + gradiente suave) en el lado izquierdo */

@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "intro_preloader": {
@@ -129,11 +138,42 @@
             "feat_3_icon": "filter",
             "feat_4_icon": "flavor"
           }
+        },
+        "slide_molido_500": {
+          "type": "product_slide",
+          "settings": {
+            "theme_variant": "molido",
+            "eyebrow": "NUESTRO PRODUCTO",
+            "title_main": "KALPA",
+            "title_sub": "CAFÉ MOLIDO 500G",
+            "description": "Café tostado de origen peruano, 100% Arábica · Variedad Obata. Molienda media fina para métodos de filtrado. Presentación de 500 g para quienes viven el café todos los días.",
+            "product_link": "/products/kalpa-cafe-molido-500g",
+            "btn_link_text": "Ver ficha completa",
+            "feat_1": "100%<br>ARÁBICA",
+            "feat_2": "ORIGEN<br>VRAEM",
+            "feat_3": "MOLIENDA<br>MEDIA FINA",
+            "feat_4": "NOTAS: CEREZA<br>· CHOCOLATE · CACAO",
+            "default_asset_image": "kalpa-molido-500-product.webp",
+            "unit_label": "Unidad",
+            "unit_price": "S/ 64.90",
+            "unit_volume": "500 g",
+            "pack_label": "Pack x 6",
+            "pack_discount": "-15%",
+            "pack_old_price": "S/ 389.40",
+            "pack_price": "S/ 330.90",
+            "pack_volume": "6 latas de 500 g",
+            "pack_mini_image": "kalpa-molido-can-solo.png",
+            "feat_1_icon": "lightning",
+            "feat_2_icon": "mountain",
+            "feat_3_icon": "filter",
+            "feat_4_icon": "flavor"
+          }
         }
       },
       "block_order": [
         "slide_original",
-        "slide_molido"
+        "slide_molido",
+        "slide_molido_500"
       ]
     },
     "vraem_origin_1": {
