@@ -786,3 +786,381 @@
     grid-column: span 1;
   }
 }
+
+/* ==========================================================================
+   HERO NOSOTROS v2 — pantalla completa, arco de luz y lata flotante
+   Secuencia: fondo → sombra/arco (fade) → palabras → CTA; la lata flota recta.
+   ========================================================================== */
+.nosotros-hero {
+  min-height: calc(100svh - var(--nosotros-hero-offset, 72px));
+  align-items: stretch;
+  background-color: #050403;
+}
+
+.nosotros-hero__bg {
+  background: url("nosotros-hero-bg.webp") center 60% / cover no-repeat;
+  animation: nosotrosHeroBgIn 1.6s ease-out both;
+}
+
+/* Capa con el arco iluminado y el exterior oscurecido: aparece sobre el fondo */
+.nosotros-hero__arch {
+  position: absolute;
+  inset: 0;
+  background: url("nosotros-hero-arch.webp") center 60% / cover no-repeat;
+  opacity: 0;
+  z-index: 2;
+  pointer-events: none;
+  animation: nosotrosHeroFade 1.8s ease-out 0.5s forwards;
+}
+
+.nosotros-hero__vignette {
+  z-index: 3;
+  background: linear-gradient(180deg, rgba(5, 4, 3, 0.55) 0%, transparent 22%, transparent 78%, rgba(5, 4, 3, 0.85) 100%);
+}
+
+/* Lata */
+.nosotros-hero__can-wrap {
+  position: absolute;
+  left: 50%;
+  bottom: 13%;
+  z-index: 4;
+  width: clamp(130px, 13vw, 230px);
+  transform: translateX(-50%);
+  opacity: 0;
+  animation: nosotrosHeroFade 1.2s ease-out 0.3s forwards;
+  pointer-events: none;
+}
+
+.nosotros-hero__can {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 28px 30px rgba(0, 0, 0, 0.55));
+  animation: nosotrosHeroFloat 4.5s ease-in-out infinite;
+}
+
+.nosotros-hero__can-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: -6%;
+  width: 70%;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.65) 0%, transparent 70%);
+  transform: translateX(-50%);
+  animation: nosotrosHeroShadow 4.5s ease-in-out infinite;
+}
+
+/* Contenido */
+.nosotros-hero__container {
+  z-index: 5;
+  max-width: 1480px;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: clamp(2.5rem, 7vh, 5rem) clamp(3.5rem, 6vw, 7rem) clamp(2rem, 6vh, 4rem) clamp(1.5rem, 5vw, 6rem);
+}
+
+.nosotros-hero__top {
+  display: flex;
+  justify-content: space-between;
+  opacity: 0;
+  animation: nosotrosHeroFade 1s ease-out 1.6s forwards;
+}
+
+.nosotros-hero__subtitle {
+  position: relative;
+  padding-bottom: 1.1rem;
+  font-size: clamp(0.72rem, 0.95vw, 0.9rem);
+  font-weight: 700;
+  letter-spacing: 0.42em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.nosotros-hero__subtitle::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 2.2rem;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.nosotros-hero__subtitle--left::after {
+  left: 0;
+}
+
+.nosotros-hero__subtitle--right {
+  margin-right: -0.42em;
+}
+
+.nosotros-hero__subtitle--right::after {
+  right: 0.42em;
+}
+
+.nosotros-hero__headline {
+  align-self: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  gap: clamp(9rem, 22vw, 26rem);
+}
+
+.nosotros-hero__giant-word {
+  font-family: "Work Sans", "Montserrat", sans-serif;
+  font-size: clamp(2.2rem, 4.2vw, 4.2rem);
+  font-weight: 400;
+  letter-spacing: 0.5em;
+  margin-right: -0.5em;
+  opacity: 0;
+  filter: blur(8px);
+  animation: nosotrosHeroWordIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.nosotros-hero__giant-word--white {
+  animation-delay: 1.9s;
+}
+
+.nosotros-hero__giant-word--gold {
+  color: #f5c42c;
+  text-shadow: 0 4px 24px rgba(245, 186, 44, 0.35), 0 2px 10px rgba(0, 0, 0, 0.8);
+  animation-delay: 2.2s;
+}
+
+.nosotros-hero__bottom-row {
+  margin: 0;
+  opacity: 0;
+  animation: nosotrosHeroFade 1s ease-out 2.8s forwards;
+}
+
+.nosotros-hero .btn-hero-descubre {
+  border-radius: 999px;
+  padding: 1.15rem 2.6rem;
+}
+
+/* Indicador lateral 01 / 02 / 03 */
+.nosotros-hero__steps {
+  position: absolute;
+  right: clamp(1rem, 2.4vw, 2.5rem);
+  top: 50%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.6rem;
+  transform: translateY(-50%);
+  opacity: 0;
+  animation: nosotrosHeroFade 1s ease-out 2.6s forwards;
+}
+
+.nosotros-hero__steps a {
+  position: relative;
+  font-family: var(--font-brand);
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.45);
+  text-decoration: none;
+}
+
+.nosotros-hero__steps a.is-active {
+  color: #ffffff;
+}
+
+.nosotros-hero__steps a:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 0.5rem);
+  width: 1px;
+  height: 1.6rem;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.nosotros-hero__steps a.is-active::after {
+  background: #ffffff;
+}
+
+@keyframes nosotrosHeroBgIn {
+  from { opacity: 0; transform: scale(1.06); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes nosotrosHeroFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes nosotrosHeroWordIn {
+  from { opacity: 0; filter: blur(8px); letter-spacing: 0.8em; }
+  to { opacity: 1; filter: blur(0); letter-spacing: 0.5em; }
+}
+
+@keyframes nosotrosHeroFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+
+@keyframes nosotrosHeroShadow {
+  0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+  50% { opacity: 0.6; transform: translateX(-50%) scale(0.85); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nosotros-hero *,
+  .nosotros-hero__bg {
+    animation-duration: 0.01s !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .nosotros-hero__headline {
+    align-self: start;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    margin-top: 2.2rem;
+  }
+  .nosotros-hero__giant-word {
+    font-size: clamp(1.7rem, 8vw, 2.6rem);
+    letter-spacing: 0.35em;
+    margin-right: -0.35em;
+  }
+  .nosotros-hero__can-wrap {
+    width: clamp(96px, 26vw, 150px);
+    bottom: 19%;
+  }
+  .nosotros-hero__steps {
+    display: none;
+  }
+  .nosotros-hero__bottom-row {
+    justify-content: center;
+  }
+}
+
+/* Hero Nosotros — móvil: arco propio más pequeño, texto encima y lata protagonista */
+@media (max-width: 768px) {
+  .nosotros-hero__bg {
+    background-position: 50% 70%;
+  }
+  .nosotros-hero__arch {
+    left: 50%;
+    right: auto;
+    top: auto;
+    bottom: 15%;
+    width: min(66vw, 320px);
+    height: 56%;
+    transform: translateX(-50%);
+    border-radius: 999px 999px 0 0;
+    background: linear-gradient(180deg, rgba(255, 200, 110, 0.28) 0%, rgba(255, 190, 90, 0.1) 55%, transparent 100%);
+    border: 1px solid rgba(255, 214, 140, 0.25);
+    border-bottom: 0;
+    box-shadow: 0 0 0 200vmax rgba(5, 4, 3, 0.68);
+  }
+  .nosotros-hero__can-wrap {
+    width: min(38vw, 190px);
+    bottom: 17%;
+  }
+  .nosotros-hero__headline {
+    margin-top: 1.4rem;
+  }
+}
+
+/* ==========================================================================
+   HERO NOSOTROS v3 — arco dibujado con código (altura controlada en cualquier
+   proporción de pantalla) y palabras que abrazan el arco como en la referencia.
+   ========================================================================== */
+.nosotros-hero {
+  --arch-w: clamp(260px, 23vw, 440px);
+}
+
+.nosotros-hero__arch {
+  inset: auto;
+  left: 50%;
+  top: 9%;
+  bottom: 22%;
+  width: var(--arch-w);
+  transform: translateX(-50%);
+  border-radius: 999px 999px 0 0;
+  background: linear-gradient(180deg, rgba(255, 205, 120, 0.2) 0%, rgba(255, 190, 90, 0.08) 55%, transparent 100%);
+  border: 1px solid rgba(255, 214, 140, 0.18);
+  border-bottom: 0;
+  box-shadow: 0 0 0 200vmax rgba(5, 4, 3, 0.42);
+}
+
+.nosotros-hero__container {
+  padding-top: clamp(4rem, 12vh, 7.5rem);
+}
+
+.nosotros-hero__headline {
+  display: grid;
+  grid-template-columns: 1fr calc(var(--arch-w) + 4vw) 1fr;
+  gap: 0;
+  width: 100%;
+}
+
+.nosotros-hero__giant-word {
+  font-size: clamp(2rem, 3.3vw, 3.9rem);
+  letter-spacing: 0.45em;
+  margin-right: 0;
+}
+
+.nosotros-hero__giant-word--white {
+  grid-column: 1;
+  justify-self: end;
+  margin-right: -0.45em;
+}
+
+.nosotros-hero__giant-word--gold {
+  grid-column: 3;
+  justify-self: start;
+  margin-right: -0.45em;
+}
+
+@media (max-width: 900px) {
+  .nosotros-hero__headline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .nosotros-hero__giant-word--white,
+  .nosotros-hero__giant-word--gold {
+    justify-self: auto;
+    margin-right: -0.35em;
+  }
+  .nosotros-hero__top {
+    justify-content: center;
+    gap: 2.5rem;
+  }
+  .nosotros-hero__subtitle--right {
+    margin-right: 0;
+  }
+  .nosotros-hero__subtitle::after {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%);
+  }
+  .nosotros-hero__container {
+    padding-top: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .nosotros-hero {
+    --arch-w: min(66vw, 320px);
+  }
+  .nosotros-hero__arch {
+    top: auto;
+    bottom: 19%;
+    height: 52%;
+    background: linear-gradient(180deg, rgba(255, 200, 110, 0.28) 0%, rgba(255, 190, 90, 0.1) 55%, transparent 100%);
+    border-color: rgba(255, 214, 140, 0.25);
+    box-shadow: 0 0 0 200vmax rgba(5, 4, 3, 0.68);
+  }
+  .nosotros-hero__can-wrap {
+    bottom: 20%;
+  }
+}

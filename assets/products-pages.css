@@ -1904,3 +1904,28 @@
   object-fit: cover;
   border-radius: 6px;
 }
+
+/* ==========================================================================
+   MÓVIL: nada debe ensanchar la página (empujaba la hamburguesa fuera)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .products-controls__container {
+    flex-wrap: nowrap;
+  }
+  .products-filter-pills,
+  .products-sort-wrap {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .featured-product-card {
+    padding: 2rem 1.1rem 0;
+  }
+  .featured-specs-row {
+    gap: 0.5rem;
+  }
+}
+
+.product-showcase-grid > *,
+.product-gallery-layout > * {
+  min-width: 0;
+}

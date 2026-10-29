@@ -6688,3 +6688,133 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   background: #000;
 }
+
+/* ==========================================================================
+   CARRUSEL DE PRODUCTOS — MÓVIL v2
+   Lata/imagen contenida, sellos visibles y compra dual (unidad + pack).
+   ========================================================================== */
+@media (max-width: 768px) {
+  .kalpa-product-carousel .carousel-arrow {
+    top: 2.4rem;
+    transform: none;
+  }
+  .kalpa-product-carousel .carousel-arrow:hover {
+    transform: scale(1.05);
+  }
+  .kalpa-product-carousel .carousel-arrow--prev {
+    left: auto;
+    right: 58px;
+  }
+  .kalpa-product-carousel .carousel-arrow--next {
+    right: 12px;
+  }
+
+  .kalpa-sale-grid {
+    max-width: 440px;
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
+
+  .kalpa-sale__info {
+    padding: 0;
+    padding-right: 96px;
+  }
+
+  .kalpa-sale__info .sale-features-row {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.35rem;
+    width: calc(100% + 96px);
+    margin-top: 0.9rem;
+  }
+  .kalpa-sale__info .sale-feature-circle {
+    width: 42px;
+    height: 42px;
+  }
+  .kalpa-sale__info .sale-feature-label {
+    font-size: 0.56rem;
+    line-height: 1.25;
+  }
+
+  .kalpa-sale__centerpiece {
+    width: 100%;
+    margin: 0.5rem 0 0.75rem;
+  }
+
+  /* Imágenes horizontales del café molido: contenidas en un escenario 4:3 */
+  .sale-can-stage--molido {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+  .sale-stage__can--molido {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+    object-fit: contain;
+  }
+
+  /* Compra dual en tarjetas */
+  .kalpa-sale__buy-box {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    padding: 0;
+  }
+  .kalpa-sale__buy-box .sale-buy-col {
+    display: flex !important;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.55rem;
+    min-width: 0;
+    padding: 0.9rem 0.75rem;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(26, 22, 21, 0.08);
+    box-shadow: 0 8px 22px rgba(35, 20, 8, 0.08);
+  }
+  .kalpa-sale__buy-box .sale-unit-header {
+    display: block !important;
+    align-self: flex-start;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+  }
+  .kalpa-sale__buy-box .sale-qty-stepper {
+    display: flex !important;
+    justify-content: space-between;
+  }
+  .kalpa-sale__buy-box .sale-price-block {
+    margin: 0;
+    padding: 0;
+  }
+  .kalpa-sale__buy-box .sale-price-main {
+    font-size: 1.45rem;
+  }
+  .kalpa-sale__buy-box .sale-pack-header {
+    gap: 0.35rem;
+  }
+  .kalpa-sale__buy-box .sale-pack-title {
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+  .kalpa-sale__buy-box .sale-pack-discount {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.68rem;
+  }
+  .kalpa-sale__buy-box .sale-pack-cans-visual {
+    display: none;
+  }
+  .kalpa-sale__buy-box .sale-pack-body {
+    display: block;
+  }
+  .kalpa-sale__buy-box .sale-buy-col--pack .btn-sale-add {
+    margin-top: auto;
+  }
+  .kalpa-sale__buy-box .btn-sale-add {
+    padding: 0.8rem 0.5rem;
+    font-size: 0.8rem;
+  }
+}

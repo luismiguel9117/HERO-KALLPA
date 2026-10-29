@@ -6,25 +6,29 @@
 <!-- 1. HERO NOSOTROS: EL ARCO ANDINO -->
 <section class="nosotros-hero" aria-label="Hero Nosotros">
   <div class="nosotros-hero__bg" aria-hidden="true"></div>
+  <div class="nosotros-hero__arch" aria-hidden="true"></div>
   <div class="nosotros-hero__vignette" aria-hidden="true"></div>
 
-  <div class="nosotros-hero__container">
-    <!-- Fila superior: Texto a ambos lados del arco -->
-    <div class="nosotros-hero__split-text">
-      <!-- Lado Izquierdo -->
-      <div class="nosotros-hero__side nosotros-hero__side--left">
-        <span class="nosotros-hero__subtitle">{{ section.settings.hero_sub_left | default: 'CAFÉ DE ALTURA' }}</span>
-        <span class="nosotros-hero__giant-word nosotros-hero__giant-word--white">{{ section.settings.hero_title_left | default: 'ENERGÍA' }}</span>
-      </div>
+  <!-- Lata flotando recta sobre la roca, dentro del arco de luz -->
+  <div class="nosotros-hero__can-wrap" aria-hidden="true">
+    <img src="{{ 'kalpa-can-original.png' | asset_url }}" alt="" class="nosotros-hero__can" width="440" height="960" draggable="false">
+    <span class="nosotros-hero__can-shadow"></span>
+  </div>
 
-      <!-- Lado Derecho -->
-      <div class="nosotros-hero__side nosotros-hero__side--right">
-        <span class="nosotros-hero__subtitle">{{ section.settings.hero_sub_right | default: 'VRAEM' }}</span>
-        <span class="nosotros-hero__giant-word nosotros-hero__giant-word--gold">{{ section.settings.hero_title_right | default: 'NATURAL' }}</span>
-      </div>
+  <div class="nosotros-hero__container">
+    <!-- Subtítulos superiores con línea -->
+    <div class="nosotros-hero__top">
+      <span class="nosotros-hero__subtitle nosotros-hero__subtitle--left">{{ section.settings.hero_sub_left | default: 'CAFÉ DE ALTURA' }}</span>
+      <span class="nosotros-hero__subtitle nosotros-hero__subtitle--right">{{ section.settings.hero_sub_right | default: 'VRAEM' }}</span>
     </div>
 
-    <!-- Fila inferior: Botón Descubre Kalpa a la izquierda -->
+    <!-- Palabras gigantes a ambos lados de la lata -->
+    <h1 class="nosotros-hero__headline">
+      <span class="nosotros-hero__giant-word nosotros-hero__giant-word--white">{{ section.settings.hero_title_left | default: 'ENERGÍA' }}</span>
+      <span class="nosotros-hero__giant-word nosotros-hero__giant-word--gold">{{ section.settings.hero_title_right | default: 'NATURAL' }}</span>
+    </h1>
+
+    <!-- CTA inferior -->
     <div class="nosotros-hero__bottom-row">
       <a href="#energia-andes" class="btn-hero-descubre">
         <span>DESCUBRE KALPA</span>
@@ -35,7 +39,27 @@
       </a>
     </div>
   </div>
+
+  <!-- Indicador lateral -->
+  <nav class="nosotros-hero__steps" aria-label="Secciones">
+    <a href="#energia-andes" class="is-active">01</a>
+    <a href="#origen-ayacucho">02</a>
+    <a href="#como-lo-hacemos">03</a>
+  </nav>
 </section>
+<script>
+  (function () {
+    // El hero ocupa exactamente la pantalla visible debajo de la barra de anuncios y el menú
+    var hero = document.querySelector(".nosotros-hero");
+    if (!hero) return;
+    var setOffset = function () {
+      var top = hero.getBoundingClientRect().top + window.scrollY;
+      document.documentElement.style.setProperty("--nosotros-hero-offset", top + "px");
+    };
+    setOffset();
+    window.addEventListener("resize", setOffset);
+  })();
+</script>
 
 <!-- 2. SECCIÓN: ENERGÍA DE LOS ANDES -->
 <section class="section-nosotros-energia" id="energia-andes">
