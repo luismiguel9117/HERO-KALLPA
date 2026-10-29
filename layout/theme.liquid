@@ -77,22 +77,40 @@
       };
     </script>
 
-    <!-- Three.js ES Modules & Addons Importmap -->
+    {%- comment -%} La lata animada (Three.js) solo existe en las secciones intro y hero {%- endcomment -%}
+    {%- liquid
+      assign has_can = false
+      if content_for_layout contains 'intro-can-card' or content_for_layout contains 'kallpa-hero-2d-anim'
+        assign has_can = true
+      endif
+    -%}
+
+    <!-- Three.js ES Modules & Addons Importmap (misma versión r160, build minificado) -->
     <script type="importmap">
       {
         "imports": {
-          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.min.js",
           "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
           "./canRenderer.js": "{{ 'canRenderer.js' | asset_url }}"
         }
       }
     </script>
+    {%- if has_can -%}
+      <!-- Tras el importmap (si no, "three" no se resuelve). Descarga en paralelo de la lata: evita la cadena hero-kallpa-can → canRenderer → three -->
+      <link rel="preconnect" href="https://unpkg.com" crossorigin>
+      <link rel="modulepreload" href="{{ 'hero-kallpa-can.js' | asset_url }}">
+      {%- comment -%} hero-kallpa-can.js importa ./canRenderer.js relativo, sin ?v= {%- endcomment -%}
+      <link rel="modulepreload" href="{{ 'canRenderer.js' | asset_url | split: '?' | first }}">
+      <link rel="modulepreload" href="https://unpkg.com/three@0.160.0/build/three.module.min.js" crossorigin>
+    {%- endif -%}
     <script src="{{ 'gsap.min.js' | asset_url }}" defer></script>
     <script src="{{ 'ScrollTrigger.min.js' | asset_url }}" defer></script>
     <script src="{{ 'kalpa-intro.js' | asset_url }}" defer></script>
     <script src="{{ 'motion.js' | asset_url }}" defer></script>
     <script src="{{ 'framer-animations.js' | asset_url }}" defer></script>
-    <script type="module" src="{{ 'hero-kallpa-can.js' | asset_url }}"></script>
+    {%- if has_can -%}
+      <script type="module" src="{{ 'hero-kallpa-can.js' | asset_url }}"></script>
+    {%- endif -%}
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
     <script src="{{ 'kalpa-components.js' | asset_url }}" defer></script>
   </head>

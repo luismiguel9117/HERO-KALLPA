@@ -104,26 +104,26 @@
                 <div class="kalpa-sale__centerpiece">
                   {%- if block.settings.theme_variant == 'original' -%}
                     <div class="sale-can-stage">
-                      <img src="{{ 'hero-beans-ice-back.webp' | asset_url }}" alt="" class="sale-stage__beans-back" draggable="false" width="400" height="500">
-                      <img src="{{ 'hero-beans-ice-front.webp' | asset_url }}" alt="" class="sale-stage__beans-mid" draggable="false" width="400" height="500">
+                      <img loading="lazy" decoding="async" src="{{ 'hero-beans-ice-back.webp' | asset_url }}" alt="" class="sale-stage__beans-back" draggable="false" width="400" height="500">
+                      <img loading="lazy" decoding="async" src="{{ 'hero-beans-ice-front.webp' | asset_url }}" alt="" class="sale-stage__beans-mid" draggable="false" width="400" height="500">
                       {%- if block.settings.main_image != blank -%}
-                        <img src="{{ block.settings.main_image | image_url: width: 800 }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="sale-stage__can" draggable="false" width="400" height="700">
+                        <img loading="lazy" decoding="async" src="{{ block.settings.main_image | image_url: width: 800 }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="sale-stage__can" draggable="false" width="400" height="700">
                       {%- elsif block.settings.default_asset_image != blank and block.settings.default_asset_image != 'kalpa-can-clean.webp' -%}
-                        <img src="{{ block.settings.default_asset_image | asset_url }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="sale-stage__can" draggable="false" width="400" height="700">
+                        <img loading="lazy" decoding="async" src="{{ block.settings.default_asset_image | asset_url }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="sale-stage__can" draggable="false" width="400" height="700">
                       {%- else -%}
-                        <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="KALPA Café Cold Brew Original 355ml" class="sale-stage__can" draggable="false" width="400" height="700">
+                        <img loading="lazy" decoding="async" src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="KALPA Café Cold Brew Original 355ml" class="sale-stage__can" draggable="false" width="400" height="700">
                       {%- endif -%}
-                      <img src="{{ 'hero-bean-single.png' | asset_url }}" alt="" class="sale-stage__bean-front" draggable="false" width="150" height="150">
-                      <img src="{{ 'hero-rock-base.webp' | asset_url }}" alt="" class="sale-stage__rock" draggable="false" width="600" height="200">
+                      <img loading="lazy" decoding="async" src="{{ 'hero-bean-single.png' | asset_url }}" alt="" class="sale-stage__bean-front" draggable="false" width="150" height="150">
+                      <img loading="lazy" decoding="async" src="{{ 'hero-rock-base.webp' | asset_url }}" alt="" class="sale-stage__rock" draggable="false" width="600" height="200">
                     </div>
                   {%- else -%}
                     <div class="sale-can-stage sale-can-stage--molido">
                       {%- if block.settings.main_image != blank -%}
-                        <img src="{{ block.settings.main_image | image_url: width: 1400 }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="sale-stage__can sale-stage__can--molido" draggable="false" width="1024" height="682">
+                        <img loading="lazy" decoding="async" src="{{ block.settings.main_image | image_url: width: 1400 }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="sale-stage__can sale-stage__can--molido" draggable="false" width="1024" height="682">
                       {%- elsif block.settings.default_asset_image != blank -%}
-                        <img src="{{ block.settings.default_asset_image | asset_url }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="sale-stage__can sale-stage__can--molido" draggable="false" width="1024" height="682">
+                        <img loading="lazy" decoding="async" src="{{ block.settings.default_asset_image | asset_url }}" alt="{{ block.settings.title_main }} {{ block.settings.title_sub }}" class="sale-stage__can sale-stage__can--molido" draggable="false" width="1024" height="682">
                       {%- else -%}
-                        <img src="{{ 'kalpa-molido-product.webp' | asset_url }}" alt="KALPA Café Molido 250g" class="sale-stage__can sale-stage__can--molido" draggable="false" width="1024" height="682">
+                        <img loading="lazy" decoding="async" src="{{ 'kalpa-molido-product.webp' | asset_url }}" alt="KALPA Café Molido 250g" class="sale-stage__can sale-stage__can--molido" draggable="false" width="1024" height="682">
                       {%- endif -%}
                     </div>
                   {%- endif -%}
@@ -166,12 +166,12 @@
                       </div>
                       <div class="sale-pack-cans-visual" aria-hidden="true">
                         {%- assign mini_can_img = block.settings.pack_mini_image | default: 'kalpa-can-original.webp' -%}
-                        <img src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--b1" draggable="false" width="50" height="90">
-                        <img src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--b2" draggable="false" width="50" height="90">
-                        <img src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--b3" draggable="false" width="50" height="90">
-                        <img src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--f1" draggable="false" width="50" height="90">
-                        <img src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--f2" draggable="false" width="50" height="90">
-                        <img src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--f3" draggable="false" width="50" height="90">
+                        <img loading="lazy" decoding="async" src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--b1" draggable="false" width="50" height="90">
+                        <img loading="lazy" decoding="async" src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--b2" draggable="false" width="50" height="90">
+                        <img loading="lazy" decoding="async" src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--b3" draggable="false" width="50" height="90">
+                        <img loading="lazy" decoding="async" src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--f1" draggable="false" width="50" height="90">
+                        <img loading="lazy" decoding="async" src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--f2" draggable="false" width="50" height="90">
+                        <img loading="lazy" decoding="async" src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--f3" draggable="false" width="50" height="90">
                       </div>
                     </div>
                     <button type="button" class="btn-sale-add" onclick="addCustomPackToCart('pack-{{ block.id }}', '{{ block.settings.pack_label }} {{ block.settings.title_main }} {{ block.settings.title_sub }}', '{{ block.settings.pack_price | remove: 'S/' | strip }}')">
