@@ -1169,6 +1169,8 @@
   }
   .nosotros-hero__can-wrap {
     bottom: 20%;
+    /* más pequeña y limitada también por la altura para no tapar título ni CTA */
+    width: min(31vw, 150px, 17vh);
   }
 }
 
