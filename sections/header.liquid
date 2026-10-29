@@ -101,16 +101,10 @@
       <button type="button" class="kalpa-mobile-menu-close" onclick="closeKallpaMobileMenu()" aria-label="Cerrar Menú">✕</button>
     </div>
     <nav class="kalpa-mobile-menu-links">
-      {%- if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 -%}
-        {%- for link in linklists[section.settings.menu].links -%}
-          <a href="{{ link.url }}" class="kalpa-mobile-item{% if link.active %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">{{ link.title }}</a>
-        {%- endfor -%}
-      {%- else -%}
-        <a href="{{ routes.root_url }}" class="kalpa-mobile-item{% if template.name == 'index' or request.path == routes.root_url %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Inicio</a>
-        <a href="{{ routes.all_products_collection_url }}" class="kalpa-mobile-item{% if template.name == 'collection' or template.name == 'product' or request.path contains 'collections' or request.path contains 'products' or request.path contains 'productos' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Productos</a>
-        <a href="/pages/promociones" class="kalpa-mobile-item" onclick="closeKallpaMobileMenu()">Promociones</a>
-        <a href="/pages/contact" class="kalpa-mobile-item{% if template.name == 'page' and page.handle contains 'nosotros' or page.handle contains 'contact' or request.path contains 'nosotros' or request.path contains 'contact' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Nosotros</a>
-      {%- endif -%}
+      <a href="{{ routes.root_url }}" class="kalpa-mobile-item{% if template.name == 'index' or request.path == routes.root_url %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Inicio</a>
+      <a href="{{ routes.all_products_collection_url }}" class="kalpa-mobile-item{% if template.name == 'collection' or template.name == 'product' or request.path contains 'collections' or request.path contains 'products' or request.path contains 'productos' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Productos</a>
+      <a href="/pages/promociones" class="kalpa-mobile-item" onclick="closeKallpaMobileMenu()">Promociones</a>
+      <a href="/pages/contact" class="kalpa-mobile-item{% if template.name == 'page' and page.handle contains 'nosotros' or page.handle contains 'contact' or request.path contains 'nosotros' or request.path contains 'contact' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Nosotros</a>
     </nav>
     <div class="kalpa-mobile-menu-footer">
       <a href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" class="kalpa-nav-cta kalpa-mobile-cta" onclick="closeKallpaMobileMenu()">
