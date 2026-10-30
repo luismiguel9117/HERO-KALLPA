@@ -11,10 +11,44 @@
   assign cat_display = section.settings.category_tag | default: 'BEBIDA FUNCIONAL A BASE DE CAFÉ'
   assign badge_display = section.settings.badge_text | default: '355 mL — LATA'
 
-  assign p_unit = section.settings.price_unit | default: '7.90'
-  assign p_sixpack = section.settings.price_sixpack | default: '39.90'
-  assign p_six_regular = p_unit | times: 6
-  assign p_six_off = p_sixpack | divided_by: p_six_regular | times: 100 | minus: 100 | round | abs
+  comment
+    Precios reales del admin: unidad = primera variante que no es pack; pack = variante cuyo
+    nombre contiene "x6" (ej. "Pack x 6"). Sin variante pack, el pack cuesta 6 unidades sin descuento.
+  endcomment
+  assign unit_variant = nil
+  assign pack_variant = nil
+  for v in product.variants
+    assign v_title = v.title | downcase | remove: ' '
+    if v_title contains 'pack' or v_title contains 'x6'
+      if pack_variant == nil and v_title contains 'x6'
+        assign pack_variant = v
+      endif
+    elsif unit_variant == nil
+      assign unit_variant = v
+    endif
+  endfor
+  if unit_variant == nil
+    assign unit_variant = product.selected_or_first_available_variant
+  endif
+
+  if unit_variant != nil
+    assign unit_cents = unit_variant.price
+  else
+    assign unit_cents = section.settings.price_unit | default: '7.90' | times: 100 | round
+  endif
+  assign six_regular_cents = unit_cents | times: 6
+  if pack_variant != nil
+    assign six_cents = pack_variant.price
+  else
+    assign six_cents = six_regular_cents
+  endif
+  assign p_six_off = 0
+  if six_regular_cents > six_cents
+    assign p_six_off = six_regular_cents | minus: six_cents | times: 100 | divided_by: six_regular_cents
+  endif
+
+  assign p_unit = unit_cents | money_without_currency
+  assign p_sixpack = six_cents | money_without_currency
 
   if section.settings.main_image != blank
     assign stage_url = section.settings.main_image | image_url: width: 1600
@@ -111,16 +145,16 @@
       <div class="pdp-group">
         <span class="pdp-label">PRESENTACIÓN</span>
         <div class="pdp-packs" role="radiogroup" aria-label="Presentación">
-          <button type="button" role="radio" aria-checked="true" class="pdp-pack is-active" onclick="selectPack(1, {{ p_unit }}, 'Unidad', this)">
+          <button type="button" role="radio" aria-checked="true" class="pdp-pack is-active" onclick="selectPack(1, {{ unit_cents | divided_by: 100.0 }}, 'Unidad', this, {{ unit_variant.id | default: 'null' }}, 1)">
             <span class="pdp-pack__radio" aria-hidden="true"></span>
             <span class="pdp-pack__main"><strong>Unidad</strong><small>1 lata · 355 mL</small></span>
             <span class="pdp-pack__price">S/ {{ p_unit }}</span>
           </button>
-          <button type="button" role="radio" aria-checked="false" class="pdp-pack" onclick="selectPack(6, {{ p_sixpack }}, 'Pack x 6', this)">
+          <button type="button" role="radio" aria-checked="false" class="pdp-pack" onclick="selectPack(6, {{ six_cents | divided_by: 100.0 }}, 'Pack x 6', this, {{ pack_variant.id | default: unit_variant.id | default: 'null' }}, {% if pack_variant != nil %}1{% else %}6{% endif %})">
             {%- if p_six_off > 0 -%}<span class="pdp-pack__save">-{{ p_six_off }}%</span>{%- endif -%}
             <span class="pdp-pack__radio" aria-hidden="true"></span>
             <span class="pdp-pack__main"><strong>Pack x 6</strong><small>6 latas de 355 mL</small></span>
-            <span class="pdp-pack__price">S/ {{ p_sixpack }}<s>S/ {{ p_six_regular | times: 100 | round | money_without_currency }}</s></span>
+            <span class="pdp-pack__price">S/ {{ p_sixpack }}{% if p_six_off > 0 %}<s>S/ {{ six_regular_cents | money_without_currency }}</s>{% endif %}</span>
           </button>
         </div>
       </div>
@@ -305,8 +339,10 @@
   }
 
   var currentPackQty = 1;
-  var currentPackPrice = parseFloat('{{ p_unit }}') || 7.90;
+  var currentPackPrice = {{ unit_cents | divided_by: 100.0 }};
   var currentPackName = 'Unidad';
+  var currentVariantId = {{ unit_variant.id | default: 'null' }};
+  var currentUnitsPerAdd = 1;
   var currentCount = 1;
 
   function updateAddLabel() {
@@ -314,10 +350,12 @@
     if (label) label.textContent = 'AGREGAR AL CARRITO – S/ ' + (currentPackPrice * currentCount).toFixed(2);
   }
 
-  function selectPack(qty, price, name, btn) {
+  function selectPack(qty, price, name, btn, variantId, unitsPerAdd) {
     currentPackQty = qty;
     currentPackPrice = price;
     currentPackName = name;
+    currentVariantId = variantId;
+    currentUnitsPerAdd = unitsPerAdd || 1;
     document.querySelectorAll('.pdp-pack').forEach(function(b) {
       b.classList.remove('is-active');
       b.setAttribute('aria-checked', 'false');
@@ -336,10 +374,10 @@
 
   function handleAddToCart() {
     var title = '{{ title_display | escape }} (' + currentPackName + (currentCount > 1 ? ' x' + currentCount : '') + ')';
-    var vId = {{ product.selected_or_first_available_variant.id | default: 'null' }};
-    var units = currentPackQty * currentCount;
+    // Con variante "Pack x 6" se agrega 1 pack por cada unidad del contador; sin ella, 6 latas sueltas
+    var units = currentUnitsPerAdd * currentCount;
     if (typeof window.addPackToKallpaCart === 'function') {
-      window.addPackToKallpaCart('pdp-' + currentPackQty, title, currentPackPrice * currentCount, units, vId);
+      window.addPackToKallpaCart('pdp-' + currentPackQty, title, currentPackPrice * currentCount, units, currentVariantId);
     } else if (typeof window.openKallpaCart === 'function') {
       window.openKallpaCart();
     }
