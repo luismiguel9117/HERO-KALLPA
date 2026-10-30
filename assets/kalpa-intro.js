@@ -46,8 +46,9 @@
       this.isTransitioning = false;
       this.isFinished = false;
 
-      // Si la página ya está scrolleada, omitir intro
-      if (window.scrollY > 20) {
+      // Si la página ya está scrolleada o llega con un ancla (ej. /#reels-section desde el footer), omitir intro
+      const hashTarget = window.location.hash.length > 1 && document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+      if (window.scrollY > 20 || hashTarget) {
         this.container.style.display = 'none';
         document.body.classList.add('web-revealed');
         this.isFinished = true;

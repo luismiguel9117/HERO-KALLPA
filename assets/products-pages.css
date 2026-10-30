@@ -1991,6 +1991,13 @@
   min-height: min(760px, calc(100vh - 72px));
 }
 
+/* Sin fotos en Shopify: no hay escenario, la compra ocupa el ancho centrada */
+.pdp-hero--no-media {
+  grid-template-columns: minmax(0, 46rem);
+  justify-content: center;
+  min-height: 0;
+}
+
 /* Escenario */
 .pdp-stage {
   position: relative;
