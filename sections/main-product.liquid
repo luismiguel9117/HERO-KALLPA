@@ -19,6 +19,12 @@
     Precios reales del admin: unidad = primera variante que no es pack; pack = variante cuyo
     nombre contiene "x6" (ej. "Pack x 6"). Sin variante pack, el pack cuesta 6 unidades sin descuento.
   endcomment
+  assign product_name = product.title | downcase
+  assign is_can = false
+  if product_name contains 'cold brew' or product_name contains 'lata'
+    assign is_can = true
+  endif
+
   assign unit_variant = nil
   assign pack_variant = nil
   for v in product.variants
@@ -139,13 +145,16 @@
       </h1>
       <p class="pdp-lead">{{ desc_display }}</p>
 
+      {%- if is_can -%}
       <ul class="pdp-features">
         <li><span class="pdp-features__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>Energía natural</li>
         <li><span class="pdp-features__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span>Sin azúcar</li>
         <li><span class="pdp-features__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 11H2L8 3z"/></svg></span>Café de los Andes</li>
         <li><span class="pdp-features__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>0 calorías</li>
       </ul>
+      {%- endif -%}
 
+      {%- if is_can -%}
       <div class="pdp-group">
         <span class="pdp-label">PRESENTACIÓN</span>
         <div class="pdp-packs" role="radiogroup" aria-label="Presentación">
@@ -161,6 +170,25 @@
             <span class="pdp-pack__price">S/ {{ p_sixpack }}{% if p_six_off > 0 %}<s>S/ {{ six_regular_cents | money_without_currency }}</s>{% endif %}</span>
           </button>
         </div>
+      {%- elsif product.has_only_default_variant == false -%}
+      <div class="pdp-group">
+        <span class="pdp-label">{{ product.options.first | upcase }}</span>
+        <div class="pdp-packs" role="radiogroup" aria-label="{{ product.options.first | escape }}">
+          {%- for v in product.variants -%}
+            {%- assign v_off = 0 -%}
+            {%- if v.compare_at_price > v.price -%}
+              {%- assign v_off = v.compare_at_price | minus: v.price | times: 100 | divided_by: v.compare_at_price -%}
+            {%- endif -%}
+            <button type="button" role="radio" aria-checked="{% if v == unit_variant %}true{% else %}false{% endif %}" class="pdp-pack{% if v == unit_variant %} is-active{% endif %}"{% unless v.available %} disabled{% endunless %} onclick="selectPack(1, {{ v.price | divided_by: 100.0 }}, {{ v.title | json | escape }}, this, {{ v.id }}, 1)">
+              {%- if v_off > 0 -%}<span class="pdp-pack__save">-{{ v_off }}%</span>{%- endif -%}
+              <span class="pdp-pack__radio" aria-hidden="true"></span>
+              <span class="pdp-pack__main"><strong>{{ v.title }}</strong>{% unless v.available %}<small>Agotado</small>{% endunless %}</span>
+              <span class="pdp-pack__price">S/ {{ v.price | money_without_currency }}{% if v_off > 0 %}<s>S/ {{ v.compare_at_price | money_without_currency }}</s>{% endif %}</span>
+            </button>
+          {%- endfor -%}
+        </div>
+      </div>
+      {%- endif -%}
       </div>
 
       <div class="pdp-group">
@@ -186,6 +214,12 @@
     </div>
   </div>
 
+  {%- liquid
+    assign spec_what = product.metafields.custom.que_lleva.value
+    assign spec_ingredients = product.metafields.custom.ingredientes.value
+    assign spec_prep = product.metafields.custom.preparacion.value
+  -%}
+  {%- if is_can -%}
   <!-- 2. FICHA: QUÉ LLEVA · CÓMO TOMARLA · NUTRICIÓN -->
   <div class="pdp-specs">
     <div class="pdp-specs__grid">
@@ -221,51 +255,68 @@
       </div>
     </div>
   </div>
+  {%- elsif spec_what != blank or spec_ingredients != blank or spec_prep != blank -%}
+  <!-- 2. FICHA DEL PRODUCTO (metacampos custom.que_lleva / custom.ingredientes / custom.preparacion) -->
+  <div class="pdp-specs">
+    <div class="pdp-specs__grid pdp-specs__grid--two">
+      {%- if spec_what != blank or spec_ingredients != blank -%}
+        <div class="pdp-specs__col">
+          <h3 class="pdp-specs__title">QUÉ LLEVA</h3>
+          {%- if spec_what != blank -%}<p class="pdp-specs__headline">{{ spec_what }}</p>{%- endif -%}
+          {%- if spec_ingredients != blank -%}<p class="pdp-specs__text"><strong>Ingredientes:</strong> {{ spec_ingredients }}</p>{%- endif -%}
+        </div>
+      {%- endif -%}
+      {%- if spec_prep != blank -%}
+        <div class="pdp-specs__col">
+          <h3 class="pdp-specs__title">CÓMO PREPARARLO</h3>
+          <p class="pdp-specs__text">{{ spec_prep }}</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+  {%- endif -%}
 </section>
 
-<!-- 4. CROSS-SELL: QUE NO SE TE ACABE A MITAD DE SEMANA -->
+<!-- 4. CROSS-SELL: otros productos reales de la tienda -->
+{%- liquid
+  assign cross_count = 0
+  for p in collections.all.products
+    if p.id != product.id and p.available
+      assign cross_count = cross_count | plus: 1
+    endif
+  endfor
+-%}
+{%- if cross_count > 0 -%}
 <section class="product-cross-section" id="cross-sell-section">
   <div class="page-width">
     <span class="cross-eyebrow">COMPLETA TU PEDIDO</span>
     <h2 class="cross-title">{{ section.settings.cross_title | default: 'QUE NO SE TE ACABE A MITAD DE SEMANA' }}</h2>
 
     <div class="cross-cards-grid">
-      <!-- Card 1: Tripack -->
-      <div class="cross-pack-card">
-        {%- if section.settings.cross_1_image != blank -%}
-          <img src="{{ section.settings.cross_1_image | image_url: width: 280 }}" alt="{{ section.settings.cross_1_name | default: 'Tripack KALPA' }}" class="cross-pack-img" width="80" height="95">
-        {%- else -%}
-          <img src="{{ 'kalpa-molido-can-solo.webp' | asset_url }}" alt="KALPA Café Molido 250g" class="cross-pack-img" width="80" height="95">
-        {%- endif -%}
-        <div class="cross-pack-info">
-          <span class="cross-pack-name">{{ section.settings.cross_1_name | default: 'CAFÉ MOLIDO 250G' }}</span>
-          <span class="cross-pack-sub">{{ section.settings.cross_1_sub | default: '100% Arábica · Origen VRAEM' }}</span>
-          <span class="cross-pack-price">S/ {{ section.settings.cross_1_price | default: '34.90' }}</span>
-          <button type="button" class="btn-cross-add" onclick="addPackToKallpaCart('cross-molido-250', 'KALPA {{ section.settings.cross_1_name | default: 'Café Molido 250g' }}', {{ section.settings.cross_1_price | default: '34.90' }})">
-            AGREGAR
-          </button>
+      {%- assign shown = 0 -%}
+      {%- for p in collections.all.products -%}
+        {%- if p.id == product.id or p.available == false -%}{%- continue -%}{%- endif -%}
+        {%- if shown >= 2 -%}{%- break -%}{%- endif -%}
+        {%- assign shown = shown | plus: 1 -%}
+        {%- assign cv = p.selected_or_first_available_variant -%}
+        <div class="cross-pack-card">
+          {%- if p.featured_image != blank -%}
+            <a href="{{ p.url }}"><img src="{{ p.featured_image | image_url: width: 280 }}" alt="{{ p.featured_image.alt | default: p.title | escape }}" class="cross-pack-img" width="80" height="95" loading="lazy"></a>
+          {%- endif -%}
+          <div class="cross-pack-info">
+            <a href="{{ p.url }}" class="cross-pack-name">{{ p.title }}</a>
+            {%- unless p.has_only_default_variant -%}<span class="cross-pack-sub">{{ cv.title }}</span>{%- endunless -%}
+            <span class="cross-pack-price">S/ {{ cv.price | money_without_currency }}</span>
+            <button type="button" class="btn-cross-add" onclick="addVariantToKallpaCart({{ cv.id }}, 1)">
+              AGREGAR
+            </button>
+          </div>
         </div>
-      </div>
-
-      <!-- Card 2: Six-pack -->
-      <div class="cross-pack-card">
-        {%- if section.settings.cross_2_image != blank -%}
-          <img src="{{ section.settings.cross_2_image | image_url: width: 280 }}" alt="{{ section.settings.cross_2_name | default: 'Sixpack KALPA' }}" class="cross-pack-img" width="80" height="95">
-        {%- else -%}
-          <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="Sixpack KALPA" class="cross-pack-img" width="80" height="95">
-        {%- endif -%}
-        <div class="cross-pack-info">
-          <span class="cross-pack-name">{{ section.settings.cross_2_name | default: 'PACK X 6' }}</span>
-          <span class="cross-pack-sub">{{ section.settings.cross_2_sub | default: '6 latas de 355 ml · -15%' }}</span>
-          <span class="cross-pack-price">S/ {{ section.settings.cross_2_price | default: '39.90' }}</span>
-          <button type="button" class="btn-cross-add" onclick="addPackToKallpaCart('cross-sixpack', 'KALPA {{ section.settings.cross_2_name | default: 'Pack x 6 Original 355ml' }}', {{ section.settings.cross_2_price | default: '39.90' }})">
-            AGREGAR
-          </button>
-        </div>
-      </div>
+      {%- endfor -%}
     </div>
   </div>
 </section>
+{%- endif -%}
 
 <!-- 5. PREGUNTAS FRECUENTES (FAQ) -->
 <section class="product-faq-section">
