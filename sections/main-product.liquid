@@ -75,6 +75,21 @@
     {%- if has_media -%}
     <!-- Escenario a sangre con la galería del producto (fotos y videos de Shopify) -->
     <div class="pdp-stage" id="product-main-card">
+      {%- comment -%}
+        Fondo: imagen del metacampo custom.fondo del producto → "Imagen de fondo" de la sección →
+        si no hay ninguna, la misma foto del producto difuminada
+      {%- endcomment -%}
+      {%- assign stage_bg = product.metafields.custom.fondo.value | default: section.settings.stage_background -%}
+      {%- if stage_bg != blank -%}
+        <img src="{{ stage_bg | image_url: width: 1800 }}" alt="" class="pdp-stage__backdrop pdp-stage__backdrop--custom" aria-hidden="true" width="1800" height="1200">
+      {%- else -%}
+        {%- if first_image != blank -%}
+          {%- assign backdrop_src = first_image | image_url: width: 600 -%}
+        {%- else -%}
+          {%- assign backdrop_src = product.media.first.preview_image | image_url: width: 600 -%}
+        {%- endif -%}
+        <img src="{{ backdrop_src }}" alt="" class="pdp-stage__backdrop" id="main-product-backdrop" aria-hidden="true" width="600" height="600">
+      {%- endif -%}
       {%- if first_image != blank -%}
         <img src="{{ first_image | image_url: width: 1600 }}" alt="{{ first_image.alt | default: title_display | escape }}" class="pdp-stage__img" id="main-product-img" width="1600" height="1600" fetchpriority="high">
       {%- else -%}
@@ -377,6 +392,8 @@
 <script>
   function switchMainImage(src, btn) {
     var img = document.getElementById('main-product-img');
+    var backdrop = document.getElementById('main-product-backdrop');
+    if (backdrop) backdrop.src = src;
     if (img) {
       img.src = src;
       img.classList.toggle('is-contain', btn.getAttribute('data-fit') === 'contain');
@@ -498,6 +515,12 @@
       "type": "image_picker",
       "id": "main_image",
       "label": "Imagen Principal en Escenario"
+    },
+    {
+      "type": "image_picker",
+      "id": "stage_background",
+      "label": "Imagen de fondo del producto",
+      "info": "Fondo detrás de la foto para todos los productos. Un producto puede tener el suyo con el metacampo custom.fondo (imagen)."
     },
     {
       "type": "text",

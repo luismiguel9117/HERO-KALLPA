@@ -2006,13 +2006,34 @@
   min-height: 560px;
 }
 
+/* La foto del producto se ve completa (contain); detrás, la misma foto difuminada rellena el espacio */
+.pdp-stage__backdrop {
+  position: absolute;
+  inset: -8%;
+  width: 116%;
+  height: 116%;
+  object-fit: cover;
+  filter: blur(40px) brightness(0.45) saturate(1.2);
+  pointer-events: none;
+}
+
+/* Fondo elegido en Shopify: se ve nítido, apenas oscurecido para que la foto resalte */
+.pdp-stage__backdrop--custom {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: brightness(0.8);
+}
+
 .pdp-stage__img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: 50% 60%;
+  object-fit: contain;
+  object-position: center;
+  padding: clamp(1.5rem, 4vw, 3.5rem) clamp(2rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3.5rem) clamp(7rem, 10vw, 9rem);
+  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.55));
   transition: opacity 0.3s ease;
 }
 
@@ -2557,6 +2578,9 @@
   .pdp-stage {
     min-height: 0;
     aspect-ratio: 4 / 5;
+  }
+  .pdp-stage__img {
+    padding: 3.5rem 1.5rem 6rem;
   }
   .pdp-thumbs {
     top: auto;
