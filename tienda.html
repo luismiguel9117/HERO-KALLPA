@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda Oficial | KALPA Cold Brew — Compra Directa</title>
+  <meta name="description" content="Tienda oficial de KALPA. Compra online Cold Brew Original 355ml y Café Molido de Especialidad 250g y 500g con despacho a todo el Perú.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo-k-symbol-white.png">
+
+  <!-- Tipografías Oficiales -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos Globales y Específicos -->
+  <link rel="stylesheet" href="assets/theme.css">
+  <link rel="stylesheet" href="assets/tienda.css">
+</head>
+<body class="tienda-page-wrapper">
+
+  <!-- ==================== 1. ANNOUNCEMENT BAR & NAVBAR ==================== -->
+  <div class="kalpa-announcement-bar">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="announcement-truck-icon">
+      <rect x="1" y="3" width="15" height="13"></rect>
+      <polygon points="16 8 20 8 23 11 23 16 16 8"></polygon>
+      <circle cx="5.5" cy="18.5" r="2.5"></circle>
+      <circle cx="18.5" cy="18.5" r="2.5"></circle>
+    </svg>
+    <span>Envíos a todo el Perú. Compra segura en latas individuales o packs de ahorro.</span>
+    <a href="productos.html" class="announcement-link-desktop">Ver ficha técnica y beneficios</a>
+  </div>
+
+  <header class="kalpa-navbar" id="kallpa-header">
+    <div class="page-width kalpa-navbar__container">
+      <!-- Logo KALPA Oficial -->
+      <a href="index.html" class="kalpa-logo" aria-label="KALPA Cold Brew - Inicio">
+        <img src="assets/logo-kalpa-white.png" alt="KALPA Logo" class="kalpa-logo__img" width="165" height="38">
+      </a>
+
+      <!-- Menú de Navegación -->
+      <nav class="kalpa-nav-menu">
+        <a href="index.html" class="kalpa-nav-item">Inicio</a>
+        <a href="tienda.html" class="kalpa-nav-item is-active">Tienda</a>
+        <a href="productos.html" class="kalpa-nav-item">Productos</a>
+        <a href="nosotros.html" class="kalpa-nav-item">Nosotros</a>
+        <a href="index.html#origin-section" class="kalpa-nav-item">Origen</a>
+      </nav>
+
+      <div class="kalpa-nav-actions">
+        <button type="button" class="kalpa-cart-capsule" onclick="openKallpaCart()" aria-label="Abrir Carrito">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span id="kallpa-cart-count">0</span>
+        </button>
+
+        <a href="#catalogo" class="kalpa-nav-cta">
+          <span>COMPRAR AHORA</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== 2. HERO BANNER DE TIENDA ==================== -->
+  <section class="tienda-hero-banner">
+    <div class="page-width tienda-hero__container">
+      <nav class="tienda-breadcrumb" aria-label="Navegación">
+        <a href="index.html">Inicio</a>
+        <span>/</span>
+        <span style="color: #f5ba2c; font-weight: 600;">Tienda</span>
+      </nav>
+
+      <h1 class="tienda-hero__title">
+        TIENDA OFICIAL <span>KALPA</span>
+      </h1>
+      <p class="tienda-hero__subtitle">
+        Toda nuestra línea de Cold Brew listo para tomar y Café Molido de especialidad. Elige tu presentación favorita y recíbela directo en tu puerta.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== 3. BARRA DE FILTROS Y CONTROLES ==================== -->
+  <section class="tienda-controls-bar" id="catalogo">
+    <div class="page-width tienda-controls__inner">
+      
+      <!-- Filtros a la Izquierda -->
+      <div class="tienda-filters-left">
+        <button type="button" class="filter-dropdown-btn is-active" data-cat="all" onclick="filterShop('all', this)">
+          <span>Todos los productos</span>
+        </button>
+        <button type="button" class="filter-dropdown-btn" data-cat="cold-brew" onclick="filterShop('cold-brew', this)">
+          <span>Cold Brew 355 ml</span>
+        </button>
+        <button type="button" class="filter-dropdown-btn" data-cat="cafe-molido" onclick="filterShop('cafe-molido', this)">
+          <span>Café Molido</span>
+        </button>
+        <button type="button" class="filter-dropdown-btn" data-cat="packs" onclick="filterShop('packs', this)">
+          <span>Packs de Ahorro</span>
+        </button>
+      </div>
+
+      <!-- Controles a la Derecha -->
+      <div class="tienda-controls-right">
+        <span class="tienda-items-count" id="tienda-count">5 artículos</span>
+        
+        <div class="tienda-sort-wrapper">
+          <select class="tienda-sort-select" aria-label="Ordenar productos" onchange="sortShop(this.value)">
+            <option value="popular">Más vendidos</option>
+            <option value="price-asc">Precio: menor a mayor</option>
+            <option value="price-desc">Precio: mayor a menor</option>
+            <option value="name">Nombre: A - Z</option>
+          </select>
+          <svg class="tienda-sort-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 4. GRID DE PRODUCTOS ==================== -->
+  <main class="page-width">
+    <div class="tienda-grid" id="tienda-product-grid">
+
+      <!-- PRODUCTO 1: KALPA COLD BREW 355 ML (UNIDAD) -->
+      <article class="tienda-card" data-category="cold-brew" data-price="7.90">
+        <div class="tienda-card__badge-wrap">
+          <span class="badge-pill badge-pill--bestseller">MÁS VENDIDO</span>
+        </div>
+
+        <div class="tienda-card__visual">
+          <img src="assets/kalpa-can-original.png" alt="Lata KALPA Cold Brew 355 ml" class="tienda-card__img" loading="lazy">
+        </div>
+
+        <div class="tienda-card__body">
+          <h2 class="tienda-card__title">KALPA Cold Brew Original</h2>
+          <div class="tienda-card__subtitle">Lata individual 355 ml · 280 mg cafeína limpia</div>
+
+          <div class="tienda-card__pricing-row">
+            <span class="price-main">S/ 7.90</span>
+            <span class="price-old">S/ 9.50</span>
+            <span class="price-discount-tag">-17%</span>
+          </div>
+
+          <div class="tienda-card__trust-pill">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>0% Azúcar · Baja Acidez Gástrica</span>
+          </div>
+
+          <div class="tienda-card__actions">
+            <div class="tienda-qty-stepper">
+              <button type="button" class="tienda-qty-btn" onclick="updateQty(this, -1)" aria-label="Disminuir">-</button>
+              <span class="tienda-qty-val">1</span>
+              <button type="button" class="tienda-qty-btn" onclick="updateQty(this, 1)" aria-label="Aumentar">+</button>
+            </div>
+            <button type="button" class="btn-tienda-add" onclick="addProductToCart(this, 'prod-cb-unit', 'KALPA Cold Brew Original 355ml', 7.90)">
+              <span>AGREGAR</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+
+          <a href="productos.html#cold-brew" class="tienda-card__info-link">
+            <span>Ver beneficios médicos e información técnica</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- PRODUCTO 2: PACK X 6 COLD BREW 355 ML -->
+      <article class="tienda-card" data-category="packs cold-brew" data-price="39.90">
+        <div class="tienda-card__badge-wrap">
+          <span class="badge-pill badge-pill--oferta">OFERTA -15%</span>
+        </div>
+
+        <div class="tienda-card__visual">
+          <img src="assets/footer-banner-can.png" alt="Pack de 6 latas KALPA Cold Brew" class="tienda-card__img" loading="lazy">
+        </div>
+
+        <div class="tienda-card__body">
+          <h2 class="tienda-card__title">Pack x 6 — Cold Brew 355 ml</h2>
+          <div class="tienda-card__subtitle">6 latas de 355 ml · Ahorro garantizado</div>
+
+          <div class="tienda-card__pricing-row">
+            <span class="price-main">S/ 39.90</span>
+            <span class="price-old">S/ 47.40</span>
+            <span class="price-discount-tag">-15%</span>
+          </div>
+
+          <div class="tienda-card__trust-pill">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Precio más bajo por lata · Envío a Perú</span>
+          </div>
+
+          <div class="tienda-card__actions">
+            <div class="tienda-qty-stepper">
+              <button type="button" class="tienda-qty-btn" onclick="updateQty(this, -1)" aria-label="Disminuir">-</button>
+              <span class="tienda-qty-val">1</span>
+              <button type="button" class="tienda-qty-btn" onclick="updateQty(this, 1)" aria-label="Aumentar">+</button>
+            </div>
+            <button type="button" class="btn-tienda-add" onclick="addProductToCart(this, 'pack-6-cb', 'Pack x 6 KALPA Cold Brew 355ml', 39.90)">
+              <span>AGREGAR</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+
+          <a href="productos.html#cold-brew" class="tienda-card__info-link">
+            <span>Ver beneficios médicos e información técnica</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- PRODUCTO 3: KALPA CAFÉ MOLIDO 250 G -->
+      <article class="tienda-card" data-category="cafe-molido" data-price="34.90">
+        <div class="tienda-card__badge-wrap">
+          <span class="badge-pill badge-pill--oferta">ESPECIALIDAD</span>
+        </div>
+
+        <div class="tienda-card__visual">
+          <img src="assets/kalpa-molido-can-solo.png" alt="Lata KALPA Café Molido 250g" class="tienda-card__img" loading="lazy">
+        </div>
+
+        <div class="tienda-card__body">
+          <h2 class="tienda-card__title">KALPA Café Molido 250 g</h2>
+          <div class="tienda-card__subtitle">Molienda media fina · 100% Arábica Obata</div>
+
+          <div class="tienda-card__pricing-row">
+            <span class="price-main">S/ 34.90</span>
+            <span class="price-old">S/ 39.90</span>
+            <span class="price-discount-tag">-13%</span>
+          </div>
+
+          <div class="tienda-card__trust-pill">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Notas de cereza, chocolate y manzana</span>
+          </div>
+
+          <div class="tienda-card__actions">
+            <div class="tienda-qty-stepper">
+              <button type="button" class="tienda-qty-btn" onclick="updateQty(this, -1)" aria-label="Disminuir">-</button>
+              <span class="tienda-qty-val">1</span>
+              <button type="button" class="tienda-qty-btn" onclick="updateQty(this, 1)" aria-label="Aumentar">+</button>
+            </div>
+            <button type="button" class="btn-tienda-add" onclick="addProductToCart(this, 'prod-molido-250', 'KALPA Café Molido 250g', 34.90)">
+              <span>AGREGAR</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+
+          <a href="productos.html#cafe-molido" class="tienda-card__info-link">
+            <span>Ver ficha técnica y método de preparación</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- PRODUCTO 4: KALPA CAFÉ MOLIDO 500 G -->
+      <article class="tienda-card" data-category="cafe-molido" data-price="59.90">
+        <div class="tienda-card__badge-wrap">
+          <span class="badge-pill badge-pill--nuevo">PRESENTACIÓN 500G</span>
+        </div>
+
+        <div class="tienda-card__visual">
+          <img src="assets/product-card-500g.png" alt="Lata KALPA Café Molido 500g" class="tienda-card__img" loading="lazy">
+        </div>
+
+        <div class="tienda-card__body">
+          <h2 class="tienda-card__title">KALPA Café Molido 500 g</h2>
+          <div class="tienda-card__subtitle">Presentación familiar · Café de especialidad VRAEM</div>
+
+          <div class="tienda-card__pricing-row">
+            <span class="price-main">S/ 59.90</span>
+            <span class="price-old">S/ 69.90</span>
+            <span class="price-discount-tag">-14%</span>
+          </div>
+
+          <div class="tienda-card__trust-pill">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Rendimiento para más de 35 tazas</span>
+          </div>
+
+          <div class="tienda-card__actions">
+            <div class="tienda-qty-stepper">
+              <button type="button" class="tienda-qty-btn" onclick="updateQty(this, -1)" aria-label="Disminuir">-</button>
+              <span class="tienda-qty-val">1</span>
+              <button type="button" class="tienda-qty-btn" onclick="updateQty(this, 1)" aria-label="Aumentar">+</button>
+            </div>
+            <button type="button" class="btn-tienda-add" onclick="addProductToCart(this, 'prod-molido-500', 'KALPA Café Molido 500g', 59.90)">
+              <span>AGREGAR</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+
+          <a href="productos.html#cafe-molido" class="tienda-card__info-link">
+            <span>Ver ficha técnica y método de preparación</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- PRODUCTO 5: PACK DÚO EXPERIENCIA KALPA -->
+      <article class="tienda-card" data-category="packs" data-price="42.90">
+        <div class="tienda-card__badge-wrap">
+          <span class="badge-pill badge-pill--bestseller">COMBO COMPLETO</span>
+        </div>
+
+        <div class="tienda-card__visual">
+          <img src="assets/product-card-molido-250.jpg" alt="Pack Dúo Experiencia KALPA" class="tienda-card__img" style="border-radius: 12px; object-fit: cover;" loading="lazy">
+        </div>
+
+        <div class="tienda-card__body">
+          <h2 class="tienda-card__title">Pack Dúo Experiencia KALPA</h2>
+          <div class="tienda-card__subtitle">1 Cold Brew 355 ml + 1 Café Molido 250 g</div>
+
+          <div class="tienda-card__pricing-row">
+            <span class="price-main">S/ 42.90</span>
+            <span class="price-old">S/ 49.90</span>
+            <span class="price-discount-tag">-14%</span>
+          </div>
+
+          <div class="tienda-card__trust-pill">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Energía inmediata + café para tu método</span>
+          </div>
+
+          <div class="tienda-card__actions">
+            <div class="tienda-qty-stepper">
+              <button type="button" class="tienda-qty-btn" onclick="updateQty(this, -1)" aria-label="Disminuir">-</button>
+              <span class="tienda-qty-val">1</span>
+              <button type="button" class="tienda-qty-btn" onclick="updateQty(this, 1)" aria-label="Aumentar">+</button>
+            </div>
+            <button type="button" class="btn-tienda-add" onclick="addProductToCart(this, 'pack-duo-exp', 'Pack Dúo Experiencia KALPA', 42.90)">
+              <span>AGREGAR</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+
+          <a href="productos.html" class="tienda-card__info-link">
+            <span>Ver detalles y ficha informativa</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- ==================== 5. FOOTER CON BANNER NEWSLETTER ==================== -->
+  <footer class="kallpa-footer-wrapper" id="footer-section">
+    <div class="kallpa-newsletter-banner">
+      <div class="kallpa-newsletter-banner__pattern" aria-hidden="true"></div>
+      <div class="kallpa-newsletter-banner__vignette" aria-hidden="true"></div>
+
+      <div class="kallpa-newsletter-container">
+        <div class="newsletter-banner__can-box">
+          <img src="assets/footer-banner-can.png" alt="Lata KALPA Cold Brew" class="newsletter-banner__can" draggable="false" loading="lazy">
+        </div>
+
+        <div class="newsletter-banner__content-box">
+          <div class="newsletter-banner__header">
+            <h3 class="newsletter-banner__title">SÉ PARTE DE KALPA</h3>
+            <p class="newsletter-banner__desc">Recibe promociones exclusivas, lanzamientos y más historias del VRAEM.</p>
+          </div>
+          <form class="newsletter-banner__form" onsubmit="event.preventDefault(); alert('¡Gracias por unirte a la comunidad KALPA!');">
+            <input type="email" placeholder="Tu correo electrónico" class="newsletter-banner__input" required aria-label="Tu correo electrónico">
+            <button type="submit" class="newsletter-banner__btn">
+              <span>SUSCRIBIRME</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </form>
+        </div>
+
+        <div class="newsletter-banner__bean-box" aria-hidden="true">
+          <img src="assets/hero-bean-single.png" alt="" class="newsletter-banner__bean" draggable="false">
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra Inferior del Footer -->
+    <div class="kallpa-footer-bottom">
+      <div class="kallpa-footer-bottom__container">
+        <div class="footer-bottom__main-row">
+          <a href="index.html" class="footer-logo-link" aria-label="KALPA - Inicio">
+            <img src="assets/logo-kalpa-white.png" alt="KALPA" class="footer-logo-img">
+          </a>
+          <nav class="footer-nav" aria-label="Navegación pie de página">
+            <a href="index.html" class="footer-nav-link">Inicio</a>
+            <a href="tienda.html" class="footer-nav-link is-active">Tienda</a>
+            <a href="productos.html" class="footer-nav-link">Productos</a>
+            <a href="nosotros.html" class="footer-nav-link">Nosotros</a>
+            <a href="index.html#origin-section" class="footer-nav-link">Origen</a>
+            <a href="#footer-section" class="footer-nav-link">Contacto</a>
+          </nav>
+          <div class="footer-social-row">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="Instagram de KALPA">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="TikTok de KALPA">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.12V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.47V10.81a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.24z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-bottom__legal-row">
+          <p class="footer-copy">&copy; 2026 KALPA Cold Brew. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== DRAWER DEL CARRITO ==================== -->
+  <div class="cart-drawer-overlay" id="kallpa-cart-overlay" onclick="closeKallpaCart()"></div>
+  <aside class="cart-drawer" id="kallpa-cart-drawer" aria-label="Tu Carrito KALPA">
+    <div class="cart-drawer__header">
+      <h3 class="cart-drawer__title">TU CARRITO</h3>
+      <button type="button" class="cart-drawer__close" onclick="closeKallpaCart()" aria-label="Cerrar Carrito">&times;</button>
+    </div>
+    <div class="cart-drawer__items" id="kallpa-cart-items">
+      <div style="padding: 2.5rem 1.5rem; text-align: center; color: #94a3b8;">Tu carrito está vacío</div>
+    </div>
+    <div class="cart-drawer__footer" id="kallpa-cart-footer">
+      <button type="button" class="btn-checkout" onclick="alert('Iniciando Checkout Seguro KALPA...')">FINALIZAR COMPRA</button>
+    </div>
+  </aside>
+
+  <!-- JavaScript de la Tienda -->
+  <script>
+    function updateQty(btn, delta) {
+      const stepper = btn.closest('.tienda-qty-stepper');
+      const valEl = stepper.querySelector('.tienda-qty-val');
+      let current = parseInt(valEl.textContent || '1', 10) + delta;
+      if (current < 1) current = 1;
+      if (current > 24) current = 24;
+      valEl.textContent = current;
+    }
+
+    function addProductToCart(btn, id, name, unitPrice) {
+      const card = btn.closest('.tienda-card');
+      const qtyEl = card.querySelector('.tienda-qty-val');
+      const qty = qtyEl ? Math.max(1, parseInt(qtyEl.textContent || '1', 10)) : 1;
+      const total = +(unitPrice * qty).toFixed(2);
+      addPackToKallpaCart(id, `${qty}x ${name}`, total);
+    }
+
+    function filterShop(category, btn) {
+      const buttons = document.querySelectorAll('.filter-dropdown-btn');
+      buttons.forEach(b => b.classList.remove('is-active'));
+      if (btn) btn.classList.add('is-active');
+
+      const cards = document.querySelectorAll('.tienda-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-category') || '';
+        if (category === 'all' || cat.includes(category)) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      const countEl = document.getElementById('tienda-count');
+      if (countEl) {
+        countEl.textContent = `${visibleCount} artículo${visibleCount === 1 ? '' : 's'}`;
+      }
+    }
+
+    function sortShop(type) {
+      const grid = document.getElementById('tienda-product-grid');
+      const cards = Array.from(grid.querySelectorAll('.tienda-card'));
+
+      if (type === 'price-asc') {
+        cards.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
+      } else if (type === 'price-desc') {
+        cards.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+      } else if (type === 'name') {
+        cards.sort((a, b) => {
+          const tA = a.querySelector('.tienda-card__title').textContent.trim();
+          const tB = b.querySelector('.tienda-card__title').textContent.trim();
+          return tA.localeCompare(tB);
+        });
+      }
+      cards.forEach(card => grid.appendChild(card));
+    }
+
+    // Carrito Global
+    function openKallpaCart() {
+      const drawer = document.getElementById('kallpa-cart-drawer');
+      const overlay = document.getElementById('kallpa-cart-overlay');
+      if (drawer && overlay) {
+        drawer.classList.add('is-open');
+        overlay.classList.add('is-open');
+      }
+    }
+
+    function closeKallpaCart() {
+      const drawer = document.getElementById('kallpa-cart-drawer');
+      const overlay = document.getElementById('kallpa-cart-overlay');
+      if (drawer && overlay) {
+        drawer.classList.remove('is-open');
+        overlay.classList.remove('is-open');
+      }
+    }
+
+    function addPackToKallpaCart(id, name, price) {
+      const countEl = document.getElementById('kallpa-cart-count');
+      if (countEl) {
+        countEl.textContent = parseInt(countEl.textContent || '0', 10) + 1;
+      }
+      const itemsContainer = document.getElementById('kallpa-cart-items');
+      if (itemsContainer) {
+        if (itemsContainer.children.length === 1 && itemsContainer.children[0].textContent.includes('vacío')) {
+          itemsContainer.innerHTML = '';
+        }
+        const itemEl = document.createElement('div');
+        itemEl.style.cssText = 'display:flex; justify-content:space-between; align-items:center; padding:1rem 1.2rem; border-bottom:1px solid rgba(255,255,255,0.08);';
+        itemEl.innerHTML = `
+          <div>
+            <div style="font-weight:700; font-size:0.92rem; color:#fff;">${name}</div>
+            <div style="color:#f5ba2c; font-size:0.85rem; font-weight:800; margin-top:0.2rem;">S/ ${price.toFixed(2)}</div>
+          </div>
+          <button style="background:none; border:none; color:#ef4444; font-size:1.2rem; cursor:pointer;" onclick="this.parentElement.remove();">&times;</button>
+        `;
+        itemsContainer.appendChild(itemEl);
+      }
+      openKallpaCart();
+    }
+  </script>
+</body>
+</html>

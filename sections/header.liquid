@@ -35,7 +35,8 @@
     <!-- Menú Central Rigurosamente Centrado al 50% -->
     <nav class="kalpa-nav-menu" aria-label="Navegación principal">
       <a href="{{ routes.root_url }}" class="kalpa-nav-item{% if template.name == 'index' or request.path == routes.root_url %} is-active{% endif %}">Inicio</a>
-      <a href="{{ routes.all_products_collection_url }}" class="kalpa-nav-item{% if template.name == 'collection' or template.name == 'product' or request.path contains 'collections' or request.path contains 'products' or request.path contains 'productos' %} is-active{% endif %}">Productos</a>
+      <a href="{{ routes.all_products_collection_url }}" class="kalpa-nav-item{% if template.name == 'collection' or request.path contains 'collections' %} is-active{% endif %}">Tienda</a>
+      <a href="/pages/productos" class="kalpa-nav-item{% if template.name == 'page' and page.handle contains 'productos' or request.path contains 'productos' %} is-active{% endif %}">Productos</a>
       <a href="/pages/promociones" class="kalpa-nav-item">Promociones</a>
       <a href="/pages/contact" class="kalpa-nav-item{% if template.name == 'page' and page.handle contains 'nosotros' or page.handle contains 'contact' or request.path contains 'nosotros' or request.path contains 'contact' %} is-active{% endif %}">Nosotros</a>
     </nav>
@@ -102,7 +103,8 @@
     </div>
     <nav class="kalpa-mobile-menu-links">
       <a href="{{ routes.root_url }}" class="kalpa-mobile-item{% if template.name == 'index' or request.path == routes.root_url %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Inicio</a>
-      <a href="{{ routes.all_products_collection_url }}" class="kalpa-mobile-item{% if template.name == 'collection' or template.name == 'product' or request.path contains 'collections' or request.path contains 'products' or request.path contains 'productos' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Productos</a>
+      <a href="{{ routes.all_products_collection_url }}" class="kalpa-mobile-item{% if template.name == 'collection' or request.path contains 'collections' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Tienda</a>
+      <a href="/pages/productos" class="kalpa-mobile-item{% if template.name == 'page' and page.handle contains 'productos' or request.path contains 'productos' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Productos</a>
       <a href="/pages/promociones" class="kalpa-mobile-item" onclick="closeKallpaMobileMenu()">Promociones</a>
       <a href="/pages/contact" class="kalpa-mobile-item{% if template.name == 'page' and page.handle contains 'nosotros' or page.handle contains 'contact' or request.path contains 'nosotros' or request.path contains 'contact' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Nosotros</a>
     </nav>
