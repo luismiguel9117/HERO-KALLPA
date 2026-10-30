@@ -1,11 +1,12 @@
 {%- comment -%}
   SECCIÓN: main-page.liquid
-  Router inteligente de páginas: si es Productos muestra la ficha técnica informativa,
-  si es Tienda muestra el catálogo comercial, y para otras páginas muestra el contenido estándar.
+  Router inteligente de páginas: si es Productos no renderiza nada (el catálogo lo pinta la
+  sección products-catalog de page.json), si es Tienda muestra el catálogo comercial,
+  y para otras páginas muestra el contenido estándar.
 {%- endcomment -%}
 
 {%- if page.handle contains 'producto' -%}
-  {% section 'kallpa-product-info' %}
+  {%- comment -%} Renderizado por products-catalog {%- endcomment -%}
 {%- elsif page.handle contains 'tienda' -%}
   {% section 'kallpa-tienda' %}
 {%- else -%}
