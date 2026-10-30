@@ -31,13 +31,21 @@
             Producto real del admin: el elegido en el bloque o, si no hay, el del enlace /products/handle.
             Precio unidad = primera variante que no es pack. Precio pack = variante cuyo nombre
             contiene "x" + pack_size (ej. "Pack x 6"); si no existe, se cobra la unidad x pack_size
-            sin descuento inventado.
+            sin descuento inventado. Si el producto agrupa varios tamaños (ej. Café Molido 250 g y
+            500 g), variant_match deja solo las variantes de ese tamaño.
           {%- endcomment -%}
           {%- liquid
+            assign variant_key = block.settings.variant_match | downcase | remove: ' '
             assign slide_product = block.settings.product
             if slide_product == blank and block.settings.product_link contains '/products/'
               assign link_handle = block.settings.product_link | split: '/products/' | last | split: '?' | first
               assign slide_product = all_products[link_handle]
+              if slide_product == blank and variant_key != blank
+                # Enlace por tamaño (kalpa-cafe-molido-250g) hacia un producto único (kalpa-cafe-molido)
+                assign size_suffix = '-' | append: variant_key
+                assign base_handle = link_handle | remove: size_suffix
+                assign slide_product = all_products[base_handle]
+              endif
             endif
 
             assign pack_size = block.settings.pack_size | default: 6
@@ -47,6 +55,11 @@
             if slide_product != blank
               for v in slide_product.variants
                 assign v_title = v.title | downcase | remove: ' '
+                if variant_key != blank
+                  unless v_title contains variant_key
+                    continue
+                  endunless
+                endif
                 if v_title contains 'pack' or v_title contains 'x3' or v_title contains 'x6' or v_title contains 'x12'
                   if pack_variant == nil and v_title contains pack_key
                     assign pack_variant = v
@@ -55,10 +68,16 @@
                   assign unit_variant = v
                 endif
               endfor
-              if unit_variant == nil
+              if unit_variant == nil and variant_key == blank
                 assign unit_variant = slide_product.selected_or_first_available_variant
               endif
+              if unit_variant == nil
+                # Ninguna variante coincide con el tamaño: se usan los precios de texto
+                assign slide_product = nil
+              endif
+            endif
 
+            if slide_product != blank
               if pack_variant != nil
                 assign pack_price_cents = pack_variant.price
                 assign pack_old_cents = pack_variant.compare_at_price | default: 0
@@ -100,7 +119,7 @@
                   {%- if block.settings.product_link != blank or block.settings.btn_link_text != blank or slide_product != blank -%}
                     {%- assign slide_pdp = block.settings.product_link -%}
                     {%- if slide_product != blank -%}
-                      {%- assign slide_pdp = slide_product.url -%}
+                      {%- assign slide_pdp = unit_variant.url | default: slide_product.url -%}
                     {%- elsif slide_pdp contains '/products/kalpa-' -%}
                       {%- assign check_handle = slide_pdp | remove: '/products/' -%}
                       {%- if all_products[check_handle].url == blank -%}
@@ -389,6 +408,12 @@
           "id": "product",
           "label": "Producto de Shopify",
           "info": "Precios, stock y botón Agregar salen de este producto. Para el pack, crea una variante llamada \"Pack x 6\" (o x 12, según Unidades por pack)."
+        },
+        {
+          "type": "text",
+          "id": "variant_match",
+          "label": "Variante a mostrar (opcional)",
+          "info": "Si el producto tiene varios tamaños, escribe el del slide tal como aparece en la variante (ej. 250 g o 500 g)."
         },
         {
           "type": "number",
