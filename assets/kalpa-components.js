@@ -58,15 +58,18 @@
     const navItems = document.querySelectorAll('.kalpa-nav-item, .kalpa-mobile-menu-link, .kalpa-mobile-item, .footer-horizontal-nav a');
     
     let activeKey = '';
-    if (
-      path.includes('collections') || 
-      path.includes('collection') || 
-      path.includes('products') || 
-      path.includes('product') || 
-      path.includes('productos') || 
-      path.includes('producto')
-    ) {
+    if (path.includes('productos') || path.includes('/pages/producto')) {
+      // Página informativa de Productos (va antes que /products para no confundirlas)
       activeKey = 'productos';
+    } else if (
+      path.includes('collection') ||
+      path.includes('/products/') ||
+      path.includes('tienda')
+    ) {
+      // Catálogo comercial y fichas de compra pertenecen a Tienda
+      activeKey = 'tienda';
+    } else if (path.includes('promociones')) {
+      activeKey = 'promociones';
     } else if (
       path.includes('nosotros') || 
       path.includes('about') || 
@@ -87,13 +90,9 @@
 
     navItems.forEach(item => {
       const text = item.textContent.trim().toLowerCase();
-      if (
-        (activeKey === 'inicio' && text === 'inicio') ||
-        (activeKey === 'productos' && text === 'productos') ||
-        (activeKey === 'nosotros' && text === 'nosotros')
-      ) {
+      if (text === activeKey) {
         item.classList.add('is-active');
-      } else if (text !== 'promociones') {
+      } else {
         item.classList.remove('is-active');
       }
     });
