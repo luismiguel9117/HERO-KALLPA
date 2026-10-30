@@ -36,10 +36,11 @@
   padding: clamp(1.5rem, 3vw, 2.25rem) 0 clamp(1.5rem, 3vw, 2.25rem);
 }
 
+/* Los bordes rectos del patrón (arriba y derecha) van pegados a la esquina superior derecha */
 .kshop-hero__pattern {
   position: absolute;
-  top: -12%;
-  right: -4%;
+  top: 0;
+  right: 0;
   width: min(62vw, 820px);
   height: auto;
   opacity: 0.16;
@@ -620,7 +621,6 @@
 
   .kshop-hero__pattern {
     width: 90vw;
-    right: -30%;
     opacity: 0.12;
   }
 }
