@@ -273,6 +273,21 @@ function initNosotrosReveal() {
   items.forEach(el => observer.observe(el));
 }
 
+// Enlaces con ancla desde otra página (ej. footer → /pages/nosotros#origen-ayacucho):
+// ScrollTrigger toma el control del scroll al cargar, así que se repite el salto tras el load
+window.addEventListener('load', () => {
+  const id = decodeURIComponent(window.location.hash.slice(1));
+  const target = id && document.getElementById(id);
+  if (!target) return;
+  const jump = () => {
+    const header = document.getElementById('kallpa-header');
+    const offset = header ? header.offsetHeight : 0;
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: 'auto' });
+  };
+  // Se repite porque imágenes y animaciones de entrada mueven el layout tras el primer salto
+  [350, 900, 1600].forEach(ms => setTimeout(jump, ms));
+});
+
 // 4. Inicialización al cargar el DOM
 document.addEventListener('DOMContentLoaded', () => {
   initBentoGlow();

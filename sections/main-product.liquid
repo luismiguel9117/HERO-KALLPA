@@ -4,12 +4,16 @@
 {%- endcomment -%}
 
 {%- liquid
-  assign title_display = section.settings.product_title | default: product.title | default: 'KALLPA COLD BREW'
-  assign title_line_1 = section.settings.title_line_1 | default: 'KALLPA'
-  assign title_line_2 = section.settings.title_line_2 | default: 'COLD BREW'
-  assign desc_display = section.settings.product_desc | default: 'Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural por lata. Listo para tomar, en cualquier momento y lugar.'
+  assign title_display = product.title | default: section.settings.product_title
+  comment
+    El título se parte en dos líneas: primera palabra en blanco, el resto en dorado
+  endcomment
+  assign title_words = title_display | split: ' '
+  assign title_line_1 = title_words | first
+  assign title_line_2 = title_display | remove_first: title_line_1 | strip
+  assign desc_display = product.description | strip_html | strip | default: section.settings.product_desc
   assign cat_display = section.settings.category_tag | default: 'BEBIDA FUNCIONAL A BASE DE CAFÉ'
-  assign badge_display = section.settings.badge_text | default: '355 mL — LATA'
+  assign badge_display = product.metafields.custom.sello.value
 
   comment
     Precios reales del admin: unidad = primera variante que no es pack; pack = variante cuyo
@@ -50,33 +54,26 @@
   assign p_unit = unit_cents | money_without_currency
   assign p_sixpack = six_cents | money_without_currency
 
-  if section.settings.main_image != blank
-    assign stage_url = section.settings.main_image | image_url: width: 1600
-  else
-    assign stage_url = 'nosotros-hero-bg-hd.webp' | asset_url
+  assign has_media = false
+  if product.media.size > 0
+    assign has_media = true
+    assign first_image = product.featured_image
   endif
-  if section.settings.thumb_1_image != blank
-    assign t1_url = section.settings.thumb_1_image | image_url: width: 1200
-  else
-    assign t1_url = 'kalpa-can-original.webp' | asset_url
-  endif
-  if section.settings.thumb_2_image != blank
-    assign t2_url = section.settings.thumb_2_image | image_url: width: 1200
-  else
-    assign t2_url = 'kalpa-original-label.webp' | asset_url
-  endif
-  assign t3_url = 'nos-pruebala-splash.webp' | asset_url
-  assign t4_url = 'product-card-250g.webp' | asset_url
 -%}
 
 <section class="pdp" aria-label="{{ title_display }}">
 
   <!-- 1. ESCENARIO + COMPRA -->
-  <div class="pdp-hero">
+  <div class="pdp-hero{% unless has_media %} pdp-hero--no-media{% endunless %}">
 
-    <!-- Escenario a sangre con galería vertical -->
+    {%- if has_media -%}
+    <!-- Escenario a sangre con la galería del producto (fotos y videos de Shopify) -->
     <div class="pdp-stage" id="product-main-card">
-      <img src="{{ stage_url }}" alt="{{ title_display }}" class="pdp-stage__img" id="main-product-img" width="1600" height="900" fetchpriority="high">
+      {%- if first_image != blank -%}
+        <img src="{{ first_image | image_url: width: 1600 }}" alt="{{ first_image.alt | default: title_display | escape }}" class="pdp-stage__img" id="main-product-img" width="1600" height="1600" fetchpriority="high">
+      {%- else -%}
+        <img src="{{ product.media.first.preview_image | image_url: width: 1600 }}" alt="{{ title_display | escape }}" class="pdp-stage__img" id="main-product-img" width="1600" height="1600" fetchpriority="high">
+      {%- endif -%}
       <div class="pdp-stage__veil" aria-hidden="true"></div>
 
       <svg class="pdp-stage__pattern" viewBox="0 0 120 360" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
@@ -90,33 +87,40 @@
         {%- endfor -%}
       </svg>
 
-      <div class="pdp-thumbs" aria-label="Galería del producto">
-        <button type="button" class="pdp-thumb is-active" onclick="switchMainImage('{{ stage_url }}', this)" aria-label="Escena principal">
-          <img src="{{ stage_url }}" alt="" width="78" height="92" loading="lazy">
-        </button>
-        <button type="button" class="pdp-thumb" data-fit="contain" onclick="switchMainImage('{{ t1_url }}', this)" aria-label="Lata de frente">
-          <img src="{{ t1_url }}" alt="" width="78" height="92" loading="lazy">
-        </button>
-        <button type="button" class="pdp-thumb" onclick="switchMainImage('{{ t2_url }}', this)" aria-label="Etiqueta completa">
-          <img src="{{ t2_url }}" alt="" width="78" height="92" loading="lazy">
-        </button>
-        {%- if section.settings.video_url != blank -%}
-          <button type="button" class="pdp-thumb pdp-thumb--video" onclick="openProductVideo('{{ section.settings.video_url }}')" aria-label="Ver video">
-            <img src="{{ t3_url }}" alt="" width="78" height="92" loading="lazy">
-            <span class="pdp-thumb__play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-          </button>
-        {%- else -%}
-          <button type="button" class="pdp-thumb" onclick="switchMainImage('{{ t3_url }}', this)" aria-label="Con hielo y granos">
-            <img src="{{ t3_url }}" alt="" width="78" height="92" loading="lazy">
-          </button>
-        {%- endif -%}
-        <button type="button" class="pdp-thumb" onclick="switchMainImage('{{ t4_url }}', this)" aria-label="Lata entre granos">
-          <img src="{{ t4_url }}" alt="" width="78" height="92" loading="lazy">
-        </button>
-      </div>
+      {%- if product.media.size > 1 -%}
+        <div class="pdp-thumbs" aria-label="Galería del producto">
+          {%- for media in product.media limit: 6 -%}
+            {%- assign thumb = media.preview_image -%}
+            {%- if media.media_type == 'image' -%}
+              <button type="button" class="pdp-thumb{% if forloop.first %} is-active{% endif %}" onclick="switchMainImage('{{ media | image_url: width: 1600 }}', this)" aria-label="Foto {{ forloop.index }}">
+                <img src="{{ thumb | image_url: width: 160 }}" alt="" width="78" height="92" loading="lazy">
+              </button>
+            {%- else -%}
+              {%- liquid
+                if media.media_type == 'external_video'
+                  if media.host == 'youtube'
+                    assign video_url = 'https://www.youtube.com/watch?v=' | append: media.external_id
+                  else
+                    assign video_url = 'https://vimeo.com/' | append: media.external_id
+                  endif
+                else
+                  assign video_url = media.sources.first.url
+                endif
+              -%}
+              <button type="button" class="pdp-thumb pdp-thumb--video" onclick="openProductVideo('{{ video_url }}')" aria-label="Ver video">
+                <img src="{{ thumb | image_url: width: 160 }}" alt="" width="78" height="92" loading="lazy">
+                <span class="pdp-thumb__play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+              </button>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
 
-      <span class="pdp-stage__badge">{{ badge_display }}</span>
+      {%- if badge_display != blank -%}
+        <span class="pdp-stage__badge">{{ badge_display }}</span>
+      {%- endif -%}
     </div>
+    {%- endif -%}
 
     <!-- Columna de compra -->
     <div class="pdp-info">

@@ -9,9 +9,6 @@
       <script>window.location.replace("{{ routes.root_url }}");</script>
     {%- endif -%}
     <script>
-      if (window.location.pathname.includes('/pages/nosotros') || window.location.pathname.includes('/pages/about')) {
-        window.location.replace('/pages/contact');
-      }
       (function() {
         var p = window.location.pathname.toLowerCase();
         if (p.includes('terminos') || p.includes('privacidad') || p.includes('devolucion') || p.includes('reclamacion') || p.includes('legal')) {
