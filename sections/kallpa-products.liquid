@@ -30,7 +30,8 @@
           {%- comment -%}
             Producto real del admin: el elegido en el bloque o, si no hay, el del enlace /products/handle.
             Precio unidad = primera variante que no es pack. Precio pack = variante cuyo nombre
-            contiene "pack" o "x6"; si no existe, se cobra la unidad x pack_size sin descuento inventado.
+            contiene "x" + pack_size (ej. "Pack x 6"); si no existe, se cobra la unidad x pack_size
+            sin descuento inventado.
           {%- endcomment -%}
           {%- liquid
             assign slide_product = block.settings.product
@@ -40,13 +41,14 @@
             endif
 
             assign pack_size = block.settings.pack_size | default: 6
+            assign pack_key = 'x' | append: pack_size
             assign unit_variant = nil
             assign pack_variant = nil
             if slide_product != blank
               for v in slide_product.variants
                 assign v_title = v.title | downcase | remove: ' '
-                if v_title contains 'pack' or v_title contains 'x6' or v_title contains 'x12' or v_title contains 'x3'
-                  if pack_variant == nil
+                if v_title contains 'pack' or v_title contains 'x3' or v_title contains 'x6' or v_title contains 'x12'
+                  if pack_variant == nil and v_title contains pack_key
                     assign pack_variant = v
                   endif
                 elsif unit_variant == nil
@@ -386,7 +388,7 @@
           "type": "product",
           "id": "product",
           "label": "Producto de Shopify",
-          "info": "Precios, stock y botón Agregar salen de este producto. Para el pack, crea una variante cuyo nombre contenga \"Pack\" (ej. Pack x 6)."
+          "info": "Precios, stock y botón Agregar salen de este producto. Para el pack, crea una variante llamada \"Pack x 6\" (o x 12, según Unidades por pack)."
         },
         {
           "type": "number",
