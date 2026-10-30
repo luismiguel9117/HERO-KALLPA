@@ -22,12 +22,13 @@
   color: var(--kshop-text);
 }
 
-/* Patrón andino en espejo: bordes rectos arriba y a la izquierda, pegado a la esquina superior
-   izquierda del hero, con el difuminado hacia la derecha. */
+/* Patrón andino tal cual viene la imagen: cortes rectos arriba y contra el borde derecho
+   (pegado a la esquina superior derecha), difuminado hacia el título. Baja por detrás
+   de los filtros; las secciones van por encima. */
 .kshop-pattern {
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   width: min(62vw, 820px);
   opacity: 0.16;
   pointer-events: none;
@@ -38,7 +39,12 @@
   display: block;
   width: 100%;
   height: auto;
-  transform: scaleX(-1);
+}
+
+.kshop > section,
+.kshop > main {
+  position: relative;
+  z-index: 1;
 }
 
 .kshop .visually-hidden {
@@ -52,14 +58,7 @@
 
 /* 1. HERO */
 .kshop-hero {
-  position: relative;
-  overflow: hidden;
   padding: clamp(1.5rem, 3vw, 2.25rem) 0 clamp(1.5rem, 3vw, 2.25rem);
-}
-
-.kshop-hero__inner {
-  position: relative;
-  z-index: 1;
 }
 
 .kshop-breadcrumb {
