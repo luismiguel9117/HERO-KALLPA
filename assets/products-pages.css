@@ -2026,6 +2026,13 @@
   background: #000;
 }
 
+/* Primer espacio: la escena llena todo el escenario, como portada */
+.pdp-slide--cover .pdp-stage__img {
+  object-fit: cover;
+  padding: 0;
+  filter: none;
+}
+
 /* La foto del producto se ve completa (contain); detrás, la misma foto difuminada rellena el espacio */
 .pdp-stage__backdrop {
   position: absolute;

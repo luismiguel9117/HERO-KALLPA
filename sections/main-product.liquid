@@ -98,7 +98,8 @@
             assign is_video = true
           endif
         -%}
-        <div class="pdp-slide{% if slide_index == 0 %} is-active{% endif %}" data-slide="{{ slide_index }}">
+        {%- comment -%} El primer espacio llena el escenario (las miniaturas quedan encima); los demás se ven completos, a la derecha de las miniaturas {%- endcomment -%}
+        <div class="pdp-slide{% if slide_index == 0 %} pdp-slide--cover is-active{% endif %}" data-slide="{{ slide_index }}">
           {%- if is_video -%}
             {%- if file.media_type == 'video' -%}
               {%- assign video_src = file.sources | where: 'format', 'mp4' | first | map: 'url' | first | default: file.sources.first.url -%}
@@ -121,16 +122,6 @@
 
       <div class="pdp-stage__veil" aria-hidden="true"></div>
 
-      <svg class="pdp-stage__pattern" viewBox="0 0 120 360" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
-        {%- for y in (0..2) -%}
-          {%- assign cy = y | times: 120 | plus: 60 -%}
-          <g transform="translate(60 {{ cy }})" fill="none" stroke="currentColor">
-            <path d="M0 -58 L58 0 L0 58 L-58 0 Z" stroke-width="7"/>
-            <path d="M0 -38 L38 0 L0 38 L-38 0 Z" stroke-width="6"/>
-            <path d="M0 -18 L18 0 L0 18 L-18 0 Z" fill="currentColor" stroke="none"/>
-          </g>
-        {%- endfor -%}
-      </svg>
 
       {%- if slot_count > 1 -%}
         <div class="pdp-thumbs" aria-label="Galería del producto">
