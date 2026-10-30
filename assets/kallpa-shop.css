@@ -16,8 +16,39 @@
   --kshop-gold-deep: #d99a0b;
   --kshop-green: #16a34a;
 
+  position: relative;
+  overflow: hidden;
   background: var(--kshop-bg);
   color: var(--kshop-text);
+}
+
+.kshop > :not(.kshop-pattern) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Patrón andino girado 90°: bordes rectos arriba y a la derecha, difuminado hacia abajo.
+   La caja tiene la proporción ya girada (1024x1536) y la imagen se rota dentro para llenarla. */
+.kshop-pattern {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 0;
+  width: min(36vw, 480px);
+  aspect-ratio: 1024 / 1536;
+  opacity: 0.16;
+  pointer-events: none;
+  user-select: none;
+}
+
+.kshop-pattern img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  max-width: none;
+  height: auto;
+  transform: translate(-50%, -50%) rotate(-90deg);
 }
 
 .kshop .visually-hidden {
@@ -31,25 +62,7 @@
 
 /* 1. HERO */
 .kshop-hero {
-  position: relative;
-  overflow: hidden;
   padding: clamp(1.5rem, 3vw, 2.25rem) 0 clamp(1.5rem, 3vw, 2.25rem);
-}
-
-/* Los bordes rectos del patrón (arriba y derecha) van pegados a la esquina superior derecha */
-.kshop-hero__pattern {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: min(62vw, 820px);
-  height: auto;
-  opacity: 0.16;
-  pointer-events: none;
-  user-select: none;
-}
-
-.kshop-hero__inner {
-  position: relative;
 }
 
 .kshop-breadcrumb {
@@ -619,8 +632,8 @@
     justify-content: space-between;
   }
 
-  .kshop-hero__pattern {
-    width: 90vw;
+  .kshop-pattern {
+    width: 55vw;
     opacity: 0.12;
   }
 }

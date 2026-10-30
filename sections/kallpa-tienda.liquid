@@ -22,9 +22,12 @@
 -%}
 
 <div class="kshop">
+  <span class="kshop-pattern" aria-hidden="true">
+    <img src="{{ 'tienda-pattern.webp' | asset_url }}" alt="" width="1536" height="1024">
+  </span>
+
   <!-- HERO DE TIENDA -->
   <section class="kshop-hero">
-    <img src="{{ 'tienda-pattern.webp' | asset_url }}" alt="" class="kshop-hero__pattern" width="1536" height="1024" aria-hidden="true">
     <div class="page-width kshop-hero__inner">
       <nav class="kshop-breadcrumb" aria-label="Navegación">
         <a href="{{ routes.root_url }}">Inicio</a>
