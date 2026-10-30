@@ -216,7 +216,12 @@
 
               <div class="grid-card__action">
                 {%- assign grid_pdp = block.settings.btn_link | default: block.settings.product.url -%}
-                {%- if grid_pdp == blank or grid_pdp contains 'kalpa-cafe-molido' and all_products['kalpa-cafe-molido-250g'].url == blank -%}
+                {%- if grid_pdp contains '/products/' -%}
+                  {%- assign grid_handle = grid_pdp | split: '/products/' | last | split: '?' | first -%}
+                  {%- if all_products[grid_handle].url == blank -%}
+                    {%- assign grid_pdp = fallback_pdp -%}
+                  {%- endif -%}
+                {%- elsif grid_pdp == blank -%}
                   {%- assign grid_pdp = fallback_pdp -%}
                 {%- endif -%}
                 <a href="{{ grid_pdp }}" class="btn-grid-product">
