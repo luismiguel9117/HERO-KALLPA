@@ -2,7 +2,64 @@
   SECCIÓN: main-promociones.liquid
   Página de promociones de lanzamiento (Pixel-Perfect con promociones.html).
   La tarjeta "Oferta especial" muestra sola el primer producto con precio comparado.
+  Tripack y 12-Pack salen de las variantes del producto elegido (o del handle kalpa-cold-brew):
+  la variante se identifica por su nombre (ej. "Pack x 3", "Pack x 12"). Precio normal =
+  precio de comparación de la variante, o la unidad x cantidad si no tiene.
 {%- endcomment -%}
+
+{%- liquid
+  assign promo_product = section.settings.product
+  if promo_product == blank
+    assign promo_product = all_products[section.settings.product_handle]
+  endif
+
+  assign tri_keys = section.settings.tripack_match | downcase | remove: ' ' | split: ','
+  assign twelve_keys = section.settings.pack12_match | downcase | remove: ' ' | split: ','
+  assign unit_variant = nil
+  assign tri_variant = nil
+  assign twelve_variant = nil
+
+  if promo_product != blank
+    for v in promo_product.variants
+      assign v_title = v.title | downcase | remove: ' '
+      assign matched = false
+      for key in twelve_keys
+        if key != blank and v_title contains key and twelve_variant == nil
+          assign twelve_variant = v
+          assign matched = true
+          break
+        endif
+      endfor
+      unless matched
+        for key in tri_keys
+          if key != blank and v_title contains key and tri_variant == nil
+            assign tri_variant = v
+            assign matched = true
+            break
+          endif
+        endfor
+      endunless
+      if matched == false and unit_variant == nil
+        unless v_title contains 'pack'
+          assign unit_variant = v
+        endunless
+      endif
+    endfor
+  endif
+
+  if tri_variant != nil
+    assign tri_normal = tri_variant.compare_at_price | default: 0
+    if tri_normal <= tri_variant.price and unit_variant != nil
+      assign tri_normal = unit_variant.price | times: 3
+    endif
+  endif
+  if twelve_variant != nil
+    assign twelve_normal = twelve_variant.compare_at_price | default: 0
+    if twelve_normal <= twelve_variant.price and unit_variant != nil
+      assign twelve_normal = unit_variant.price | times: 12
+    endif
+  endif
+-%}
 
 <!-- ==================== PROMOCIONES: HERO LANZAMIENTO ==================== -->
 <section class="promo-hero" aria-label="Lanzamiento Kallpa">
@@ -32,8 +89,15 @@
         <h3 class="promo-card__name">TRIPACK</h3>
         <div class="promo-card__body">
           <div class="promo-card__pricing">
-            <span class="promo-card__normal">PRECIO NORMAL<s>S/ 23.70</s></span>
-            <span class="promo-card__launch"><small>PRECIO DE LANZAMIENTO</small>S/ 19.90</span>
+            {%- if tri_variant != nil -%}
+              {%- if tri_normal > tri_variant.price -%}
+                <span class="promo-card__normal">PRECIO NORMAL<s>{{ tri_normal | money }}</s></span>
+              {%- endif -%}
+              <span class="promo-card__launch"><small>PRECIO DE LANZAMIENTO</small>{{ tri_variant.price | money }}</span>
+            {%- else -%}
+              <span class="promo-card__normal">PRECIO NORMAL<s>S/ 23.70</s></span>
+              <span class="promo-card__launch"><small>PRECIO DE LANZAMIENTO</small>S/ 19.90</span>
+            {%- endif -%}
           </div>
           <div class="promo-card__tripack" aria-hidden="true">
             <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="" loading="lazy">
@@ -41,7 +105,12 @@
             <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="" loading="lazy">
           </div>
         </div>
-        <button type="button" class="promo-btn" onclick="addPackToKallpaCart('promo-tripack', 'Tripack KALPA Cold Brew (3 latas)', 19.90, 1)">APROVECHAR <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.3"></circle><circle cx="18" cy="20" r="1.3"></circle><path d="M2 3h3l2.6 12.2a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 7H6"></path></svg></button>
+        <button type="button" class="promo-btn"
+          {% if tri_variant != nil %}
+            onclick="addPromoVariant(this, {{ tri_variant.id }})" {% unless tri_variant.available %}disabled{% endunless %}
+          {% else %}
+            onclick="addPackToKallpaCart('promo-tripack', 'Tripack KALPA Cold Brew (3 latas)', 19.90, 1)"
+          {% endif %}>{% if tri_variant != nil and tri_variant.available == false %}AGOTADO{% else %}APROVECHAR{% endif %} <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.3"></circle><circle cx="18" cy="20" r="1.3"></circle><path d="M2 3h3l2.6 12.2a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 7H6"></path></svg></button>
       </article>
 
       <article class="promo-card">
@@ -49,12 +118,24 @@
         <h3 class="promo-card__name">12-PACK</h3>
         <div class="promo-card__body">
           <div class="promo-card__pricing">
-            <span class="promo-card__normal">PRECIO NORMAL<s>S/ 94.80</s></span>
-            <span class="promo-card__launch"><small>PRECIO DE LANZAMIENTO</small>S/ 79.90</span>
+            {%- if twelve_variant != nil -%}
+              {%- if twelve_normal > twelve_variant.price -%}
+                <span class="promo-card__normal">PRECIO NORMAL<s>{{ twelve_normal | money }}</s></span>
+              {%- endif -%}
+              <span class="promo-card__launch"><small>PRECIO DE LANZAMIENTO</small>{{ twelve_variant.price | money }}</span>
+            {%- else -%}
+              <span class="promo-card__normal">PRECIO NORMAL<s>S/ 94.80</s></span>
+              <span class="promo-card__launch"><small>PRECIO DE LANZAMIENTO</small>S/ 79.90</span>
+            {%- endif -%}
           </div>
           <img src="{{ 'promo-pack12.webp' | asset_url }}" alt="Pack de 12 latas KALPA Cold Brew" class="promo-card__pack12" loading="lazy">
         </div>
-        <button type="button" class="promo-btn" onclick="addPackToKallpaCart('promo-12pack', '12-Pack KALPA Cold Brew (12 latas)', 79.90, 1)">APROVECHAR <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.3"></circle><circle cx="18" cy="20" r="1.3"></circle><path d="M2 3h3l2.6 12.2a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 7H6"></path></svg></button>
+        <button type="button" class="promo-btn"
+          {% if twelve_variant != nil %}
+            onclick="addPromoVariant(this, {{ twelve_variant.id }})" {% unless twelve_variant.available %}disabled{% endunless %}
+          {% else %}
+            onclick="addPackToKallpaCart('promo-12pack', '12-Pack KALPA Cold Brew (12 latas)', 79.90, 1)"
+          {% endif %}>{% if twelve_variant != nil and twelve_variant.available == false %}AGOTADO{% else %}APROVECHAR{% endif %} <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.3"></circle><circle cx="18" cy="20" r="1.3"></circle><path d="M2 3h3l2.6 12.2a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 7H6"></path></svg></button>
       </article>
 
       {%- assign promo_offer = nil -%}
@@ -111,10 +192,46 @@
   </div>
 </section>
 
+<script>
+  function addPromoVariant(btn, variantId) {
+    if (btn.disabled || typeof window.addVariantToKallpaCart !== 'function') return;
+    btn.disabled = true;
+    window.addVariantToKallpaCart(variantId, 1)
+      .catch(() => {})
+      .finally(() => { btn.disabled = false; });
+  }
+</script>
+
 {% schema %}
 {
   "name": "Promociones",
-  "settings": [],
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Producto de las ofertas",
+      "info": "Tripack y 12-Pack toman precio y stock de las variantes de este producto."
+    },
+    {
+      "type": "text",
+      "id": "product_handle",
+      "label": "Handle si no eliges producto",
+      "default": "kalpa-cold-brew"
+    },
+    {
+      "type": "text",
+      "id": "tripack_match",
+      "label": "Nombre de la variante Tripack contiene",
+      "info": "Separa opciones con comas. Se ignoran mayúsculas y espacios: \"Pack x 3\" coincide con x3.",
+      "default": "x3,tripack,3latas"
+    },
+    {
+      "type": "text",
+      "id": "pack12_match",
+      "label": "Nombre de la variante 12-Pack contiene",
+      "default": "x12,12pack,12latas"
+    }
+  ],
   "presets": [
     {
       "name": "Promociones"
