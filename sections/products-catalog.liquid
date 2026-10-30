@@ -3,6 +3,9 @@
   Catálogo Completo Modular KALPA (Hero, Filtros, Productos Destacados y Cuadrícula Dinámica)
 {%- endcomment -%}
 
+{%- comment -%} En la plantilla genérica de páginas (page.json) solo se muestra en la página Productos {%- endcomment -%}
+{%- if template.name != 'page' or page.handle contains 'producto' -%}
+
 <!-- 1. HERO DE PRODUCTOS -->
 <section class="kallpa-products-hero" aria-label="Catálogo de Productos">
   <div class="products-hero__bg-layer" aria-hidden="true"></div>
@@ -279,6 +282,8 @@
     console.log('Sort products:', val);
   }
 </script>
+
+{%- endif -%}
 
 {% schema %}
 {
