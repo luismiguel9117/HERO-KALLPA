@@ -3,8 +3,9 @@
     "main": {
       "type": "kallpa-tienda",
       "settings": {
-        "title": "TIENDA OFICIAL KALPA",
-        "subtitle": "Toda nuestra línea de Cold Brew listo para tomar y Café Molido de especialidad. Elige tu presentación favorita y recíbela directo en tu puerta."
+        "title_dark": "TIENDA",
+        "title_gold": "KALLPA",
+        "subtitle": "Energía de los Andes, en cada formato."
       }
     }
   },
