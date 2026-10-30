@@ -1,224 +1,186 @@
 {%- comment -%}
   SECCIÓN: main-product.liquid
-  Página de Detalle de Producto KALPA (Galería, Selector Dinámico, Nutrición, Cross-sell & FAQs)
+  Página de Detalle de Producto KALPA: escenario a sangre con galería, compra, ficha (qué lleva, cómo tomarla, nutrición), cross-sell y FAQs
 {%- endcomment -%}
 
 {%- liquid
-  assign title_display = section.settings.product_title | default: product.title | default: 'KALPA COLD BREW'
-  assign desc_display = section.settings.product_desc | default: product.description | strip_html | default: 'Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural por lata. Listo para tomar, en cualquier momento y lugar.'
-  assign cat_display = section.settings.category_tag | default: 'COLD BREW · LATA 355 ML'
-  assign badge_display = section.settings.badge_text | default: '355 ML — LATA'
+  assign title_display = section.settings.product_title | default: product.title | default: 'KALLPA COLD BREW'
+  assign title_line_1 = section.settings.title_line_1 | default: 'KALLPA'
+  assign title_line_2 = section.settings.title_line_2 | default: 'COLD BREW'
+  assign desc_display = section.settings.product_desc | default: 'Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural por lata. Listo para tomar, en cualquier momento y lugar.'
+  assign cat_display = section.settings.category_tag | default: 'BEBIDA FUNCIONAL A BASE DE CAFÉ'
+  assign badge_display = section.settings.badge_text | default: '355 mL — LATA'
 
   assign p_unit = section.settings.price_unit | default: '7.90'
-  assign p_tripack = section.settings.price_tripack | default: '35.70'
   assign p_sixpack = section.settings.price_sixpack | default: '39.90'
-  assign p_12pack = section.settings.price_12pack | default: '142.80'
+  assign p_six_regular = p_unit | times: 6
+  assign p_six_off = p_sixpack | divided_by: p_six_regular | times: 100 | minus: 100 | round | abs
+
+  if section.settings.main_image != blank
+    assign stage_url = section.settings.main_image | image_url: width: 1600
+  else
+    assign stage_url = 'nosotros-hero-bg-hd.webp' | asset_url
+  endif
+  if section.settings.thumb_1_image != blank
+    assign t1_url = section.settings.thumb_1_image | image_url: width: 1200
+  else
+    assign t1_url = 'kalpa-can-original.webp' | asset_url
+  endif
+  if section.settings.thumb_2_image != blank
+    assign t2_url = section.settings.thumb_2_image | image_url: width: 1200
+  else
+    assign t2_url = 'kalpa-original-label.webp' | asset_url
+  endif
+  assign t3_url = 'nos-pruebala-splash.webp' | asset_url
+  assign t4_url = 'product-card-250g.webp' | asset_url
 -%}
 
-<!-- 1. BREADCRUMB -->
-<div class="product-breadcrumb">
-  <div class="page-width">
-    <a href="{{ routes.root_url }}">Inicio</a>
-    <span class="sep">/</span>
-    <a href="{{ routes.all_products_collection_url }}">Productos</a>
-    <span class="sep">/</span>
-    <span style="color:#ffffff;">{{ title_display }}</span>
-  </div>
-</div>
+<section class="pdp" aria-label="{{ title_display }}">
 
-<!-- 2. ESCENARIO PRINCIPAL DEL PRODUCTO -->
-<section class="product-showcase-section">
-  <div class="page-width">
-    <div class="product-showcase-grid">
+  <!-- 1. ESCENARIO + COMPRA -->
+  <div class="pdp-hero">
 
-      <!-- Columna Izquierda: Galería Vertical + Gran Escenario con Patrón Andino -->
-      <div class="product-gallery-layout">
-        <!-- Miniaturas Verticales -->
-        <div class="product-thumbnails-col">
-          {%- if section.settings.thumb_1_image != blank -%}
-            {%- assign t1_url = section.settings.thumb_1_image | image_url: width: 600 -%}
-          {%- else -%}
-            {%- assign t1_url = 'kalpa-can-original.webp' | asset_url -%}
-          {%- endif -%}
+    <!-- Escenario a sangre con galería vertical -->
+    <div class="pdp-stage" id="product-main-card">
+      <img src="{{ stage_url }}" alt="{{ title_display }}" class="pdp-stage__img" id="main-product-img" width="1600" height="900" fetchpriority="high">
+      <div class="pdp-stage__veil" aria-hidden="true"></div>
 
-          {%- if section.settings.thumb_2_image != blank -%}
-            {%- assign t2_url = section.settings.thumb_2_image | image_url: width: 600 -%}
-          {%- else -%}
-            {%- assign t2_url = 'kalpa-original-label.webp' | asset_url -%}
-          {%- endif -%}
+      <svg class="pdp-stage__pattern" viewBox="0 0 120 360" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+        {%- for y in (0..2) -%}
+          {%- assign cy = y | times: 120 | plus: 60 -%}
+          <g transform="translate(60 {{ cy }})" fill="none" stroke="currentColor">
+            <path d="M0 -58 L58 0 L0 58 L-58 0 Z" stroke-width="7"/>
+            <path d="M0 -38 L38 0 L0 38 L-38 0 Z" stroke-width="6"/>
+            <path d="M0 -18 L18 0 L0 18 L-18 0 Z" fill="currentColor" stroke="none"/>
+          </g>
+        {%- endfor -%}
+      </svg>
 
-          <button type="button" class="product-thumb-btn is-active" onclick="switchMainImage('{{ t1_url }}', this)" aria-label="Vista frontal">
-            <img src="{{ t1_url }}" alt="Vista Frontal" class="product-thumb-img" width="65" height="80">
-          </button>
-          <button type="button" class="product-thumb-btn" data-fit="cover" onclick="switchMainImage('{{ t2_url }}', this)" aria-label="Etiqueta completa">
-            <img src="{{ t2_url }}" alt="Etiqueta completa" class="product-thumb-img product-thumb-img--cover" width="65" height="80">
-          </button>
-        </div>
-
-        <!-- Escenario Principal con Roca Volcánica, Hielos y Granos -->
-        <div class="product-main-stage" id="product-main-card">
-          <div class="catalog-card__pattern"></div>
-          <div class="catalog-card__stage">
-            {%- if section.settings.main_image != blank -%}
-              <img src="{{ section.settings.main_image | image_url: width: 800 }}" alt="{{ title_display }}" class="catalog-card__can" id="main-product-img" width="380" height="660">
-            {%- elsif product.featured_image != blank -%}
-              <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ title_display }}" class="catalog-card__can" id="main-product-img" width="380" height="660">
-            {%- else -%}
-              <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="{{ title_display }}" class="catalog-card__can" id="main-product-img" width="380" height="660">
-            {%- endif -%}
-          </div>
-          <span class="product-stage-badge">{{ badge_display }}</span>
-        </div>
-      </div>
-
-      <!-- Columna Derecha: Configuración, Opciones y Botón de Compra -->
-      <div class="product-details-col">
-        <span class="product-cat-tag">{{ cat_display }}</span>
-        <h1 class="product-main-title">{{ title_display }}</h1>
-        <p class="product-lead-desc">{{ desc_display }}</p>
-
-        <!-- Bloque de Precio Dinámico -->
-        <div class="product-price-block">
-          <span class="product-price-val" id="display-price">S/ {{ p_unit }}</span>
-          <span class="product-price-sub" id="display-price-sub">S/ {{ p_unit }} por lata</span>
-        </div>
-
-        <!-- Selector de Cantidad (Packs) -->
-        <div class="selector-group">
-          <span class="selector-group-label">CANTIDAD</span>
-          <div class="pack-selector-grid">
-            <button type="button" class="pack-card-btn is-active" onclick="selectPack(1, {{ p_unit }}, 'Unidad', this)">
-              <span class="pack-card-main">
-                <span class="pack-card-name">Unidad</span>
-                <span class="pack-card-meta">1 lata · 355 ml</span>
-              </span>
-              <span class="pack-card-price">S/ {{ p_unit }}</span>
-            </button>
-            <button type="button" class="pack-card-btn" onclick="selectPack(6, {{ p_sixpack }}, 'Pack x 6', this)">
-              <span class="pack-card-save">Ahorra 15%</span>
-              <span class="pack-card-main">
-                <span class="pack-card-name">Pack x 6</span>
-                <span class="pack-card-meta">6 latas de 355 ml</span>
-              </span>
-              <span class="pack-card-price"><s>S/ {{ p_unit | times: 6 | round: 2 }}</s> S/ {{ p_sixpack }}</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Botón de Compra / Agregar al Carrito -->
-        <button type="button" class="btn-product-add" id="btn-add-main" onclick="handleAddToCart()">
-          AGREGAR AL CARRITO &ndash; S/ {{ p_unit }}
+      <div class="pdp-thumbs" aria-label="Galería del producto">
+        <button type="button" class="pdp-thumb is-active" onclick="switchMainImage('{{ stage_url }}', this)" aria-label="Escena principal">
+          <img src="{{ stage_url }}" alt="" width="78" height="92" loading="lazy">
         </button>
-
-        <!-- Sellos de Entrega y Confianza -->
-        <div class="product-trust-row">
-          <div class="product-trust-item">
-            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-gold);">
-              <rect x="1" y="3" width="15" height="13"></rect>
-              <polygon points="16 8 20 8 23 11 23 16 16 8"></polygon>
-              <circle cx="5.5" cy="18.5" r="2.5"></circle>
-              <circle cx="18.5" cy="18.5" r="2.5"></circle>
-            </svg>
-            <span>Envíos a todo el Perú</span>
-          </div>
-          <div class="product-trust-item">
-            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-gold);">
-              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <path d="M16 10a4 4 0 0 1-8 0"></path>
-            </svg>
-            <span>También disponible en Rappi Turbo</span>
-          </div>
-        </div>
-
-        <!-- 3 Sellos de Beneficios Clave -->
-        <div class="product-features-ribbon">
-          <span class="product-feature-tag"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Energía limpia</span>
-          <span class="product-feature-tag"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line></svg> Sin azúcar</span>
-          <span class="product-feature-tag"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 3 4 8 5-5 5 11H2L8 3z"></path></svg> Café de altura</span>
-        </div>
-
+        <button type="button" class="pdp-thumb" data-fit="contain" onclick="switchMainImage('{{ t1_url }}', this)" aria-label="Lata de frente">
+          <img src="{{ t1_url }}" alt="" width="78" height="92" loading="lazy">
+        </button>
+        <button type="button" class="pdp-thumb" onclick="switchMainImage('{{ t2_url }}', this)" aria-label="Etiqueta completa">
+          <img src="{{ t2_url }}" alt="" width="78" height="92" loading="lazy">
+        </button>
+        {%- if section.settings.video_url != blank -%}
+          <button type="button" class="pdp-thumb pdp-thumb--video" onclick="openProductVideo('{{ section.settings.video_url }}')" aria-label="Ver video">
+            <img src="{{ t3_url }}" alt="" width="78" height="92" loading="lazy">
+            <span class="pdp-thumb__play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </button>
+        {%- else -%}
+          <button type="button" class="pdp-thumb" onclick="switchMainImage('{{ t3_url }}', this)" aria-label="Con hielo y granos">
+            <img src="{{ t3_url }}" alt="" width="78" height="92" loading="lazy">
+          </button>
+        {%- endif -%}
+        <button type="button" class="pdp-thumb" onclick="switchMainImage('{{ t4_url }}', this)" aria-label="Lata entre granos">
+          <img src="{{ t4_url }}" alt="" width="78" height="92" loading="lazy">
+        </button>
       </div>
 
+      <span class="pdp-stage__badge">{{ badge_display }}</span>
+    </div>
+
+    <!-- Columna de compra -->
+    <div class="pdp-info">
+      <nav class="pdp-crumbs" aria-label="Ruta">
+        <a href="{{ routes.root_url }}">Inicio</a>
+        <span aria-hidden="true">›</span>
+        <a href="{{ routes.all_products_collection_url }}">Productos</a>
+        <span aria-hidden="true">›</span>
+        <span>{{ title_display }}</span>
+      </nav>
+
+      <span class="pdp-eyebrow">{{ cat_display }}</span>
+      <h1 class="pdp-title">
+        <span>{{ title_line_1 }}</span>
+        <span class="pdp-title__gold">{{ title_line_2 }}</span>
+      </h1>
+      <p class="pdp-lead">{{ desc_display }}</p>
+
+      <ul class="pdp-features">
+        <li><span class="pdp-features__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>Energía natural</li>
+        <li><span class="pdp-features__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span>Sin azúcar</li>
+        <li><span class="pdp-features__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 11H2L8 3z"/></svg></span>Café de los Andes</li>
+        <li><span class="pdp-features__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>0 calorías</li>
+      </ul>
+
+      <div class="pdp-group">
+        <span class="pdp-label">PRESENTACIÓN</span>
+        <div class="pdp-packs" role="radiogroup" aria-label="Presentación">
+          <button type="button" role="radio" aria-checked="true" class="pdp-pack is-active" onclick="selectPack(1, {{ p_unit }}, 'Unidad', this)">
+            <span class="pdp-pack__radio" aria-hidden="true"></span>
+            <span class="pdp-pack__main"><strong>Unidad</strong><small>1 lata · 355 mL</small></span>
+            <span class="pdp-pack__price">S/ {{ p_unit }}</span>
+          </button>
+          <button type="button" role="radio" aria-checked="false" class="pdp-pack" onclick="selectPack(6, {{ p_sixpack }}, 'Pack x 6', this)">
+            {%- if p_six_off > 0 -%}<span class="pdp-pack__save">-{{ p_six_off }}%</span>{%- endif -%}
+            <span class="pdp-pack__radio" aria-hidden="true"></span>
+            <span class="pdp-pack__main"><strong>Pack x 6</strong><small>6 latas de 355 mL</small></span>
+            <span class="pdp-pack__price">S/ {{ p_sixpack }}<s>S/ {{ p_six_regular | times: 100 | round | money_without_currency }}</s></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="pdp-group">
+        <span class="pdp-label">CANTIDAD</span>
+        <div class="pdp-buy">
+          <div class="pdp-qty">
+            <button type="button" onclick="changeQty(-1)" aria-label="Quitar uno">−</button>
+            <span id="pdp-qty-val" aria-live="polite">1</span>
+            <button type="button" onclick="changeQty(1)" aria-label="Agregar uno">+</button>
+          </div>
+          <button type="button" class="pdp-add" id="btn-add-main" onclick="handleAddToCart()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+            <span id="btn-add-label">AGREGAR AL CARRITO – S/ {{ p_unit }}</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="pdp-trust">
+        <div class="pdp-trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>Envíos a todo el Perú</div>
+        <div class="pdp-trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1-5h16l1 5"/><path d="M4 9v11h16V9"/><path d="M3 9h18"/><path d="M9 20v-6h6v6"/></svg>También disponible en Rappi Turbo</div>
+        <div class="pdp-trust__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>Compra segura y garantizada</div>
+      </div>
     </div>
   </div>
-</section>
 
-<!-- 3. QUÉ LLEVA & INFORMACIÓN NUTRICIONAL -->
-<section class="product-specs-section">
-  <div class="page-width">
-    <div class="product-specs-grid">
-
-      <!-- Columna Izquierda: Qué Lleva, Cómo Tomarla y Advertencia -->
-      <div class="product-info-block">
-        <div>
-          <h3 class="specs-block-title">QUÉ LLEVA</h3>
-          <h4 class="specs-item-header">{{ section.settings.specs_what | default: 'Café cold brew listo para tomar, macerado en frío durante 24 horas.' }}</h4>
-          <p class="specs-item-body">
-            <strong>Ingredientes:</strong> {{ section.settings.specs_ingredients | default: 'agua tratada, café de especialidad de Ayacucho y stevia natural.' }}<br>
-            <strong>Contenido neto:</strong> {{ section.settings.specs_net_content | default: '355 ml.' }}
-          </p>
-        </div>
-
-        <div>
-          <h3 class="specs-block-title">CÓMO TOMARLA</h3>
-          <p class="specs-item-body">
-            {{ section.settings.specs_how_to_drink | default: 'Tómala siempre bien helada. Combínala como quieras: sola directo de la lata o servida con hielo y rodaja de cítrico. Después de abrir el envase, refrigérala.' }}
-          </p>
-        </div>
-
-        <!-- Tarjeta de Advertencia Alto en Cafeína -->
-        <div class="specs-warning-card">
-          <div class="specs-warning-title">{{ section.settings.warning_title | default: 'ALTO EN CAFEÍNA' }}</div>
-          <p class="specs-warning-text">
-            {{ section.settings.warning_text | default: 'No recomendado para niños, mujeres embarazadas o personas con extrema sensibilidad a la cafeína.' }}
-          </p>
-        </div>
+  <!-- 2. FICHA: QUÉ LLEVA · CÓMO TOMARLA · NUTRICIÓN -->
+  <div class="pdp-specs">
+    <div class="pdp-specs__grid">
+      <div class="pdp-specs__col">
+        <h3 class="pdp-specs__title">QUÉ LLEVA</h3>
+        <p class="pdp-specs__headline">{{ section.settings.specs_what | default: 'Café cold brew listo para tomar, macerado en frío durante 24 horas.' }}</p>
+        <p class="pdp-specs__text"><strong>Ingredientes:</strong> {{ section.settings.specs_ingredients | default: 'agua tratada, café de especialidad de Ayacucho y stevia natural.' }}</p>
+        <p class="pdp-specs__warning"><strong>{{ section.settings.warning_title | default: 'ALTO EN CAFEÍNA' }}.</strong> {{ section.settings.warning_text | default: 'No recomendado para niños, mujeres embarazadas o personas con extrema sensibilidad a la cafeína.' }}</p>
       </div>
 
-      <!-- Columna Derecha: Tabla de Información Nutricional -->
-      <div class="product-info-block">
-        <h3 class="specs-block-title">INFORMACIÓN NUTRICIONAL</h3>
-        <table class="nutrition-table">
-          <thead>
-            <tr>
-              <th>Nutriente</th>
-              <th>Por porción ({{ section.settings.specs_net_content | default: '355 ml' }})</th>
-            </tr>
-          </thead>
+      <div class="pdp-specs__col">
+        <h3 class="pdp-specs__title">CÓMO TOMARLA</h3>
+        <ul class="pdp-howto">
+          <li><span class="pdp-howto__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="22"/><line x1="3.3" y1="7" x2="20.7" y2="17"/><line x1="3.3" y1="17" x2="20.7" y2="7"/><polyline points="9 4 12 6 15 4"/><polyline points="9 20 12 18 15 20"/></svg></span>Tómala bien helada</li>
+          <li><span class="pdp-howto__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><line x1="7" y1="7" x2="17" y2="7"/><line x1="7" y1="17" x2="17" y2="17"/></svg></span>Sola o con hielo</li>
+          <li><span class="pdp-howto__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span>En cualquier momento del día</li>
+        </ul>
+      </div>
+
+      <div class="pdp-specs__col">
+        <h3 class="pdp-specs__title">INFORMACIÓN NUTRICIONAL</h3>
+        <table class="pdp-nutrition">
+          <thead><tr><th>Nutriente</th><th>Por porción ({{ section.settings.specs_net_content | default: '355 mL' }})</th></tr></thead>
           <tbody>
-            <tr>
-              <td>Energía</td>
-              <td>0 kcal / 0 kJ</td>
-            </tr>
-            <tr>
-              <td>Grasas totales</td>
-              <td>0 g</td>
-            </tr>
-            <tr>
-              <td>Carbohidratos totales</td>
-              <td>0 g</td>
-            </tr>
-            <tr>
-              <td>Azúcares añadidos</td>
-              <td>0 g</td>
-            </tr>
-            <tr>
-              <td>Proteínas</td>
-              <td>0 g</td>
-            </tr>
-            <tr>
-              <td>Sodio</td>
-              <td>5 mg</td>
-            </tr>
-            <tr>
-              <td>Cafeína</td>
-              <td>280 mg</td>
-            </tr>
+            <tr><td>Energía</td><td>0 kcal / 0 kJ</td></tr>
+            <tr><td>Grasas totales</td><td>0 g</td></tr>
+            <tr><td>Carbohidratos totales</td><td>0 g</td></tr>
+            <tr><td>Azúcares añadidos</td><td>0 g</td></tr>
+            <tr><td>Proteína</td><td>0 g</td></tr>
+            <tr><td>Cafeína</td><td>280 mg</td></tr>
           </tbody>
         </table>
       </div>
-
     </div>
   </div>
 </section>
@@ -328,64 +290,56 @@
     var img = document.getElementById('main-product-img');
     if (img) {
       img.src = src;
-      img.classList.toggle('is-cover', btn.getAttribute('data-fit') === 'cover');
+      img.classList.toggle('is-contain', btn.getAttribute('data-fit') === 'contain');
     }
-    var all = document.querySelectorAll('.product-thumb-btn');
-    all.forEach(function(b) { b.classList.remove('is-active'); });
+    document.querySelectorAll('.pdp-thumb').forEach(function(b) { b.classList.remove('is-active'); });
     btn.classList.add('is-active');
   }
 
-  var currentFlavor = '{{ section.settings.flavor_1_name | default: 'Original' }}';
+  function openProductVideo(url) {
+    if (typeof window.openReelModal === 'function') {
+      window.openReelModal(url);
+    } else {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  }
+
   var currentPackQty = 1;
   var currentPackPrice = parseFloat('{{ p_unit }}') || 7.90;
   var currentPackName = 'Unidad';
+  var currentCount = 1;
 
-  function selectFlavor(f, btn) {
-    currentFlavor = f;
-    var all = document.querySelectorAll('.flavor-pill');
-    all.forEach(function(b) { b.classList.remove('is-active'); });
-    btn.classList.add('is-active');
-    
-    var card = document.getElementById('product-main-card');
-    if (card) {
-      if (f.toLowerCase().indexOf('orange') !== -1) {
-        card.style.background = 'radial-gradient(circle at 50% 50%, #e6751c 0%, #b8540c 100%)';
-      } else {
-        card.style.background = 'radial-gradient(circle at 50% 50%, #f6c823 0%, #d89f0a 100%)';
-      }
-    }
+  function updateAddLabel() {
+    var label = document.getElementById('btn-add-label');
+    if (label) label.textContent = 'AGREGAR AL CARRITO – S/ ' + (currentPackPrice * currentCount).toFixed(2);
   }
 
   function selectPack(qty, price, name, btn) {
     currentPackQty = qty;
     currentPackPrice = price;
     currentPackName = name;
-    var all = document.querySelectorAll('.pack-card-btn');
-    all.forEach(function(b) { b.classList.remove('is-active'); });
+    document.querySelectorAll('.pdp-pack').forEach(function(b) {
+      b.classList.remove('is-active');
+      b.setAttribute('aria-checked', 'false');
+    });
     btn.classList.add('is-active');
+    btn.setAttribute('aria-checked', 'true');
+    updateAddLabel();
+  }
 
-    var pVal = document.getElementById('display-price');
-    var pSub = document.getElementById('display-price-sub');
-    var btnAdd = document.getElementById('btn-add-main');
-    if (pVal) pVal.textContent = 'S/ ' + price.toFixed(2);
-    if (pSub) {
-      var perCan = (price / qty).toFixed(2);
-      if (qty === 1) {
-        pSub.textContent = 'S/ ' + perCan + ' por lata';
-      } else {
-        pSub.textContent = qty + ' latas · S/ ' + perCan + ' por lata';
-      }
-    }
-    if (btnAdd) {
-      btnAdd.textContent = 'AGREGAR AL CARRITO \u2013 S/ ' + price.toFixed(2);
-    }
+  function changeQty(delta) {
+    currentCount = Math.max(1, Math.min(99, currentCount + delta));
+    var el = document.getElementById('pdp-qty-val');
+    if (el) el.textContent = currentCount;
+    updateAddLabel();
   }
 
   function handleAddToCart() {
-    var title = '{{ title_display }} ' + currentFlavor + ' (' + currentPackName + ')';
+    var title = '{{ title_display | escape }} (' + currentPackName + (currentCount > 1 ? ' x' + currentCount : '') + ')';
     var vId = {{ product.selected_or_first_available_variant.id | default: 'null' }};
+    var units = currentPackQty * currentCount;
     if (typeof window.addPackToKallpaCart === 'function') {
-      window.addPackToKallpaCart('pdp-' + currentFlavor.toLowerCase() + '-' + currentPackQty, title, currentPackPrice, currentPackQty, vId);
+      window.addPackToKallpaCart('pdp-' + currentPackQty, title, currentPackPrice * currentCount, units, vId);
     } else if (typeof window.openKallpaCart === 'function') {
       window.openKallpaCart();
     }
@@ -420,6 +374,18 @@
       "default": "KALPA COLD BREW"
     },
     {
+      "type": "text",
+      "id": "title_line_1",
+      "label": "Título línea 1 (blanco)",
+      "default": "KALLPA"
+    },
+    {
+      "type": "text",
+      "id": "title_line_2",
+      "label": "Título línea 2 (dorado)",
+      "default": "COLD BREW"
+    },
+    {
       "type": "textarea",
       "id": "product_desc",
       "label": "Descripción Principal",
@@ -439,6 +405,12 @@
       "type": "image_picker",
       "id": "main_image",
       "label": "Imagen Principal en Escenario"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video del producto (enlace de Instagram o MP4)",
+      "info": "Si lo completas, una miniatura de la galería abre el video"
     },
     {
       "type": "image_picker",
