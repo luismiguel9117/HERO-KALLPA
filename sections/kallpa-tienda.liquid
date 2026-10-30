@@ -1,412 +1,359 @@
 {%- comment -%}
   SECCIÓN: kallpa-tienda.liquid
-  Catálogo E-commerce Oficial KALPA con Filtros, Descuentos, Garantía y Carrito
+  Catálogo E-commerce Oficial KALPA. Todo sale del admin de Shopify:
+  productos de la colección, variantes, precios, precio comparado (descuento),
+  stock (Agotado) e imágenes. Los filtros se arman con el "Tipo de producto".
+  Insignias opcionales: etiqueta del producto con formato "badge:Más vendido".
 {%- endcomment -%}
 
-{{ 'tienda.css' | asset_url | stylesheet_tag }}
+{{ 'kallpa-shop.css' | asset_url | stylesheet_tag }}
 
-<!-- HERO BANNER DE TIENDA -->
-<section class="tienda-hero-banner">
-  <div class="page-width tienda-hero__container">
-    <nav class="tienda-breadcrumb" aria-label="Navegación">
+{%- liquid
+  assign shop_collection = collection
+  if shop_collection == blank
+    assign shop_collection = section.settings.collection
+  endif
+  if shop_collection == blank
+    assign shop_collection = collections['all']
+  endif
+-%}
+
+<!-- HERO DE TIENDA -->
+<section class="kshop-hero">
+  <div class="page-width">
+    <nav class="kshop-breadcrumb" aria-label="Navegación">
       <a href="{{ routes.root_url }}">Inicio</a>
-      <span>/</span>
-      <span style="color: #f5ba2c; font-weight: 600;">Tienda</span>
+      <span aria-hidden="true">/</span>
+      <span class="is-current">Tienda</span>
     </nav>
-
-    <h1 class="tienda-hero__title">
-      {{ section.settings.title | default: 'TIENDA OFICIAL KALPA' }}
-    </h1>
-    <p class="tienda-hero__subtitle">
-      {{ section.settings.subtitle | default: 'Toda nuestra línea de Cold Brew listo para tomar y Café Molido de especialidad. Elige tu presentación favorita y recíbela directo en tu puerta.' }}
-    </p>
+    <h1 class="kshop-hero__title">{{ section.settings.title | default: 'TIENDA OFICIAL KALPA' }}</h1>
+    {%- if section.settings.subtitle != blank -%}
+      <p class="kshop-hero__subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
   </div>
 </section>
 
-<!-- BARRA DE FILTROS Y CONTROLES -->
-<section class="tienda-controls-bar" id="catalogo">
-  <div class="page-width tienda-controls__inner">
-    
-    <!-- Filtros a la Izquierda -->
-    <div class="tienda-filters-left">
-      <button type="button" class="filter-dropdown-btn is-active" data-cat="all" onclick="filterShop('all', this)">
-        <span>Todos los productos</span>
-      </button>
-      <button type="button" class="filter-dropdown-btn" data-cat="cold-brew" onclick="filterShop('cold-brew', this)">
-        <span>Cold Brew 355 ml</span>
-      </button>
-      <button type="button" class="filter-dropdown-btn" data-cat="cafe-molido" onclick="filterShop('cafe-molido', this)">
-        <span>Café Molido</span>
-      </button>
-      <button type="button" class="filter-dropdown-btn" data-cat="packs" onclick="filterShop('packs', this)">
-        <span>Packs de Ahorro</span>
-      </button>
+{%- paginate shop_collection.products by section.settings.per_page -%}
+
+  {%- liquid
+    assign product_types = ''
+    assign has_sale = false
+    for p in shop_collection.products
+      if p.type != blank
+        assign type_key = p.type | handleize
+        unless product_types contains type_key
+          assign product_types = product_types | append: p.type | append: '|' | append: type_key | append: ';;'
+        endunless
+      endif
+      if p.compare_at_price > p.price
+        assign has_sale = true
+      endif
+    endfor
+    assign product_types = product_types | split: ';;'
+  -%}
+
+  <!-- BARRA DE FILTROS Y CONTROLES -->
+  <section class="kshop-toolbar" id="catalogo">
+    <div class="page-width kshop-toolbar__inner">
+      <div class="kshop-filters" role="group" aria-label="Filtrar productos">
+        <button type="button" class="kshop-chip is-active" data-filter="all">Todos</button>
+        {%- for entry in product_types -%}
+          {%- assign parts = entry | split: '|' -%}
+          {%- if parts.size == 2 -%}
+            <button type="button" class="kshop-chip" data-filter="type-{{ parts[1] }}">{{ parts[0] }}</button>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if has_sale -%}
+          <button type="button" class="kshop-chip" data-filter="on-sale">En oferta</button>
+        {%- endif -%}
+        <label class="kshop-toggle">
+          <input type="checkbox" data-available-only>
+          <span>Solo disponibles</span>
+        </label>
+      </div>
+
+      <div class="kshop-controls">
+        <span class="kshop-count" data-count>{{ shop_collection.products_count }} {% if shop_collection.products_count == 1 %}artículo{% else %}artículos{% endif %}</span>
+        <div class="kshop-sort">
+          <select aria-label="Ordenar productos" data-sort>
+            <option value="featured">Destacados</option>
+            <option value="price-asc">Precio: menor a mayor</option>
+            <option value="price-desc">Precio: mayor a menor</option>
+            <option value="discount">Mayor descuento</option>
+            <option value="name">Nombre: A - Z</option>
+          </select>
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+        <div class="kshop-density" role="group" aria-label="Tamaño de la cuadrícula">
+          <button type="button" class="is-active" data-density="comfy" aria-label="Vista amplia" aria-pressed="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1.5"/><rect x="9" y="1" width="6" height="6" rx="1.5"/><rect x="1" y="9" width="6" height="6" rx="1.5"/><rect x="9" y="9" width="6" height="6" rx="1.5"/></svg>
+          </button>
+          <button type="button" data-density="compact" aria-label="Vista compacta" aria-pressed="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="2.5" cy="2.5" r="1.5"/><circle cx="8" cy="2.5" r="1.5"/><circle cx="13.5" cy="2.5" r="1.5"/><circle cx="2.5" cy="8" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="13.5" cy="8" r="1.5"/><circle cx="2.5" cy="13.5" r="1.5"/><circle cx="8" cy="13.5" r="1.5"/><circle cx="13.5" cy="13.5" r="1.5"/></svg>
+          </button>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <!-- Controles a la Derecha -->
-    <div class="tienda-controls-right">
-      <span class="tienda-items-count" id="tienda-items-count">5 artículos</span>
-      
-      <div class="tienda-sort-wrapper">
-        <select class="tienda-sort-select" aria-label="Ordenar productos" onchange="sortShop(this.value)">
-          <option value="popular">Más vendidos</option>
-          <option value="price-asc">Precio: menor a mayor</option>
-          <option value="price-desc">Precio: mayor a menor</option>
-          <option value="name">Nombre: A - Z</option>
-        </select>
-        <svg class="tienda-sort-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="6 9 12 15 18 9"></polyline>
-        </svg>
-      </div>
-    </div>
+  <!-- CUADRÍCULA DE PRODUCTOS -->
+  <main class="page-width kshop-main">
+    {%- if shop_collection.products.size > 0 -%}
+      <div class="kshop-grid" data-grid data-density="comfy">
+        {%- for product in shop_collection.products -%}
+          {%- liquid
+            assign variant = product.selected_or_first_available_variant
+            assign discount_pct = 0
+            if variant.compare_at_price > variant.price
+              assign discount_pct = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price
+            endif
+            assign badge_text = ''
+            for tag in product.tags
+              assign tag_lower = tag | downcase
+              if tag_lower contains 'badge:'
+                assign badge_text = tag | split: ':' | last | strip
+                break
+              endif
+            endfor
+          -%}
+          <article class="kshop-card{% unless product.available %} is-soldout{% endunless %}"
+                   data-card
+                   data-index="{{ forloop.index0 }}"
+                   data-type="type-{{ product.type | handleize }}"
+                   data-on-sale="{% if product.compare_at_price > product.price %}true{% else %}false{% endif %}"
+                   data-available="{{ product.available }}"
+                   data-price="{{ variant.price }}"
+                   data-discount="{{ discount_pct }}"
+                   data-name="{{ product.title | escape }}">
 
-  </div>
-</section>
+            <a href="{{ product.url }}" class="kshop-card__media" aria-label="{{ product.title | escape }}">
+              <span class="kshop-card__badges">
+                {%- if product.available == false -%}
+                  <span class="kshop-badge kshop-badge--soldout">Agotado</span>
+                {%- elsif product.compare_at_price > product.price -%}
+                  <span class="kshop-badge kshop-badge--sale">Oferta</span>
+                {%- endif -%}
+                {%- if badge_text != blank -%}
+                  <span class="kshop-badge kshop-badge--custom">{{ badge_text }}</span>
+                {%- endif -%}
+              </span>
+              {%- if product.featured_media -%}
+                {%- assign media_alt = product.featured_media.alt | default: product.title | escape -%}
+                {{ product.featured_media | image_url: width: 700 | image_tag: loading: 'lazy', class: 'kshop-card__img', sizes: '(min-width: 1280px) 20vw, (min-width: 768px) 30vw, 50vw', widths: '300, 450, 600, 700', alt: media_alt }}
+                {%- if product.media.size > 1 -%}
+                  {{ product.media[1] | image_url: width: 700 | image_tag: loading: 'lazy', class: 'kshop-card__img kshop-card__img--alt', sizes: '(min-width: 1280px) 20vw, (min-width: 768px) 30vw, 50vw', widths: '300, 450, 600, 700', alt: '' }}
+                {%- endif -%}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'kshop-card__img kshop-card__img--placeholder' }}
+              {%- endif -%}
+            </a>
 
-<!-- CUADRÍCULA DE PRODUCTOS E-COMMERCE -->
-<main class="page-width">
-  <div class="tienda-grid" id="tienda-product-grid">
-    
-    <!-- PRODUCTO 1: KALPA COLD BREW 355 ML (UNIDAD) -->
-    <article class="tienda-card" data-category="cold-brew" data-price="7.90" data-name="KALPA Cold Brew Original">
-      <div class="tienda-card__badge-wrap">
-        <span class="badge-pill badge-pill--bestseller">MÁS VENDIDO</span>
-      </div>
+            <div class="kshop-card__body">
+              <h2 class="kshop-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h2>
 
-      <div class="tienda-card__visual">
-        <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="Lata KALPA Cold Brew 355 ml" class="tienda-card__img" loading="lazy">
-      </div>
+              <div class="kshop-card__price" data-price-row>
+                <span class="kshop-price" data-price-current>{{ variant.price | money }}</span>
+                <s class="kshop-price__old" data-price-old{% unless variant.compare_at_price > variant.price %} hidden{% endunless %}>{{ variant.compare_at_price | money }}</s>
+              </div>
+              <span class="kshop-discount" data-discount-tag{% if discount_pct == 0 %} hidden{% endif %}>-{{ discount_pct }}%</span>
 
-      <div class="tienda-card__body">
-        <h2 class="tienda-card__title">KALPA Cold Brew Original</h2>
-        <div class="tienda-card__subtitle">Lata individual 355 ml · 280 mg cafeína limpia</div>
+              {%- if section.settings.trust_text != blank -%}
+                <div class="kshop-trust">
+                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12.5 11 15.5 16.5 9.5"></polyline></svg>
+                  <span>{{ section.settings.trust_text }}</span>
+                </div>
+              {%- endif -%}
 
-        <div class="tienda-card__pricing-row">
-          <span class="price-main">S/ 7.90</span>
-          <span class="price-old">S/ 9.50</span>
-          <span class="price-discount-tag">-17%</span>
-        </div>
+              <form class="kshop-card__buy" data-buy-form>
+                {%- unless product.has_only_default_variant -%}
+                  <div class="kshop-variant">
+                    <select name="id" aria-label="Presentación de {{ product.title | escape }}" data-variant-select>
+                      {%- for v in product.variants -%}
+                        {%- liquid
+                          assign v_pct = 0
+                          if v.compare_at_price > v.price
+                            assign v_pct = v.compare_at_price | minus: v.price | times: 100 | divided_by: v.compare_at_price
+                          endif
+                        -%}
+                        <option value="{{ v.id }}"
+                                data-price="{{ v.price | money | escape }}"
+                                data-price-cents="{{ v.price }}"
+                                data-old="{% if v.compare_at_price > v.price %}{{ v.compare_at_price | money | escape }}{% endif %}"
+                                data-discount="{{ v_pct }}"
+                                data-available="{{ v.available }}"
+                                {% if v.id == variant.id %}selected{% endif %}>
+                          {{ v.title }}{% unless v.available %} — Agotado{% endunless %}
+                        </option>
+                      {%- endfor -%}
+                    </select>
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </div>
+                {%- else -%}
+                  <input type="hidden" name="id" value="{{ variant.id }}">
+                {%- endunless -%}
 
-        <div class="tienda-card__trust-pill">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-          <span>0% Azúcar · Baja Acidez Gástrica</span>
-        </div>
-
-        <div class="tienda-card__actions">
-          <div class="tienda-qty-stepper">
-            <button type="button" class="tienda-qty-btn" onclick="updateQty(this, -1)" aria-label="Disminuir">-</button>
-            <span class="tienda-qty-val">1</span>
-            <button type="button" class="tienda-qty-btn" onclick="updateQty(this, 1)" aria-label="Aumentar">+</button>
-          </div>
-          <button type="button" class="btn-tienda-add" onclick="addProductToCart(this, 'prod-cb-unit', 'KALPA Cold Brew Original 355ml', 7.90)">
-            <span>AGREGAR</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-          </button>
-        </div>
-
-        <a href="/pages/productos" class="tienda-card__info-link">
-          <span>Ver beneficios médicos e información técnica</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </a>
-      </div>
-    </article>
-
-    <!-- PRODUCTO 2: PACK X 6 COLD BREW 355 ML -->
-    <article class="tienda-card" data-category="packs cold-brew" data-price="39.90" data-name="Pack x 6 Cold Brew 355 ml">
-      <div class="tienda-card__badge-wrap">
-        <span class="badge-pill badge-pill--oferta">OFERTA -15%</span>
-      </div>
-
-      <div class="tienda-card__visual">
-        <img src="{{ 'footer-banner-can.webp' | asset_url }}" alt="Pack de 6 latas KALPA Cold Brew" class="tienda-card__img" loading="lazy">
-      </div>
-
-      <div class="tienda-card__body">
-        <h2 class="tienda-card__title">Pack x 6 — Cold Brew 355 ml</h2>
-        <div class="tienda-card__subtitle">6 latas de 355 ml · Ahorro garantizado</div>
-
-        <div class="tienda-card__pricing-row">
-          <span class="price-main">S/ 39.90</span>
-          <span class="price-old">S/ 47.40</span>
-          <span class="price-discount-tag">-15%</span>
-        </div>
-
-        <div class="tienda-card__trust-pill">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-          <span>Precio más bajo por lata · Envío a Perú</span>
-        </div>
-
-        <div class="tienda-card__actions">
-          <div class="tienda-qty-stepper">
-            <button type="button" class="tienda-qty-btn" onclick="updateQty(this, -1)" aria-label="Disminuir">-</button>
-            <span class="tienda-qty-val">1</span>
-            <button type="button" class="tienda-qty-btn" onclick="updateQty(this, 1)" aria-label="Aumentar">+</button>
-          </div>
-          <button type="button" class="btn-tienda-add" onclick="addProductToCart(this, 'pack-6-cb', 'Pack x 6 KALPA Cold Brew 355ml', 39.90)">
-            <span>AGREGAR</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-          </button>
-        </div>
-
-        <a href="/pages/productos" class="tienda-card__info-link">
-          <span>Ver beneficios médicos e información técnica</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </a>
-      </div>
-    </article>
-
-    <!-- PRODUCTO 3: KALPA CAFÉ MOLIDO 250 G -->
-    <article class="tienda-card" data-category="cafe-molido" data-price="34.90" data-name="KALPA Café Molido 250 g">
-      <div class="tienda-card__badge-wrap">
-        <span class="badge-pill badge-pill--oferta">ESPECIALIDAD</span>
+                <div class="kshop-card__actions">
+                  <div class="kshop-qty">
+                    <button type="button" data-qty="-1" aria-label="Disminuir cantidad">&minus;</button>
+                    <input type="number" name="quantity" value="1" min="1" max="99" aria-label="Cantidad" inputmode="numeric">
+                    <button type="button" data-qty="1" aria-label="Aumentar cantidad">+</button>
+                  </div>
+                  <button type="submit" class="kshop-add" data-add-btn {% unless variant.available %}disabled{% endunless %}>
+                    <span data-add-label>{% if variant.available %}Agregar{% else %}Agotado{% endif %}</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </article>
+        {%- endfor -%}
       </div>
 
-      <div class="tienda-card__visual">
-        <img src="{{ 'product-card-250g.webp' | asset_url }}" alt="Lata KALPA Café Molido 250g" class="tienda-card__img" loading="lazy">
+      <p class="kshop-empty" data-empty hidden>No hay productos con estos filtros.</p>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="kshop-pagination" aria-label="Paginación">
+          {%- if paginate.previous -%}
+            <a href="{{ paginate.previous.url }}" aria-label="Página anterior">&lsaquo;</a>
+          {%- endif -%}
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}
+              <a href="{{ part.url }}">{{ part.title }}</a>
+            {%- elsif part.title == paginate.current_page -%}
+              <span class="is-current" aria-current="page">{{ part.title }}</span>
+            {%- else -%}
+              <span>{{ part.title }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if paginate.next -%}
+            <a href="{{ paginate.next.url }}" aria-label="Página siguiente">&rsaquo;</a>
+          {%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- else -%}
+      <div class="kshop-empty kshop-empty--store">
+        <p>Aún no hay productos publicados en esta colección.</p>
+        <span>Agrégalos desde el admin de Shopify y aparecerán aquí automáticamente.</span>
       </div>
+    {%- endif -%}
+  </main>
 
-      <div class="tienda-card__body">
-        <h2 class="tienda-card__title">KALPA Café Molido 250 g</h2>
-        <div class="tienda-card__subtitle">Molienda media fina · 100% Arábica Obata</div>
-
-        <div class="tienda-card__pricing-row">
-          <span class="price-main">S/ 34.90</span>
-          <span class="price-old">S/ 39.90</span>
-          <span class="price-discount-tag">-13%</span>
-        </div>
-
-        <div class="tienda-card__trust-pill">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-          <span>Notas de cereza, chocolate y manzana</span>
-        </div>
-
-        <div class="tienda-card__actions">
-          <div class="tienda-qty-stepper">
-            <button type="button" class="tienda-qty-btn" onclick="updateQty(this, -1)" aria-label="Disminuir">-</button>
-            <span class="tienda-qty-val">1</span>
-            <button type="button" class="tienda-qty-btn" onclick="updateQty(this, 1)" aria-label="Aumentar">+</button>
-          </div>
-          <button type="button" class="btn-tienda-add" onclick="addProductToCart(this, 'prod-molido-250', 'KALPA Café Molido 250g', 34.90)">
-            <span>AGREGAR</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-          </button>
-        </div>
-
-        <a href="/pages/productos" class="tienda-card__info-link">
-          <span>Ver ficha técnica y método de preparación</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </a>
-      </div>
-    </article>
-
-    <!-- PRODUCTO 4: KALPA CAFÉ MOLIDO 500 G -->
-    <article class="tienda-card" data-category="cafe-molido" data-price="59.90" data-name="KALPA Café Molido 500 g">
-      <div class="tienda-card__badge-wrap">
-        <span class="badge-pill badge-pill--nuevo">PRESENTACIÓN 500G</span>
-      </div>
-
-      <div class="tienda-card__visual">
-        <img src="{{ 'product-card-500g.webp' | asset_url }}" alt="Lata KALPA Café Molido 500g" class="tienda-card__img" loading="lazy">
-      </div>
-
-      <div class="tienda-card__body">
-        <h2 class="tienda-card__title">KALPA Café Molido 500 g</h2>
-        <div class="tienda-card__subtitle">Presentación familiar · Café de especialidad VRAEM</div>
-
-        <div class="tienda-card__pricing-row">
-          <span class="price-main">S/ 59.90</span>
-          <span class="price-old">S/ 69.90</span>
-          <span class="price-discount-tag">-14%</span>
-        </div>
-
-        <div class="tienda-card__trust-pill">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-          <span>Rendimiento para más de 35 tazas</span>
-        </div>
-
-        <div class="tienda-card__actions">
-          <div class="tienda-qty-stepper">
-            <button type="button" class="tienda-qty-btn" onclick="updateQty(this, -1)" aria-label="Disminuir">-</button>
-            <span class="tienda-qty-val">1</span>
-            <button type="button" class="tienda-qty-btn" onclick="updateQty(this, 1)" aria-label="Aumentar">+</button>
-          </div>
-          <button type="button" class="btn-tienda-add" onclick="addProductToCart(this, 'prod-molido-500', 'KALPA Café Molido 500g', 59.90)">
-            <span>AGREGAR</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-          </button>
-        </div>
-
-        <a href="/pages/productos" class="tienda-card__info-link">
-          <span>Ver ficha técnica y método de preparación</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </a>
-      </div>
-    </article>
-
-    <!-- PRODUCTO 5: PACK DÚO EXPERIENCIA KALPA -->
-    <article class="tienda-card" data-category="packs" data-price="42.90" data-name="Pack Dúo Experiencia KALPA">
-      <div class="tienda-card__badge-wrap">
-        <span class="badge-pill badge-pill--bestseller">COMBO COMPLETO</span>
-      </div>
-
-      <div class="tienda-card__visual">
-        <img src="{{ 'product-card-molido-250.webp' | asset_url }}" alt="Pack Dúo Experiencia KALPA" class="tienda-card__img" style="border-radius: 12px; object-fit: cover;" loading="lazy">
-      </div>
-
-      <div class="tienda-card__body">
-        <h2 class="tienda-card__title">Pack Dúo Experiencia KALPA</h2>
-        <div class="tienda-card__subtitle">1 Cold Brew 355 ml + 1 Café Molido 250 g</div>
-
-        <div class="tienda-card__pricing-row">
-          <span class="price-main">S/ 42.90</span>
-          <span class="price-old">S/ 49.90</span>
-          <span class="price-discount-tag">-14%</span>
-        </div>
-
-        <div class="tienda-card__trust-pill">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-          <span>Energía inmediata + café para tu método</span>
-        </div>
-
-        <div class="tienda-card__actions">
-          <div class="tienda-qty-stepper">
-            <button type="button" class="tienda-qty-btn" onclick="updateQty(this, -1)" aria-label="Disminuir">-</button>
-            <span class="tienda-qty-val">1</span>
-            <button type="button" class="tienda-qty-btn" onclick="updateQty(this, 1)" aria-label="Aumentar">+</button>
-          </div>
-          <button type="button" class="btn-tienda-add" onclick="addProductToCart(this, 'pack-duo', 'Pack Dúo Experiencia KALPA', 42.90)">
-            <span>AGREGAR</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-          </button>
-        </div>
-
-        <a href="/pages/productos" class="tienda-card__info-link">
-          <span>Ver beneficios médicos e información técnica</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </a>
-      </div>
-    </article>
-
-  </div>
-</main>
+{%- endpaginate -%}
 
 <script>
-  function updateQty(btn, change) {
-    const stepper = btn.closest('.tienda-qty-stepper');
-    const valEl = stepper.querySelector('.tienda-qty-val');
-    let current = parseInt(valEl.textContent) || 1;
-    current += change;
-    if (current < 1) current = 1;
-    if (current > 99) current = 99;
-    valEl.textContent = current;
-  }
+  (function() {
+    const grid = document.querySelector('[data-grid]');
+    if (!grid) return;
+    const cards = Array.from(grid.querySelectorAll('[data-card]'));
+    const countEl = document.querySelector('[data-count]');
+    const emptyEl = document.querySelector('[data-empty]');
+    const availableOnly = document.querySelector('[data-available-only]');
+    let activeFilter = 'all';
 
-  function filterShop(cat, btn) {
-    document.querySelectorAll('.filter-dropdown-btn').forEach(b => b.classList.remove('is-active'));
-    btn.classList.add('is-active');
+    function applyFilters() {
+      let visible = 0;
+      cards.forEach(card => {
+        const matchesFilter =
+          activeFilter === 'all' ||
+          (activeFilter === 'on-sale' && card.dataset.onSale === 'true') ||
+          card.dataset.type === activeFilter;
+        const matchesStock = !availableOnly.checked || card.dataset.available === 'true';
+        const show = matchesFilter && matchesStock;
+        card.hidden = !show;
+        if (show) visible++;
+      });
+      if (countEl) countEl.textContent = visible + (visible === 1 ? ' artículo' : ' artículos');
+      if (emptyEl) emptyEl.hidden = visible > 0;
+    }
 
-    const cards = document.querySelectorAll('.tienda-card');
-    let count = 0;
+    document.querySelectorAll('.kshop-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.kshop-chip').forEach(c => c.classList.remove('is-active'));
+        chip.classList.add('is-active');
+        activeFilter = chip.dataset.filter;
+        applyFilters();
+      });
+    });
+    availableOnly.addEventListener('change', applyFilters);
+
+    document.querySelector('[data-sort]').addEventListener('change', e => {
+      const criteria = e.target.value;
+      const num = (card, key) => parseFloat(card.dataset[key]) || 0;
+      const sorted = cards.slice().sort((a, b) => {
+        if (criteria === 'price-asc') return num(a, 'price') - num(b, 'price');
+        if (criteria === 'price-desc') return num(b, 'price') - num(a, 'price');
+        if (criteria === 'discount') return num(b, 'discount') - num(a, 'discount');
+        if (criteria === 'name') return a.dataset.name.localeCompare(b.dataset.name, 'es');
+        return num(a, 'index') - num(b, 'index');
+      });
+      sorted.forEach(card => grid.appendChild(card));
+    });
+
+    document.querySelectorAll('.kshop-density button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.kshop-density button').forEach(b => {
+          b.classList.toggle('is-active', b === btn);
+          b.setAttribute('aria-pressed', b === btn);
+        });
+        grid.dataset.density = btn.dataset.density;
+      });
+    });
+
     cards.forEach(card => {
-      const cardCat = card.getAttribute('data-category');
-      if (cat === 'all' || cardCat.includes(cat)) {
-        card.style.display = 'flex';
-        count++;
-      } else {
-        card.style.display = 'none';
+      const form = card.querySelector('[data-buy-form]');
+      const qtyInput = form.querySelector('input[name="quantity"]');
+      const addBtn = form.querySelector('[data-add-btn]');
+      const addLabel = form.querySelector('[data-add-label]');
+      const select = form.querySelector('[data-variant-select]');
+
+      form.querySelectorAll('[data-qty]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const next = (parseInt(qtyInput.value, 10) || 1) + parseInt(btn.dataset.qty, 10);
+          qtyInput.value = Math.min(99, Math.max(1, next));
+        });
+      });
+
+      if (select) {
+        select.addEventListener('change', () => {
+          const opt = select.selectedOptions[0];
+          const oldEl = card.querySelector('[data-price-old]');
+          const tagEl = card.querySelector('[data-discount-tag]');
+          const available = opt.dataset.available === 'true';
+          card.querySelector('[data-price-current]').textContent = opt.dataset.price;
+          oldEl.textContent = opt.dataset.old;
+          oldEl.hidden = !opt.dataset.old;
+          tagEl.textContent = '-' + opt.dataset.discount + '%';
+          tagEl.hidden = opt.dataset.discount === '0';
+          card.dataset.price = opt.dataset.priceCents;
+          addBtn.disabled = !available;
+          addLabel.textContent = available ? 'Agregar' : 'Agotado';
+        });
       }
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        if (addBtn.disabled || typeof window.addVariantToKallpaCart !== 'function') return;
+        const variantId = form.querySelector('[name="id"]').value;
+        const qty = Math.min(99, Math.max(1, parseInt(qtyInput.value, 10) || 1));
+        addBtn.disabled = true;
+        addLabel.textContent = 'Agregando…';
+        window.addVariantToKallpaCart(variantId, qty)
+          .then(() => {
+            addBtn.classList.add('is-added');
+            addLabel.textContent = '✓ Agregado';
+          })
+          .catch(() => {
+            addLabel.textContent = 'Sin stock suficiente';
+          })
+          .finally(() => {
+            setTimeout(() => {
+              addBtn.disabled = false;
+              addBtn.classList.remove('is-added');
+              addLabel.textContent = 'Agregar';
+            }, 1800);
+          });
+      });
     });
-
-    const countEl = document.getElementById('tienda-items-count');
-    if (countEl) countEl.textContent = count + ' artículos';
-  }
-
-  function sortShop(criteria) {
-    const grid = document.getElementById('tienda-product-grid');
-    const cards = Array.from(grid.querySelectorAll('.tienda-card'));
-
-    cards.sort((a, b) => {
-      const priceA = parseFloat(a.getAttribute('data-price'));
-      const priceB = parseFloat(b.getAttribute('data-price'));
-      const nameA = a.getAttribute('data-name');
-      const nameB = b.getAttribute('data-name');
-
-      if (criteria === 'price-asc') return priceA - priceB;
-      if (criteria === 'price-desc') return priceB - priceA;
-      if (criteria === 'name') return nameA.localeCompare(nameB);
-      return 0;
-    });
-
-    cards.forEach(c => grid.appendChild(c));
-  }
-
-  function addProductToCart(btn, id, title, price) {
-    const card = btn.closest('.tienda-card');
-    const qtyVal = parseInt(card.querySelector('.tienda-qty-val').textContent) || 1;
-    
-    const origHTML = btn.innerHTML;
-    btn.innerHTML = '<span>✓ AGREGADO</span>';
-    btn.style.background = '#10b981';
-    btn.style.color = '#ffffff';
-
-    const cartCountEl = document.getElementById('kallpa-cart-count');
-    if (cartCountEl) {
-      let current = parseInt(cartCountEl.textContent) || 0;
-      cartCountEl.textContent = current + qtyVal;
-    }
-
-    if (typeof openKallpaCart === 'function') {
-      setTimeout(() => {
-        openKallpaCart();
-      }, 350);
-    }
-
-    setTimeout(() => {
-      btn.innerHTML = origHTML;
-      btn.style.background = '';
-      btn.style.color = '';
-    }, 2000);
-  }
+  })();
 </script>
 
 {% schema %}
@@ -424,6 +371,27 @@
       "id": "subtitle",
       "label": "Subtítulo Descriptivo",
       "default": "Toda nuestra línea de Cold Brew listo para tomar y Café Molido de especialidad. Elige tu presentación favorita y recíbela directo en tu puerta."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección a mostrar",
+      "info": "En la página de colección se usa esa colección. En otras páginas, si se deja vacío, se muestran todos los productos."
+    },
+    {
+      "type": "range",
+      "id": "per_page",
+      "label": "Productos por página",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "text",
+      "id": "trust_text",
+      "label": "Sello de confianza en cada tarjeta",
+      "default": "Envíos a todo el Perú"
     }
   ],
   "presets": [

@@ -223,8 +223,31 @@ window.addPackToKallpaCart = function(packId, name, price, qty = 1, variantId = 
   });
 };
 
+// Agregar una variante real de Shopify (precio, nombre e imagen salen del admin)
+window.addVariantToKallpaCart = function(variantId, qty = 1) {
+  window.openKallpaCart();
+
+  return fetch('/cart/add.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ items: [{ id: variantId, quantity: qty || 1 }] })
+  })
+  .then(res => res.json().then(data => {
+    if (!res.ok) throw data;
+    return data;
+  }))
+  .then(() => {
+    window.refreshKallpaCart();
+  })
+  .catch(err => {
+    console.error('Error adding variant to Shopify cart:', err);
+    window.refreshKallpaCart();
+    throw err;
+  });
+};
+
 window.addToCartKallpa = function(variantId, quantity = 1) {
-  window.addPackToKallpaCart('general', 'KALPA Producto', 11.90, quantity, variantId);
+  window.addVariantToKallpaCart(variantId, quantity).catch(() => {});
 };
 
 window.addKallpaToCart = function(title, priceSol, image) {

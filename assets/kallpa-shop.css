@@ -1,0 +1,621 @@
+/* ==========================================================================
+   KALPA TIENDA (sections/kallpa-tienda.liquid)
+   Cuadrícula limpia estilo catálogo: insignias, precio con tachado,
+   % de descuento y sello de confianza. Datos 100% desde el admin de Shopify.
+   ========================================================================== */
+
+.kshop-hero,
+.kshop-toolbar,
+.kshop-main {
+  --kshop-gold: #f5ba2c;
+  --kshop-bg: #070908;
+  --kshop-surface: #0f1210;
+  --kshop-surface-2: #151916;
+  --kshop-line: rgba(255, 255, 255, 0.08);
+  --kshop-text: #ffffff;
+  --kshop-muted: #9aa3ad;
+  --kshop-sale: #f5ba2c;
+  --kshop-green: #22c55e;
+}
+
+/* 1. HERO */
+.kshop-hero {
+  padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(1.5rem, 3vw, 2.25rem);
+  background:
+    radial-gradient(ellipse at 15% 0%, rgba(245, 186, 44, 0.09) 0%, transparent 55%),
+    var(--kshop-bg);
+  color: var(--kshop-text);
+}
+
+.kshop-breadcrumb {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--kshop-muted);
+  margin-bottom: 0.9rem;
+}
+
+.kshop-breadcrumb a {
+  color: #cbd5e1;
+  text-decoration: none;
+}
+
+.kshop-breadcrumb a:hover,
+.kshop-breadcrumb .is-current {
+  color: var(--kshop-gold);
+}
+
+.kshop-hero__title {
+  font-family: var(--font-brand);
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  margin: 0;
+}
+
+.kshop-hero__subtitle {
+  max-width: 620px;
+  margin: 0.9rem 0 0;
+  color: #b8c0c9;
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+/* 2. TOOLBAR */
+.kshop-toolbar {
+  position: sticky;
+  top: var(--header-height, 0px);
+  z-index: 20;
+  background: rgba(7, 9, 8, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--kshop-line);
+  border-bottom: 1px solid var(--kshop-line);
+}
+
+.kshop-toolbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+}
+
+.kshop-filters {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.kshop-chip {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--kshop-line);
+  background: var(--kshop-surface);
+  color: #d5dbe1;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.kshop-chip:hover {
+  border-color: rgba(245, 186, 44, 0.5);
+  color: #fff;
+}
+
+.kshop-chip.is-active {
+  background: var(--kshop-gold);
+  border-color: var(--kshop-gold);
+  color: #0b0908;
+}
+
+.kshop-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-left: 0.35rem;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  cursor: pointer;
+  user-select: none;
+}
+
+.kshop-toggle input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--kshop-gold);
+}
+
+.kshop-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  flex-shrink: 0;
+}
+
+.kshop-count {
+  font-size: 0.85rem;
+  color: var(--kshop-muted);
+  white-space: nowrap;
+}
+
+.kshop-sort {
+  position: relative;
+}
+
+.kshop-sort select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0.55rem 2.2rem 0.55rem 0.95rem;
+  border-radius: 10px;
+  border: 1px solid var(--kshop-line);
+  background: var(--kshop-surface);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.kshop-sort svg {
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--kshop-muted);
+  pointer-events: none;
+}
+
+.kshop-density {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.kshop-density button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--kshop-muted);
+  cursor: pointer;
+}
+
+.kshop-density button.is-active {
+  background: var(--kshop-surface-2);
+  border-color: var(--kshop-line);
+  color: var(--kshop-gold);
+}
+
+/* 3. GRID */
+.kshop-main {
+  display: block;
+  background: var(--kshop-bg);
+  color: var(--kshop-text);
+  padding-top: clamp(1.75rem, 3vw, 2.75rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.kshop-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.75rem) clamp(0.75rem, 1.6vw, 1.5rem);
+}
+
+@media (min-width: 768px) {
+  .kshop-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .kshop-grid[data-density="compact"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1024px) {
+  .kshop-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .kshop-grid[data-density="compact"] { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1280px) {
+  .kshop-grid[data-density="compact"] { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+/* 4. CARD */
+.kshop-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.kshop-card[hidden] {
+  display: none;
+}
+
+.kshop-card__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 60%, rgba(245, 186, 44, 0.07) 0%, transparent 60%),
+    var(--kshop-surface);
+  border: 1px solid var(--kshop-line);
+  transition: border-color 0.25s;
+}
+
+.kshop-card:hover .kshop-card__media {
+  border-color: rgba(245, 186, 44, 0.35);
+}
+
+.kshop-card__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 10%;
+  object-fit: contain;
+  transition: opacity 0.35s ease, transform 0.45s ease;
+}
+
+.kshop-card:hover .kshop-card__img {
+  transform: scale(1.04);
+}
+
+.kshop-card__img--alt {
+  opacity: 0;
+}
+
+.kshop-card:hover .kshop-card__img--alt {
+  opacity: 1;
+}
+
+.kshop-card__media:has(.kshop-card__img--alt):hover .kshop-card__img:not(.kshop-card__img--alt) {
+  opacity: 0;
+}
+
+.kshop-card__img--placeholder {
+  fill: rgba(255, 255, 255, 0.12);
+  padding: 18%;
+}
+
+.kshop-card.is-soldout .kshop-card__img {
+  opacity: 0.55;
+  filter: grayscale(0.4);
+}
+
+.kshop-card__badges {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+.kshop-badge {
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.kshop-badge--sale {
+  background: var(--kshop-sale);
+  color: #0b0908;
+}
+
+.kshop-badge--soldout {
+  background: #000;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.kshop-badge--custom {
+  background: #fff;
+  color: #0b0908;
+}
+
+.kshop-card__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  flex: 1;
+  padding: 1rem 0.25rem 0;
+  text-align: center;
+}
+
+.kshop-card__title {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: clamp(0.92rem, 1.1vw, 1.02rem);
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.kshop-card__title a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.kshop-card__title a:hover {
+  color: var(--kshop-gold);
+}
+
+.kshop-card__price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.5rem;
+}
+
+.kshop-price {
+  font-family: var(--font-brand);
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  font-weight: 900;
+  color: #fff;
+}
+
+.kshop-price__old {
+  font-size: 0.85rem;
+  color: var(--kshop-muted);
+}
+
+.kshop-discount {
+  padding: 0.3rem 0.75rem;
+  border-radius: 8px;
+  background: rgba(245, 186, 44, 0.16);
+  color: var(--kshop-gold);
+  font-family: var(--font-brand);
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+
+.kshop-discount[hidden],
+.kshop-price__old[hidden] {
+  display: none;
+}
+
+.kshop-trust {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid var(--kshop-line);
+  background: var(--kshop-surface);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #d5dbe1;
+}
+
+.kshop-trust svg {
+  flex-shrink: 0;
+  color: var(--kshop-green);
+}
+
+.kshop-card__buy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 0.35rem;
+}
+
+.kshop-variant {
+  position: relative;
+}
+
+.kshop-variant select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  padding: 0.55rem 2rem 0.55rem 0.8rem;
+  border-radius: 10px;
+  border: 1px solid var(--kshop-line);
+  background: var(--kshop-surface);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.kshop-variant svg {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--kshop-muted);
+  pointer-events: none;
+}
+
+.kshop-card__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.kshop-qty {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--kshop-line);
+  border-radius: 10px;
+  background: var(--kshop-surface);
+  overflow: hidden;
+}
+
+.kshop-qty button {
+  width: 30px;
+  height: 40px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.kshop-qty input {
+  width: 30px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 800;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.kshop-qty input::-webkit-outer-spin-button,
+.kshop-qty input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.kshop-add {
+  flex: 1;
+  min-width: 0;
+  min-height: 40px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--kshop-gold);
+  color: #0b0908;
+  font-family: var(--font-brand);
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.kshop-add:hover:not(:disabled) {
+  background: #ffcb45;
+}
+
+.kshop-add:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.kshop-add:disabled {
+  background: var(--kshop-surface-2);
+  color: var(--kshop-muted);
+  cursor: not-allowed;
+}
+
+.kshop-add.is-added {
+  background: var(--kshop-green);
+  color: #fff;
+}
+
+.kshop-grid[data-density="compact"] .kshop-trust,
+.kshop-grid[data-density="compact"] .kshop-card__buy {
+  display: none;
+}
+
+/* 5. VACÍO Y PAGINACIÓN */
+.kshop-empty {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--kshop-muted);
+}
+
+.kshop-empty--store p {
+  margin: 0 0 0.4rem;
+  color: #fff;
+  font-weight: 700;
+}
+
+.kshop-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 3rem;
+}
+
+.kshop-pagination a,
+.kshop-pagination span {
+  display: grid;
+  place-items: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 0.6rem;
+  border-radius: 10px;
+  border: 1px solid var(--kshop-line);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.kshop-pagination .is-current {
+  background: var(--kshop-gold);
+  border-color: var(--kshop-gold);
+  color: #0b0908;
+}
+
+/* 6. MÓVIL */
+@media (max-width: 899px) {
+  .kshop-toolbar {
+    position: static;
+  }
+
+  .kshop-toolbar__inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .kshop-filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 0 -1rem;
+    padding: 0 1rem 0.15rem;
+  }
+
+  .kshop-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .kshop-chip,
+  .kshop-toggle {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .kshop-controls {
+    justify-content: space-between;
+  }
+
+  .kshop-density {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .kshop-trust {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .kshop-card__actions {
+    flex-direction: column;
+  }
+
+  .kshop-qty {
+    justify-content: space-between;
+  }
+
+  .kshop-qty input {
+    flex: 1;
+  }
+}
