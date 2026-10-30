@@ -1,0 +1,430 @@
+{%- comment -%}
+  SECCIÓN: kallpa-product-info.liquid
+  Hub Informativo Oficial KALPA: Ficha Técnica, Beneficios Médicos, Modo de Uso y Origen
+{%- endcomment -%}
+
+{{ 'products-info.css' | asset_url | stylesheet_tag }}
+
+<!-- 1. HERO INFORMATIVO EDITORIAL -->
+<section class="info-hero">
+  <div class="page-width info-hero__container">
+    <nav class="info-breadcrumb" aria-label="Navegación">
+      <a href="{{ routes.root_url }}">Inicio</a>
+      <span>/</span>
+      <span style="color: #f5ba2c; font-weight: 600;">Productos & Ficha Técnica</span>
+    </nav>
+
+    <div class="info-hero__kicker">
+      <span class="info-kicker-dot"></span>
+      <span>CIENCIA, BOTÁNICA & ORIGEN ANDINO</span>
+    </div>
+
+    <h1 class="info-hero__title">
+      CONOCE TODO SOBRE <span>KALPA</span>
+    </h1>
+
+    <p class="info-hero__desc">
+      Energía limpia y sin artificios directo desde los Andes peruanos. Explora la ciencia detrás de nuestra extracción en frío, beneficios fisiológicos avalados, indicaciones de consumo y la ficha técnica oficial.
+    </p>
+
+    <!-- Selector de Producto Activo -->
+    <div class="product-tabs-nav" role="tablist">
+      <button type="button" class="product-tab-btn is-active" data-target="tab-coldbrew" onclick="switchProductTab('tab-coldbrew', this)">
+        <span class="tab-dot"></span>
+        <span>Cold Brew en Lata 355 ml</span>
+      </button>
+      <button type="button" class="product-tab-btn" data-target="tab-cafemolido" onclick="switchProductTab('tab-cafemolido', this)">
+        <span class="tab-dot"></span>
+        <span>Café de Altura Molido (250g / 500g)</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENIDO PRINCIPAL DE FICHA TÉCNICA Y BENEFICIOS -->
+<div class="page-width info-main-layout">
+
+  <!-- ==================== TAB 1: COLD BREW 355 ML ==================== -->
+  <div id="tab-coldbrew" class="product-tab-panel is-active">
+    
+    <!-- 2. ORIGEN Y CREACIÓN -->
+    <section class="info-origin-grid">
+      <div class="origin-media">
+        <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="KALPA Cold Brew Can 355 ml" class="origin-image" />
+        <div class="origin-badge-stamp">
+          <span class="stamp-title">24 HORAS</span>
+          <span class="stamp-sub">MACERACIÓN A 4°C</span>
+        </div>
+      </div>
+      <div class="origin-content">
+        <div class="section-kicker">HISTORIA DE CREACIÓN</div>
+        <h2 class="section-title">Nacido de las alturas del VRAEM, infusionado para rendir</h2>
+        <p class="section-p">
+          KALPA no es una bebida energética convencional ni café caliente enfriado. Cada lote de Cold Brew se elabora mediante un proceso artesanal y científico de inmersión en frío a 4°C por 24 horas continuas, utilizando únicamente agua purificada de manantial y café de estricta altura (1,800 - 2,200 msnm) cosechado a mano en Ayacucho.
+        </p>
+        <p class="section-p">
+          Al prescindir por completo del calor, evitamos la degradación de aceites volátiles y la liberación de compuestos fenólicos amargos, obteniendo un perfil naturalmente dulce con notas a cacao puro, frutos rojos y una suavidad inigualable para el estómago.
+        </p>
+        <div class="origin-metrics">
+          <div class="metric-box">
+            <span class="metric-val">24 h</span>
+            <span class="metric-lbl">Extracción en frío</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-val">2,200</span>
+            <span class="metric-lbl">msnm de altitud</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-val">0%</span>
+            <span class="metric-lbl">Azúcar o aditivos</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. BENEFICIOS MÉDICOS Y FISIOLÓGICOS -->
+    <section class="info-benefits-section">
+      <div class="section-header-center">
+        <div class="section-kicker">EVIDENCIA & SALUD</div>
+        <h2 class="section-title">Beneficios Médicos y Fisiológicos</h2>
+        <p class="section-p-sub">Diseñado meticulosamente para optimizar tu rendimiento diario sin cobrar factura a tu salud.</p>
+      </div>
+
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <div class="benefit-badge">Salud Gástrica</div>
+          <h3 class="benefit-title">-65% Menor Acidez que el café tradicional</h3>
+          <p class="benefit-desc">El proceso de extracción en frío no oxida los ácidos clorogénicos en ácido quínico, lo que permite un consumo seguro para personas con gastritis, reflujo o acidez estomacal frecuente.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+          </div>
+          <div class="benefit-badge">Energía Limpia</div>
+          <h3 class="benefit-title">280 mg de Cafeína Botánica Real</h3>
+          <p class="benefit-desc">Cafeína derivada exclusivamente del grano de café arábica. Sin taurina sintética ni azúcares añadidos, brindando estimulación neuromuscular constante sin taquicardia ni picos abruptos.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+          <div class="benefit-badge">Metabolismo</div>
+          <h3 class="benefit-title">0 Calorías, Keto & Apto para Ayuno</h3>
+          <p class="benefit-desc">No rompe el ayuno intermitente ni induce respuesta glucémica o insulinémica. Ideal para atletas en restricción calórica, personas con diabetes o entusiastas del estilo de vida cetogénico.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </div>
+          <div class="benefit-badge">Longevidad</div>
+          <h3 class="benefit-title">Alta Concentración de Polifenoles</h3>
+          <p class="benefit-desc">Al no ser sometido a temperaturas de ebullición, retiene hasta 2.5 veces más antioxidantes naturales, protegiendo las células contra el estrés oxidativo y combatiendo el envejecimiento prematuro.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. MOMENTOS Y TIPOS DE USO -->
+    <section class="usage-moments-section">
+      <div class="section-header-center">
+        <div class="section-kicker">PROTOCOLO DIARIO</div>
+        <h2 class="section-title">Momentos Óptimos de Consumo</h2>
+        <p class="section-p-sub">Diseñado para adaptarse a tus exigencias físicas y cognitivas más intensas.</p>
+      </div>
+
+      <div class="moments-grid">
+        <div class="moment-card">
+          <div class="moment-time">07:00 AM — 09:00 AM</div>
+          <h3 class="moment-title">Arranque Matutino & Deep Work</h3>
+          <p class="moment-desc">Toma KALPA 30 minutos antes de tu sesión de trabajo de alta concentración. Aumenta la dopamina y la noradrenalina prefrontal, facilitando el estado de flujo (flow state).</p>
+        </div>
+        <div class="moment-card">
+          <div class="moment-time">30 MIN ANTES DE ENTRENAR</div>
+          <h3 class="moment-title">Pre-Workout Limpio</h3>
+          <p class="moment-desc">Mejora la tasa metabólica y la movilización de ácidos grasos como sustrato energético, retrasando la fatiga central durante entrenamientos de fuerza o resistencia.</p>
+        </div>
+        <div class="moment-card">
+          <div class="moment-time">02:00 PM — 04:00 PM</div>
+          <h3 class="moment-title">Superar la Caída de la Tarde</h3>
+          <p class="moment-desc">Evita el temido bajón de energía post-almuerzo. Al no contener azúcar añadida ni carbohidratos, elimina los rebotes de somnolencia e hipoglucemia reactiva.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. FICHA TÉCNICA OFICIAL -->
+    <section class="tech-sheet-section">
+      <div class="section-header-center">
+        <div class="section-kicker">CONTROL DE CALIDAD</div>
+        <h2 class="section-title">Ficha Técnica Oficial del Producto</h2>
+        <p class="section-p-sub">Especificaciones analíticas certificadas por lote de producción.</p>
+      </div>
+
+      <div class="tech-table-wrapper">
+        <table class="tech-table">
+          <thead>
+            <tr>
+              <th>Parámetro</th>
+              <th>Especificación Analítica</th>
+              <th>Nota / Estándar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Denominación</strong></td>
+              <td>Bebida de Café Ready-to-Drink (Cold Brew Coffee)</td>
+              <td>Sin aditivos químicos ni gasificación artificial</td>
+            </tr>
+            <tr>
+              <td><strong>Origen del Grano</strong></td>
+              <td>VRAEM / Ayacucho, Perú</td>
+              <td>Cosecha selectiva manual en fincas asociadas</td>
+            </tr>
+            <tr>
+              <td><strong>Variedad Botánica</strong></td>
+              <td>100% Coffea Arabica (Typica, Caturra, Bourbon)</td>
+              <td>Café de especialidad > 84 puntos SCA</td>
+            </tr>
+            <tr>
+              <td><strong>Método de Extracción</strong></td>
+              <td>Inmersión total en frío por 24 horas a 4°C</td>
+              <td>Filtrado micrométrico triple grado alimenticio</td>
+            </tr>
+            <tr>
+              <td><strong>Contenido Neto</strong></td>
+              <td>355 ml (12 fl oz) por lata</td>
+              <td>Lata de aluminio 100% reciclable con barniz BPA-NI</td>
+            </tr>
+            <tr>
+              <td><strong>Contenido de Cafeína</strong></td>
+              <td>280 mg por porción (78.8 mg / 100 ml)</td>
+              <td>Equivalente natural a ~3 espressos dobles</td>
+            </tr>
+            <tr>
+              <td><strong>pH de la Bebida</strong></td>
+              <td>5.4 — 5.6 (Acidez neutra y suave)</td>
+              <td>Vs. pH 4.2 - 4.7 de café caliente convencional</td>
+            </tr>
+            <tr>
+              <td><strong>Valor Nutricional</strong></td>
+              <td>0 kcal, 0g Azúcar, 0g Grasas, 0g Sodio</td>
+              <td>100% apto para celíacos, veganos y diabéticos</td>
+            </tr>
+            <tr>
+              <td><strong>Ingredientes</strong></td>
+              <td>Agua purificada de manantial, Café 100% arábica</td>
+              <td>Solo 2 ingredientes naturales. Sin conservantes.</td>
+            </tr>
+            <tr>
+              <td><strong>Registro Sanitario</strong></td>
+              <td>DIGESA / Sanidad Alimentaria Perú</td>
+              <td>Registro emitido y vigente para consumo nacional</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 6. INDICACIONES DE CONSUMO Y CONSERVACIÓN -->
+    <section class="instructions-section">
+      <div class="section-header-center">
+        <div class="section-kicker">RITUAL DE SERVIDO</div>
+        <h2 class="section-title">Indicaciones de Consumo & Conservación</h2>
+      </div>
+
+      <div class="instructions-grid">
+        <div class="instruction-step">
+          <div class="step-num">01</div>
+          <h4 class="step-title">Servir Bien Helada</h4>
+          <p class="step-desc">La temperatura óptima de consumo es entre <strong>2°C y 5°C</strong>. Mantén las latas en refrigeración constante para una experiencia de sabor óptima.</p>
+        </div>
+        <div class="instruction-step">
+          <div class="step-num">02</div>
+          <h4 class="step-title">Giro Suave Previo</h4>
+          <p class="step-desc">Gira suavemente la lata boca abajo antes de abrir (sin agitar con fuerza) para homogeneizar los compuestos aromáticos disueltos.</p>
+        </div>
+        <div class="instruction-step">
+          <div class="step-num">03</div>
+          <h4 class="step-title">Vaso con Hielo o Directo</h4>
+          <p class="step-desc">Disfrútalo directo de la lata para máxima frescura o viértelo en un vaso corto con hielo grande. Excelente también con un splash de leche de almendras o avena.</p>
+        </div>
+        <div class="instruction-step">
+          <div class="step-num">04</div>
+          <h4 class="step-title">Conservación</h4>
+          <p class="step-desc">Almacenar en lugar fresco y seco, protegido de la radiación solar directa. Una vez abierta la lata, consumir en el transcurso del día.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. BOTÓN DIRECTO A TIENDA -->
+    <div class="product-purchase-footer">
+      <div class="purchase-box">
+        <h3 class="purchase-title">¿Listo para sentir la energía real de los Andes?</h3>
+        <p class="purchase-desc">Adquiere tu KALPA Cold Brew por lata individual o ahorra comprando el pack de 6 unidades en nuestra tienda oficial con despacho rápido.</p>
+        <a href="{{ routes.all_products_collection_url | default: '/collections/all' }}" class="btn-purchase-cta">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span>IR A LA TIENDA Y COMPRAR</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ==================== TAB 2: CAFÉ DE ALTURA MOLIDO (250G / 500G) ==================== -->
+  <div id="tab-cafemolido" class="product-tab-panel">
+    
+    <section class="info-origin-grid">
+      <div class="origin-media">
+        <img src="{{ 'product-card-500g.webp' | asset_url }}" alt="Café de Altura Ayacucho 500 g" class="origin-image" />
+        <div class="origin-badge-stamp">
+          <span class="stamp-title">1,800 - 2,200</span>
+          <span class="stamp-sub">MSNM DE ALTURA</span>
+        </div>
+      </div>
+      <div class="origin-content">
+        <div class="section-kicker">ORIGEN AYACUCHO</div>
+        <h2 class="section-title">Café de estricta altura cosechado en micro-lotes</h2>
+        <p class="section-p">
+          Cultivado bajo sombra en las laderas andino-amazónicas del VRAEM. Los cambios térmicos entre el día soleado y las noches frías de montaña permiten que el grano madure con lentitud, concentrando azúcares complejos y ácidos orgánicos nobles.
+        </p>
+        <p class="section-p">
+          Tostado semanalmente en lotes pequeños (small batch) con perfil de tueste medio para destacar notas florales, cacao al 70%, manzana roja y una acidez málica brillante y balanceada.
+        </p>
+        <div class="origin-metrics">
+          <div class="metric-box">
+            <span class="metric-val">+84 pts</span>
+            <span class="metric-lbl">Puntaje de Taza SCA</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-val">Medio</span>
+            <span class="metric-lbl">Tueste Artesanal</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-val">100%</span>
+            <span class="metric-lbl">Arábica Peruano</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tech-sheet-section">
+      <div class="section-header-center">
+        <div class="section-kicker">ESPECIFICACIONES DEL GRANO</div>
+        <h2 class="section-title">Ficha Técnica: Café Molido 250g y 500g</h2>
+      </div>
+
+      <div class="tech-table-wrapper">
+        <table class="tech-table">
+          <thead>
+            <tr>
+              <th>Parámetro</th>
+              <th>Especificación Analítica</th>
+              <th>Detalle de Preparación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Región de Cosecha</strong></td>
+              <td>VRAEM, Ayacucho (Perú)</td>
+              <td>Comunidades cafetaleras sostenibles</td>
+            </tr>
+            <tr>
+              <td><strong>Altitud</strong></td>
+              <td>1,800 a 2,200 msnm</td>
+              <td>Estricta altura (Strictly High Grown - SHG)</td>
+            </tr>
+            <tr>
+              <td><strong>Variedad</strong></td>
+              <td>Typica, Caturra roja y Bourbon amarillo</td>
+              <td>100% Coffea Arabica seleccionada</td>
+            </tr>
+            <tr>
+              <td><strong>Beneficio / Proceso</strong></td>
+              <td>Lavado tradicional con fermentación limpia de 18H</td>
+              <td>Secado solar en camas africanas suspendidas</td>
+            </tr>
+            <tr>
+              <td><strong>Molienda</strong></td>
+              <td>Molienda Media Universal</td>
+              <td>Apta para cafetera italiana (Moka), filtro V60, Chemex y prensa</td>
+            </tr>
+            <tr>
+              <td><strong>Perfil de Taza</strong></td>
+              <td>Cacao amargo, cereza madura, nuez y miel de caña</td>
+              <td>Cuerpo medio sedoso y postgusto prolongado</td>
+            </tr>
+            <tr>
+              <td><strong>Presentaciones</strong></td>
+              <td>Bolsa trilaminada 250 g y 500 g con válvula desgasificadora</td>
+              <td>Protege el café contra oxígeno, luz UV y humedad</td>
+            </tr>
+            <tr>
+              <td><strong>Registro Sanitario</strong></td>
+              <td>DIGESA / Sanidad Alimentaria Perú</td>
+              <td>Cumple normativas sanitarias oficiales de alimentos</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="product-purchase-footer">
+      <div class="purchase-box">
+        <h3 class="purchase-title">Pide tu Café de Altura recién tostado</h3>
+        <p class="purchase-desc">Disponible en presentaciones de 250 g, 500 g o en Pack Dúo con descuento directo en nuestra tienda online.</p>
+        <a href="{{ routes.all_products_collection_url | default: '/collections/all' }}" class="btn-purchase-cta">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span>VER EN LA TIENDA KALPA</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  function switchProductTab(tabId, btn) {
+    document.querySelectorAll('.product-tab-btn').forEach(b => b.classList.remove('is-active'));
+    document.querySelectorAll('.product-tab-panel').forEach(p => p.classList.remove('is-active'));
+
+    btn.classList.add('is-active');
+    const target = document.getElementById(tabId);
+    if (target) {
+      target.classList.add('is-active');
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Hub Informativo Productos",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Hub Informativo Productos"
+    }
+  ]
+}
+{% endschema %}
