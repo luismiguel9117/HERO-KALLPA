@@ -22,29 +22,23 @@
   color: var(--kshop-text);
 }
 
-/* Patrón andino girado 90° a la derecha: bordes rectos abajo y a los lados, difuminado hacia
-   arriba. Va pegado abajo a la derecha del hero y sube por detrás del título (lo que pasa del
-   borde superior lo recorta .kshop). La caja tiene la proporción ya girada (1024x1536) y la
-   imagen se rota dentro para llenarla. */
+/* Patrón andino en espejo: bordes rectos arriba y a la izquierda, pegado a la esquina superior
+   izquierda del hero, con el difuminado hacia la derecha. */
 .kshop-pattern {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  height: 150%;
-  aspect-ratio: 1024 / 1536;
+  top: 0;
+  left: 0;
+  width: min(62vw, 820px);
   opacity: 0.16;
   pointer-events: none;
   user-select: none;
 }
 
 .kshop-pattern img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 150%;
-  max-width: none;
+  display: block;
+  width: 100%;
   height: auto;
-  transform: translate(-50%, -50%) rotate(90deg);
+  transform: scaleX(-1);
 }
 
 .kshop .visually-hidden {
@@ -59,6 +53,7 @@
 /* 1. HERO */
 .kshop-hero {
   position: relative;
+  overflow: hidden;
   padding: clamp(1.5rem, 3vw, 2.25rem) 0 clamp(1.5rem, 3vw, 2.25rem);
 }
 
@@ -635,6 +630,7 @@
   }
 
   .kshop-pattern {
+    width: 90vw;
     opacity: 0.12;
   }
 }
