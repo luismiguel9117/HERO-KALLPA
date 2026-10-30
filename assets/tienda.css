@@ -1,0 +1,447 @@
+/* ==========================================================================
+   KALPA TIENDA E-COMMERCE (Estilo de Catálogo Comercial basado en Mockup)
+   Adaptado con la identidad visual de KALPA: Syne, Work Sans, Oro #f5ba2c y Negro
+   ========================================================================== */
+
+.tienda-page-wrapper {
+  background-color: #070a08;
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+/* 1. HERO BANNER DE TIENDA */
+.tienda-hero-banner {
+  position: relative;
+  width: 100%;
+  padding: clamp(3rem, 5vw, 4.5rem) 0 2rem;
+  background: radial-gradient(circle at 50% 20%, rgba(245, 186, 44, 0.08) 0%, transparent 65%),
+              #050806;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tienda-hero__container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tienda-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.tienda-breadcrumb a {
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.tienda-breadcrumb a:hover {
+  color: #f5ba2c;
+}
+
+.tienda-hero__title {
+  font-family: var(--font-brand);
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.tienda-hero__title span {
+  color: #f5ba2c;
+}
+
+.tienda-hero__subtitle {
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  color: #94a3b8;
+  max-width: 650px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* 2. BARRA DE FILTROS Y CONTROLES (Exacta a la Referencia) */
+.tienda-controls-bar {
+  position: sticky;
+  top: 70px;
+  z-index: 40;
+  background: rgba(7, 10, 8, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1rem 0;
+  margin-bottom: 2.5rem;
+}
+
+.tienda-controls__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Filtros a la Izquierda (Dropdowns: Disponibilidad, Precio, Categoría) */
+.tienda-filters-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.filter-dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+
+.filter-dropdown-btn:hover,
+.filter-dropdown-btn.is-active {
+  background: rgba(245, 186, 44, 0.12);
+  border-color: #f5ba2c;
+  color: #f5ba2c;
+}
+
+/* Controles a la Derecha: Conteo, Ordenar y Selector de Grid */
+.tienda-controls-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.tienda-items-count {
+  font-size: 0.84rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.tienda-sort-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.tienda-sort-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  padding: 0.55rem 2rem 0.55rem 0.95rem;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.tienda-sort-select:focus {
+  border-color: #f5ba2c;
+}
+
+.tienda-sort-arrow {
+  position: absolute;
+  right: 0.75rem;
+  pointer-events: none;
+  color: #94a3b8;
+}
+
+/* 3. GRID DE PRODUCTOS E-COMMERCE */
+.tienda-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  padding-bottom: 5rem;
+}
+
+@media (max-width: 1200px) {
+  .tienda-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .tienda-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 540px) {
+  .tienda-grid {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+}
+
+/* 4. TARJETA DE PRODUCTO (Card Comercial de Compra) */
+.tienda-card {
+  background: #0d120f;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+}
+
+.tienda-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(245, 186, 44, 0.4);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(245, 186, 44, 0.1);
+}
+
+/* Insignias de la Tarjeta */
+.tienda-card__badge-wrap {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-brand);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.65rem;
+  border-radius: 999px;
+  line-height: 1;
+}
+
+.badge-pill--oferta {
+  background: #f5ba2c;
+  color: #0b0908;
+}
+
+.badge-pill--bestseller {
+  background: #ea580c;
+  color: #ffffff;
+}
+
+.badge-pill--nuevo {
+  background: #10b981;
+  color: #ffffff;
+}
+
+/* Visual del Producto */
+.tienda-card__visual {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem 0 1rem;
+  overflow: hidden;
+}
+
+.tienda-card__img {
+  max-width: 82%;
+  max-height: 230px;
+  object-fit: contain;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.5));
+}
+
+.tienda-card:hover .tienda-card__img {
+  transform: scale(1.06);
+}
+
+/* Contenido Editorial de la Tarjeta */
+.tienda-card__body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.tienda-card__title {
+  font-family: var(--font-brand);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.25;
+  margin: 0 0 0.35rem;
+}
+
+.tienda-card__subtitle {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin: 0 0 0.95rem;
+  line-height: 1.4;
+}
+
+/* Bloque de Precios (Exacto al Mockup) */
+.tienda-card__pricing-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  margin-bottom: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.price-main {
+  font-family: var(--font-brand);
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.price-old {
+  font-size: 0.88rem;
+  color: #64748b;
+  text-decoration: line-through;
+  font-weight: 500;
+}
+
+.price-discount-tag {
+  background: rgba(245, 186, 44, 0.16);
+  border: 1px solid rgba(245, 186, 44, 0.35);
+  color: #f5ba2c;
+  font-family: var(--font-brand);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+/* Pastilla de Garantía / Valor Agregado (Como en la Referencia) */
+.tienda-card__trust-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.74rem;
+  color: #cbd5e1;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.tienda-card__trust-pill svg {
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+/* Acciones de Compra */
+.tienda-card__actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: auto;
+}
+
+.tienda-qty-stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.12rem 0.35rem;
+  height: 38px;
+}
+
+.tienda-qty-btn {
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.tienda-qty-btn:hover {
+  color: #f5ba2c;
+}
+
+.tienda-qty-val {
+  font-family: var(--font-brand);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  min-width: 22px;
+  text-align: center;
+}
+
+.btn-tienda-add {
+  flex-grow: 1;
+  height: 38px;
+  background: #f5ba2c;
+  color: #0b0908;
+  border: none;
+  border-radius: 999px;
+  font-family: var(--font-brand);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  transition: all 0.22s ease;
+  box-shadow: 0 4px 14px rgba(245, 186, 44, 0.3);
+}
+
+.btn-tienda-add:hover {
+  background: #fbd132;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(245, 186, 44, 0.45);
+}
+
+/* Enlace a la Ficha Técnica Informativa */
+.tienda-card__info-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-size: 0.74rem;
+  color: #94a3b8;
+  text-decoration: none;
+  margin-top: 0.75rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.tienda-card__info-link:hover {
+  color: #f5ba2c;
+}

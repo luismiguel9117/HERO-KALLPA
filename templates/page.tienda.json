@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "kallpa-tienda",
+      "settings": {
+        "title_dark": "TIENDA",
+        "title_gold": "KALLPA",
+        "subtitle": "Energía de los Andes, en cada formato."
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

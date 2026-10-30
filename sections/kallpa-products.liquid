@@ -27,6 +27,76 @@
 
       {%- if section.blocks.size > 0 -%}
         {%- for block in section.blocks -%}
+          {%- comment -%}
+            Producto real del admin: el elegido en el bloque o, si no hay, el del enlace /products/handle.
+            Precio unidad = primera variante que no es pack. Precio pack = variante cuyo nombre
+            contiene "x" + pack_size (ej. "Pack x 6"); si no existe, se cobra la unidad x pack_size
+            sin descuento inventado. Si el producto agrupa varios tamaños (ej. Café Molido 250 g y
+            500 g), variant_match deja solo las variantes de ese tamaño.
+          {%- endcomment -%}
+          {%- liquid
+            assign variant_key = block.settings.variant_match | downcase | remove: ' '
+            assign slide_product = block.settings.product
+            if slide_product == blank and block.settings.product_link contains '/products/'
+              assign link_handle = block.settings.product_link | split: '/products/' | last | split: '?' | first
+              assign slide_product = all_products[link_handle]
+              if slide_product == blank and variant_key != blank
+                # Enlace por tamaño (kalpa-cafe-molido-250g) hacia un producto único (kalpa-cafe-molido)
+                assign size_suffix = '-' | append: variant_key
+                assign base_handle = link_handle | remove: size_suffix
+                assign slide_product = all_products[base_handle]
+              endif
+            endif
+
+            assign pack_size = block.settings.pack_size | default: 6
+            assign pack_key = 'x' | append: pack_size
+            assign unit_variant = nil
+            assign pack_variant = nil
+            if slide_product != blank
+              for v in slide_product.variants
+                assign v_title = v.title | downcase | remove: ' '
+                if variant_key != blank
+                  unless v_title contains variant_key
+                    continue
+                  endunless
+                endif
+                if v_title contains 'pack' or v_title contains 'x3' or v_title contains 'x6' or v_title contains 'x12'
+                  if pack_variant == nil and v_title contains pack_key
+                    assign pack_variant = v
+                  endif
+                elsif unit_variant == nil
+                  assign unit_variant = v
+                endif
+              endfor
+              if unit_variant == nil and variant_key == blank
+                assign unit_variant = slide_product.selected_or_first_available_variant
+              endif
+              if unit_variant == nil
+                # Ninguna variante coincide con el tamaño: se usan los precios de texto
+                assign slide_product = nil
+              endif
+            endif
+
+            if slide_product != blank
+              if pack_variant != nil
+                assign pack_price_cents = pack_variant.price
+                assign pack_old_cents = pack_variant.compare_at_price | default: 0
+                if pack_old_cents <= pack_price_cents
+                  assign pack_old_cents = unit_variant.price | times: pack_size
+                endif
+                assign pack_available = pack_variant.available
+              else
+                assign pack_price_cents = unit_variant.price | times: pack_size
+                assign pack_old_cents = 0
+                assign pack_available = unit_variant.available
+              endif
+
+              assign pack_discount_pct = 0
+              if pack_old_cents > pack_price_cents
+                assign pack_discount_pct = pack_old_cents | minus: pack_price_cents | times: 100 | divided_by: pack_old_cents
+              endif
+            endif
+          -%}
           <div class="kalpa-product-slide {% if forloop.first %}active{% endif %} {% if block.type == 'product_molido' or block.settings.theme_variant == 'molido' %}kalpa-product-slide--molido{% else %}kalpa-product-slide--original{% endif %}" 
                id="product-slide-{{ forloop.index0 }}" 
                data-slide-index="{{ forloop.index0 }}"
@@ -46,9 +116,11 @@
                     {{ block.settings.description | default: 'Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar.' }}
                   </p>
                   
-                  {%- if block.settings.product_link != blank or block.settings.btn_link_text != blank -%}
+                  {%- if block.settings.product_link != blank or block.settings.btn_link_text != blank or slide_product != blank -%}
                     {%- assign slide_pdp = block.settings.product_link -%}
-                    {%- if slide_pdp contains '/products/kalpa-' -%}
+                    {%- if slide_product != blank -%}
+                      {%- assign slide_pdp = unit_variant.url | default: slide_product.url -%}
+                    {%- elsif slide_pdp contains '/products/kalpa-' -%}
                       {%- assign check_handle = slide_pdp | remove: '/products/' -%}
                       {%- if all_products[check_handle].url == blank -%}
                         {%- assign slide_pdp = collections['all'].products.first.url | default: '/products/the-collection-snowboard-liquid' -%}
@@ -135,7 +207,14 @@
                   <div class="sale-buy-col sale-buy-col--unit">
                     <div class="sale-unit-header">{{ block.settings.unit_label | default: 'Unidad' }}</div>
                     <div class="sale-price-block">
-                      <div class="sale-price-main">{{ block.settings.unit_price | default: 'S/ 7.90' }}</div>
+                      {%- if slide_product != blank -%}
+                        {%- if unit_variant.compare_at_price > unit_variant.price -%}
+                          <span class="sale-pack-old-price">{{ unit_variant.compare_at_price | money }}</span>
+                        {%- endif -%}
+                        <div class="sale-price-main">{{ unit_variant.price | money }}</div>
+                      {%- else -%}
+                        <div class="sale-price-main">{{ block.settings.unit_price | default: 'S/ 7.90' }}</div>
+                      {%- endif -%}
                       <div class="sale-volume-sub">{{ block.settings.unit_volume | default: '355 ml' }}</div>
                     </div>
                     <div class="sale-qty-stepper" aria-label="Cantidad de unidades">
@@ -143,8 +222,20 @@
                       <span id="qty-{{ block.id }}" class="qty-val">1</span>
                       <button type="button" class="qty-btn" onclick="updateSlideQty('qty-{{ block.id }}', 1)" aria-label="Aumentar cantidad">+</button>
                     </div>
-                    <button type="button" class="btn-sale-add" onclick="addCustomUnitToCart('{{ block.id }}', '{{ block.settings.title_main }} {{ block.settings.title_sub }}', '{{ block.settings.unit_price | remove: 'S/' | strip }}')">
-                      <span>AGREGAR</span>
+                    {%- liquid
+                      assign unit_sold_out = false
+                      if slide_product != blank and unit_variant.available == false
+                        assign unit_sold_out = true
+                      endif
+                    -%}
+                    <button type="button" class="btn-sale-add"
+                      {% if slide_product != blank %}
+                        onclick="addSlideVariantToCart(this, {{ unit_variant.id }}, 'qty-{{ block.id }}', 1)"
+                      {% else %}
+                        onclick="addCustomUnitToCart('{{ block.id }}', '{{ block.settings.title_main }} {{ block.settings.title_sub }}', '{{ block.settings.unit_price | remove: 'S/' | strip }}')"
+                      {% endif %}
+                      {% if unit_sold_out %}disabled{% endif %}>
+                      <span>{% if unit_sold_out %}AGOTADO{% else %}AGREGAR{% endif %}</span>
                       <svg class="sale-add-arrow-mobile" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                         <polyline points="12 5 19 12 12 19"></polyline>
@@ -156,12 +247,25 @@
                   <div class="sale-buy-col sale-buy-col--pack">
                     <div class="sale-pack-header">
                       <span class="sale-pack-title">{{ block.settings.pack_label | default: 'Pack x 6' }}</span>
-                      <span class="sale-pack-discount">{{ block.settings.pack_discount | default: '-15%' }}</span>
+                      {%- if slide_product != blank -%}
+                        {%- if pack_discount_pct > 0 -%}
+                          <span class="sale-pack-discount">-{{ pack_discount_pct }}%</span>
+                        {%- endif -%}
+                      {%- else -%}
+                        <span class="sale-pack-discount">{{ block.settings.pack_discount | default: '-15%' }}</span>
+                      {%- endif -%}
                     </div>
                     <div class="sale-pack-body">
                       <div class="sale-pack-pricing">
-                        <span class="sale-pack-old-price">{{ block.settings.pack_old_price | default: 'S/ 47.40' }}</span>
-                        <div class="sale-price-main sale-price-main--pack">{{ block.settings.pack_price | default: 'S/ 39.90' }}</div>
+                        {%- if slide_product != blank -%}
+                          {%- if pack_old_cents > pack_price_cents -%}
+                            <span class="sale-pack-old-price">{{ pack_old_cents | money }}</span>
+                          {%- endif -%}
+                          <div class="sale-price-main sale-price-main--pack">{{ pack_price_cents | money }}</div>
+                        {%- else -%}
+                          <span class="sale-pack-old-price">{{ block.settings.pack_old_price | default: 'S/ 47.40' }}</span>
+                          <div class="sale-price-main sale-price-main--pack">{{ block.settings.pack_price | default: 'S/ 39.90' }}</div>
+                        {%- endif -%}
                         <div class="sale-volume-sub">{{ block.settings.pack_volume | default: '6 unidades' }}</div>
                       </div>
                       <div class="sale-pack-cans-visual" aria-hidden="true">
@@ -174,9 +278,22 @@
                         <img loading="lazy" decoding="async" src="{{ mini_can_img | asset_url }}" alt="" class="pack-mini-can pack-mini-can--f3" draggable="false" width="50" height="90">
                       </div>
                     </div>
-                    <button type="button" class="btn-sale-add" onclick="addCustomPackToCart('pack-{{ block.id }}', '{{ block.settings.pack_label }} {{ block.settings.title_main }} {{ block.settings.title_sub }}', '{{ block.settings.pack_price | remove: 'S/' | strip }}')">
-                      <span>AGREGAR</span>
-                    </button>
+                    {%- if slide_product != blank -%}
+                      {%- if pack_variant != nil -%}
+                        {%- assign pack_cart_variant = pack_variant.id -%}
+                        {%- assign pack_cart_qty = 1 -%}
+                      {%- else -%}
+                        {%- assign pack_cart_variant = unit_variant.id -%}
+                        {%- assign pack_cart_qty = pack_size -%}
+                      {%- endif -%}
+                      <button type="button" class="btn-sale-add" onclick="addSlideVariantToCart(this, {{ pack_cart_variant }}, null, {{ pack_cart_qty }})" {% unless pack_available %}disabled{% endunless %}>
+                        <span>{% if pack_available %}AGREGAR{% else %}AGOTADO{% endif %}</span>
+                      </button>
+                    {%- else -%}
+                      <button type="button" class="btn-sale-add" onclick="addCustomPackToCart('pack-{{ block.id }}', '{{ block.settings.pack_label }} {{ block.settings.title_main }} {{ block.settings.title_sub }}', '{{ block.settings.pack_price | remove: 'S/' | strip }}')">
+                        <span>AGREGAR</span>
+                      </button>
+                    {%- endif -%}
                   </div>
                 </div>
 
@@ -205,6 +322,17 @@
     if (val < 1) val = 1;
     if (val > 24) val = 24;
     el.textContent = val;
+  }
+
+  // Producto vinculado al admin: agrega la variante real (qtyElementId multiplica por el contador de la unidad)
+  function addSlideVariantToCart(btn, variantId, qtyElementId, baseQty) {
+    if (btn.disabled || typeof window.addVariantToKallpaCart !== 'function') return;
+    const qtyEl = qtyElementId ? document.getElementById(qtyElementId) : null;
+    const qty = (qtyEl ? Math.max(1, parseInt(qtyEl.textContent || '1', 10)) : 1) * (baseQty || 1);
+    btn.disabled = true;
+    window.addVariantToKallpaCart(variantId, qty)
+      .catch(() => {})
+      .finally(() => { btn.disabled = false; });
   }
 
   function addCustomUnitToCart(blockId, name, priceStr) {
@@ -276,9 +404,29 @@
           "default": "Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar."
         },
         {
+          "type": "product",
+          "id": "product",
+          "label": "Producto de Shopify",
+          "info": "Precios, stock y botón Agregar salen de este producto. Para el pack, crea una variante llamada \"Pack x 6\" (o x 12, según Unidades por pack)."
+        },
+        {
+          "type": "text",
+          "id": "variant_match",
+          "label": "Variante a mostrar (opcional)",
+          "info": "Si el producto tiene varios tamaños, escribe el del slide tal como aparece en la variante (ej. 250 g o 500 g)."
+        },
+        {
+          "type": "number",
+          "id": "pack_size",
+          "label": "Unidades por pack",
+          "info": "Si el producto no tiene variante Pack, el pack se cobra como esta cantidad de unidades.",
+          "default": 6
+        },
+        {
           "type": "url",
           "id": "product_link",
-          "label": "Enlace Ficha de Producto"
+          "label": "Enlace Ficha de Producto",
+          "info": "Si no eliges producto arriba, se usa el producto de este enlace (/products/...)."
         },
         {
           "type": "text",
@@ -436,6 +584,10 @@
         {
           "type": "header",
           "content": "Precios: Opción Unidad"
+        },
+        {
+          "type": "paragraph",
+          "content": "Los precios de texto solo se muestran si el slide no tiene un producto de Shopify vinculado."
         },
         {
           "type": "text",

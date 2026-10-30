@@ -1,0 +1,28 @@
+{%- comment -%}
+  SECCIÓN: main-page.liquid
+  Router inteligente de páginas: si es Productos no renderiza nada (el catálogo lo pinta la
+  sección products-catalog de page.json), si es Tienda muestra el catálogo comercial,
+  y para otras páginas muestra el contenido estándar.
+{%- endcomment -%}
+
+{%- if page.handle contains 'producto' -%}
+  {%- comment -%} Renderizado por products-catalog {%- endcomment -%}
+{%- elsif page.handle contains 'tienda' -%}
+  {% section 'kallpa-tienda' %}
+{%- else -%}
+  <div class="page-width" style="padding: clamp(3rem, 6vw, 6rem) 1.5rem; max-width: 900px; margin: 0 auto; color: #fff;">
+    <h1 style="font-family: var(--font-brand); font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; margin-bottom: 2rem; color: #f5ba2c;">
+      {{ page.title }}
+    </h1>
+    <div class="rte" style="line-height: 1.8; color: #cbd5e1; font-size: 1.05rem;">
+      {{ page.content }}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Página General",
+  "settings": []
+}
+{% endschema %}

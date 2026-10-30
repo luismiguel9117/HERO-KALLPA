@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Productos | KALPA Cold Brew — La Línea Kallpa</title>
-  <meta name="description" content="Descubre la línea completa de productos KALPA: Cold Brew Original 355ml y Café Molido de Especialidad 250g y 500g directo del VRAEM.">
+  <title>Productos | KALPA Cold Brew — Ficha Técnica, Beneficios Médicos y Origen</title>
+  <meta name="description" content="Guía técnica y editorial de KALPA. Conoce la ciencia de nuestra extracción en frío de 24H, beneficios médicos (baja acidez, 0 azúcar, 280mg cafeína natural) y ficha técnica oficial.">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/logo-k-symbol-white.png">
@@ -14,55 +14,39 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Estilos Globales -->
+  <!-- Estilos Globales y Específicos -->
   <link rel="stylesheet" href="assets/theme.css">
-  <link rel="stylesheet" href="assets/products-pages.css">
+  <link rel="stylesheet" href="assets/products-info.css">
 </head>
-<body class="bg-black text-white">
+<body class="prod-info-page">
 
   <!-- ==================== 1. ANNOUNCEMENT BAR & NAVBAR ==================== -->
   <div class="kalpa-announcement-bar">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="announcement-truck-icon">
       <rect x="1" y="3" width="15" height="13"></rect>
-      <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+      <polygon points="16 8 20 8 23 11 23 16 16 8"></polygon>
       <circle cx="5.5" cy="18.5" r="2.5"></circle>
       <circle cx="18.5" cy="18.5" r="2.5"></circle>
     </svg>
-    <span>Envíos a todo el Perú. Compra por unidad o por pack.</span>
-    <a href="producto.html" class="announcement-link-desktop">Ver promoción de lanzamiento</a>
+    <span>¿Buscas comprar directo? Conoce nuestra Tienda Oficial con envíos a todo el Perú.</span>
+    <a href="tienda.html" class="announcement-link-desktop">Ir a la Tienda</a>
   </div>
 
-    <!-- ==================== BARRA DE NAVEGACIÓN KALPA (COMPONENTE ÚNICO) ==================== -->
   <header class="kalpa-navbar" id="kallpa-header">
     <div class="page-width kalpa-navbar__container">
-      <!-- Logo KALPA Oficial -->
       <a href="index.html" class="kalpa-logo" aria-label="KALPA Cold Brew - Inicio">
         <img src="assets/logo-kalpa-white.png" alt="KALPA Logo" class="kalpa-logo__img" width="165" height="38">
       </a>
 
-      <!-- Menú de Navegación Unificado -->
       <nav class="kalpa-nav-menu">
         <a href="index.html" class="kalpa-nav-item">Inicio</a>
+        <a href="tienda.html" class="kalpa-nav-item">Tienda</a>
         <a href="productos.html" class="kalpa-nav-item is-active">Productos</a>
-        <a href="promociones.html" class="kalpa-nav-item">Promociones</a>
         <a href="nosotros.html" class="kalpa-nav-item">Nosotros</a>
+        <a href="index.html#origin-section" class="kalpa-nav-item">Origen</a>
       </nav>
 
-      <!-- Acciones de Navegación Unificadas -->
       <div class="kalpa-nav-actions">
-        <button type="button" class="kalpa-nav-icon nav-icon--account" aria-label="Cuenta" onclick="alert('Mi Cuenta KALPA')">
-          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-        </button>
-
-        <button type="button" class="kalpa-nav-icon nav-icon--favorites" aria-label="Favoritos" onclick="alert('Guardado en favoritos')">
-          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-          </svg>
-        </button>
-
         <button type="button" class="kalpa-cart-capsule" onclick="openKallpaCart()" aria-label="Abrir Carrito">
           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
@@ -72,308 +56,372 @@
           <span id="kallpa-cart-count">0</span>
         </button>
 
-        <a href="productos.html" class="kalpa-nav-cta">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="8" cy="21" r="1"></circle>
-            <circle cx="19" cy="21" r="1"></circle>
-            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
-          </svg>
-          <span>COMPRAR AHORA</span>
+        <a href="tienda.html" class="kalpa-nav-cta">
+          <span>IR A LA TIENDA</span>
         </a>
-
-        <button type="button" class="kalpa-nav-hamburger" id="kalpa-mobile-menu-btn" aria-label="Abrir Menú">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
       </div>
     </div>
   </header>
 
-  <!-- ==================== MENÚ MÓVIL KALPA (COMPONENTE ÚNICO) ==================== -->
-  <div class="kalpa-mobile-menu-overlay" id="kalpa-mobile-menu-overlay" onclick="closeKallpaMobileMenu()"></div>
-  <aside class="kalpa-mobile-menu-drawer" id="kalpa-mobile-menu-drawer" aria-label="Menú Móvil KALPA">
-    <div class="kalpa-mobile-menu-header">
-      <img src="assets/logo-kalpa-white.png" alt="KALPA Logo" width="135" height="32">
-      <button type="button" class="kalpa-mobile-menu-close" onclick="closeKallpaMobileMenu()" aria-label="Cerrar Menú">&times;</button>
-    </div>
-    <nav class="kalpa-mobile-menu-links">
-      <a href="index.html" class="kalpa-mobile-menu-link"><span>Inicio</span> <span>&rarr;</span></a>
-      <a href="productos.html" class="kalpa-mobile-menu-link"><span>Productos</span> <span>&rarr;</span></a>
-      <a href="promociones.html" class="kalpa-mobile-menu-link"><span>Promociones</span> <span>&rarr;</span></a>
-      <a href="nosotros.html" class="kalpa-mobile-menu-link"><span>Nosotros</span> <span>&rarr;</span></a>
-    </nav>
-    <div class="kalpa-mobile-menu-bottom">
-      <a href="productos.html" class="kalpa-nav-cta" style="display: flex; justify-content: center; width: 100%; margin: 0;">
-        <span>COMPRAR AHORA</span>
-      </a>
-    </div>
-  </aside>
-
-  <!-- ==================== 2. HERO DE PRODUCTOS (FONDO PANORÁMICO DE CACAO Y AMANECER ANDINO) ==================== -->
-  <section class="kallpa-products-hero" aria-label="Catálogo de Productos">
-    <div class="products-hero__bg-layer" aria-hidden="true"></div>
-    <div class="products-hero__vignette" aria-hidden="true"></div>
-
-    <div class="page-width products-hero__container">
-      <!-- Breadcrumb -->
-      <nav class="products-hero__breadcrumb" aria-label="Ruta de navegación">
-        <a href="index.html">Inicio</a>
-        <span class="breadcrumb-separator">&gt;</span>
-        <span class="breadcrumb-current">Productos</span>
-      </nav>
-
-      <!-- Kicker con barra dorada -->
-      <div class="products-hero__kicker">
-        <span class="kicker-dash"></span>
-        <span>NUESTROS PRODUCTOS</span>
-      </div>
-
-      <!-- Título Gigante -->
-      <h1 class="products-hero__title">
-        <span class="title-line-white">LA LÍNEA</span>
-        <span class="title-line-gold">KALLPA</span>
-      </h1>
-
-      <!-- Párrafo Descriptivo -->
-      <p class="products-hero__desc">
-        Distintas formas de disfrutar la energía real de los Andes.
-      </p>
-    </div>
-  </section>
-
-  <!-- ==================== 3. BARRA DE FILTROS Y ORDENAMIENTO ==================== -->
-  <section class="products-controls-bar">
-    <div class="page-width products-controls__container">
+  <!-- ==================== 2. HERO EDITORIAL DE PRODUCTOS ==================== -->
+  <section class="prod-info-hero">
+    <div class="page-width prod-info-hero__inner">
+      <span class="prod-info-kicker">FICHA EDITORIAL & CIENTÍFICA</span>
       
-      <!-- Píldoras de Filtro -->
-      <div class="products-filter-pills" role="tablist">
-        <button type="button" class="filter-pill is-active" data-filter="all" onclick="filterProducts('all', this)">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
-            <line x1="6" y1="1" x2="6" y2="4"></line>
-            <line x1="10" y1="1" x2="10" y2="4"></line>
-            <line x1="14" y1="1" x2="14" y2="4"></line>
-          </svg>
-          <span>Todos los productos</span>
-        </button>
+      <h1 class="prod-info-title">
+        LA CIENCIA Y EL ARTE DETRÁS DE <span>KALPA</span>
+      </h1>
+      
+      <p class="prod-info-lead">
+        Desarrollado para quienes exigen máximo rendimiento físico y cognitivo sin comprometer su salud. Conoce la investigación, el origen andino y los atributos nutricionales de nuestra línea de especialidad.
+      </p>
 
-        <button type="button" class="filter-pill" data-filter="cold-brew" onclick="filterProducts('cold-brew', this)">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Selector de Pestaña Interactiva (Cold Brew vs Café Molido) -->
+      <div class="prod-tabs-nav" role="tablist">
+        <button type="button" class="prod-tab-btn is-active" id="tab-btn-cb" onclick="switchProductView('cold-brew')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="6" y="4" width="12" height="16" rx="2"></rect>
             <line x1="6" y1="9" x2="18" y2="9"></line>
-            <line x1="9" y1="2" x2="15" y2="2"></line>
           </svg>
-          <span>Cold Brew</span>
+          <span>Cold Brew 355 ml</span>
         </button>
 
-        <button type="button" class="filter-pill" data-filter="cafe-molido" onclick="filterProducts('cafe-molido', this)">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <button type="button" class="prod-tab-btn" id="tab-btn-molido" onclick="switchProductView('cafe-molido')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="9"></circle>
             <path d="M12 3a9 9 0 0 0 0 18c2-2 3-5 3-9s-1-7-3-9z"></path>
           </svg>
-          <span>Café Molido</span>
-        </button>
-
-        <button type="button" class="filter-pill" data-filter="accesorios" onclick="filterProducts('accesorios', this)">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="9" cy="21" r="1"></circle>
-            <circle cx="20" cy="21" r="1"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-          </svg>
-          <span>Accesorios</span>
+          <span>Café Molido 250g / 500g</span>
         </button>
       </div>
+    </div>
+  </section>
 
-      <!-- Selector de Ordenamiento -->
-      <div class="products-sort-wrap">
-        <label for="products-sort-select" class="sort-label">Ordenar por:</label>
-        <div class="sort-select-wrapper">
-          <select id="products-sort-select" class="sort-select" onchange="sortProducts(this.value)">
-            <option value="recent">Más recientes</option>
-            <option value="price-low">Precio: menor a mayor</option>
-            <option value="price-high">Precio: mayor a menor</option>
-            <option value="popular">Más populares</option>
-          </select>
-          <svg class="sort-select-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
+  <!-- ==================== 3. SECCIÓN: CREACIÓN Y ORIGEN ==================== -->
+  <section class="section-creacion" id="creacion">
+    <div class="page-width creacion-grid">
+      
+      <div class="creacion-content">
+        <span class="creacion-header-eyebrow">EL PROCESO DE ORIGEN</span>
+        <h2 class="creacion-heading" id="creacion-title">
+          DE LAS PENDIENTES DEL VRAEM A LA EXTRACCIÓN PERFECTA
+        </h2>
+        <p class="creacion-text" id="creacion-desc">
+          En los valles altos de Ayacucho, entre los 1,800 y 2,200 metros sobre el nivel del mar, las plantas de café crecen bajo sombra nativa, recibiendo brisas andinas y suelos minerales enriquecidos. Esta altitud ralentiza el crecimiento de la cereza, concentrando azúcares naturales, polifenoles y una acidez málica limpia.
+        </p>
+
+        <div class="creacion-puntos-lista" id="creacion-puntos">
+          <div class="creacion-punto">
+            <div class="punto-icon-box">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="punto-title">Extracción Lenta en Frío de 24 Horas</h3>
+              <p class="punto-desc">A diferencia del café comercial preparado con agua hirviendo que quema los aceites esenciales, KALPA se macera a 4°C durante un ciclo entero de 24 horas continuas.</p>
+            </div>
+          </div>
+
+          <div class="creacion-punto">
+            <div class="punto-icon-box">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="m4.93 4.93 4.24 4.24"></path>
+                <path d="m14.83 9.17 4.24-4.24"></path>
+                <path d="m14.83 14.83 4.24 4.24"></path>
+                <path d="m9.17 14.83-4.24 4.24"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="punto-title">Filtrado Micrométrico Puro</h3>
+              <p class="punto-desc">Triple filtración por gravedad que retiene cualquier sedimento, logrando un cuerpo limpio, sedoso y ultra refrescante en boca.</p>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div class="creacion-visual-card">
+        <img id="creacion-img" src="assets/clean-energy-hero.jpg" alt="Proceso de café de especialidad y cold brew KALPA" loading="lazy">
       </div>
 
     </div>
   </section>
 
-  <!-- ==================== 4. LISTADO PRINCIPAL DE PRODUCTOS ==================== -->
-  <main class="products-catalog-main">
+  <!-- ==================== 4. SECCIÓN: TIPOS DE USO Y MOMENTOS DE CONSUMO ==================== -->
+  <section class="section-usos" id="usos">
     <div class="page-width">
-      
-      <!-- 4.1 PRODUCTO DESTACADO 01: KALLPA ORIGINAL COLD BREW (Banner Panorámico) -->
-      <article class="featured-product-card" id="featured-product" data-category="cold-brew">
-        <div class="featured-card__bg-pattern" aria-hidden="true"></div>
+      <div class="usos-header">
+        <span class="prod-info-kicker">RENDIMIENTO & RUTINA</span>
+        <h2 class="prod-info-title">CUÁNDO Y CÓMO TOMAR <span>KALPA</span></h2>
+        <p style="color: #94a3b8; font-size: 1.05rem; margin-top: 0.5rem;">
+          Diseñado para integrarse con precisión en los momentos de mayor demanda de tu día.
+        </p>
+      </div>
+
+      <div class="usos-grid">
         
-        <div class="featured-card__container">
-          
-          <!-- Columna 1: Información Editorial -->
-          <div class="featured-card__info">
-            <div class="featured-card__kicker">
-              <span class="kicker-tag">01 — COLD BREW</span>
-            </div>
-            
-            <h2 class="featured-card__title">
-              <span class="title-kallpa">KALLPA</span>
-              <span class="title-product">ORIGINAL</span>
-            </h2>
-
-            <p class="featured-card__desc">
-              Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar.
-            </p>
-
-            <div class="featured-card__cta">
-              <a href="producto.html" class="btn-grid-product">
-                <span>VER PRODUCTO</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-              </a>
-            </div>
-
-            <!-- 4 Atributos Circulares -->
-            <div class="featured-specs-row">
-              <div class="featured-spec-badge">
-                <div class="spec-circle">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                  </svg>
-                </div>
-                <span class="spec-label">280 mg<br>de cafeína</span>
-              </div>
-
-              <div class="featured-spec-badge">
-                <div class="spec-circle">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                  </svg>
-                </div>
-                <span class="spec-label">Café de origen<br>VRAEM</span>
-              </div>
-
-              <div class="featured-spec-badge">
-                <div class="spec-circle">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                  </svg>
-                </div>
-                <span class="spec-label">Sin azúcares<br>añadidos</span>
-              </div>
-
-              <div class="featured-spec-badge">
-                <div class="spec-circle">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="6" y="4" width="12" height="16" rx="2"></rect>
-                    <line x1="6" y1="9" x2="18" y2="9"></line>
-                  </svg>
-                </div>
-                <span class="spec-label">Listo<br>para tomar</span>
-              </div>
-            </div>
+        <!-- Uso 1: Pre-Entreno -->
+        <article class="uso-card">
+          <div class="uso-card__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
           </div>
+          <span class="uso-card__kicker">DEPORTE & POTENCIA</span>
+          <h3 class="uso-card__title">Pre-Entreno y Resistencia</h3>
+          <p class="uso-card__text">
+            Tómalo 25 a 35 minutos antes de tu entrenamiento de fuerza, carrera o sesión deportiva. Sus 280 mg de cafeína estimulan la contracción neuromuscular, movilizan ácidos grasos y elevan el VO2 max sin la carga de azúcar ni la inflamación estomacal de los pre-entrenos en polvo.
+          </p>
+        </article>
 
-          <!-- Columna 2: Visual Central de la Lata con Hielos, Rayo y Roca -->
-          <div class="featured-card__visual">
-            <div class="featured-can-stage">
-              <div class="lightning-ray-bg" aria-hidden="true"></div>
-              <img src="assets/hero-beans-ice-back.webp" alt="" class="stage-beans-back" draggable="false">
-              <img src="assets/kalpa-can-original.webp" alt="Lata KALPA Cold Brew Original 355ml" class="stage-can-img" draggable="false">
-              <img src="assets/hero-bean-single.png" alt="" class="stage-bean-front" draggable="false">
-              <img src="assets/hero-rock-base.webp" alt="" class="stage-rock-base" draggable="false">
-            </div>
+        <!-- Uso 2: Trabajo Profundo -->
+        <article class="uso-card">
+          <div class="uso-card__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <span class="uso-card__kicker">COGNICIÓN & ESTUDIO</span>
+          <h3 class="uso-card__title">Foco Mental y Trabajo Profundo</h3>
+          <p class="uso-card__text">
+            Ideal para programadores, creativos, médicos y estudiantes. Al no contener azúcares simples, evita el pico glucémico de la insulina y la consiguiente caída de energía (crash). Mantiene el estado de flujo (flow state) durante 5 a 6 horas ininterrumpidas.
+          </p>
+        </article>
+
+        <!-- Uso 3: Recarga de Tarde -->
+        <article class="uso-card">
+          <div class="uso-card__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+              <line x1="6" y1="1" x2="6" y2="4"></line>
+              <line x1="10" y1="1" x2="10" y2="4"></line>
+              <line x1="14" y1="1" x2="14" y2="4"></line>
+            </svg>
+          </div>
+          <span class="uso-card__kicker">CLARIDAD DIARIA</span>
+          <h3 class="uso-card__title">Reset de Tarde sin Ansiedad</h3>
+          <p class="uso-card__text">
+            Sustituye las bebidas gaseosas y energizantes sintéticos a media tarde. Sírvelo bien helado con hielo para una refrescancia inmediata que reactiva tu metabolismo sin generar taquicardia ni interferir con la relajación nocturna.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 5. SECCIÓN: BENEFICIOS MÉDICOS Y FISIOLÓGICOS ==================== -->
+  <section class="section-beneficios-medicos" id="beneficios">
+    <div class="page-width">
+      <div class="med-header">
+        <span class="prod-info-kicker">RESPALDO FISIOLÓGICO</span>
+        <h2 class="prod-info-title">BENEFICIOS MÉDICOS DE LA EXTRACCIÓN EN FRÍO</h2>
+        <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6;">
+          Por qué la maceración de 24 horas y los granos de altura del VRAEM marcan una diferencia contundente en tu organismo comparado con el café industrial o las bebidas energéticas tradicionales.
+        </p>
+      </div>
+
+      <div class="med-grid">
+        
+        <!-- Beneficio 1: Acidez Reducida -->
+        <div class="med-card">
+          <div class="med-badge-num">-65%</div>
+          <div class="med-card__content">
+            <h3 class="med-card__title">65% Menor Acidez Gástrica</h3>
+            <p class="med-card__desc">
+              El calor descompone los aceites del café en ácidos clorogénicos y quinoides altamente irritantes. La extracción fría de KALPA previene esta oxidación, ofreciendo un pH suave (~5.4) altamente tolerable para estómagos con gastritis leve, reflujo o sensibilidad digestiva.
+            </p>
+            <span class="med-card__tag">✓ Amigable con la mucosa gástrica</span>
           </div>
         </div>
-      </article>
 
-      <!-- 4.2 CUADRÍCULA DE CAFÉ MOLIDO: 250G Y 500G -->
-      <section class="products-grid-duo" aria-label="Variedades de Café Molido">
-        
-        <!-- Tarjeta 02: KALLPA CAFÉ MOLIDO 250G -->
-        <article class="grid-card-product grid-card--molido250" data-category="cafe-molido">
-          <div class="grid-card__bg" aria-hidden="true"></div>
-          <div class="grid-card__glass" aria-hidden="true"></div>
-
-          <div class="grid-card__content">
-            <span class="grid-card__kicker">02 — CAFÉ MOLIDO</span>
-            <h3 class="grid-card__title">
-              <span class="title-kallpa">KALLPA</span>
-              <span class="title-molido">CAFÉ MOLIDO</span>
-            </h3>
-            <p class="grid-card__desc">
-              Café tostado y molido de especialidad, con notas de cereza, chocolate y manzana. Cultivado en los Andes peruanos para tu día a día.
+        <!-- Beneficio 2: 280 mg Cafeína Limpia -->
+        <div class="med-card">
+          <div class="med-badge-num">280</div>
+          <div class="med-card__content">
+            <h3 class="med-card__title">Cafeína Natural de Origen Vegetal</h3>
+            <p class="med-card__desc">
+              280 mg de cafeína natural pura por lata. A diferencia de la cafeína sintética (anhidra) añadida en polvos y refrescos que impacta de golpe al sistema cardiovascular, la cafeína ligada a los polifenoles del café se absorbe de forma gradual y sostenida.
             </p>
-
-            <div class="grid-card__action">
-              <a href="producto.html" class="btn-grid-product">
-                <span>VER PRODUCTO</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-              </a>
-            </div>
+            <span class="med-card__tag">✓ Sin taquicardia ni picos de ansiedad</span>
           </div>
-        </article>
+        </div>
 
-        <!-- Tarjeta 03: KALLPA CAFÉ MOLIDO 500G -->
-        <article class="grid-card-product grid-card--molido500" data-category="cafe-molido">
-          <div class="grid-card__bg" aria-hidden="true"></div>
-          <div class="grid-card__glass" aria-hidden="true"></div>
-
-          <div class="grid-card__content">
-            <span class="grid-card__kicker">03 — CAFÉ MOLIDO</span>
-            <h3 class="grid-card__title">
-              <span class="title-kallpa">KALLPA</span>
-              <span class="title-molido">CAFÉ MOLIDO</span>
-            </h3>
-            <p class="grid-card__desc">
-              La misma calidad, en una presentación más grande. Café de especialidad, ideal para quienes viven el café todos los días.
+        <!-- Beneficio 3: 0 Azúcar y Salud Metabólica -->
+        <div class="med-card">
+          <div class="med-badge-num">0g</div>
+          <div class="med-card__content">
+            <h3 class="med-card__title">Cero Azúcar y Cero Carbohidratos</h3>
+            <p class="med-card__desc">
+              No eleva la glucosa en sangre ni estimula la secreción de insulina. 100% compatible con protocolos de ayuno intermitente (no rompe la autofagia), dietas cetogénicas (keto) y recomendado para personas con resistencia a la insulina o diabetes.
             </p>
-
-            <div class="grid-card__action">
-              <a href="producto.html" class="btn-grid-product">
-                <span>VER PRODUCTO</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-              </a>
-            </div>
+            <span class="med-card__tag">✓ Apto para diabéticos y protocolo fasting</span>
           </div>
-        </article>
+        </div>
 
-      </section>
+        <!-- Beneficio 4: Antioxidantes y Salud Celular -->
+        <div class="med-card">
+          <div class="med-badge-num">AOX</div>
+          <div class="med-card__content">
+            <h3 class="med-card__title">Alta Concentración de Polifenoles</h3>
+            <p class="med-card__desc">
+              El café de altura cosechado a más de 1,800 metros es una de las fuentes vegetales más ricas en ácido clorogénico antioxidante. Protege el endotelio vascular, modula la inflamación celular y combate el daño por radicales libres.
+            </p>
+            <span class="med-card__tag">✓ Protección celular y longevidad</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 6. SECCIÓN: FICHA TÉCNICA OFICIAL ==================== -->
+  <section class="section-ficha-tecnica" id="ficha-tecnica">
+    <div class="page-width ficha-container">
+      
+      <div class="ficha-box">
+        <div class="ficha-header-row">
+          <div>
+            <span style="font-size: 0.75rem; color: #f5ba2c; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;">ESPECIFICACIÓN TÉCNICA OFICIAL</span>
+            <h2 class="ficha-title" id="ficha-product-title">KALPA COLD BREW <span>355 ML</span></h2>
+          </div>
+          <div class="ficha-code-badge" id="ficha-code">SKU: KLP-CB-355</div>
+        </div>
+
+        <table class="ficha-table" id="ficha-table-content">
+          <tbody>
+            <tr>
+              <th>Ingredientes</th>
+              <td>Agua filtrada osmotizada, Café de especialidad 100% Arábica (Ayacucho, VRAEM).</td>
+            </tr>
+            <tr>
+              <th>Método de Extracción</th>
+              <td>Maceración lenta en frío por 24 horas continuas a 4°C.</td>
+            </tr>
+            <tr>
+              <th>Contenido Neto</th>
+              <td>355 ml (12 fl. oz.)</td>
+            </tr>
+            <tr>
+              <th>Contenido de Cafeína</th>
+              <td class="ficha-highlight">280 mg por lata (aprox. 3 tazas de café espresso)</td>
+            </tr>
+            <tr>
+              <th>Calorías / Valor Energético</th>
+              <td class="ficha-highlight">0 kcal (0 kJ)</td>
+            </tr>
+            <tr>
+              <th>Azúcares / Grasas / Sodio</th>
+              <td>0 g azúcares añadidos, 0 g grasas, 5 mg sodio natural.</td>
+            </tr>
+            <tr>
+              <th>pH Estimado</th>
+              <td>5.4 ± 0.2 (Extremadamente suave en paladar y estómago)</td>
+            </tr>
+            <tr>
+              <th>Notas de Cata</th>
+              <td>Chocolate amargo 70%, manzana deshidratada, cuerpo sedoso y final dulce natural.</td>
+            </tr>
+            <tr>
+              <th>Vida Útil y Empaque</th>
+              <td>12 meses en lata de aluminio 100% reciclable, libre de BPA.</td>
+            </tr>
+            <tr>
+              <th>Certificaciones</th>
+              <td>Origen Ayacucho · Registro Sanitario DIGESA · Libre de Gluten · Vegano.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
     </div>
-  </main>
+  </section>
 
-  <!-- ==================== 5. FOOTER CON BANNER NEWSLETTER ==================== -->
-    <!-- ==================== FOOTER KALPA CON NEWSLETTER (COMPONENTE ÚNICO) ==================== -->
+  <!-- ==================== 7. SECCIÓN: INDICACIONES DE CONSUMO ==================== -->
+  <section class="section-indicaciones" id="indicaciones">
+    <div class="page-width">
+      <div class="usos-header">
+        <span class="prod-info-kicker">EXPERIENCIA SENSORIAL</span>
+        <h2 class="prod-info-title">INDICACIONES DE CONSUMO Y CONSERVACIÓN</h2>
+      </div>
+
+      <div class="indicaciones-grid">
+        <div class="ind-card">
+          <div class="ind-card__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"></path>
+            </svg>
+          </div>
+          <h3 class="ind-card__title">Temperatura Ideal</h3>
+          <p class="ind-card__text">
+            Consumir entre 2°C y 5°C. El frío realza las notas de cacao y atenúa cualquier aspereza, brindando una experiencia sedosa y fresca.
+          </p>
+        </div>
+
+        <div class="ind-card">
+          <div class="ind-card__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <h3 class="ind-card__title">Ritual de Apertura</h3>
+          <p class="ind-card__text">
+            Girar suavemente la lata antes de abrir para homogeneizar los aceites aromáticos. Disfrutar directo de la lata o verter sobre abundante hielo en vaso de cristal.
+          </p>
+        </div>
+
+        <div class="ind-card">
+          <div class="ind-card__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          <h3 class="ind-card__title">Conservación</h3>
+          <p class="ind-card__text">
+            Mantener en lugar fresco, seco y al resguardo de fuentes de calor directo. Una vez abierta la lata de Cold Brew, consumir en el día.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 8. BANNER DE CONVERSIÓN HACIA LA TIENDA ==================== -->
+  <section class="section-prod-cta">
+    <div class="page-width prod-cta-box">
+      <span class="prod-info-kicker">DISPONIBLE AHORA</span>
+      <h2 class="prod-cta-title">¿LISTO PARA PROBAR LA ENERGÍA REAL?</h2>
+      <p class="prod-cta-desc">
+        Compra online por unidad o con 15% de descuento en pack de 6 con envío prioritario a todo el Perú.
+      </p>
+
+      <div>
+        <a href="tienda.html" class="btn-ir-tienda">
+          <span>IR A LA TIENDA Y COMPRAR</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 9. FOOTER ==================== -->
   <footer class="kallpa-footer-wrapper" id="footer-section">
-    
-    <!-- BANNER NEWSLETTER SUPERIOR: SÉ PARTE DE KALPA -->
     <div class="kallpa-newsletter-banner">
-      <!-- Marca de agua con patrón textil andino del hero -->
       <div class="kallpa-newsletter-banner__pattern" aria-hidden="true"></div>
       <div class="kallpa-newsletter-banner__vignette" aria-hidden="true"></div>
 
       <div class="kallpa-newsletter-container">
-        
-        <!-- Lata con Hielos y Salpicadura en Primer Plano Izquierdo -->
         <div class="newsletter-banner__can-box">
-          <img src="assets/footer-banner-can.webp" alt="Lata KALPA Cold Brew" class="newsletter-banner__can" draggable="false" loading="lazy">
+          <img src="assets/footer-banner-can.png" alt="Lata KALPA Cold Brew" class="newsletter-banner__can" draggable="false" loading="lazy">
         </div>
 
-        <!-- Bloque de Contenido y Formulario -->
         <div class="newsletter-banner__content-box">
           <div class="newsletter-banner__header">
             <h3 class="newsletter-banner__title">SÉ PARTE DE KALPA</h3>
@@ -391,83 +439,47 @@
           </form>
         </div>
 
-        <!-- Grano de Café en la Esquina Superior Derecha (sobre el botón) -->
         <div class="newsletter-banner__bean-box" aria-hidden="true">
           <img src="assets/hero-bean-single.png" alt="" class="newsletter-banner__bean" draggable="false">
         </div>
-
       </div>
     </div>
 
-    <!-- BARRA INFERIOR DEL FOOTER: LOGO, MENÚ, REDES, ENVÍOS Y LEGAL -->
+    <!-- Barra Inferior del Footer -->
     <div class="kallpa-footer-bottom">
       <div class="kallpa-footer-bottom__container">
-        
-        <!-- Fila 1: Logo + Navegación + Redes Sociales + Envíos a todo el Perú -->
         <div class="footer-bottom__main-row">
-          
-          <!-- Logo KALPA -->
           <a href="index.html" class="footer-logo-link" aria-label="KALPA - Inicio">
-            <img src="assets/logo-kalpa-white.png" alt="KALPA" class="footer-logo-img" width="135" height="32">
+            <img src="assets/logo-kalpa-white.png" alt="KALPA" class="footer-logo-img">
           </a>
-
-          <!-- Menú Horizontal de Enlaces -->
-          <nav class="footer-horizontal-nav" aria-label="Navegación pie de página">
-            <a href="index.html">Inicio</a>
-            <a href="productos.html">Productos</a>
-            <a href="promociones.html">Promociones</a>
-            <a href="nosotros.html">Nosotros</a>
+          <nav class="footer-nav" aria-label="Navegación pie de página">
+            <a href="index.html" class="footer-nav-link">Inicio</a>
+            <a href="tienda.html" class="footer-nav-link">Tienda</a>
+            <a href="productos.html" class="footer-nav-link is-active">Productos</a>
+            <a href="nosotros.html" class="footer-nav-link">Nosotros</a>
+            <a href="index.html#origin-section" class="footer-nav-link">Origen</a>
+            <a href="#footer-section" class="footer-nav-link">Contacto</a>
           </nav>
-
-          <!-- Iconos de Redes Sociales -->
-          <div class="footer-social-icons">
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Instagram">
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <div class="footer-social-row">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="Instagram de KALPA">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
               </svg>
             </a>
-            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="TikTok">
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.68 6.34 6.34 0 0 0 9.33 22a6.33 6.33 0 0 0 6.34-6.32V8.92a8.28 8.28 0 0 0 3.92 1V6.69z"></path>
-              </svg>
-            </a>
-            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="YouTube">
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path>
+            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="TikTok de KALPA">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.12V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.47V10.81a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.24z"/>
               </svg>
             </a>
           </div>
-
-          <!-- Envíos a todo el Perú -->
-          <div class="footer-shipping-badge">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="footer-shipping-icon">
-              <rect x="1" y="3" width="15" height="13"></rect>
-              <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
-              <circle cx="5.5" cy="18.5" r="2.5"></circle>
-              <circle cx="18.5" cy="18.5" r="2.5"></circle>
-            </svg>
-            <span>Envíos a todo el Perú.</span>
-          </div>
-
         </div>
-
-        <!-- Fila 2: Copyright y Enlaces Legales -->
         <div class="footer-bottom__legal-row">
-          <p class="footer-copyright">&copy; 2026 KALPA. Todos los derechos reservados.</p>
-          <div class="footer-legal-links">
-            <a href="#footer-section">Términos y condiciones</a>
-            <span class="legal-sep">|</span>
-            <a href="#footer-section">Política de privacidad</a>
-            <span class="legal-sep">|</span>
-            <a href="mailto:Ventas@kalpa.pe">Contacto</a>
-          </div>
+          <p class="footer-copy">&copy; 2026 KALPA Cold Brew. Todos los derechos reservados.</p>
         </div>
-
       </div>
     </div>
-
   </footer>
 
   <!-- ==================== DRAWER DEL CARRITO ==================== -->
@@ -485,53 +497,117 @@
     </div>
   </aside>
 
-  <!-- JavaScript de la Página de Productos -->
+  <!-- JavaScript Interactivo de Ficha Técnica Dinámica -->
   <script>
-    // Control de Cantidad del Producto Destacado
-    function updateFeaturedQty(delta) {
-      const el = document.getElementById('featured-qty-val');
-      if (!el) return;
-      let val = parseInt(el.textContent || '1', 10) + delta;
-      if (val < 1) val = 1;
-      if (val > 24) val = 24;
-      el.textContent = val;
-    }
-
-    function addFeaturedUnitToCart() {
-      const el = document.getElementById('featured-qty-val');
-      const qty = el ? Math.max(1, parseInt(el.textContent || '1', 10)) : 1;
-      const total = +(7.90 * qty).toFixed(2);
-      addPackToKallpaCart('prod-featured-unit', `${qty}x KALPA Cold Brew Original 355ml`, total);
-    }
-
-    // Filtrado de Productos por Píldoras
-    function filterProducts(category, btn) {
-      const pills = document.querySelectorAll('.filter-pill');
-      pills.forEach(p => p.classList.remove('is-active'));
-      if (btn) btn.classList.add('is-active');
-
-      const featured = document.getElementById('featured-product');
-      const duoCards = document.querySelectorAll('.grid-card-product');
-
-      if (category === 'all') {
-        if (featured) featured.style.display = 'block';
-        duoCards.forEach(c => c.style.display = 'flex');
-      } else if (category === 'cold-brew') {
-        if (featured) featured.style.display = 'block';
-        duoCards.forEach(c => c.style.display = 'none');
-      } else if (category === 'cafe-molido') {
-        if (featured) featured.style.display = 'none';
-        duoCards.forEach(c => c.style.display = 'flex');
-      } else {
-        // Accesorios u otros
-        if (featured) featured.style.display = 'none';
-        duoCards.forEach(c => c.style.display = 'none');
+    const productData = {
+      'cold-brew': {
+        title: 'DE LAS PENDIENTES DEL VRAEM A LA EXTRACCIÓN PERFECTA',
+        desc: 'En los valles altos de Ayacucho, entre los 1,800 y 2,200 metros sobre el nivel del mar, las plantas de café crecen bajo sombra nativa, recibiendo brisas andinas y suelos minerales enriquecidos. Esta altitud ralentiza el crecimiento de la cereza, concentrando azúcares naturales, polifenoles y una acidez málica limpia.',
+        img: 'assets/clean-energy-hero.jpg',
+        puntos: [
+          {
+            title: 'Extracción Lenta en Frío de 24 Horas',
+            desc: 'A diferencia del café comercial preparado con agua hirviendo que quema los aceites esenciales, KALPA se macera a 4°C durante un ciclo entero de 24 horas continuas.'
+          },
+          {
+            title: 'Filtrado Micrométrico Puro',
+            desc: 'Triple filtración por gravedad que retiene cualquier sedimento, logrando un cuerpo limpio, sedoso y ultra refrescante en boca.'
+          }
+        ],
+        fichaTitle: 'KALPA COLD BREW <span>355 ML</span>',
+        sku: 'SKU: KLP-CB-355',
+        specs: [
+          { label: 'Ingredientes', val: 'Agua filtrada osmotizada, Café de especialidad 100% Arábica (Ayacucho, VRAEM).' },
+          { label: 'Método de Extracción', val: 'Maceración lenta en frío por 24 horas continuas a 4°C.' },
+          { label: 'Contenido Neto', val: '355 ml (12 fl. oz.)' },
+          { label: 'Contenido de Cafeína', val: '280 mg por lata (aprox. 3 tazas de café espresso)', highlight: true },
+          { label: 'Calorías / Valor Energético', val: '0 kcal (0 kJ)', highlight: true },
+          { label: 'Azúcares / Grasas / Sodio', val: '0 g azúcares añadidos, 0 g grasas, 5 mg sodio natural.' },
+          { label: 'pH Estimado', val: '5.4 ± 0.2 (Extremadamente suave en paladar y estómago)' },
+          { label: 'Notas de Cata', val: 'Chocolate amargo 70%, manzana deshidratada, cuerpo sedoso y final dulce natural.' },
+          { label: 'Vida Útil y Empaque', val: '12 meses en lata de aluminio 100% reciclable, libre de BPA.' },
+          { label: 'Certificaciones', val: 'Origen Ayacucho · Registro Sanitario DIGESA · Libre de Gluten · Vegano.' }
+        ]
+      },
+      'cafe-molido': {
+        title: 'CAFÉ DE ESPECIALIDAD TOSTADO Y MOLIDO DE ORIGEN',
+        desc: 'Selección estricta de granos 100% Arábica variedad Obata, recolectados a mano en su punto óptimo de maduración por familias cafetaleras del VRAEM. Un tueste medio claro meticuloso resalta su dulzor achocolatado sin amargores invasivos.',
+        img: 'assets/product-card-molido-250.jpg',
+        puntos: [
+          {
+            title: 'Molienda Media Fina Homogénea',
+            desc: 'Calibrada con molinos cónicos de precisión para ofrecer una tasa de extracción óptima en cafeteras de filtro, prensa francesa, Chemex, V60 o moka italiana.'
+          },
+          {
+            title: 'Empaque Hermético con Válvula',
+            desc: 'Envasado en lata metálica hermética que aísla de la luz, humedad y oxígeno, manteniendo el aroma y frescura durante meses.'
+          }
+        ],
+        fichaTitle: 'KALPA CAFÉ MOLIDO <span>250G / 500G</span>',
+        sku: 'SKU: KLP-MOL-VAR',
+        specs: [
+          { label: 'Origen Geográfico', val: 'Valles del VRAEM, Ayacucho, Perú (1,800 - 2,200 msnm).' },
+          { label: 'Variedad Botánica', val: '100% Arábica · Variedad Obata / Caturra.' },
+          { label: 'Beneficio y Proceso', val: 'Lavado con fermentación controlada y secado solar en camas africanas.' },
+          { label: 'Perfil de Tueste', val: 'Tueste Medio Claro (City Roast) para preservar acidez balanceada.' },
+          { label: 'Molienda', val: 'Media Fina (versátil para métodos de filtrado y prensa).' },
+          { label: 'Presentaciones', val: 'Lata de 250 g y Lata de 500 g con sellado de frescura.' },
+          { label: 'Notas de Cata', val: 'Cereza madura, chocolate con leche, manzana roja y notas caramelizadas.', highlight: true },
+          { label: 'Calorías por Taza', val: '2 kcal (sin endulzantes)' },
+          { label: 'Conservación', val: 'Cerrar tapa hermética tras cada uso. Mantener en ambiente fresco y seco.' },
+          { label: 'Certificaciones', val: 'Café de Comercio Justo · 100% Origen Peruano · Registro Sanitario.' }
+        ]
       }
+    };
+
+    function switchProductView(key) {
+      const data = productData[key];
+      if (!data) return;
+
+      // Actualizar botones de pestaña
+      document.getElementById('tab-btn-cb').classList.toggle('is-active', key === 'cold-brew');
+      document.getElementById('tab-btn-molido').classList.toggle('is-active', key === 'cafe-molido');
+
+      // Actualizar sección creación
+      document.getElementById('creacion-title').textContent = data.title;
+      document.getElementById('creacion-desc').textContent = data.desc;
+      document.getElementById('creacion-img').src = data.img;
+
+      // Puntos lista
+      const puntosContainer = document.getElementById('creacion-puntos');
+      puntosContainer.innerHTML = data.puntos.map(p => `
+        <div class="creacion-punto">
+          <div class="punto-icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div>
+            <h3 class="punto-title">${p.title}</h3>
+            <p class="punto-desc">${p.desc}</p>
+          </div>
+        </div>
+      `).join('');
+
+      // Ficha técnica
+      document.getElementById('ficha-product-title').innerHTML = data.fichaTitle;
+      document.getElementById('ficha-code').textContent = data.sku;
+
+      const tableBody = document.querySelector('#ficha-table-content tbody');
+      tableBody.innerHTML = data.specs.map(s => `
+        <tr>
+          <th>${s.label}</th>
+          <td class="${s.highlight ? 'ficha-highlight' : ''}">${s.val}</td>
+        </tr>
+      `).join('');
     }
 
-    function sortProducts(value) {
-      console.log('Ordenando productos por:', value);
-    }
+    // Revisar hash al cargar la página (ej: productos.html#cafe-molido)
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.location.hash === '#cafe-molido') {
+        switchProductView('cafe-molido');
+      }
+    });
 
     // Carrito Global
     function openKallpaCart() {
@@ -551,31 +627,6 @@
         overlay.classList.remove('is-open');
       }
     }
-
-    function addPackToKallpaCart(id, name, price) {
-      const countEl = document.getElementById('kallpa-cart-count');
-      if (countEl) {
-        countEl.textContent = parseInt(countEl.textContent || '0', 10) + 1;
-      }
-      const itemsContainer = document.getElementById('kallpa-cart-items');
-      if (itemsContainer) {
-        if (itemsContainer.children.length === 1 && itemsContainer.children[0].textContent.includes('vacío')) {
-          itemsContainer.innerHTML = '';
-        }
-        const itemEl = document.createElement('div');
-        itemEl.style.cssText = 'display:flex; justify-content:space-between; align-items:center; padding:1rem 1.2rem; border-bottom:1px solid rgba(255,255,255,0.08);';
-        itemEl.innerHTML = `
-          <div>
-            <div style="font-weight:700; font-size:0.92rem; color:#fff;">${name}</div>
-            <div style="color:#f5ba2c; font-size:0.85rem; font-weight:800; margin-top:0.2rem;">S/ ${price.toFixed(2)}</div>
-          </div>
-          <button style="background:none; border:none; color:#ef4444; font-size:1.2rem; cursor:pointer;" onclick="this.parentElement.remove();">&times;</button>
-        `;
-        itemsContainer.appendChild(itemEl);
-      }
-      openKallpaCart();
-    }
   </script>
-  <script src="assets/kalpa-components.js"></script>
 </body>
 </html>

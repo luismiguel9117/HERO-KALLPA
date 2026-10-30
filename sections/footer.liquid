@@ -72,8 +72,9 @@
           <h4 class="footer-col-title">Tienda</h4>
           <ul class="footer-nav-list">
             {%- assign cold_brew = all_products['kallpa-cold-brew-original'] -%}
+            {%- assign cafe_molido = all_products['cafe-molido-250-g'] -%}
             <li><a href="{{ cold_brew.url | default: routes.all_products_collection_url }}">Cold Brew Original (355 ml)</a></li>
-            <li><a href="{{ routes.all_products_collection_url }}">Café Molido Obata (250 g)</a></li>
+            <li><a href="{{ cafe_molido.url | default: routes.all_products_collection_url }}">Café Molido Obata (250 g)</a></li>
             <li><a href="/pages/promociones">Packs & Promociones</a></li>
             <li><a href="{{ routes.root_url }}#origin-section">Envíos a todo el Perú</a></li>
           </ul>

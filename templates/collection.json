@@ -1,86 +1,15 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "catalog": {
-      "type": "products-catalog",
+    "main": {
+      "type": "kallpa-tienda",
       "settings": {
-        "breadcrumb_text": "Productos",
-        "kicker": "NUESTROS PRODUCTOS",
-        "title_line1": "LA LÍNEA",
-        "title_line2": "KALLPA",
-        "description": "Distintas formas de disfrutar la energía real de los Andes."
-      },
-      "blocks": {
-        "featured_01": {
-          "type": "featured_product",
-          "settings": {
-            "category": "cold-brew",
-            "kicker": "01 — COLD BREW",
-            "title_main": "KALLPA",
-            "title_sub": "ORIGINAL",
-            "description": "Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar.",
-            "default_asset_image": "kalpa-can-original.webp",
-            "spec_1_icon": "lightning",
-            "spec_1": "280 mg<br>de cafeína",
-            "spec_2_icon": "check",
-            "spec_2": "Café de origen<br>VRAEM",
-            "spec_3_icon": "check",
-            "spec_3": "Sin azúcares<br>añadidos",
-            "spec_4_icon": "coffee_can",
-            "spec_4": "Listo<br>para tomar",
-            "unit_label": "Unidad",
-            "unit_price": "S/ 7.90",
-            "unit_volume": "355 ml",
-            "pack_label": "Pack x 6",
-            "pack_discount": "-15%",
-            "pack_old_price": "S/ 47.40",
-            "pack_price": "S/ 39.90",
-            "pack_volume": "6 latas de 355 ml"
-          }
-        },
-        "card_molido_250": {
-          "type": "grid_product",
-          "settings": {
-            "category": "cafe-molido",
-            "kicker": "02 — CAFÉ MOLIDO",
-            "title_main": "KALLPA",
-            "title_sub": "CAFÉ MOLIDO 250G",
-            "description": "Café tostado y molido de especialidad, con notas de cereza, chocolate y manzana. Cultivado en los Andes peruanos para tu día a día.",
-            "default_bg_image": "product-card-250g.webp",
-            "btn_text": "VER PRODUCTO",
-            "btn_link": "/products/kalpa-cafe-molido-250g"
-          }
-        },
-        "card_molido_500": {
-          "type": "grid_product",
-          "settings": {
-            "category": "cafe-molido",
-            "kicker": "03 — CAFÉ MOLIDO",
-            "title_main": "KALLPA",
-            "title_sub": "CAFÉ MOLIDO 500G",
-            "description": "La misma calidad, en una presentación más grande. Café de especialidad, ideal para quienes viven el café todos los días.",
-            "default_bg_image": "product-card-500g.webp",
-            "btn_text": "VER PRODUCTO",
-            "btn_link": "/products/kalpa-cafe-molido-500g"
-          }
-        }
-      },
-      "block_order": [
-        "featured_01",
-        "card_molido_250",
-        "card_molido_500"
-      ]
+        "title_dark": "TIENDA",
+        "title_gold": "KALLPA",
+        "subtitle": "Energía de los Andes, en cada formato."
+      }
     }
   },
   "order": [
-    "catalog"
+    "main"
   ]
 }
