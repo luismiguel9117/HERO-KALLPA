@@ -1,157 +1,139 @@
 {%- comment -%}
   SECCIÓN: main-product.liquid
-  Página de Detalle de Producto KALPA: escenario a sangre con galería, compra, ficha (qué lleva, cómo tomarla, nutrición), cross-sell y FAQs
+  Página de Detalle de Producto KALPA. Un solo diseño (el de la lata Cold Brew) para todos los
+  productos: escenario con galería, compra, ficha (qué lleva, cómo tomarla, nutrición),
+  cross-sell y FAQs. Solo cambia la información, que se llena en cada producto del admin
+  con estos metacampos (namespace "custom"):
+
+  - categoria (texto)            → antetítulo dorado. Si falta: el Tipo de producto.
+  - sello (texto)                → insignia sobre la foto.
+  - caracteristicas (lista)      → 4 sellos bajo la descripción.
+  - contenido (texto)            → "355 mL", "250 g". Envase (texto) → "lata", "bolsa".
+  - que_lleva, ingredientes, advertencia_titulo, advertencia (texto)
+  - como_tomarla (lista) o preparacion (texto); titulo_preparacion (texto)
+  - nutricion (texto multilínea): una fila por línea, "Energía: 0 kcal"
+  - preguntas (texto multilínea): una pregunta por línea, "¿Pregunta? | Respuesta"
+  - ficha_1 … ficha_4 (archivo)  → galería. Si no hay, se usan las fotos del producto.
+
+  La lata Cold Brew conserva sus textos de siempre mientras no tenga esos metacampos.
 {%- endcomment -%}
 
 {%- liquid
+  assign mf = product.metafields.custom
   assign title_display = product.title | default: section.settings.product_title
-  comment
-    El título se parte en dos líneas: primera palabra en blanco, el resto en dorado
-  endcomment
+  # El título se parte en dos líneas: primera palabra en blanco, el resto en dorado
   assign title_words = title_display | split: ' '
   assign title_line_1 = title_words | first
   assign title_line_2 = title_display | remove_first: title_line_1 | strip
-  assign desc_display = product.description | strip_html | strip | default: section.settings.product_desc
-  assign cat_display = section.settings.category_tag | default: 'BEBIDA FUNCIONAL A BASE DE CAFÉ'
-  assign badge_display = product.metafields.custom.sello.value
 
-  comment
-    Precios reales del admin: unidad = primera variante que no es pack; pack = variante cuyo
-    nombre contiene "x6" (ej. "Pack x 6"). Sin variante pack, el pack cuesta 6 unidades sin descuento.
-  endcomment
   assign product_name = product.title | downcase
   assign is_can = false
   if product_name contains 'cold brew' or product_name contains 'lata'
     assign is_can = true
   endif
+  if product_name contains 'molido'
+    assign is_can = false
+  endif
 
+  # Textos: metacampo del producto; la lata conserva sus textos de siempre como respaldo
+  assign desc_display = product.description | strip_html | strip
+  assign cat_display = mf.categoria.value
+  assign badge_display = mf.sello.value
+  assign net_content = mf.contenido.value
+  assign container_name = mf.envase.value | downcase
+  if is_can
+    if desc_display == blank
+      assign desc_display = section.settings.product_desc
+    endif
+    if cat_display == blank
+      assign cat_display = section.settings.category_tag | default: 'BEBIDA FUNCIONAL A BASE DE CAFÉ'
+    endif
+    if net_content == blank
+      assign net_content = '355 mL'
+    endif
+    if container_name == blank
+      assign container_name = 'lata'
+    endif
+  endif
+  if cat_display == blank
+    assign cat_display = product.type
+  endif
+  assign container_plural = container_name | append: 's'
+
+  # Variante inicial: la primera que no es pack y tiene stock; si no, la primera
   assign unit_variant = nil
-  assign pack_variant = nil
   for v in product.variants
     assign v_title = v.title | downcase | remove: ' '
-    if v_title contains 'pack' or v_title contains 'x6'
-      if pack_variant == nil and v_title contains 'x6'
-        assign pack_variant = v
-      endif
-    elsif unit_variant == nil
+    unless v_title contains 'pack'
       assign unit_variant = v
-    endif
+      break
+    endunless
   endfor
   if unit_variant == nil
-    assign unit_variant = product.selected_or_first_available_variant
+    assign unit_variant = product.variants.first
   endif
+  assign start_variant = unit_variant
+  unless start_variant.available
+    assign start_variant = product.selected_or_first_available_variant
+  endunless
 
-  if unit_variant != nil
-    assign unit_cents = unit_variant.price
-  else
-    assign unit_cents = section.settings.price_unit | default: '7.90' | times: 100 | round
-  endif
-  assign six_regular_cents = unit_cents | times: 6
-  if pack_variant != nil
-    assign six_cents = pack_variant.price
-  else
-    assign six_cents = six_regular_cents
-  endif
-  assign p_six_off = 0
-  if six_regular_cents > six_cents
-    assign p_six_off = six_regular_cents | minus: six_cents | times: 100 | divided_by: six_regular_cents
-  endif
-
-  assign p_unit = unit_cents | money_without_currency
-  assign p_sixpack = six_cents | money_without_currency
-
-  comment
-    La ficha usa 4 espacios propios del producto (metacampos custom.ficha_1 … custom.ficha_4, tipo Archivo).
-    Aceptan imagen, GIF o video. Las fotos normales del producto quedan para el carrusel del inicio.
-  endcomment
+  # Galería: archivos de los metacampos ficha_1…ficha_4; si no hay, las fotos del producto
   assign slot_count = 0
   for n in (1..4)
     assign slot_key = 'ficha_' | append: n
-    if product.metafields.custom[slot_key].value != blank
+    if mf[slot_key].value != blank
       assign slot_count = slot_count | plus: 1
     endif
   endfor
-  assign has_media = false
-  if slot_count > 0
-    assign has_media = true
+  assign media_count = slot_count
+  if slot_count == 0
+    assign media_count = product.media.size
+    if media_count > 4
+      assign media_count = 4
+    endif
   endif
 -%}
 
 <section class="pdp" aria-label="{{ title_display }}">
 
   <!-- 1. ESCENARIO + COMPRA -->
-  <div class="pdp-hero{% unless has_media %} pdp-hero--no-media{% endunless %}">
+  <div class="pdp-hero{% if media_count == 0 %} pdp-hero--no-media{% endif %}">
 
-    {%- if has_media -%}
-    <!-- Escenario a sangre: un panel por cada espacio de la ficha con contenido -->
+    {%- if media_count > 0 -%}
     <div class="pdp-stage" id="product-main-card">
-      {%- assign slide_index = 0 -%}
-      {%- for n in (1..4) -%}
-        {%- assign slot_key = 'ficha_' | append: n -%}
-        {%- assign file = product.metafields.custom[slot_key].value -%}
-        {%- if file == blank -%}{%- continue -%}{%- endif -%}
-        {%- liquid
-          assign file_url = file.url | default: file.src
-          assign file_ext = file_url | split: '?' | first | split: '.' | last | downcase
-          assign is_video = false
-          if file.media_type == 'video' or file_ext == 'mp4' or file_ext == 'webm' or file_ext == 'mov'
-            assign is_video = true
-          endif
-        -%}
-        {%- comment -%} El primer espacio llena el escenario (las miniaturas quedan encima); los demás se ven completos, a la derecha de las miniaturas {%- endcomment -%}
-        <div class="pdp-slide{% if slide_index == 0 %} pdp-slide--cover is-active{% endif %}" data-slide="{{ slide_index }}">
-          {%- if is_video -%}
-            {%- if file.media_type == 'video' -%}
-              {%- assign video_src = file.sources | where: 'format', 'mp4' | first | map: 'url' | first | default: file.sources.first.url -%}
-              {%- assign poster = file.preview_image | image_url: width: 1600 -%}
-            {%- else -%}
-              {%- assign video_src = file_url -%}
-              {%- assign poster = '' -%}
-            {%- endif -%}
-            <video class="pdp-stage__img pdp-stage__video" src="{{ video_src }}"{% if poster != blank %} poster="{{ poster }}"{% endif %} muted loop playsinline controls preload="{% if slide_index == 0 %}auto{% else %}none{% endif %}"{% if slide_index == 0 %} autoplay{% endif %}></video>
-          {%- elsif file.media_type == 'image' -%}
-            <img src="{{ file | image_url: width: 600 }}" alt="" class="pdp-stage__backdrop" aria-hidden="true" width="600" height="600"{% if slide_index > 0 %} loading="lazy"{% endif %}>
-            <img src="{{ file | image_url: width: 1600 }}" alt="{{ file.alt | default: title_display | escape }}" class="pdp-stage__img" width="1600" height="1600"{% if slide_index == 0 %} fetchpriority="high"{% else %} loading="lazy"{% endif %}>
-          {%- else -%}
-            <img src="{{ file_url }}" alt="" class="pdp-stage__backdrop" aria-hidden="true"{% if slide_index > 0 %} loading="lazy"{% endif %}>
-            <img src="{{ file_url }}" alt="{{ title_display | escape }}" class="pdp-stage__img"{% if slide_index > 0 %} loading="lazy"{% endif %}>
-          {%- endif -%}
-        </div>
-        {%- assign slide_index = slide_index | plus: 1 -%}
-      {%- endfor -%}
+      {%- assign media_index = 0 -%}
+      {%- if slot_count > 0 -%}
+        {%- for n in (1..4) -%}
+          {%- assign slot_key = 'ficha_' | append: n -%}
+          {%- assign file = mf[slot_key].value -%}
+          {%- if file == blank -%}{%- continue -%}{%- endif -%}
+          {%- render 'pdp-media', file: file, index: media_index, mode: 'slide', title: title_display -%}
+          {%- assign media_index = media_index | plus: 1 -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for media in product.media limit: 4 -%}
+          {%- render 'pdp-media', file: media, index: forloop.index0, mode: 'slide', title: title_display -%}
+        {%- endfor -%}
+      {%- endif -%}
 
       <div class="pdp-stage__veil" aria-hidden="true"></div>
 
-
-      {%- if slot_count > 1 -%}
+      {%- if media_count > 1 -%}
         <div class="pdp-thumbs" aria-label="Galería del producto">
-          {%- assign thumb_index = 0 -%}
-          {%- for n in (1..4) -%}
-            {%- assign slot_key = 'ficha_' | append: n -%}
-            {%- assign file = product.metafields.custom[slot_key].value -%}
-            {%- if file == blank -%}{%- continue -%}{%- endif -%}
-            {%- liquid
-              assign file_url = file.url | default: file.src
-              assign file_ext = file_url | split: '?' | first | split: '.' | last | downcase
-              assign is_video = false
-              if file.media_type == 'video' or file_ext == 'mp4' or file_ext == 'webm' or file_ext == 'mov'
-                assign is_video = true
-              endif
-              assign thumb_src = ''
-              if file.media_type == 'image'
-                assign thumb_src = file | image_url: width: 160
-              elsif file.preview_image != blank
-                assign thumb_src = file.preview_image | image_url: width: 160
-              elsif is_video == false
-                assign thumb_src = file_url
-              endif
-            -%}
-            <button type="button" class="pdp-thumb{% if is_video %} pdp-thumb--video{% endif %}{% if thumb_index == 0 %} is-active{% endif %}" onclick="showProductSlide({{ thumb_index }}, this)" aria-label="{% if is_video %}Ver video{% else %}Ver imagen {{ thumb_index | plus: 1 }}{% endif %}">
-              {%- if thumb_src != blank -%}<img src="{{ thumb_src }}" alt="" width="78" height="92" loading="lazy">{%- endif -%}
-              {%- if is_video -%}<span class="pdp-thumb__play" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>{%- endif -%}
-            </button>
-            {%- assign thumb_index = thumb_index | plus: 1 -%}
-          {%- endfor -%}
+          {%- assign media_index = 0 -%}
+          {%- if slot_count > 0 -%}
+            {%- for n in (1..4) -%}
+              {%- assign slot_key = 'ficha_' | append: n -%}
+              {%- assign file = mf[slot_key].value -%}
+              {%- if file == blank -%}{%- continue -%}{%- endif -%}
+              {%- render 'pdp-media', file: file, index: media_index, mode: 'thumb', title: title_display -%}
+              {%- assign media_index = media_index | plus: 1 -%}
+            {%- endfor -%}
+          {%- else -%}
+            {%- for media in product.media limit: 4 -%}
+              {%- render 'pdp-media', file: media, index: forloop.index0, mode: 'thumb', title: title_display -%}
+            {%- endfor -%}
+          {%- endif -%}
         </div>
       {%- endif -%}
 
@@ -166,62 +148,118 @@
       <nav class="pdp-crumbs" aria-label="Ruta">
         <a href="{{ routes.root_url }}">Inicio</a>
         <span aria-hidden="true">›</span>
-        <a href="{{ routes.all_products_collection_url }}">Productos</a>
+        <a href="{{ routes.all_products_collection_url }}">Tienda</a>
         <span aria-hidden="true">›</span>
         <span>{{ title_display }}</span>
       </nav>
 
-      <span class="pdp-eyebrow">{{ cat_display }}</span>
+      {%- if cat_display != blank -%}
+        <span class="pdp-eyebrow">{{ cat_display }}</span>
+      {%- endif -%}
       <h1 class="pdp-title">
         <span>{{ title_line_1 }}</span>
         <span class="pdp-title__gold">{{ title_line_2 }}</span>
       </h1>
-      <p class="pdp-lead">{{ desc_display }}</p>
-
-      {%- if is_can -%}
-      <ul class="pdp-features">
-        <li><span class="pdp-features__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>Energía natural</li>
-        <li><span class="pdp-features__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span>Sin azúcar</li>
-        <li><span class="pdp-features__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 11H2L8 3z"/></svg></span>Café de los Andes</li>
-        <li><span class="pdp-features__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>0 calorías</li>
-      </ul>
+      {%- if desc_display != blank -%}
+        <p class="pdp-lead">{{ desc_display }}</p>
       {%- endif -%}
 
-      {%- if is_can -%}
+      {%- liquid
+        assign features = mf.caracteristicas.value
+        if features == blank and is_can
+          assign features = 'Energía natural|Sin azúcar|Café de los Andes|0 calorías' | split: '|'
+        endif
+      -%}
+      {%- if features != blank -%}
+        <ul class="pdp-features">
+          {%- for feature in features limit: 4 -%}
+            {%- assign icon_slot = forloop.index0 | modulo: 4 -%}
+            <li>
+              <span class="pdp-features__icon">
+                {%- case icon_slot -%}
+                  {%- when 0 -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  {%- when 1 -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                  {%- when 2 -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 11H2L8 3z"/></svg>
+                  {%- else -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                {%- endcase -%}
+              </span>
+              {{ feature }}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
       <div class="pdp-group">
         <span class="pdp-label">PRESENTACIÓN</span>
         <div class="pdp-packs" role="radiogroup" aria-label="Presentación">
-          <button type="button" role="radio" aria-checked="true" class="pdp-pack is-active" onclick="selectPack(1, {{ unit_cents | divided_by: 100.0 }}, 'Unidad', this, {{ unit_variant.id | default: 'null' }}, 1)">
-            <span class="pdp-pack__radio" aria-hidden="true"></span>
-            <span class="pdp-pack__main"><strong>Unidad</strong><small>1 lata · 355 mL</small></span>
-            <span class="pdp-pack__price">S/ {{ p_unit }}</span>
-          </button>
-          <button type="button" role="radio" aria-checked="false" class="pdp-pack" onclick="selectPack(6, {{ six_cents | divided_by: 100.0 }}, 'Pack x 6', this, {{ pack_variant.id | default: unit_variant.id | default: 'null' }}, {% if pack_variant != nil %}1{% else %}6{% endif %})">
-            {%- if p_six_off > 0 -%}<span class="pdp-pack__save">-{{ p_six_off }}%</span>{%- endif -%}
-            <span class="pdp-pack__radio" aria-hidden="true"></span>
-            <span class="pdp-pack__main"><strong>Pack x 6</strong><small>6 latas de 355 mL</small></span>
-            <span class="pdp-pack__price">S/ {{ p_sixpack }}{% if p_six_off > 0 %}<s>S/ {{ six_regular_cents | money_without_currency }}</s>{% endif %}</span>
-          </button>
-        </div>
-      {%- elsif product.has_only_default_variant == false -%}
-      <div class="pdp-group">
-        <span class="pdp-label">{{ product.options.first | upcase }}</span>
-        <div class="pdp-packs" role="radiogroup" aria-label="{{ product.options.first | escape }}">
           {%- for v in product.variants -%}
-            {%- assign v_off = 0 -%}
-            {%- if v.compare_at_price > v.price -%}
-              {%- assign v_off = v.compare_at_price | minus: v.price | times: 100 | divided_by: v.compare_at_price -%}
-            {%- endif -%}
-            <button type="button" role="radio" aria-checked="{% if v == unit_variant %}true{% else %}false{% endif %}" class="pdp-pack{% if v == unit_variant %} is-active{% endif %}"{% unless v.available %} disabled{% endunless %} onclick="selectPack(1, {{ v.price | divided_by: 100.0 }}, {{ v.title | json | escape }}, this, {{ v.id }}, 1)">
+            {%- liquid
+              # Unidades de la variante: "Pack x 6" = 6; cualquier otra = 1
+              assign v_units = 1
+              assign v_title = v.title | downcase | remove: ' '
+              if v_title contains 'x'
+                assign v_after_x = v_title | split: 'x' | last | plus: 0
+                if v_after_x > 1
+                  assign v_units = v_after_x
+                endif
+              endif
+
+              # Descuento: precio de comparación o, para un pack, la unidad por N
+              assign v_regular = v.compare_at_price | default: 0
+              if v_regular <= v.price and v_units > 1
+                assign v_regular = unit_variant.price | times: v_units
+              endif
+              assign v_off = 0
+              if v_regular > v.price
+                assign v_off = v_regular | minus: v.price | times: 100 | divided_by: v_regular
+              endif
+
+              assign v_name = v.title
+              if product.has_only_default_variant
+                assign v_name = 'Unidad'
+              endif
+
+              assign v_detail = ''
+              if container_name != blank
+                if v_units > 1
+                  assign v_detail = v_units | append: ' ' | append: container_plural
+                  if net_content != blank
+                    assign v_detail = v_detail | append: ' de ' | append: net_content
+                  endif
+                else
+                  assign v_detail = '1 ' | append: container_name
+                  if net_content != blank
+                    assign v_detail = v_detail | append: ' · ' | append: net_content
+                  endif
+                endif
+              elsif net_content != blank
+                assign v_detail = net_content
+                if v_units > 1
+                  assign v_detail = v_units | append: ' × ' | append: net_content
+                endif
+              endif
+            -%}
+            <button type="button" role="radio"
+                    aria-checked="{% if v.id == start_variant.id %}true{% else %}false{% endif %}"
+                    class="pdp-pack{% if v.id == start_variant.id %} is-active{% endif %}"
+                    data-variant-id="{{ v.id }}"
+                    data-price="{{ v.price }}"
+                    data-available="{{ v.available }}"
+                    onclick="selectPack(this)">
               {%- if v_off > 0 -%}<span class="pdp-pack__save">-{{ v_off }}%</span>{%- endif -%}
               <span class="pdp-pack__radio" aria-hidden="true"></span>
-              <span class="pdp-pack__main"><strong>{{ v.title }}</strong>{% unless v.available %}<small>Agotado</small>{% endunless %}</span>
-              <span class="pdp-pack__price">S/ {{ v.price | money_without_currency }}{% if v_off > 0 %}<s>S/ {{ v.compare_at_price | money_without_currency }}</s>{% endif %}</span>
+              <span class="pdp-pack__main">
+                <strong>{{ v_name }}</strong>
+                {%- if v.available == false -%}
+                  <small>Agotado</small>
+                {%- elsif v_detail != blank -%}
+                  <small>{{ v_detail }}</small>
+                {%- endif -%}
+              </span>
+              <span class="pdp-pack__price">S/ {{ v.price | money_without_currency }}{% if v_off > 0 %}<s>S/ {{ v_regular | money_without_currency }}</s>{% endif %}</span>
             </button>
           {%- endfor -%}
         </div>
-      </div>
-      {%- endif -%}
       </div>
 
       <div class="pdp-group">
@@ -232,9 +270,9 @@
             <span id="pdp-qty-val" aria-live="polite">1</span>
             <button type="button" onclick="changeQty(1)" aria-label="Agregar uno">+</button>
           </div>
-          <button type="button" class="pdp-add" id="btn-add-main" onclick="handleAddToCart()">
+          <button type="button" class="pdp-add" id="btn-add-main" onclick="handleAddToCart()"{% unless start_variant.available %} disabled{% endunless %}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-            <span id="btn-add-label">AGREGAR AL CARRITO – S/ {{ p_unit }}</span>
+            <span id="btn-add-label">{% if start_variant.available %}AGREGAR AL CARRITO – S/ {{ start_variant.price | money_without_currency }}{% else %}AGOTADO{% endif %}</span>
           </button>
         </div>
       </div>
@@ -248,61 +286,108 @@
   </div>
 
   {%- liquid
-    assign spec_what = product.metafields.custom.que_lleva.value
-    assign spec_ingredients = product.metafields.custom.ingredientes.value
-    assign spec_prep = product.metafields.custom.preparacion.value
+    assign spec_what = mf.que_lleva.value
+    assign spec_ingredients = mf.ingredientes.value
+    assign spec_warning_title = mf.advertencia_titulo.value
+    assign spec_warning = mf.advertencia.value
+    assign spec_howto = mf.como_tomarla.value
+    assign spec_prep = mf.preparacion.value
+    assign spec_prep_title = mf.titulo_preparacion.value
+    assign nutrition_rows = mf.nutricion.value | newline_to_br | split: '<br />'
+
+    if is_can
+      if spec_what == blank
+        assign spec_what = section.settings.specs_what
+      endif
+      if spec_ingredients == blank
+        assign spec_ingredients = section.settings.specs_ingredients
+      endif
+      if spec_warning == blank
+        assign spec_warning_title = section.settings.warning_title
+        assign spec_warning = section.settings.warning_text
+      endif
+      if spec_howto == blank and spec_prep == blank
+        assign spec_howto = 'Tómala bien helada|Sola o con hielo|En cualquier momento del día' | split: '|'
+      endif
+      if nutrition_rows.size == 0
+        assign nutrition_rows = 'Energía: 0 kcal / 0 kJ|Grasas totales: 0 g|Carbohidratos totales: 0 g|Azúcares añadidos: 0 g|Proteína: 0 g|Cafeína: 280 mg' | split: '|'
+      endif
+    endif
+
+    if spec_prep_title == blank
+      if is_can
+        assign spec_prep_title = 'CÓMO TOMARLA'
+      else
+        assign spec_prep_title = 'CÓMO PREPARARLO'
+      endif
+    endif
+
+    assign spec_cols = 0
+    if spec_what != blank or spec_ingredients != blank or spec_warning != blank
+      assign spec_cols = spec_cols | plus: 1
+    endif
+    if spec_howto != blank or spec_prep != blank
+      assign spec_cols = spec_cols | plus: 1
+    endif
+    if nutrition_rows.size > 0
+      assign spec_cols = spec_cols | plus: 1
+    endif
   -%}
-  {%- if is_can -%}
+  {%- if spec_cols > 0 -%}
   <!-- 2. FICHA: QUÉ LLEVA · CÓMO TOMARLA · NUTRICIÓN -->
   <div class="pdp-specs">
-    <div class="pdp-specs__grid">
-      <div class="pdp-specs__col">
-        <h3 class="pdp-specs__title">QUÉ LLEVA</h3>
-        <p class="pdp-specs__headline">{{ section.settings.specs_what | default: 'Café cold brew listo para tomar, macerado en frío durante 24 horas.' }}</p>
-        <p class="pdp-specs__text"><strong>Ingredientes:</strong> {{ section.settings.specs_ingredients | default: 'agua tratada, café de especialidad de Ayacucho y stevia natural.' }}</p>
-        <p class="pdp-specs__warning"><strong>{{ section.settings.warning_title | default: 'ALTO EN CAFEÍNA' }}.</strong> {{ section.settings.warning_text | default: 'No recomendado para niños, mujeres embarazadas o personas con extrema sensibilidad a la cafeína.' }}</p>
-      </div>
-
-      <div class="pdp-specs__col">
-        <h3 class="pdp-specs__title">CÓMO TOMARLA</h3>
-        <ul class="pdp-howto">
-          <li><span class="pdp-howto__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="22"/><line x1="3.3" y1="7" x2="20.7" y2="17"/><line x1="3.3" y1="17" x2="20.7" y2="7"/><polyline points="9 4 12 6 15 4"/><polyline points="9 20 12 18 15 20"/></svg></span>Tómala bien helada</li>
-          <li><span class="pdp-howto__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><line x1="7" y1="7" x2="17" y2="7"/><line x1="7" y1="17" x2="17" y2="17"/></svg></span>Sola o con hielo</li>
-          <li><span class="pdp-howto__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span>En cualquier momento del día</li>
-        </ul>
-      </div>
-
-      <div class="pdp-specs__col">
-        <h3 class="pdp-specs__title">INFORMACIÓN NUTRICIONAL</h3>
-        <table class="pdp-nutrition">
-          <thead><tr><th>Nutriente</th><th>Por porción ({{ section.settings.specs_net_content | default: '355 mL' }})</th></tr></thead>
-          <tbody>
-            <tr><td>Energía</td><td>0 kcal / 0 kJ</td></tr>
-            <tr><td>Grasas totales</td><td>0 g</td></tr>
-            <tr><td>Carbohidratos totales</td><td>0 g</td></tr>
-            <tr><td>Azúcares añadidos</td><td>0 g</td></tr>
-            <tr><td>Proteína</td><td>0 g</td></tr>
-            <tr><td>Cafeína</td><td>280 mg</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  {%- elsif spec_what != blank or spec_ingredients != blank or spec_prep != blank -%}
-  <!-- 2. FICHA DEL PRODUCTO (metacampos custom.que_lleva / custom.ingredientes / custom.preparacion) -->
-  <div class="pdp-specs">
-    <div class="pdp-specs__grid pdp-specs__grid--two">
-      {%- if spec_what != blank or spec_ingredients != blank -%}
+    <div class="pdp-specs__grid{% if spec_cols < 3 %} pdp-specs__grid--two{% endif %}">
+      {%- if spec_what != blank or spec_ingredients != blank or spec_warning != blank -%}
         <div class="pdp-specs__col">
           <h3 class="pdp-specs__title">QUÉ LLEVA</h3>
           {%- if spec_what != blank -%}<p class="pdp-specs__headline">{{ spec_what }}</p>{%- endif -%}
           {%- if spec_ingredients != blank -%}<p class="pdp-specs__text"><strong>Ingredientes:</strong> {{ spec_ingredients }}</p>{%- endif -%}
+          {%- if spec_warning != blank -%}
+            <p class="pdp-specs__warning">{% if spec_warning_title != blank %}<strong>{{ spec_warning_title }}.</strong> {% endif %}{{ spec_warning }}</p>
+          {%- endif -%}
         </div>
       {%- endif -%}
-      {%- if spec_prep != blank -%}
+
+      {%- if spec_howto != blank or spec_prep != blank -%}
         <div class="pdp-specs__col">
-          <h3 class="pdp-specs__title">CÓMO PREPARARLO</h3>
-          <p class="pdp-specs__text">{{ spec_prep }}</p>
+          <h3 class="pdp-specs__title">{{ spec_prep_title }}</h3>
+          {%- if spec_howto != blank -%}
+            <ul class="pdp-howto">
+              {%- for step in spec_howto limit: 4 -%}
+                {%- assign icon_slot = forloop.index0 | modulo: 3 -%}
+                <li>
+                  <span class="pdp-howto__icon">
+                    {%- case icon_slot -%}
+                      {%- when 0 -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="22"/><line x1="3.3" y1="7" x2="20.7" y2="17"/><line x1="3.3" y1="17" x2="20.7" y2="7"/><polyline points="9 4 12 6 15 4"/><polyline points="9 20 12 18 15 20"/></svg>
+                      {%- when 1 -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><line x1="7" y1="7" x2="17" y2="7"/><line x1="7" y1="17" x2="17" y2="17"/></svg>
+                      {%- else -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+                    {%- endcase -%}
+                  </span>
+                  {{ step }}
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- else -%}
+            <p class="pdp-specs__text">{{ spec_prep | newline_to_br }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if nutrition_rows.size > 0 -%}
+        <div class="pdp-specs__col">
+          <h3 class="pdp-specs__title">INFORMACIÓN NUTRICIONAL</h3>
+          <table class="pdp-nutrition">
+            <thead><tr><th>Nutriente</th><th>Por porción{% if net_content != blank %} ({{ net_content }}){% endif %}</th></tr></thead>
+            <tbody>
+              {%- for row in nutrition_rows -%}
+                {%- assign row_clean = row | strip -%}
+                {%- if row_clean == blank -%}{%- continue -%}{%- endif -%}
+                {%- assign row_name = row_clean | split: ':' | first | strip -%}
+                {%- assign row_value = row_clean | remove_first: row_name | remove_first: ':' | strip -%}
+                <tr><td>{{ row_name }}</td><td>{{ row_value }}</td></tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
         </div>
       {%- endif -%}
     </div>
@@ -351,14 +436,44 @@
 </section>
 {%- endif -%}
 
-<!-- 5. PREGUNTAS FRECUENTES (FAQ) -->
+<!-- 5. PREGUNTAS FRECUENTES (FAQ): metacampo "preguntas" del producto o, en la lata, los bloques de la sección -->
+{%- liquid
+  assign faq_lines = mf.preguntas.value | newline_to_br | split: '<br />'
+  assign has_product_faq = false
+  for line in faq_lines
+    if line contains '|'
+      assign has_product_faq = true
+      break
+    endif
+  endfor
+  assign show_faq = has_product_faq
+  if is_can and section.blocks.size > 0
+    assign show_faq = true
+  endif
+-%}
+{%- if show_faq -%}
 <section class="product-faq-section">
   <div class="page-width">
     <span class="faq-eyebrow">{{ section.settings.faq_eyebrow | default: 'PREGUNTAS FRECUENTES' }}</span>
     <h2 class="faq-title">{{ section.settings.faq_title | default: 'ANTES DE COMPRAR' }}</h2>
 
     <div class="faq-accordion">
-      {%- if section.blocks.size > 0 -%}
+      {%- if has_product_faq -%}
+        {%- assign faq_index = 0 -%}
+        {%- for line in faq_lines -%}
+          {%- unless line contains '|' -%}{%- continue -%}{%- endunless -%}
+          {%- assign faq_question = line | split: '|' | first | strip -%}
+          {%- assign faq_answer = line | remove_first: faq_question | remove_first: '|' | strip -%}
+          <div class="faq-item{% if faq_index == 0 %} is-open{% endif %}">
+            <button type="button" class="faq-header" onclick="toggleFaq(this)">
+              <span>{{ faq_question }}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-body">{{ faq_answer }}</div>
+          </div>
+          {%- assign faq_index = faq_index | plus: 1 -%}
+        {%- endfor -%}
+      {%- else -%}
         {%- for block in section.blocks -%}
           {%- if block.type == 'faq_item' -%}
             <div class="faq-item{% if block.settings.open_by_default %} is-open{% endif %}" {{ block.shopify_attributes }}>
@@ -372,40 +487,11 @@
             </div>
           {%- endif -%}
         {%- endfor -%}
-      {%- else -%}
-        <div class="faq-item is-open">
-          <button type="button" class="faq-header" onclick="toggleFaq(this)">
-            <span>¿Cuánta cafeína tiene?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-body">
-            Cada lata de 355 ml contiene 280 mg de cafeína natural pura, extraída lentamente en frío durante 24 horas continuas a 4°C. Equivale a aproximadamente 3 espressos pero con liberación prolongada gracias a los polifenoles del café.
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button type="button" class="faq-header" onclick="toggleFaq(this)">
-            <span>¿Quién no debería tomarla?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-body">
-            Debido a su alta concentración de cafeína natural, no está recomendada para niños, personas gestantes o en período de lactancia, ni personas con alta sensibilidad a los estimulantes o afecciones cardíacas.
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button type="button" class="faq-header" onclick="toggleFaq(this)">
-            <span>¿Envían a provincia?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-body">
-            Sí. Despachamos a todas las ciudades y provincias del Perú a través de Olva Courier y Shalom, con empaque protector anti-impacto. El tiempo promedio de entrega en Lima es de 24 a 48 horas, y en provincias de 48 a 72 horas hábiles.
-          </div>
-        </div>
       {%- endif -%}
     </div>
   </div>
 </section>
+{%- endif -%}
 
 <script>
   function showProductSlide(index, btn) {
@@ -424,49 +510,45 @@
     btn.classList.add('is-active');
   }
 
-  var currentPackQty = 1;
-  var currentPackPrice = {{ unit_cents | divided_by: 100.0 }};
-  var currentPackName = 'Unidad';
-  var currentVariantId = {{ unit_variant.id | default: 'null' }};
-  var currentUnitsPerAdd = 1;
+  var currentVariantId = {{ start_variant.id | default: 'null' }};
+  var currentPriceCents = {{ start_variant.price | default: 0 }};
+  var currentAvailable = {{ start_variant.available | default: false }};
   var currentCount = 1;
 
-  function updateAddLabel() {
+  function updateAddButton() {
+    var btn = document.getElementById('btn-add-main');
     var label = document.getElementById('btn-add-label');
-    if (label) label.textContent = 'AGREGAR AL CARRITO – S/ ' + (currentPackPrice * currentCount).toFixed(2);
+    if (btn) btn.disabled = !currentAvailable;
+    if (label) {
+      label.textContent = currentAvailable
+        ? 'AGREGAR AL CARRITO – S/ ' + (currentPriceCents * currentCount / 100).toFixed(2)
+        : 'AGOTADO';
+    }
   }
 
-  function selectPack(qty, price, name, btn, variantId, unitsPerAdd) {
-    currentPackQty = qty;
-    currentPackPrice = price;
-    currentPackName = name;
-    currentVariantId = variantId;
-    currentUnitsPerAdd = unitsPerAdd || 1;
+  function selectPack(btn) {
+    currentVariantId = Number(btn.getAttribute('data-variant-id'));
+    currentPriceCents = Number(btn.getAttribute('data-price'));
+    currentAvailable = btn.getAttribute('data-available') === 'true';
     document.querySelectorAll('.pdp-pack').forEach(function(b) {
       b.classList.remove('is-active');
       b.setAttribute('aria-checked', 'false');
     });
     btn.classList.add('is-active');
     btn.setAttribute('aria-checked', 'true');
-    updateAddLabel();
+    updateAddButton();
   }
 
   function changeQty(delta) {
     currentCount = Math.max(1, Math.min(99, currentCount + delta));
     var el = document.getElementById('pdp-qty-val');
     if (el) el.textContent = currentCount;
-    updateAddLabel();
+    updateAddButton();
   }
 
   function handleAddToCart() {
-    var title = '{{ title_display | escape }} (' + currentPackName + (currentCount > 1 ? ' x' + currentCount : '') + ')';
-    // Con variante "Pack x 6" se agrega 1 pack por cada unidad del contador; sin ella, 6 latas sueltas
-    var units = currentUnitsPerAdd * currentCount;
-    if (typeof window.addPackToKallpaCart === 'function') {
-      window.addPackToKallpaCart('pdp-' + currentPackQty, title, currentPackPrice * currentCount, units, currentVariantId);
-    } else if (typeof window.openKallpaCart === 'function') {
-      window.openKallpaCart();
-    }
+    if (!currentAvailable || !currentVariantId || typeof window.addVariantToKallpaCart !== 'function') return;
+    window.addVariantToKallpaCart(currentVariantId, currentCount).catch(function() {});
   }
 
   function toggleFaq(btn) {
@@ -482,116 +564,35 @@
   "name": "Detalle de Producto",
   "settings": [
     {
+      "type": "paragraph",
+      "content": "El diseño es el mismo para todos los productos. La información de cada uno se llena en el admin, en los metacampos del producto. Los textos de abajo solo se usan en la lata Cold Brew cuando no tiene esos metacampos."
+    },
+    {
       "type": "header",
-      "content": "Información Principal"
+      "content": "Lata Cold Brew (respaldo)"
     },
     {
       "type": "text",
       "id": "category_tag",
-      "label": "Tag de Categoría",
+      "label": "Antetítulo",
       "default": "BEBIDA FUNCIONAL A BASE DE CAFÉ"
     },
     {
       "type": "text",
       "id": "product_title",
-      "label": "Título del Producto",
+      "label": "Título si el producto no tiene nombre",
       "default": "KALPA COLD BREW"
-    },
-    {
-      "type": "text",
-      "id": "title_line_1",
-      "label": "Título línea 1 (blanco)",
-      "default": "KALLPA"
-    },
-    {
-      "type": "text",
-      "id": "title_line_2",
-      "label": "Título línea 2 (dorado)",
-      "default": "COLD BREW"
     },
     {
       "type": "textarea",
       "id": "product_desc",
-      "label": "Descripción Principal",
+      "label": "Descripción",
       "default": "Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural por lata. Listo para tomar, en cualquier momento y lugar."
     },
     {
       "type": "text",
-      "id": "badge_text",
-      "label": "Insignia en Escenario",
-      "default": "355 ML — LATA"
-    },
-    {
-      "type": "header",
-      "content": "Imágenes del Producto"
-    },
-    {
-      "type": "image_picker",
-      "id": "main_image",
-      "label": "Imagen Principal en Escenario"
-    },
-    {
-      "type": "image_picker",
-      "id": "thumb_1_image",
-      "label": "Miniatura 1 (Frontal)"
-    },
-    {
-      "type": "image_picker",
-      "id": "thumb_2_image",
-      "label": "Miniatura 2 (Etiqueta)"
-    },
-    {
-      "type": "header",
-      "content": "Sabores"
-    },
-    {
-      "type": "text",
-      "id": "flavor_1_name",
-      "label": "Nombre Sabor 1",
-      "default": "Original"
-    },
-    {
-      "type": "text",
-      "id": "flavor_2_name",
-      "label": "Nombre Sabor 2",
-      "default": "Orange"
-    },
-    {
-      "type": "header",
-      "content": "Precios por Pack"
-    },
-    {
-      "type": "text",
-      "id": "price_unit",
-      "label": "Precio Unidad (S/)",
-      "default": "7.90"
-    },
-    {
-      "type": "text",
-      "id": "price_tripack",
-      "label": "Precio Tripack (S/)",
-      "default": "35.70"
-    },
-    {
-      "type": "text",
-      "id": "price_sixpack",
-      "label": "Precio Pack x 6 (S/)",
-      "default": "39.90"
-    },
-    {
-      "type": "text",
-      "id": "price_12pack",
-      "label": "Precio 12-pack (S/)",
-      "default": "142.80"
-    },
-    {
-      "type": "header",
-      "content": "Especificaciones y Qué Lleva"
-    },
-    {
-      "type": "text",
       "id": "specs_what",
-      "label": "Subtítulo de Qué Lleva",
+      "label": "Qué lleva",
       "default": "Café cold brew listo para tomar, macerado en frío durante 24 horas."
     },
     {
@@ -602,105 +603,43 @@
     },
     {
       "type": "text",
-      "id": "specs_net_content",
-      "label": "Contenido Neto",
-      "default": "355 ml."
-    },
-    {
-      "type": "textarea",
-      "id": "specs_how_to_drink",
-      "label": "Cómo Tomarla",
-      "default": "Tómala siempre bien helada. Combínala como quieras: sola directo de la lata o servida con hielo y rodaja de cítrico. Después de abrir el envase, refrigérala."
-    },
-    {
-      "type": "text",
       "id": "warning_title",
-      "label": "Título de Advertencia",
+      "label": "Título de advertencia",
       "default": "ALTO EN CAFEÍNA"
     },
     {
       "type": "textarea",
       "id": "warning_text",
-      "label": "Texto de Advertencia",
+      "label": "Texto de advertencia",
       "default": "No recomendado para niños, mujeres embarazadas o personas con extrema sensibilidad a la cafeína."
     },
     {
       "type": "header",
-      "content": "Venta Cruzada (Cross-Sell)"
+      "content": "Venta cruzada y preguntas"
     },
     {
       "type": "text",
       "id": "cross_title",
-      "label": "Título Cross-Sell",
+      "label": "Título de venta cruzada",
       "default": "QUE NO SE TE ACABE A MITAD DE SEMANA"
-    },
-    {
-      "type": "image_picker",
-      "id": "cross_1_image",
-      "label": "Imagen Pack 1"
-    },
-    {
-      "type": "text",
-      "id": "cross_1_name",
-      "label": "Nombre Pack 1",
-      "default": "CAFÉ MOLIDO 250G"
-    },
-    {
-      "type": "text",
-      "id": "cross_1_sub",
-      "label": "Subtexto Pack 1",
-      "default": "100% Arábica · Origen VRAEM"
-    },
-    {
-      "type": "text",
-      "id": "cross_1_price",
-      "label": "Precio Pack 1 (S/)",
-      "default": "34.90"
-    },
-    {
-      "type": "image_picker",
-      "id": "cross_2_image",
-      "label": "Imagen Pack 2"
-    },
-    {
-      "type": "text",
-      "id": "cross_2_name",
-      "label": "Nombre Pack 2",
-      "default": "PACK X 6"
-    },
-    {
-      "type": "text",
-      "id": "cross_2_sub",
-      "label": "Subtexto Pack 2",
-      "default": "6 latas de 355 ml · -15%"
-    },
-    {
-      "type": "text",
-      "id": "cross_2_price",
-      "label": "Precio Pack 2 (S/)",
-      "default": "39.90"
-    },
-    {
-      "type": "header",
-      "content": "Preguntas Frecuentes"
     },
     {
       "type": "text",
       "id": "faq_eyebrow",
-      "label": "Kicker FAQ",
+      "label": "Antetítulo de preguntas",
       "default": "PREGUNTAS FRECUENTES"
     },
     {
       "type": "text",
       "id": "faq_title",
-      "label": "Título FAQ",
+      "label": "Título de preguntas",
       "default": "ANTES DE COMPRAR"
     }
   ],
   "blocks": [
     {
       "type": "faq_item",
-      "name": "Pregunta FAQ",
+      "name": "Pregunta (lata)",
       "settings": [
         {
           "type": "text",
@@ -725,31 +664,7 @@
   ],
   "presets": [
     {
-      "name": "Detalle de Producto",
-      "blocks": [
-        {
-          "type": "faq_item",
-          "settings": {
-            "question": "¿Cuánta cafeína tiene?",
-            "answer": "Cada lata de 355 ml contiene 280 mg de cafeína natural pura, extraída lentamente en frío durante 24 horas continuas a 4°C. Equivale a aproximadamente 3 espressos pero con liberación prolongada gracias a los polifenoles del café.",
-            "open_by_default": true
-          }
-        },
-        {
-          "type": "faq_item",
-          "settings": {
-            "question": "¿Quién no debería tomarla?",
-            "answer": "Debido a su alta concentración de cafeína natural, no está recomendada para niños, personas gestantes o en período de lactancia, ni personas con alta sensibilidad a los estimulantes o afecciones cardíacas."
-          }
-        },
-        {
-          "type": "faq_item",
-          "settings": {
-            "question": "¿Envían a provincia?",
-            "answer": "Sí. Despachamos a todas las ciudades y provincias del Perú a través de Olva Courier y Shalom, con empaque protector anti-impacto. El tiempo promedio de entrega en Lima es de 24 a 48 horas, y en provincias de 48 a 72 horas hábiles."
-          }
-        }
-      ]
+      "name": "Detalle de Producto"
     }
   ]
 }
