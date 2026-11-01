@@ -9,6 +9,10 @@
         "feature_2": "100% Arábica · Obata",
         "feature_3": "Ayacucho · 1,650 msnm",
         "feature_4": "Notas: cereza, chocolate, manzana",
+        "feature_1_icon": "medal",
+        "feature_2_icon": "leaf",
+        "feature_3_icon": "mountain",
+        "feature_4_icon": "flavor",
         "net_content": "",
         "container": "lata",
         "warning_title": "CONSERVACIÓN",
@@ -27,6 +31,9 @@
         "howto_1": "100 g de café en 1 L de agua fría filtrada",
         "howto_2": "Reposa 12–18 h en refrigeración y filtra",
         "howto_3": "Sirve el concentrado 1:1 con agua, leche o hielo · dura 7 días refrigerado",
+        "howto_1_icon": "scale",
+        "howto_2_icon": "clock",
+        "howto_3_icon": "glass",
         "nutrition": "Variedad: 100% Obata\nProceso: Lavado\nTueste: Medio oscuro\nOrigen: Anexo San Vicente, Anco, La Mar – Ayacucho\nProductor: Asociación Matices de Altura\nCosechado a: 1,650 msnm\nPuntaje: 85 pts SCA\nMolienda: Gruesa, para cold brew"
       },
       "blocks": {
