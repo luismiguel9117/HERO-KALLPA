@@ -1,63 +1,55 @@
 {%- comment -%}
   SECCIÓN: main-product.liquid
-  Página de Detalle de Producto KALPA. Un solo diseño (el de la lata Cold Brew) para todos los
+  Página de Detalle de Producto KALPA. Un solo diseño, el de la lata Cold Brew, para todos los
   productos: escenario con galería, compra, ficha (qué lleva, cómo tomarla, nutrición),
-  cross-sell y FAQs. Solo cambia la información, que se llena en cada producto del admin
-  con estos metacampos (namespace "custom"):
+  cross-sell y FAQs. Solo cambia la información:
 
-  - categoria (texto)            → antetítulo dorado. Si falta: el Tipo de producto.
-  - sello (texto)                → insignia sobre la foto.
-  - caracteristicas (lista)      → 4 sellos bajo la descripción.
-  - contenido (texto)            → "355 mL", "250 g". Envase (texto) → "lata", "bolsa".
-  - que_lleva, ingredientes, advertencia_titulo, advertencia (texto)
-  - como_tomarla (lista) o preparacion (texto); titulo_preparacion (texto)
-  - nutricion (texto multilínea): una fila por línea, "Energía: 0 kcal"
-  - preguntas (texto multilínea): una pregunta por línea, "¿Pregunta? | Respuesta"
-  - ficha_1 … ficha_4 (archivo)  → galería. Si no hay, se usan las fotos del producto.
-
-  La lata Cold Brew conserva sus textos de siempre mientras no tenga esos metacampos.
+  1. Los textos viven en los ajustes de esta sección (editor de temas). La plantilla "product"
+     tiene los de Cold Brew; cada tipo de producto usa su propia plantilla (ej. product.cafe-molido)
+     con la misma estructura y sus textos.
+  2. Si un producto tiene metacampos propios (namespace "custom"), estos reemplazan al ajuste:
+     categoria, sello, caracteristicas (lista), contenido, envase, que_lleva, ingredientes,
+     advertencia_titulo, advertencia, titulo_preparacion, como_tomarla (lista), nutricion
+     (una fila por línea "Energía: 0 kcal"), preguntas (una por línea "¿Pregunta? | Respuesta"),
+     ficha_1 … ficha_4 (galería; si no hay, se usan las fotos del producto).
 {%- endcomment -%}
 
 {%- liquid
   assign mf = product.metafields.custom
-  assign title_display = product.title | default: section.settings.product_title
+  assign ss = section.settings
+  assign title_display = product.title | default: ss.product_title
   # El título se parte en dos líneas: primera palabra en blanco, el resto en dorado
   assign title_words = title_display | split: ' '
   assign title_line_1 = title_words | first
   assign title_line_2 = title_display | remove_first: title_line_1 | strip
 
-  assign product_name = product.title | downcase
-  assign is_can = false
-  if product_name contains 'cold brew' or product_name contains 'lata'
-    assign is_can = true
-  endif
-  if product_name contains 'molido'
-    assign is_can = false
-  endif
-
-  # Textos: metacampo del producto; la lata conserva sus textos de siempre como respaldo
-  assign desc_display = product.description | strip_html | strip
-  assign cat_display = mf.categoria.value
-  assign badge_display = mf.sello.value
+  # Cada texto: metacampo del producto o, si no tiene, el ajuste de la plantilla
+  assign desc_display = product.description | strip_html | strip | default: ss.product_desc
+  assign cat_display = mf.categoria.value | default: ss.category_tag | default: product.type
+  assign badge_display = mf.sello.value | default: ss.badge_text
+  # Contenido neto: metacampo, el que dice el nombre ("Café Molido 500 g" → 500 g) o el de la plantilla
   assign net_content = mf.contenido.value
-  assign container_name = mf.envase.value | downcase
-  if is_can
-    if desc_display == blank
-      assign desc_display = section.settings.product_desc
-    endif
-    if cat_display == blank
-      assign cat_display = section.settings.category_tag | default: 'BEBIDA FUNCIONAL A BASE DE CAFÉ'
-    endif
-    if net_content == blank
-      assign net_content = '355 mL'
-    endif
-    if container_name == blank
-      assign container_name = 'lata'
-    endif
+  if net_content == blank
+    assign title_tokens = product.title | downcase | split: ' '
+    for token in title_tokens
+      assign token_number = token | plus: 0
+      assign next_token = title_tokens[forloop.index]
+      if token_number > 0 and next_token == 'g' or token_number > 0 and next_token == 'ml'
+        assign net_content = token | append: ' ' | append: next_token | replace: ' ml', ' mL'
+        break
+      endif
+      assign unit_g = token | slice: -1
+      assign unit_ml = token | slice: -2, 2
+      if token_number > 0 and unit_g == 'g' or token_number > 0 and unit_ml == 'ml'
+        assign net_content = token | replace: 'ml', ' mL' | replace: 'g', ' g'
+        break
+      endif
+    endfor
   endif
-  if cat_display == blank
-    assign cat_display = product.type
+  if net_content == blank
+    assign net_content = ss.net_content
   endif
+  assign container_name = mf.envase.value | default: ss.container | downcase
   assign container_plural = container_name | append: 's'
 
   # Variante inicial: la primera que no es pack y tiene stock; si no, la primera
@@ -166,13 +158,14 @@
 
       {%- liquid
         assign features = mf.caracteristicas.value
-        if features == blank and is_can
-          assign features = 'Energía natural|Sin azúcar|Café de los Andes|0 calorías' | split: '|'
+        if features == blank
+          assign features = ss.feature_1 | append: '|' | append: ss.feature_2 | append: '|' | append: ss.feature_3 | append: '|' | append: ss.feature_4 | split: '|'
         endif
       -%}
       {%- if features != blank -%}
         <ul class="pdp-features">
           {%- for feature in features limit: 4 -%}
+            {%- if feature == blank -%}{%- continue -%}{%- endif -%}
             {%- assign icon_slot = forloop.index0 | modulo: 4 -%}
             <li>
               <span class="pdp-features__icon">
@@ -286,41 +279,20 @@
   </div>
 
   {%- liquid
-    assign spec_what = mf.que_lleva.value
-    assign spec_ingredients = mf.ingredientes.value
-    assign spec_warning_title = mf.advertencia_titulo.value
-    assign spec_warning = mf.advertencia.value
-    assign spec_howto = mf.como_tomarla.value
+    assign spec_what = mf.que_lleva.value | default: ss.specs_what
+    assign spec_ingredients = mf.ingredientes.value | default: ss.specs_ingredients
+    assign spec_warning_title = mf.advertencia_titulo.value | default: ss.warning_title
+    assign spec_warning = mf.advertencia.value | default: ss.warning_text
+    assign spec_prep_title = mf.titulo_preparacion.value | default: ss.howto_title | default: 'CÓMO TOMARLA'
     assign spec_prep = mf.preparacion.value
-    assign spec_prep_title = mf.titulo_preparacion.value
-    assign nutrition_rows = mf.nutricion.value | newline_to_br | split: '<br />'
 
-    if is_can
-      if spec_what == blank
-        assign spec_what = section.settings.specs_what
-      endif
-      if spec_ingredients == blank
-        assign spec_ingredients = section.settings.specs_ingredients
-      endif
-      if spec_warning == blank
-        assign spec_warning_title = section.settings.warning_title
-        assign spec_warning = section.settings.warning_text
-      endif
-      if spec_howto == blank and spec_prep == blank
-        assign spec_howto = 'Tómala bien helada|Sola o con hielo|En cualquier momento del día' | split: '|'
-      endif
-      if nutrition_rows.size == 0
-        assign nutrition_rows = 'Energía: 0 kcal / 0 kJ|Grasas totales: 0 g|Carbohidratos totales: 0 g|Azúcares añadidos: 0 g|Proteína: 0 g|Cafeína: 280 mg' | split: '|'
-      endif
+    assign spec_howto = mf.como_tomarla.value
+    if spec_howto == blank and spec_prep == blank
+      assign spec_howto = ss.howto_1 | append: '|' | append: ss.howto_2 | append: '|' | append: ss.howto_3 | split: '|'
     endif
 
-    if spec_prep_title == blank
-      if is_can
-        assign spec_prep_title = 'CÓMO TOMARLA'
-      else
-        assign spec_prep_title = 'CÓMO PREPARARLO'
-      endif
-    endif
+    assign nutrition_source = mf.nutricion.value | default: ss.nutrition
+    assign nutrition_rows = nutrition_source | newline_to_br | split: '<br />'
 
     assign spec_cols = 0
     if spec_what != blank or spec_ingredients != blank or spec_warning != blank
@@ -354,6 +326,7 @@
           {%- if spec_howto != blank -%}
             <ul class="pdp-howto">
               {%- for step in spec_howto limit: 4 -%}
+                {%- if step == blank -%}{%- continue -%}{%- endif -%}
                 {%- assign icon_slot = forloop.index0 | modulo: 3 -%}
                 <li>
                   <span class="pdp-howto__icon">
@@ -436,7 +409,7 @@
 </section>
 {%- endif -%}
 
-<!-- 5. PREGUNTAS FRECUENTES (FAQ): metacampo "preguntas" del producto o, en la lata, los bloques de la sección -->
+<!-- 5. PREGUNTAS FRECUENTES (FAQ): metacampo "preguntas" del producto o los bloques de la plantilla -->
 {%- liquid
   assign faq_lines = mf.preguntas.value | newline_to_br | split: '<br />'
   assign has_product_faq = false
@@ -447,7 +420,7 @@
     endif
   endfor
   assign show_faq = has_product_faq
-  if is_can and section.blocks.size > 0
+  if section.blocks.size > 0
     assign show_faq = true
   endif
 -%}
@@ -565,16 +538,16 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "El diseño es el mismo para todos los productos. La información de cada uno se llena en el admin, en los metacampos del producto. Los textos de abajo solo se usan en la lata Cold Brew cuando no tiene esos metacampos."
+      "content": "Mismo diseño para todos los productos (estándar: Kalpa Cold Brew). Edita aquí los textos de esta plantilla. Si un producto tiene metacampos propios (custom.*), esos reemplazan estos textos."
     },
     {
       "type": "header",
-      "content": "Lata Cold Brew (respaldo)"
+      "content": "Encabezado"
     },
     {
       "type": "text",
       "id": "category_tag",
-      "label": "Antetítulo",
+      "label": "Antetítulo dorado",
       "default": "BEBIDA FUNCIONAL A BASE DE CAFÉ"
     },
     {
@@ -586,8 +559,67 @@
     {
       "type": "textarea",
       "id": "product_desc",
-      "label": "Descripción",
+      "label": "Descripción (si el producto no tiene descripción en el admin)",
       "default": "Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural por lata. Listo para tomar, en cualquier momento y lugar."
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Insignia sobre la foto (opcional)"
+    },
+    {
+      "type": "header",
+      "content": "Características (4 sellos)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Ícono según posición: rayo, hoja, montaña, caja."
+    },
+    {
+      "type": "text",
+      "id": "feature_1",
+      "label": "Característica 1",
+      "default": "Energía natural"
+    },
+    {
+      "type": "text",
+      "id": "feature_2",
+      "label": "Característica 2",
+      "default": "Sin azúcar"
+    },
+    {
+      "type": "text",
+      "id": "feature_3",
+      "label": "Característica 3",
+      "default": "Café de los Andes"
+    },
+    {
+      "type": "text",
+      "id": "feature_4",
+      "label": "Característica 4",
+      "default": "0 calorías"
+    },
+    {
+      "type": "header",
+      "content": "Presentación"
+    },
+    {
+      "type": "text",
+      "id": "net_content",
+      "label": "Contenido neto",
+      "info": "Ej. 355 mL, 250 g. Se muestra en cada presentación y en la tabla nutricional.",
+      "default": "355 mL"
+    },
+    {
+      "type": "text",
+      "id": "container",
+      "label": "Envase (singular)",
+      "info": "Ej. lata, bolsa. Arma \"1 lata · 355 mL\" y \"6 latas de 355 mL\".",
+      "default": "lata"
+    },
+    {
+      "type": "header",
+      "content": "Ficha: Qué lleva"
     },
     {
       "type": "text",
@@ -615,6 +647,45 @@
     },
     {
       "type": "header",
+      "content": "Ficha: Cómo tomarla"
+    },
+    {
+      "type": "text",
+      "id": "howto_title",
+      "label": "Título",
+      "default": "CÓMO TOMARLA"
+    },
+    {
+      "type": "text",
+      "id": "howto_1",
+      "label": "Paso 1",
+      "default": "Tómala bien helada"
+    },
+    {
+      "type": "text",
+      "id": "howto_2",
+      "label": "Paso 2",
+      "default": "Sola o con hielo"
+    },
+    {
+      "type": "text",
+      "id": "howto_3",
+      "label": "Paso 3",
+      "default": "En cualquier momento del día"
+    },
+    {
+      "type": "header",
+      "content": "Ficha: Información nutricional"
+    },
+    {
+      "type": "textarea",
+      "id": "nutrition",
+      "label": "Tabla nutricional",
+      "info": "Una fila por línea con el formato Nutriente: valor. Déjalo vacío para ocultar la tabla.",
+      "default": "Energía: 0 kcal / 0 kJ\nGrasas totales: 0 g\nCarbohidratos totales: 0 g\nAzúcares añadidos: 0 g\nProteína: 0 g\nCafeína: 280 mg"
+    },
+    {
+      "type": "header",
       "content": "Venta cruzada y preguntas"
     },
     {
@@ -639,19 +710,19 @@
   "blocks": [
     {
       "type": "faq_item",
-      "name": "Pregunta (lata)",
+      "name": "Pregunta frecuente",
       "settings": [
         {
           "type": "text",
           "id": "question",
           "label": "Pregunta",
-          "default": "¿Cuánta cafeína tiene?"
+          "default": "¿Envían a provincia?"
         },
         {
           "type": "textarea",
           "id": "answer",
           "label": "Respuesta",
-          "default": "Cada lata de 355 ml contiene 280 mg de cafeína natural pura, extraída lentamente en frío durante 24 horas continuas a 4°C."
+          "default": "Sí. Despachamos a todo el Perú."
         },
         {
           "type": "checkbox",

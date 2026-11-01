@@ -1,0 +1,54 @@
+{
+  "sections": {
+    "main_product": {
+      "type": "main-product",
+      "settings": {
+        "category_tag": "CAFÉ MOLIDO DE ESPECIALIDAD",
+        "product_desc": "Café tostado de origen peruano, 100% Arábica · Variedad Obata. Notas a cereza, chocolate y manzana, cultivado en los Andes de Ayacucho.",
+        "badge_text": "",
+        "feature_1": "Origen Ayacucho",
+        "feature_2": "100% Arábica Obata",
+        "feature_3": "Café de los Andes",
+        "feature_4": "Notas a cereza y cacao",
+        "net_content": "",
+        "container": "lata",
+        "specs_what": "Café de especialidad tostado y molido, listo para preparar en casa.",
+        "specs_ingredients": "100% café arábica, variedad Obata.",
+        "warning_title": "",
+        "warning_text": "",
+        "howto_title": "CÓMO PREPARARLO",
+        "howto_1": "Mezcla el café con agua fría",
+        "howto_2": "Deja reposar en refrigeración",
+        "howto_3": "Filtra y sirve con hielo",
+        "nutrition": "",
+        "cross_title": "QUE NO SE TE ACABE A MITAD DE SEMANA",
+        "faq_eyebrow": "PREGUNTAS FRECUENTES",
+        "faq_title": "ANTES DE COMPRAR"
+      },
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Qué molienda tiene?",
+            "answer": "Revisa la presentación que elegiste: la molienda gruesa está pensada para cold brew y prensa francesa; la fina, para métodos de filtrado.",
+            "open_by_default": true
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Envían a provincia?",
+            "answer": "Sí. Despachamos a todas las ciudades y provincias del Perú a través de Olva Courier y Shalom, con empaque protector anti-impacto. El tiempo promedio de entrega en Lima es de 24 a 48 horas, y en provincias de 48 a 72 horas hábiles."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2"
+      ]
+    }
+  },
+  "order": [
+    "main_product"
+  ]
+}
