@@ -3867,6 +3867,32 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 
+/* Mensajes del formulario de newsletter (Shopify customer form) */
+.newsletter-banner__form {
+  flex-wrap: wrap;
+}
+
+.newsletter-banner__status {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.newsletter-banner__status--ok {
+  color: #fbd132;
+  font-weight: 700;
+}
+
+.newsletter-banner__status--error {
+  color: #fecaca;
+}
+
+.newsletter-banner__status--error ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
 .newsletter-banner__input {
   flex: 1;
   min-width: 0;
@@ -6897,4 +6923,14 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0.8rem 0.5rem;
     font-size: 0.8rem;
   }
+}
+
+/* Texto solo para lectores de pantalla */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }

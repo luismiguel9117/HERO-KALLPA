@@ -34,11 +34,19 @@
 
     <!-- Menú Central Rigurosamente Centrado al 50% -->
     <nav class="kalpa-nav-menu" aria-label="Navegación principal">
-      <a href="{{ routes.root_url }}" class="kalpa-nav-item{% if template.name == 'index' or request.path == routes.root_url %} is-active{% endif %}">Inicio</a>
-      <a href="{{ routes.all_products_collection_url }}" class="kalpa-nav-item{% if template.name == 'collection' or request.path contains 'collections' or request.path contains 'tienda' or page.handle contains 'tienda' %} is-active{% endif %}">Tienda</a>
-      <a href="/pages/productos" class="kalpa-nav-item{% if template.name == 'page' and page.handle contains 'producto' or request.path contains 'productos' %} is-active{% endif %}">Productos</a>
-      <a href="/pages/promociones" class="kalpa-nav-item{% if request.path contains 'promociones' %} is-active{% endif %}">Promociones</a>
-      <a href="/pages/nosotros" class="kalpa-nav-item{% if template.name == 'page' and page.handle contains 'nosotros' or page.handle contains 'contact' or request.path contains 'nosotros' or request.path contains 'contact' %} is-active{% endif %}">Nosotros</a>
+      {%- comment -%} Con "Usar el menú del admin" activo, los enlaces salen de Tienda online → Navegación {%- endcomment -%}
+      {%- assign nav_menu = linklists[section.settings.menu] -%}
+      {%- if section.settings.use_admin_menu and nav_menu.links.size > 0 -%}
+        {%- for link in nav_menu.links -%}
+          <a href="{{ link.url }}" class="kalpa-nav-item{% if link.active or link.child_active %} is-active{% endif %}">{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.root_url }}" class="kalpa-nav-item{% if template.name == 'index' or request.path == routes.root_url %} is-active{% endif %}">Inicio</a>
+        <a href="{{ routes.all_products_collection_url }}" class="kalpa-nav-item{% if template.name == 'collection' or request.path contains 'collections' or request.path contains 'tienda' or page.handle contains 'tienda' %} is-active{% endif %}">Tienda</a>
+        <a href="/pages/productos" class="kalpa-nav-item{% if template.name == 'page' and page.handle contains 'producto' or request.path contains 'productos' %} is-active{% endif %}">Productos</a>
+        <a href="/pages/promociones" class="kalpa-nav-item{% if request.path contains 'promociones' %} is-active{% endif %}">Promociones</a>
+        <a href="/pages/nosotros" class="kalpa-nav-item{% if template.name == 'page' and page.handle contains 'nosotros' or page.handle contains 'contact' or request.path contains 'nosotros' or request.path contains 'contact' %} is-active{% endif %}">Nosotros</a>
+      {%- endif -%}
     </nav>
 
     <!-- Acciones Derecha (Búsqueda, Cuenta, Wishlist, Carrito, CTA, Hamburger) -->
@@ -51,10 +59,11 @@
         </svg>
       </a>
 
-      <!-- Lista de Deseos / Favoritos -->
-      <button type="button" class="kalpa-nav-icon nav-icon--favorites" aria-label="Lista de Deseos" onclick="handleKallpaWishlist(this)">
+      <!-- Búsqueda -->
+      <button type="button" class="kalpa-nav-icon nav-icon--search" aria-label="Buscar productos" aria-controls="kallpa-search" aria-expanded="false" onclick="openKallpaSearch(this)">
         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
       </button>
 
@@ -102,11 +111,17 @@
       <button type="button" class="kalpa-mobile-menu-close" onclick="closeKallpaMobileMenu()" aria-label="Cerrar Menú">✕</button>
     </div>
     <nav class="kalpa-mobile-menu-links">
-      <a href="{{ routes.root_url }}" class="kalpa-mobile-item{% if template.name == 'index' or request.path == routes.root_url %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Inicio</a>
-      <a href="{{ routes.all_products_collection_url }}" class="kalpa-mobile-item{% if template.name == 'collection' or request.path contains 'collections' or request.path contains 'tienda' or page.handle contains 'tienda' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Tienda</a>
-      <a href="/pages/productos" class="kalpa-mobile-item{% if template.name == 'page' and page.handle contains 'producto' or request.path contains 'productos' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Productos</a>
-      <a href="/pages/promociones" class="kalpa-mobile-item{% if request.path contains 'promociones' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Promociones</a>
-      <a href="/pages/nosotros" class="kalpa-mobile-item{% if template.name == 'page' and page.handle contains 'nosotros' or page.handle contains 'contact' or request.path contains 'nosotros' or request.path contains 'contact' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Nosotros</a>
+      {%- if section.settings.use_admin_menu and nav_menu.links.size > 0 -%}
+        {%- for link in nav_menu.links -%}
+          <a href="{{ link.url }}" class="kalpa-mobile-item{% if link.active or link.child_active %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.root_url }}" class="kalpa-mobile-item{% if template.name == 'index' or request.path == routes.root_url %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Inicio</a>
+        <a href="{{ routes.all_products_collection_url }}" class="kalpa-mobile-item{% if template.name == 'collection' or request.path contains 'collections' or request.path contains 'tienda' or page.handle contains 'tienda' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Tienda</a>
+        <a href="/pages/productos" class="kalpa-mobile-item{% if template.name == 'page' and page.handle contains 'producto' or request.path contains 'productos' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Productos</a>
+        <a href="/pages/promociones" class="kalpa-mobile-item{% if request.path contains 'promociones' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Promociones</a>
+        <a href="/pages/nosotros" class="kalpa-mobile-item{% if template.name == 'page' and page.handle contains 'nosotros' or page.handle contains 'contact' or request.path contains 'nosotros' or request.path contains 'contact' %} is-active{% endif %}" onclick="closeKallpaMobileMenu()">Nosotros</a>
+      {%- endif -%}
     </nav>
     <div class="kalpa-mobile-menu-footer">
       <a href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" class="kalpa-nav-cta kalpa-mobile-cta" onclick="closeKallpaMobileMenu()">
@@ -115,6 +130,48 @@
     </div>
   </div>
 </div>
+
+<!-- Buscador (abre desde la lupa del header) -->
+<div class="kallpa-search" id="kallpa-search" hidden>
+  <div class="kallpa-search__backdrop" onclick="closeKallpaSearch()"></div>
+  <form action="{{ routes.search_url }}" method="get" role="search" class="kallpa-search__form">
+    <input type="hidden" name="type" value="product">
+    <label for="kallpa-search-input" class="visually-hidden">Buscar productos</label>
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    <input id="kallpa-search-input" type="search" name="q" placeholder="Buscar café, cold brew, packs…" autocomplete="off" value="{{ search.terms | escape }}">
+    <button type="submit" class="kallpa-search__submit">BUSCAR</button>
+    <button type="button" class="kallpa-search__close" onclick="closeKallpaSearch()" aria-label="Cerrar búsqueda">✕</button>
+  </form>
+</div>
+
+<style>
+  .kallpa-search { position: fixed; inset: 0; z-index: 1200; }
+  .kallpa-search[hidden] { display: none; }
+  .kallpa-search__backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); }
+  .kallpa-search__form { position: relative; display: flex; align-items: center; gap: 0.75rem; max-width: 760px; margin: clamp(5rem, 14vh, 9rem) auto 0; padding: 0.6rem 0.6rem 0.6rem 1.25rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 999px; background: #0d0f12; color: #fff; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5); width: calc(100% - 2rem); }
+  .kallpa-search__form > svg { flex-shrink: 0; color: #f5ba2c; }
+  .kallpa-search__form input[type="search"] { flex: 1; min-width: 0; border: 0; background: transparent; color: #fff; font: inherit; font-size: 1.05rem; outline: none; }
+  .kallpa-search__submit { padding: 0.75rem 1.4rem; border: 0; border-radius: 999px; background: #f5ba2c; color: #0b0908; font-family: var(--font-brand); font-weight: 900; letter-spacing: 0.06em; cursor: pointer; }
+  .kallpa-search__close { width: 40px; height: 40px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.08); color: #fff; cursor: pointer; }
+  @media (max-width: 520px) { .kallpa-search__submit { display: none; } }
+</style>
+
+<script>
+  function openKallpaSearch(btn) {
+    var box = document.getElementById('kallpa-search');
+    if (!box) return;
+    box.hidden = false;
+    if (btn) btn.setAttribute('aria-expanded', 'true');
+    var input = document.getElementById('kallpa-search-input');
+    if (input) setTimeout(function() { input.focus(); }, 30);
+  }
+  function closeKallpaSearch() {
+    var box = document.getElementById('kallpa-search');
+    if (box) box.hidden = true;
+    document.querySelectorAll('.nav-icon--search').forEach(function(b) { b.setAttribute('aria-expanded', 'false'); });
+  }
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeKallpaSearch(); });
+</script>
 
 {% schema %}
 {
@@ -153,6 +210,13 @@
       "id": "menu",
       "label": "Menú de Navegación",
       "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_admin_menu",
+      "label": "Usar el menú del admin",
+      "info": "Activa esto cuando el menú elegido arriba tenga los enlaces finales (Tienda online → Navegación). Desactivado, se muestran Inicio, Tienda, Productos, Promociones y Nosotros.",
+      "default": false
     },
     {
       "type": "text",

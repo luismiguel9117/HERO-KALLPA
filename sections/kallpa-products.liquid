@@ -222,20 +222,22 @@
                       <span id="qty-{{ block.id }}" class="qty-val">1</span>
                       <button type="button" class="qty-btn" onclick="updateSlideQty('qty-{{ block.id }}', 1)" aria-label="Aumentar cantidad">+</button>
                     </div>
+                    {%- comment -%} Sin producto vinculado no se puede comprar: el botón queda desactivado (nunca se agrega otro producto) {%- endcomment -%}
                     {%- liquid
-                      assign unit_sold_out = false
-                      if slide_product != blank and unit_variant.available == false
-                        assign unit_sold_out = true
+                      assign unit_label = 'AGREGAR'
+                      assign unit_disabled = false
+                      if slide_product == blank
+                        assign unit_label = 'NO DISPONIBLE'
+                        assign unit_disabled = true
+                      elsif unit_variant.available == false
+                        assign unit_label = 'AGOTADO'
+                        assign unit_disabled = true
                       endif
                     -%}
                     <button type="button" class="btn-sale-add"
-                      {% if slide_product != blank %}
-                        onclick="addSlideVariantToCart(this, {{ unit_variant.id }}, 'qty-{{ block.id }}', 1)"
-                      {% else %}
-                        onclick="addCustomUnitToCart('{{ block.id }}', '{{ block.settings.title_main }} {{ block.settings.title_sub }}', '{{ block.settings.unit_price | remove: 'S/' | strip }}')"
-                      {% endif %}
-                      {% if unit_sold_out %}disabled{% endif %}>
-                      <span>{% if unit_sold_out %}AGOTADO{% else %}AGREGAR{% endif %}</span>
+                      {% if slide_product != blank %}onclick="addSlideVariantToCart(this, {{ unit_variant.id }}, 'qty-{{ block.id }}', 1)"{% endif %}
+                      {% if unit_disabled %}disabled{% endif %}>
+                      <span>{{ unit_label }}</span>
                       <svg class="sale-add-arrow-mobile" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                         <polyline points="12 5 19 12 12 19"></polyline>
@@ -290,8 +292,8 @@
                         <span>{% if pack_available %}AGREGAR{% else %}AGOTADO{% endif %}</span>
                       </button>
                     {%- else -%}
-                      <button type="button" class="btn-sale-add" onclick="addCustomPackToCart('pack-{{ block.id }}', '{{ block.settings.pack_label }} {{ block.settings.title_main }} {{ block.settings.title_sub }}', '{{ block.settings.pack_price | remove: 'S/' | strip }}')">
-                        <span>AGREGAR</span>
+                      <button type="button" class="btn-sale-add" disabled>
+                        <span>NO DISPONIBLE</span>
                       </button>
                     {%- endif -%}
                   </div>
@@ -335,21 +337,6 @@
       .finally(() => { btn.disabled = false; });
   }
 
-  function addCustomUnitToCart(blockId, name, priceStr) {
-    const qtyEl = document.getElementById('qty-' + blockId);
-    const qty = qtyEl ? Math.max(1, parseInt(qtyEl.textContent || '1', 10)) : 1;
-    const price = parseFloat(priceStr) || 7.90;
-    if (typeof window.addPackToKallpaCart === 'function') {
-      window.addPackToKallpaCart('unit-' + blockId, `${qty}x ${name}`, price, qty);
-    }
-  }
-
-  function addCustomPackToCart(packId, name, priceStr) {
-    const price = parseFloat(priceStr) || 39.90;
-    if (typeof window.addPackToKallpaCart === 'function') {
-      window.addPackToKallpaCart(packId, name, price, 1);
-    }
-  }
 </script>
 
 {% schema %}

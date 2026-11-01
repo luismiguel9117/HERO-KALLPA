@@ -54,6 +54,7 @@
     <!-- Shopify Asset Maps para Scripts Modulares -->
     <script>
       window.Shopify = window.Shopify || {};
+      window.Shopify.money_format = {{ shop.money_format | json }};
       window.Shopify.routes = window.Shopify.routes || {
         root: "{{ routes.root_url }}",
         cart: "{{ routes.cart_url }}",
@@ -61,8 +62,6 @@
         cart_change_url: "{{ routes.cart_change_url }}",
         cart_clear_url: "{{ routes.cart_clear_url }}"
       };
-      {%- assign fallback_variant = collections['all'].products.first.variants.first.id -%}
-      window.Shopify.default_variant_id = {{ fallback_variant | default: 67960537088316 }};
 
       window.ShopifyAssetUrls = {
         'hero-beans-ice-back.webp': "{{ 'hero-beans-ice-back.webp' | asset_url }}",
