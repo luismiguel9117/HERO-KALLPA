@@ -9,6 +9,10 @@
         "feature_2": "100% Arábica · Obata",
         "feature_3": "Ayacucho · 1,650 msnm",
         "feature_4": "Notas: cereza, chocolate, manzana",
+        "feature_1_icon": "medal",
+        "feature_2_icon": "leaf",
+        "feature_3_icon": "mountain",
+        "feature_4_icon": "flavor",
         "net_content": "",
         "container": "lata",
         "warning_title": "CONSERVACIÓN",
@@ -27,6 +31,9 @@
         "howto_1": "10 g de café por cada 180 ml de agua filtrada",
         "howto_2": "Agua a 92–96 °C: recién hervida, reposada 30–45 s",
         "howto_3": "Sirve caliente o sobre hielo · V60 o AeroPress",
+        "howto_1_icon": "scale",
+        "howto_2_icon": "thermometer",
+        "howto_3_icon": "coffee_cup",
         "nutrition": "Variedad: 100% Obata\nProceso: Lavado\nTueste: Medio oscuro\nOrigen: Anexo San Vicente, Anco, La Mar – Ayacucho\nProductor: Asociación Matices de Altura\nCosechado a: 1,650 msnm\nPuntaje: 85 pts SCA\nMolienda: Media fina, para filtrado"
       },
       "blocks": {

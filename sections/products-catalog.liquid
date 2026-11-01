@@ -200,8 +200,24 @@
     <section class="products-grid-duo" aria-label="Variedades de Productos">
       {%- for block in section.blocks -%}
         {%- if block.type == 'grid_product' -%}
+          {%- comment -%} Fondo: imagen del bloque, si no la foto del producto en el admin, si no el archivo de assets {%- endcomment -%}
+          {%- liquid
+            assign grid_product = block.settings.product
+            if grid_product == blank and block.settings.btn_link contains '/products/'
+              assign grid_product_handle = block.settings.btn_link | split: '/products/' | last | split: '?' | first
+              assign grid_product = all_products[grid_product_handle]
+            endif
+            assign grid_bg = ''
+            if block.settings.image != blank
+              assign grid_bg = block.settings.image | image_url: width: 900
+            elsif grid_product.featured_image != blank
+              assign grid_bg = grid_product.featured_image | image_url: width: 900
+            elsif block.settings.default_bg_image != blank
+              assign grid_bg = block.settings.default_bg_image | asset_url
+            endif
+          -%}
           <article class="grid-card-product" data-category="{{ block.settings.category | default: 'cafe-molido' }}" {{ block.shopify_attributes }}>
-            <div class="grid-card__bg" aria-hidden="true" style="{% if block.settings.image != blank %}background-image: url('{{ block.settings.image | image_url: width: 900 }}');{% elsif block.settings.default_bg_image != blank %}background-image: url('{{ block.settings.default_bg_image | asset_url }}');{% endif %}"></div>
+            <div class="grid-card__bg" aria-hidden="true" style="{% if grid_bg != blank %}background-image: url('{{ grid_bg }}');{% endif %}"></div>
             <div class="grid-card__glass" aria-hidden="true"></div>
 
             <div class="grid-card__content">
@@ -319,9 +335,18 @@
           "id": "category",
           "label": "Categoría de Filtro",
           "options": [
-            { "value": "cold-brew", "label": "Cold Brew" },
-            { "value": "cafe-molido", "label": "Café Molido" },
-            { "value": "accesorios", "label": "Accesorios" }
+            {
+              "value": "cold-brew",
+              "label": "Cold Brew"
+            },
+            {
+              "value": "cafe-molido",
+              "label": "Café Molido"
+            },
+            {
+              "value": "accesorios",
+              "label": "Accesorios"
+            }
           ],
           "default": "cold-brew"
         },
@@ -378,14 +403,98 @@
           "id": "spec_1_icon",
           "label": "Ícono Atributo 1",
           "options": [
-            { "value": "lightning", "label": "⚡ Rayo / Energía" },
-            { "value": "leaf", "label": "🌿 Hoja / Arábica" },
-            { "value": "mountain", "label": "⛰️ Montaña / VRAEM" },
-            { "value": "filter", "label": "⌛ Filtro / Molienda" },
-            { "value": "flavor", "label": "🎯 Sabor / Aroma" },
-            { "value": "drop_zero", "label": "💧 Gota 0 Calorías" },
-            { "value": "check", "label": "✓ Check" },
-            { "value": "coffee_can", "label": "🥫 Lata" }
+            {
+              "value": "lightning",
+              "label": "⚡ Rayo / Energía"
+            },
+            {
+              "value": "leaf",
+              "label": "🌿 Hoja / 100% Arábica"
+            },
+            {
+              "value": "check",
+              "label": "✓ Sin azúcar añadida"
+            },
+            {
+              "value": "mountain",
+              "label": "⛰️ Montaña / Origen"
+            },
+            {
+              "value": "bean",
+              "label": "🫘 Grano de café"
+            },
+            {
+              "value": "coffee_cup",
+              "label": "☕ Taza de café"
+            },
+            {
+              "value": "coffee_can",
+              "label": "🥫 Lata KALPA"
+            },
+            {
+              "value": "glass",
+              "label": "🧊 Vaso con hielo"
+            },
+            {
+              "value": "snowflake",
+              "label": "❄️ Frío / Refrescante"
+            },
+            {
+              "value": "water",
+              "label": "💧 Agua"
+            },
+            {
+              "value": "drop_zero",
+              "label": "💧 Gota con cero (0 calorías)"
+            },
+            {
+              "value": "box",
+              "label": "📦 Cubo / Paquete"
+            },
+            {
+              "value": "filter",
+              "label": "⌛ Filtro / Molienda"
+            },
+            {
+              "value": "flavor",
+              "label": "🎯 Notas de sabor / Aroma"
+            },
+            {
+              "value": "scale",
+              "label": "⚖️ Balanza / Medida"
+            },
+            {
+              "value": "thermometer",
+              "label": "🌡️ Temperatura"
+            },
+            {
+              "value": "clock",
+              "label": "🕒 Reloj / Tiempo"
+            },
+            {
+              "value": "sun",
+              "label": "☀️ Sol / Todo el día"
+            },
+            {
+              "value": "medal",
+              "label": "🏅 Medalla / Puntaje"
+            },
+            {
+              "value": "star",
+              "label": "⭐ Calidad premium"
+            },
+            {
+              "value": "heart",
+              "label": "❤️ Salud / Bienestar"
+            },
+            {
+              "value": "truck",
+              "label": "🚚 Envío"
+            },
+            {
+              "value": "shield",
+              "label": "🛡️ Compra segura"
+            }
           ],
           "default": "lightning"
         },
@@ -405,10 +514,98 @@
           "id": "spec_2_icon",
           "label": "Ícono Atributo 2",
           "options": [
-            { "value": "mountain", "label": "⛰️ Montaña / VRAEM" },
-            { "value": "leaf", "label": "🌿 Hoja / Arábica" },
-            { "value": "check", "label": "✓ Check" },
-            { "value": "lightning", "label": "⚡ Rayo / Energía" }
+            {
+              "value": "lightning",
+              "label": "⚡ Rayo / Energía"
+            },
+            {
+              "value": "leaf",
+              "label": "🌿 Hoja / 100% Arábica"
+            },
+            {
+              "value": "check",
+              "label": "✓ Sin azúcar añadida"
+            },
+            {
+              "value": "mountain",
+              "label": "⛰️ Montaña / Origen"
+            },
+            {
+              "value": "bean",
+              "label": "🫘 Grano de café"
+            },
+            {
+              "value": "coffee_cup",
+              "label": "☕ Taza de café"
+            },
+            {
+              "value": "coffee_can",
+              "label": "🥫 Lata KALPA"
+            },
+            {
+              "value": "glass",
+              "label": "🧊 Vaso con hielo"
+            },
+            {
+              "value": "snowflake",
+              "label": "❄️ Frío / Refrescante"
+            },
+            {
+              "value": "water",
+              "label": "💧 Agua"
+            },
+            {
+              "value": "drop_zero",
+              "label": "💧 Gota con cero (0 calorías)"
+            },
+            {
+              "value": "box",
+              "label": "📦 Cubo / Paquete"
+            },
+            {
+              "value": "filter",
+              "label": "⌛ Filtro / Molienda"
+            },
+            {
+              "value": "flavor",
+              "label": "🎯 Notas de sabor / Aroma"
+            },
+            {
+              "value": "scale",
+              "label": "⚖️ Balanza / Medida"
+            },
+            {
+              "value": "thermometer",
+              "label": "🌡️ Temperatura"
+            },
+            {
+              "value": "clock",
+              "label": "🕒 Reloj / Tiempo"
+            },
+            {
+              "value": "sun",
+              "label": "☀️ Sol / Todo el día"
+            },
+            {
+              "value": "medal",
+              "label": "🏅 Medalla / Puntaje"
+            },
+            {
+              "value": "star",
+              "label": "⭐ Calidad premium"
+            },
+            {
+              "value": "heart",
+              "label": "❤️ Salud / Bienestar"
+            },
+            {
+              "value": "truck",
+              "label": "🚚 Envío"
+            },
+            {
+              "value": "shield",
+              "label": "🛡️ Compra segura"
+            }
           ],
           "default": "check"
         },
@@ -428,10 +625,98 @@
           "id": "spec_3_icon",
           "label": "Ícono Atributo 3",
           "options": [
-            { "value": "check", "label": "✓ Check" },
-            { "value": "leaf", "label": "🌿 Hoja / Arábica" },
-            { "value": "drop_zero", "label": "💧 Gota 0 Calorías" },
-            { "value": "heart", "label": "❤️ Salud" }
+            {
+              "value": "lightning",
+              "label": "⚡ Rayo / Energía"
+            },
+            {
+              "value": "leaf",
+              "label": "🌿 Hoja / 100% Arábica"
+            },
+            {
+              "value": "check",
+              "label": "✓ Sin azúcar añadida"
+            },
+            {
+              "value": "mountain",
+              "label": "⛰️ Montaña / Origen"
+            },
+            {
+              "value": "bean",
+              "label": "🫘 Grano de café"
+            },
+            {
+              "value": "coffee_cup",
+              "label": "☕ Taza de café"
+            },
+            {
+              "value": "coffee_can",
+              "label": "🥫 Lata KALPA"
+            },
+            {
+              "value": "glass",
+              "label": "🧊 Vaso con hielo"
+            },
+            {
+              "value": "snowflake",
+              "label": "❄️ Frío / Refrescante"
+            },
+            {
+              "value": "water",
+              "label": "💧 Agua"
+            },
+            {
+              "value": "drop_zero",
+              "label": "💧 Gota con cero (0 calorías)"
+            },
+            {
+              "value": "box",
+              "label": "📦 Cubo / Paquete"
+            },
+            {
+              "value": "filter",
+              "label": "⌛ Filtro / Molienda"
+            },
+            {
+              "value": "flavor",
+              "label": "🎯 Notas de sabor / Aroma"
+            },
+            {
+              "value": "scale",
+              "label": "⚖️ Balanza / Medida"
+            },
+            {
+              "value": "thermometer",
+              "label": "🌡️ Temperatura"
+            },
+            {
+              "value": "clock",
+              "label": "🕒 Reloj / Tiempo"
+            },
+            {
+              "value": "sun",
+              "label": "☀️ Sol / Todo el día"
+            },
+            {
+              "value": "medal",
+              "label": "🏅 Medalla / Puntaje"
+            },
+            {
+              "value": "star",
+              "label": "⭐ Calidad premium"
+            },
+            {
+              "value": "heart",
+              "label": "❤️ Salud / Bienestar"
+            },
+            {
+              "value": "truck",
+              "label": "🚚 Envío"
+            },
+            {
+              "value": "shield",
+              "label": "🛡️ Compra segura"
+            }
           ],
           "default": "check"
         },
@@ -451,9 +736,98 @@
           "id": "spec_4_icon",
           "label": "Ícono Atributo 4",
           "options": [
-            { "value": "coffee_can", "label": "🥫 Lata / Listo para tomar" },
-            { "value": "clock", "label": "🕒 Reloj" },
-            { "value": "snowflake", "label": "❄️ Nieve" }
+            {
+              "value": "lightning",
+              "label": "⚡ Rayo / Energía"
+            },
+            {
+              "value": "leaf",
+              "label": "🌿 Hoja / 100% Arábica"
+            },
+            {
+              "value": "check",
+              "label": "✓ Sin azúcar añadida"
+            },
+            {
+              "value": "mountain",
+              "label": "⛰️ Montaña / Origen"
+            },
+            {
+              "value": "bean",
+              "label": "🫘 Grano de café"
+            },
+            {
+              "value": "coffee_cup",
+              "label": "☕ Taza de café"
+            },
+            {
+              "value": "coffee_can",
+              "label": "🥫 Lata KALPA"
+            },
+            {
+              "value": "glass",
+              "label": "🧊 Vaso con hielo"
+            },
+            {
+              "value": "snowflake",
+              "label": "❄️ Frío / Refrescante"
+            },
+            {
+              "value": "water",
+              "label": "💧 Agua"
+            },
+            {
+              "value": "drop_zero",
+              "label": "💧 Gota con cero (0 calorías)"
+            },
+            {
+              "value": "box",
+              "label": "📦 Cubo / Paquete"
+            },
+            {
+              "value": "filter",
+              "label": "⌛ Filtro / Molienda"
+            },
+            {
+              "value": "flavor",
+              "label": "🎯 Notas de sabor / Aroma"
+            },
+            {
+              "value": "scale",
+              "label": "⚖️ Balanza / Medida"
+            },
+            {
+              "value": "thermometer",
+              "label": "🌡️ Temperatura"
+            },
+            {
+              "value": "clock",
+              "label": "🕒 Reloj / Tiempo"
+            },
+            {
+              "value": "sun",
+              "label": "☀️ Sol / Todo el día"
+            },
+            {
+              "value": "medal",
+              "label": "🏅 Medalla / Puntaje"
+            },
+            {
+              "value": "star",
+              "label": "⭐ Calidad premium"
+            },
+            {
+              "value": "heart",
+              "label": "❤️ Salud / Bienestar"
+            },
+            {
+              "value": "truck",
+              "label": "🚚 Envío"
+            },
+            {
+              "value": "shield",
+              "label": "🛡️ Compra segura"
+            }
           ],
           "default": "coffee_can"
         },
@@ -545,9 +919,18 @@
           "id": "category",
           "label": "Categoría de Filtro",
           "options": [
-            { "value": "cafe-molido", "label": "Café Molido" },
-            { "value": "cold-brew", "label": "Cold Brew" },
-            { "value": "accesorios", "label": "Accesorios" }
+            {
+              "value": "cafe-molido",
+              "label": "Café Molido"
+            },
+            {
+              "value": "cold-brew",
+              "label": "Cold Brew"
+            },
+            {
+              "value": "accesorios",
+              "label": "Accesorios"
+            }
           ],
           "default": "cafe-molido"
         },
