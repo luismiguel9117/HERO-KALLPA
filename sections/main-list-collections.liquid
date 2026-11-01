@@ -1,0 +1,72 @@
+{%- comment -%}
+  SECCIÓN: main-list-collections.liquid
+  Página /collections: todas las colecciones de la tienda con el diseño de la Tienda.
+  La imagen sale de la colección o, si no tiene, de su primer producto.
+{%- endcomment -%}
+
+{{ 'kallpa-shop.css' | asset_url | stylesheet_tag }}
+
+<div class="kshop">
+  <section class="kshop-hero">
+    <div class="page-width">
+      <nav class="kshop-breadcrumb" aria-label="Navegación">
+        <a href="{{ routes.root_url }}">Inicio</a>
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        <span aria-current="page">Colecciones</span>
+      </nav>
+      <h1 class="kshop-hero__title">{{ section.settings.title_dark | default: 'COLECCIONES' }} <em>{{ section.settings.title_gold | default: 'KALLPA' }}</em></h1>
+    </div>
+  </section>
+
+  <main class="page-width kshop-main">
+    <div class="kshop-grid" data-view="grid">
+      {%- for col in collections -%}
+        {%- if col.all_products_count == 0 -%}{%- continue -%}{%- endif -%}
+        {%- assign cover = col.featured_image | default: col.products.first.featured_media.preview_image -%}
+        <article class="kshop-card">
+          <div class="kshop-card__media">
+            <a href="{{ col.url }}" class="kshop-card__media-link" tabindex="-1" aria-hidden="true">
+              {%- if cover -%}
+                {{ cover | image_url: width: 800 | image_tag: loading: 'lazy', class: 'kshop-card__img', sizes: '(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw', widths: '360, 540, 720, 800', alt: col.title }}
+              {%- else -%}
+                {{ 'collection-1' | placeholder_svg_tag: 'kshop-card__img kshop-card__img--placeholder' }}
+              {%- endif -%}
+            </a>
+          </div>
+          <div class="kshop-card__body">
+            <span class="kshop-card__category">{{ col.all_products_count }} {% if col.all_products_count == 1 %}producto{% else %}productos{% endif %}</span>
+            <h2 class="kshop-card__title"><a href="{{ col.url }}">{{ col.title }}</a></h2>
+            {%- if col.description != blank -%}
+              <p class="kshop-card__desc">{{ col.description | strip_html | truncatewords: 18 }}</p>
+            {%- endif -%}
+            <div class="kshop-card__buy">
+              <div class="kshop-card__footer">
+                <a href="{{ col.url }}" class="kshop-add" style="text-decoration: none;">Ver colección</a>
+              </div>
+            </div>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </main>
+</div>
+
+{% schema %}
+{
+  "name": "Lista de colecciones",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title_dark",
+      "label": "Título (parte negra)",
+      "default": "COLECCIONES"
+    },
+    {
+      "type": "text",
+      "id": "title_gold",
+      "label": "Título (parte dorada)",
+      "default": "KALLPA"
+    }
+  ]
+}
+{% endschema %}

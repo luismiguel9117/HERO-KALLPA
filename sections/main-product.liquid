@@ -249,7 +249,7 @@
                   <small>{{ v_detail }}</small>
                 {%- endif -%}
               </span>
-              <span class="pdp-pack__price">S/ {{ v.price | money_without_currency }}{% if v_off > 0 %}<s>S/ {{ v_regular | money_without_currency }}</s>{% endif %}</span>
+              <span class="pdp-pack__price">{{ v.price | money }}{% if v_off > 0 %}<s>{{ v_regular | money }}</s>{% endif %}</span>
             </button>
           {%- endfor -%}
         </div>
@@ -265,7 +265,7 @@
           </div>
           <button type="button" class="pdp-add" id="btn-add-main" onclick="handleAddToCart()"{% unless start_variant.available %} disabled{% endunless %}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-            <span id="btn-add-label">{% if start_variant.available %}AGREGAR AL CARRITO – S/ {{ start_variant.price | money_without_currency }}{% else %}AGOTADO{% endif %}</span>
+            <span id="btn-add-label">{% if start_variant.available %}AGREGAR AL CARRITO – {{ start_variant.price | money }}{% else %}AGOTADO{% endif %}</span>
           </button>
         </div>
       </div>
@@ -397,7 +397,7 @@
           <div class="cross-pack-info">
             <a href="{{ p.url }}" class="cross-pack-name">{{ p.title }}</a>
             {%- unless p.has_only_default_variant -%}<span class="cross-pack-sub">{{ cv.title }}</span>{%- endunless -%}
-            <span class="cross-pack-price">S/ {{ cv.price | money_without_currency }}</span>
+            <span class="cross-pack-price">{{ cv.price | money }}</span>
             <button type="button" class="btn-cross-add" onclick="addVariantToKallpaCart({{ cv.id }}, 1)">
               AGREGAR
             </button>
@@ -494,7 +494,7 @@
     if (btn) btn.disabled = !currentAvailable;
     if (label) {
       label.textContent = currentAvailable
-        ? 'AGREGAR AL CARRITO – S/ ' + (currentPriceCents * currentCount / 100).toFixed(2)
+        ? 'AGREGAR AL CARRITO – ' + window.formatMoney(currentPriceCents * currentCount)
         : 'AGOTADO';
     }
   }

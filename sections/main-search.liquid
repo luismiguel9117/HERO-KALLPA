@@ -1,0 +1,130 @@
+{%- comment -%}
+  SECCIÓN: main-search.liquid
+  Resultados de búsqueda con el diseño de la Tienda (fondo claro y tarjetas blancas).
+  Los productos muestran precio real, descuento y estado agotado; las páginas aparecen como enlaces.
+{%- endcomment -%}
+
+{{ 'kallpa-shop.css' | asset_url | stylesheet_tag }}
+
+<div class="kshop">
+  <section class="kshop-hero">
+    <div class="page-width">
+      <nav class="kshop-breadcrumb" aria-label="Navegación">
+        <a href="{{ routes.root_url }}">Inicio</a>
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        <span aria-current="page">Búsqueda</span>
+      </nav>
+      <h1 class="kshop-hero__title">BUSCAR <em>KALLPA</em></h1>
+      <form action="{{ routes.search_url }}" method="get" role="search" class="ksearch-form">
+        <input type="hidden" name="type" value="product">
+        <label for="SearchPageInput" class="visually-hidden">Buscar productos</label>
+        <input id="SearchPageInput" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Buscar café, cold brew, packs…">
+        <button type="submit" class="kshop-add">Buscar</button>
+      </form>
+      {%- if search.performed -%}
+        <p class="kshop-hero__subtitle">
+          {%- if search.results_count == 0 -%}
+            No encontramos resultados para “{{ search.terms | escape }}”. Prueba con otra palabra o mira toda la <a href="{{ routes.all_products_collection_url }}">Tienda</a>.
+          {%- else -%}
+            {{ search.results_count }} {% if search.results_count == 1 %}resultado{% else %}resultados{% endif %} para “{{ search.terms | escape }}”
+          {%- endif -%}
+        </p>
+      {%- endif -%}
+    </div>
+  </section>
+
+  {%- if search.performed and search.results_count > 0 -%}
+    {%- paginate search.results by 24 -%}
+      <main class="page-width kshop-main">
+        <div class="kshop-grid" data-view="grid">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {%- liquid
+                assign variant = item.selected_or_first_available_variant
+                assign discount_pct = 0
+                if variant.compare_at_price > variant.price
+                  assign discount_pct = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price
+                endif
+              -%}
+              <article class="kshop-card{% unless item.available %} is-soldout{% endunless %}">
+                <div class="kshop-card__media">
+                  <a href="{{ item.url }}" class="kshop-card__media-link" tabindex="-1" aria-hidden="true">
+                    {%- if item.featured_media -%}
+                      {%- assign media_alt = item.featured_media.alt | default: item.title | escape -%}
+                      {{ item.featured_media | image_url: width: 800 | image_tag: loading: 'lazy', class: 'kshop-card__img', sizes: '(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw', widths: '360, 540, 720, 800', alt: media_alt }}
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'kshop-card__img kshop-card__img--placeholder' }}
+                    {%- endif -%}
+                  </a>
+                  <span class="kshop-card__badges">
+                    {%- if item.available == false -%}
+                      <span class="kshop-badge kshop-badge--soldout">Agotado</span>
+                    {%- elsif discount_pct > 0 -%}
+                      <span class="kshop-badge kshop-badge--sale">-{{ discount_pct }}%</span>
+                    {%- endif -%}
+                  </span>
+                </div>
+                <div class="kshop-card__body">
+                  {%- if item.type != blank -%}<span class="kshop-card__category">{{ item.type }}</span>{%- endif -%}
+                  <h2 class="kshop-card__title"><a href="{{ item.url }}">{{ item.title }}</a></h2>
+                  <div class="kshop-card__buy">
+                    <div class="kshop-card__footer">
+                      <div class="kshop-card__price">
+                        <span class="kshop-price">{{ variant.price | money }}</span>
+                        {%- if discount_pct > 0 -%}<s class="kshop-price__old">{{ variant.compare_at_price | money }}</s>{%- endif -%}
+                      </div>
+                      <a href="{{ item.url }}" class="kshop-add">Ver producto</a>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            {%- else -%}
+              <article class="kshop-card ksearch-page">
+                <div class="kshop-card__body">
+                  <span class="kshop-card__category">Página</span>
+                  <h2 class="kshop-card__title"><a href="{{ item.url }}">{{ item.title }}</a></h2>
+                  <p class="kshop-card__desc">{{ item.content | strip_html | truncatewords: 24 }}</p>
+                </div>
+              </article>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <nav class="kshop-pagination" aria-label="Paginación">
+            {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" aria-label="Página anterior">&lsaquo;</a>{%- endif -%}
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}
+                <a href="{{ part.url }}">{{ part.title }}</a>
+              {%- elsif part.title == paginate.current_page -%}
+                <span class="is-current" aria-current="page">{{ part.title }}</span>
+              {%- else -%}
+                <span>{{ part.title }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if paginate.next -%}<a href="{{ paginate.next.url }}" aria-label="Página siguiente">&rsaquo;</a>{%- endif -%}
+          </nav>
+        {%- endif -%}
+      </main>
+    {%- endpaginate -%}
+  {%- else -%}
+    <main class="page-width kshop-main"></main>
+  {%- endif -%}
+</div>
+
+<style>
+  .ksearch-form { display: flex; gap: 0.75rem; max-width: 640px; margin-top: 1.25rem; }
+  .ksearch-form input[type="search"] { flex: 1; min-width: 0; height: 48px; padding: 0 1rem; border: 1px solid var(--kshop-line); border-radius: 10px; background: #fff; color: var(--kshop-text); font: inherit; font-size: 1rem; }
+  .ksearch-form input[type="search"]:focus { outline: none; border-color: var(--kshop-gold-deep); box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.25); }
+  .ksearch-form .kshop-add { margin-left: 0; min-width: 120px; height: 48px; }
+  .kshop-hero__subtitle a { color: var(--kshop-gold-deep); }
+  .kshop-card__footer a.kshop-add { text-decoration: none; }
+  .ksearch-page .kshop-card__body { padding-top: 1.5rem; }
+</style>
+
+{% schema %}
+{
+  "name": "Resultados de búsqueda",
+  "settings": []
+}
+{% endschema %}

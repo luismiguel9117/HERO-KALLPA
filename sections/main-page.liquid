@@ -1,28 +1,160 @@
 {%- comment -%}
   SECCIÓN: main-page.liquid
-  Router inteligente de páginas: si es Productos no renderiza nada (el catálogo lo pinta la
-  sección products-catalog de page.json), si es Tienda muestra el catálogo comercial,
-  y para otras páginas muestra el contenido estándar.
+  Router inteligente de páginas (plantilla "page" por defecto):
+  - Productos: no renderiza nada (el catálogo lo pinta la sección products-catalog de page.json).
+  - Tienda: redirige a la colección de todos los productos (donde vive el catálogo).
+  - Legales (términos, privacidad, devoluciones, reclamaciones): snippet legal-page con el Libro de Reclamaciones.
+  - Contacto: contenido de la página + formulario de contacto de Shopify (llega al correo de la tienda).
+  - Otras: contenido estándar.
 {%- endcomment -%}
 
-{%- if page.handle contains 'producto' -%}
+{%- liquid
+  assign handle = page.handle | downcase
+  assign is_legal = false
+  if handle contains 'termino' or handle contains 'privacidad' or handle contains 'devolucion' or handle contains 'reclamacion'
+    assign is_legal = true
+  endif
+  assign is_contact = false
+  if handle contains 'contact'
+    assign is_contact = true
+  endif
+-%}
+
+{%- if handle contains 'producto' -%}
   {%- comment -%} Renderizado por products-catalog {%- endcomment -%}
-{%- elsif page.handle contains 'tienda' -%}
-  {% section 'kallpa-tienda' %}
+{%- elsif handle contains 'tienda' -%}
+  {%- comment -%} Una sección no puede incluir otra: la Tienda vive en la colección de todos los productos {%- endcomment -%}
+  <p class="page-width" style="padding: 4rem 1.5rem; color: #fff;"><a href="{{ routes.all_products_collection_url }}" style="color: #f5ba2c;">Ir a la Tienda</a></p>
+  <script>window.location.replace({{ routes.all_products_collection_url | json }});</script>
+{%- elsif is_legal -%}
+  {% render "legal-page", legal: section.settings %}
 {%- else -%}
-  <div class="page-width" style="padding: clamp(3rem, 6vw, 6rem) 1.5rem; max-width: 900px; margin: 0 auto; color: #fff;">
-    <h1 style="font-family: var(--font-brand); font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; margin-bottom: 2rem; color: #f5ba2c;">
-      {{ page.title }}
-    </h1>
-    <div class="rte" style="line-height: 1.8; color: #cbd5e1; font-size: 1.05rem;">
-      {{ page.content }}
-    </div>
+  <div class="page-width kpage">
+    <h1 class="kpage__title">{{ page.title }}</h1>
+
+    {%- if is_contact -%}
+      <div class="kpage-contact">
+        <div class="kpage-contact__info">
+          {%- if page.content != blank -%}
+            <div class="rte kpage__content">{{ page.content }}</div>
+          {%- else -%}
+            <p class="kpage__content">{{ section.settings.contact_intro }}</p>
+          {%- endif -%}
+          <ul class="kpage-contact__list">
+            {%- if section.settings.contact_email != blank -%}
+              <li><span>Correo</span><a href="mailto:{{ section.settings.contact_email }}">{{ section.settings.contact_email }}</a></li>
+            {%- endif -%}
+            {%- if section.settings.contact_whatsapp != blank -%}
+              {%- assign wa_number = section.settings.contact_whatsapp | remove: ' ' | remove: '+' | remove: '-' -%}
+              <li><span>WhatsApp</span><a href="https://wa.me/{{ wa_number }}" target="_blank" rel="noopener">{{ section.settings.contact_whatsapp }}</a></li>
+            {%- endif -%}
+            {%- if section.settings.contact_hours != blank -%}
+              <li><span>Horario</span>{{ section.settings.contact_hours }}</li>
+            {%- endif -%}
+            {%- if section.settings.contact_address != blank -%}
+              <li><span>Dirección</span>{{ section.settings.contact_address }}</li>
+            {%- endif -%}
+          </ul>
+        </div>
+
+        {%- form 'contact', id: 'kallpa-contact-form', class: 'kpage-form' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="kpage-form__ok" role="status">Gracias por escribirnos. Te responderemos pronto al correo que indicaste.</p>
+          {%- else -%}
+            {%- if form.errors -%}
+              <div class="kpage-form__error" role="alert">{{ form.errors | default_errors }}</div>
+            {%- endif -%}
+            <input type="hidden" name="contact[Tipo de formulario]" value="Contacto">
+            <div class="kpage-form__row">
+              <label for="ContactName">Nombre *</label>
+              <input id="ContactName" type="text" name="contact[Nombre]" required autocomplete="name" value="{{ form.name }}">
+            </div>
+            <div class="kpage-form__grid">
+              <div class="kpage-form__row">
+                <label for="ContactEmail">Correo *</label>
+                <input id="ContactEmail" type="email" name="contact[email]" required autocomplete="email" value="{{ form.email }}">
+              </div>
+              <div class="kpage-form__row">
+                <label for="ContactPhone">Teléfono</label>
+                <input id="ContactPhone" type="tel" name="contact[Teléfono]" autocomplete="tel" value="{{ form.phone }}">
+              </div>
+            </div>
+            <div class="kpage-form__row">
+              <label for="ContactMessage">Mensaje *</label>
+              <textarea id="ContactMessage" name="contact[body]" rows="6" required>{{ form.body }}</textarea>
+            </div>
+            <button type="submit" class="kpage-form__btn">ENVIAR MENSAJE</button>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    {%- else -%}
+      <div class="rte kpage__content">{{ page.content }}</div>
+    {%- endif -%}
   </div>
+
+  <style>
+    .kpage { max-width: 1100px; margin: 0 auto; padding: clamp(3rem, 6vw, 6rem) 1.5rem; color: #fff; }
+    .kpage__title { margin: 0 0 2rem; font-family: var(--font-brand); font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: #f5ba2c; }
+    .kpage__content { margin: 0 0 1.5rem; color: #cbd5e1; font-size: 1.05rem; line-height: 1.8; }
+    .kpage-contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+    .kpage-contact__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
+    .kpage-contact__list li { display: grid; gap: 0.2rem; color: #e2e8f0; }
+    .kpage-contact__list span { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #f5ba2c; }
+    .kpage-contact__list a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+    .kpage-form { display: grid; gap: 1rem; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; background: rgba(255, 255, 255, 0.03); }
+    .kpage-form__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .kpage-form__row { display: grid; gap: 0.4rem; }
+    .kpage-form__row label { font-size: 0.8rem; font-weight: 700; color: #cbd5e1; }
+    .kpage-form__row input, .kpage-form__row textarea { width: 100%; padding: 0.8rem 1rem; border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 10px; background: rgba(0, 0, 0, 0.35); color: #fff; font: inherit; }
+    .kpage-form__row input:focus, .kpage-form__row textarea:focus { outline: none; border-color: #f5ba2c; box-shadow: 0 0 0 3px rgba(245, 186, 44, 0.2); }
+    .kpage-form__btn { justify-self: start; padding: 0.95rem 1.8rem; border: 0; border-radius: 999px; background: #f5ba2c; color: #0b0908; font-family: var(--font-brand); font-weight: 900; letter-spacing: 0.06em; cursor: pointer; }
+    .kpage-form__btn:hover { background: #ffcb45; }
+    .kpage-form__ok { margin: 0; color: #fbd132; font-weight: 700; line-height: 1.6; }
+    .kpage-form__error { padding: 0.8rem 1rem; border: 1px solid rgba(239, 68, 68, 0.45); border-radius: 10px; background: rgba(239, 68, 68, 0.1); color: #fecaca; font-size: 0.9rem; }
+    .kpage-form__error ul { margin: 0; padding-left: 1.1rem; }
+    @media (max-width: 768px) {
+      .kpage-contact, .kpage-form__grid { grid-template-columns: 1fr; }
+    }
+  </style>
 {%- endif -%}
 
 {% schema %}
 {
   "name": "Página General",
-  "settings": []
+  "settings": [
+    {
+      "type": "header",
+      "content": "Página de Contacto"
+    },
+    {
+      "type": "textarea",
+      "id": "contact_intro",
+      "label": "Texto de introducción",
+      "info": "Se usa si la página Contacto no tiene contenido en el admin.",
+      "default": "¿Tienes dudas sobre un pedido, envíos o ventas al por mayor? Escríbenos y te respondemos lo antes posible."
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Correo",
+      "default": "ventas@kalpa.pe"
+    },
+    {
+      "type": "text",
+      "id": "contact_whatsapp",
+      "label": "WhatsApp (con código de país, ej. +51 987 654 321)"
+    },
+    {
+      "type": "text",
+      "id": "contact_hours",
+      "label": "Horario de atención"
+    },
+    {
+      "type": "text",
+      "id": "contact_address",
+      "label": "Dirección",
+      "default": "Urb. Mariscal Cáceres Mz G Lt 5, Ayacucho, Perú"
+    }
+  ]
 }
 {% endschema %}

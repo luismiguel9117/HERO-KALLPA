@@ -25,16 +25,25 @@
           <h3 class="newsletter-banner__title">{{ section.settings.newsletter_title | default: 'SÉ PARTE DE KALPA' }}</h3>
           <p class="newsletter-banner__desc">{{ section.settings.newsletter_desc | default: 'Recibe promociones exclusivas, lanzamientos y más historias del VRAEM.' }}</p>
         </div>
-        <form class="newsletter-banner__form" onsubmit="handleKallpaNewsletter(event, this);">
-          <input type="email" placeholder="Tu correo electrónico" class="newsletter-banner__input" required aria-label="Tu correo electrónico">
-          <button type="submit" class="newsletter-banner__btn">
-            <span>SUSCRIBIRME</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </button>
-        </form>
+        {%- comment -%} Formulario de Shopify: cada correo queda como cliente con la etiqueta "newsletter" y aceptación de marketing {%- endcomment -%}
+        {%- form 'customer', id: 'kallpa-newsletter', class: 'newsletter-banner__form' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="newsletter-banner__status newsletter-banner__status--ok" role="status">¡Listo! Ya eres parte de KALPA. Te escribiremos con promociones y lanzamientos.</p>
+          {%- else -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <input type="email" name="contact[email]" placeholder="Tu correo electrónico" class="newsletter-banner__input" required aria-label="Tu correo electrónico" autocomplete="email" value="{{ form.email }}">
+            <button type="submit" class="newsletter-banner__btn">
+              <span>SUSCRIBIRME</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+            {%- if form.errors -%}
+              <div class="newsletter-banner__status newsletter-banner__status--error" role="alert">{{ form.errors | default_errors }}</div>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endform -%}
       </div>
 
       <!-- Grano de Café en la Esquina Superior Derecha -->
@@ -69,25 +78,39 @@
 
         <!-- Columna 2: Tienda -->
         <div class="footer-col footer-col--nav">
-          <h4 class="footer-col-title">Tienda</h4>
+          <h4 class="footer-col-title">{{ section.settings.menu_shop_title | default: 'Tienda' }}</h4>
           <ul class="footer-nav-list">
-            {%- assign cold_brew = all_products['kalpa-cold-brew'] -%}
-            {%- assign cafe_molido = all_products['cafe-molido-250-g-y-500-g'] -%}
-            <li><a href="{{ cold_brew.url | default: routes.all_products_collection_url }}">Cold Brew Original (355 ml)</a></li>
-            <li><a href="{{ cafe_molido.url | default: routes.all_products_collection_url }}">Café Molido Obata (250 g)</a></li>
-            <li><a href="/pages/promociones">Packs & Promociones</a></li>
-            <li><a href="{{ routes.root_url }}#origin-section">Envíos a todo el Perú</a></li>
+            {%- assign col_menu = linklists[section.settings.menu_shop] -%}
+            {%- if col_menu.links.size > 0 -%}
+              {%- for link in col_menu.links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            {%- else -%}
+              {%- assign cold_brew = all_products['kalpa-cold-brew'] -%}
+              {%- assign cafe_molido = all_products['cafe-molido-250-g-y-500-g'] -%}
+              <li><a href="{{ cold_brew.url | default: routes.all_products_collection_url }}">Cold Brew Original (355 ml)</a></li>
+              <li><a href="{{ cafe_molido.url | default: routes.all_products_collection_url }}">Café Molido Obata (250 g)</a></li>
+              <li><a href="/pages/promociones">Packs & Promociones</a></li>
+              <li><a href="{{ routes.root_url }}#origin-section">Envíos a todo el Perú</a></li>
+            {%- endif -%}
           </ul>
         </div>
 
         <!-- Columna 3: Nosotros -->
         <div class="footer-col footer-col--nav">
-          <h4 class="footer-col-title">Nosotros</h4>
+          <h4 class="footer-col-title">{{ section.settings.menu_about_title | default: 'Nosotros' }}</h4>
           <ul class="footer-nav-list">
-            <li><a href="/pages/nosotros">Nuestra Historia</a></li>
-            <li><a href="/pages/nosotros#origen-ayacucho">Origen VRAEM</a></li>
-            <li><a href="/pages/nosotros#como-lo-hacemos">Energía Natural</a></li>
-            <li><a href="{{ routes.root_url }}#reels-section">Comunidad & Reseñas</a></li>
+            {%- assign col_menu = linklists[section.settings.menu_about] -%}
+            {%- if col_menu.links.size > 0 -%}
+              {%- for link in col_menu.links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            {%- else -%}
+              <li><a href="/pages/nosotros">Nuestra Historia</a></li>
+              <li><a href="/pages/nosotros#origen-ayacucho">Origen VRAEM</a></li>
+              <li><a href="/pages/nosotros#como-lo-hacemos">Energía Natural</a></li>
+              <li><a href="{{ routes.root_url }}#reels-section">Comunidad & Reseñas</a></li>
+            {%- endif -%}
           </ul>
         </div>
 
@@ -166,23 +189,6 @@
 
 </footer>
 
-<script>
-  // Manejo elegante del formulario Newsletter
-  function handleKallpaNewsletter(e, form) {
-    e.preventDefault();
-    const input = form.querySelector('input[type="email"]');
-    if (!input || !input.value.trim()) return;
-
-    const email = input.value.trim();
-    if (typeof window.showKallpaToast === 'function') {
-      window.showKallpaToast('¡Gracias por unirte a KALPA! Te enviaremos promociones exclusivas a ' + email);
-    } else {
-      alert('¡Gracias por unirte a la comunidad KALPA!');
-    }
-    input.value = '';
-  }
-</script>
-
 {% schema %}
 {
   "name": "Footer KALPA",
@@ -198,6 +204,36 @@
       "id": "newsletter_desc",
       "label": "Descripción del Newsletter",
       "default": "Recibe promociones exclusivas, lanzamientos y más historias del VRAEM."
+    },
+    {
+      "type": "header",
+      "content": "Columnas de enlaces"
+    },
+    {
+      "type": "paragraph",
+      "content": "Elige un menú de Tienda online → Navegación para cada columna. Si lo dejas vacío, se muestran los enlaces actuales."
+    },
+    {
+      "type": "text",
+      "id": "menu_shop_title",
+      "label": "Título columna 1",
+      "default": "Tienda"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_shop",
+      "label": "Menú columna 1"
+    },
+    {
+      "type": "text",
+      "id": "menu_about_title",
+      "label": "Título columna 2",
+      "default": "Nosotros"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_about",
+      "label": "Menú columna 2"
     }
   ]
 }

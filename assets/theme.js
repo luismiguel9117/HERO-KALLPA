@@ -76,10 +76,18 @@ window.closeKallpaCart = function() {
 };
 
 // Formato de moneda adaptable en Soles (PEN)
+// Formatea céntimos con el formato de moneda de la tienda (Configuración → Mercados/Moneda), ej. "S/. {{amount}}"
 function formatMoney(cents) {
-  if (typeof cents !== 'number') return 'S/ ' + cents;
-  return 'S/ ' + (cents / 100).toFixed(2);
+  var value = Number(cents) || 0;
+  var format = (window.Shopify && window.Shopify.money_format) || 'S/. {{amount}}';
+  var amount = (value / 100).toFixed(2);
+  var withComma = amount.replace('.', ',');
+  return format
+    .replace(/{{s*amount_with_comma_separators*}}/, withComma)
+    .replace(/{{s*amount_no_decimalss*}}/, String(Math.round(value / 100)))
+    .replace(/{{s*amounts*}}/, amount);
 }
+window.formatMoney = formatMoney;
 
 // Renderizar UI del Carrito
 function renderCartUI(cart) {
@@ -194,34 +202,6 @@ window.updateKallpaCartItem = function(itemKey, qty) {
   });
 };
 
-// Agregar producto al carrito de Shopify
-window.addPackToKallpaCart = function(packId, name, price, qty = 1, variantId = null) {
-  const vId = variantId || (window.Shopify && window.Shopify.default_variant_id) || 67960537088316;
-
-  // Abrir carrito de inmediato
-  window.openKallpaCart();
-
-  fetch('/cart/add.js', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      id: vId,
-      quantity: qty || 1,
-      properties: {
-        'Producto': name,
-        'Presentación': packId
-      }
-    })
-  })
-  .then(res => res.json())
-  .then(() => {
-    window.refreshKallpaCart();
-  })
-  .catch(err => {
-    console.error('Error adding to Shopify cart:', err);
-    window.refreshKallpaCart();
-  });
-};
 
 // Agregar una variante real de Shopify (precio, nombre e imagen salen del admin)
 window.addVariantToKallpaCart = function(variantId, qty = 1) {
@@ -250,9 +230,6 @@ window.addToCartKallpa = function(variantId, quantity = 1) {
   window.addVariantToKallpaCart(variantId, quantity).catch(() => {});
 };
 
-window.addKallpaToCart = function(title, priceSol, image) {
-  window.addPackToKallpaCart('pack', title, priceSol, 1);
-};
 // Aparición de bloques en Nosotros para navegadores sin animation-timeline (Safari/iOS)
 function initNosotrosReveal() {
   if (window.CSS && CSS.supports('animation-timeline: view()')) return;
@@ -357,37 +334,9 @@ window.prevProductSlide = function() {
   window.goToProductSlide(currentProductSlide - 1);
 };
 
-window.updateSaleUnitQty = function(delta) {
-  const el = document.getElementById('sale-unit-qty');
-  if (!el) return;
-  let val = parseInt(el.textContent || '1', 10) + delta;
-  if (val < 1) val = 1;
-  if (val > 24) val = 24;
-  el.textContent = val;
-};
 
-window.updateMolidoUnitQty = function(delta) {
-  const el = document.getElementById('molido-unit-qty');
-  if (!el) return;
-  let val = parseInt(el.textContent || '1', 10) + delta;
-  if (val < 1) val = 1;
-  if (val > 24) val = 24;
-  el.textContent = val;
-};
 
-window.addSaleUnitToCart = function() {
-  const el = document.getElementById('sale-unit-qty');
-  const qty = el ? Math.max(1, parseInt(el.textContent || '1', 10)) : 1;
-  const total = +(7.90 * qty).toFixed(2);
-  window.addPackToKallpaCart('unit-kalpa-original', `${qty}x KALPA Original 355ml`, total);
-};
 
-window.addMolidoUnitToCart = function() {
-  const el = document.getElementById('molido-unit-qty');
-  const qty = el ? Math.max(1, parseInt(el.textContent || '1', 10)) : 1;
-  const total = +(34.90 * qty).toFixed(2);
-  window.addPackToKallpaCart('unit-kalpa-molido', `${qty}x KALPA Café Molido 250g`, total);
-};
 
 
 
@@ -579,26 +528,3 @@ window.showKallpaToast = function(message, iconSvg) {
   }, 3800);
 };
 
-// 7. Manejador de Favoritos (Wishlist) con Feedback Háptico / Toast
-window.handleKallpaWishlist = function(btn) {
-  if (btn) {
-    btn.classList.toggle('is-favorited');
-    const svg = btn.querySelector('svg');
-    if (svg) {
-      if (btn.classList.contains('is-favorited')) {
-        svg.setAttribute('fill', '#fbd132');
-        svg.setAttribute('stroke', '#fbd132');
-      } else {
-        svg.setAttribute('fill', 'none');
-        svg.setAttribute('stroke', 'currentColor');
-      }
-    }
-  }
-
-  const heartIcon = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#fbd132" stroke="#fbd132" stroke-width="2" class="kallpa-toast-icon">
-      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-    </svg>
-  `;
-  window.showKallpaToast('¡Guardado en tu lista de deseos KALPA!', heartIcon);
-};
