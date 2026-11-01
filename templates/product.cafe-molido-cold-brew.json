@@ -1,0 +1,66 @@
+{
+  "sections": {
+    "main_product": {
+      "type": "main-product",
+      "settings": {
+        "category_tag": "CAFÉ DE ESPECIALIDAD",
+        "badge_text": "",
+        "feature_1": "85 pts SCA",
+        "feature_2": "100% Arábica · Obata",
+        "feature_3": "Ayacucho · 1,650 msnm",
+        "feature_4": "Notas: cereza, chocolate, manzana",
+        "net_content": "",
+        "container": "lata",
+        "warning_title": "CONSERVACIÓN",
+        "warning_text": "Mantener en lugar fresco, seco y sin luz directa. Cerrar bien después de abrir. Lata hermética reutilizable con válvula: rellénala con Kalpa Recarga.",
+        "nutrition_title": "FICHA TÉCNICA",
+        "nutrition_col_1": "Dato",
+        "nutrition_col_2": "Detalle",
+        "nutrition_show_content": false,
+        "cross_title": "QUE NO SE TE ACABE A MITAD DE SEMANA",
+        "faq_eyebrow": "PREGUNTAS FRECUENTES",
+        "faq_title": "ANTES DE COMPRAR",
+        "product_desc": "Cultivado a 1,650 msnm en Anco, La Mar, por la Asociación Matices de Altura. Lavado, de taza limpia y dulce, tostado en Ayacucho y molido grueso para extraer en frío.",
+        "specs_what": "Café premium tostado y molido gourmet, con molienda gruesa especial para cold brew.",
+        "specs_ingredients": "Café tostado molido 100% Obata.",
+        "howto_title": "CÓMO PREPARARLO",
+        "howto_1": "100 g de café en 1 L de agua fría filtrada",
+        "howto_2": "Reposa 12–18 h en refrigeración y filtra",
+        "howto_3": "Sirve el concentrado 1:1 con agua, leche o hielo · dura 7 días refrigerado",
+        "nutrition": "Variedad: 100% Obata\nProceso: Lavado\nTueste: Medio oscuro\nOrigen: Anexo San Vicente, Anco, La Mar – Ayacucho\nProductor: Asociación Matices de Altura\nCosechado a: 1,650 msnm\nPuntaje: 85 pts SCA\nMolienda: Gruesa, para cold brew"
+      },
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Para qué métodos sirve?",
+            "answer": "Tiene molienda gruesa, especial para cold brew. También funciona por goteo en frío y en prensa francesa.",
+            "open_by_default": true
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Puedo rellenar la lata?",
+            "answer": "Sí. La lata es hermética, reutilizable y tiene válvula. Rellénala con Kalpa Recarga."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Envían a provincia?",
+            "answer": "Sí. Despachamos a todas las ciudades y provincias del Perú a través de Olva Courier y Shalom, con empaque protector anti-impacto. El tiempo promedio de entrega en Lima es de 24 a 48 horas, y en provincias de 48 a 72 horas hábiles."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3"
+      ]
+    }
+  },
+  "order": [
+    "main_product"
+  ]
+}
