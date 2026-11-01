@@ -348,9 +348,9 @@
 
       {%- if nutrition_rows.size > 0 -%}
         <div class="pdp-specs__col">
-          <h3 class="pdp-specs__title">INFORMACIÓN NUTRICIONAL</h3>
+          <h3 class="pdp-specs__title">{{ ss.nutrition_title | default: 'INFORMACIÓN NUTRICIONAL' }}</h3>
           <table class="pdp-nutrition">
-            <thead><tr><th>Nutriente</th><th>Por porción{% if net_content != blank %} ({{ net_content }}){% endif %}</th></tr></thead>
+            <thead><tr><th>{{ ss.nutrition_col_1 | default: 'Nutriente' }}</th><th>{{ ss.nutrition_col_2 | default: 'Por porción' }}{% if ss.nutrition_show_content and net_content != blank %} ({{ net_content }}){% endif %}</th></tr></thead>
             <tbody>
               {%- for row in nutrition_rows -%}
                 {%- assign row_clean = row | strip -%}
@@ -675,13 +675,38 @@
     },
     {
       "type": "header",
-      "content": "Ficha: Información nutricional"
+      "content": "Ficha: Tabla (nutrición o ficha técnica)"
+    },
+    {
+      "type": "text",
+      "id": "nutrition_title",
+      "label": "Título de la tabla",
+      "default": "INFORMACIÓN NUTRICIONAL"
+    },
+    {
+      "type": "text",
+      "id": "nutrition_col_1",
+      "label": "Encabezado columna 1",
+      "default": "Nutriente"
+    },
+    {
+      "type": "text",
+      "id": "nutrition_col_2",
+      "label": "Encabezado columna 2",
+      "default": "Por porción"
+    },
+    {
+      "type": "checkbox",
+      "id": "nutrition_show_content",
+      "label": "Agregar el contenido neto al encabezado 2",
+      "info": "Ej. \"Por porción (355 mL)\".",
+      "default": true
     },
     {
       "type": "textarea",
       "id": "nutrition",
-      "label": "Tabla nutricional",
-      "info": "Una fila por línea con el formato Nutriente: valor. Déjalo vacío para ocultar la tabla.",
+      "label": "Filas de la tabla",
+      "info": "Una fila por línea con el formato Dato: valor. Déjalo vacío para ocultar la tabla.",
       "default": "Energía: 0 kcal / 0 kJ\nGrasas totales: 0 g\nCarbohidratos totales: 0 g\nAzúcares añadidos: 0 g\nProteína: 0 g\nCafeína: 280 mg"
     },
     {

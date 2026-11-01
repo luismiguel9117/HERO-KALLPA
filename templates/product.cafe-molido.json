@@ -3,38 +3,49 @@
     "main_product": {
       "type": "main-product",
       "settings": {
-        "category_tag": "CAFÉ MOLIDO DE ESPECIALIDAD",
-        "product_desc": "Café tostado de origen peruano, 100% Arábica · Variedad Obata. Notas a cereza, chocolate y manzana, cultivado en los Andes de Ayacucho.",
+        "category_tag": "CAFÉ DE ESPECIALIDAD",
         "badge_text": "",
-        "feature_1": "Origen Ayacucho",
-        "feature_2": "100% Arábica Obata",
-        "feature_3": "Café de los Andes",
-        "feature_4": "Notas a cereza y cacao",
+        "feature_1": "85 pts SCA",
+        "feature_2": "100% Arábica · Obata",
+        "feature_3": "Ayacucho · 1,650 msnm",
+        "feature_4": "Notas: cereza, chocolate, manzana",
         "net_content": "",
         "container": "lata",
-        "specs_what": "Café de especialidad tostado y molido, listo para preparar en casa.",
-        "specs_ingredients": "100% café arábica, variedad Obata.",
-        "warning_title": "",
-        "warning_text": "",
-        "howto_title": "CÓMO PREPARARLO",
-        "howto_1": "Mezcla el café con agua fría",
-        "howto_2": "Deja reposar en refrigeración",
-        "howto_3": "Filtra y sirve con hielo",
-        "nutrition": "",
+        "warning_title": "CONSERVACIÓN",
+        "warning_text": "Mantener en lugar fresco, seco y sin luz directa. Cerrar bien después de abrir. Lata hermética reutilizable con válvula: rellénala con Kalpa Recarga.",
+        "nutrition_title": "FICHA TÉCNICA",
+        "nutrition_col_1": "Dato",
+        "nutrition_col_2": "Detalle",
+        "nutrition_show_content": false,
         "cross_title": "QUE NO SE TE ACABE A MITAD DE SEMANA",
         "faq_eyebrow": "PREGUNTAS FRECUENTES",
-        "faq_title": "ANTES DE COMPRAR"
+        "faq_title": "ANTES DE COMPRAR",
+        "product_desc": "Cultivado a 1,650 msnm en Anco, La Mar, por la Asociación Matices de Altura. Lavado, de taza limpia y dulce, tostado en Ayacucho y molido para métodos de filtrado.",
+        "specs_what": "Café premium tostado y molido gourmet, con molienda media fina para métodos de filtrado.",
+        "specs_ingredients": "Café tostado molido 100% Obata.",
+        "howto_title": "CÓMO PREPARARLO",
+        "howto_1": "10 g de café por cada 180 ml de agua filtrada",
+        "howto_2": "Agua a 92–96 °C: recién hervida, reposada 30–45 s",
+        "howto_3": "Sirve caliente o sobre hielo · V60 o AeroPress",
+        "nutrition": "Variedad: 100% Obata\nProceso: Lavado\nTueste: Medio oscuro\nOrigen: Anexo San Vicente, Anco, La Mar – Ayacucho\nProductor: Asociación Matices de Altura\nCosechado a: 1,650 msnm\nPuntaje: 85 pts SCA\nMolienda: Media fina, para filtrado"
       },
       "blocks": {
         "faq_1": {
           "type": "faq_item",
           "settings": {
-            "question": "¿Qué molienda tiene?",
-            "answer": "Revisa la presentación que elegiste: la molienda gruesa está pensada para cold brew y prensa francesa; la fina, para métodos de filtrado.",
+            "question": "¿Para qué métodos sirve?",
+            "answer": "Tiene molienda media fina, pensada para métodos de filtrado como V60 y AeroPress.",
             "open_by_default": true
           }
         },
         "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Puedo rellenar la lata?",
+            "answer": "Sí. La lata es hermética, reutilizable y tiene válvula. Rellénala con Kalpa Recarga."
+          }
+        },
+        "faq_3": {
           "type": "faq_item",
           "settings": {
             "question": "¿Envían a provincia?",
@@ -44,7 +55,8 @@
       },
       "block_order": [
         "faq_1",
-        "faq_2"
+        "faq_2",
+        "faq_3"
       ]
     }
   },

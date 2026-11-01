@@ -1,0 +1,66 @@
+{
+  "sections": {
+    "main_product": {
+      "type": "main-product",
+      "settings": {
+        "category_tag": "CAFÉ DE ESPECIALIDAD EN GRANO",
+        "badge_text": "",
+        "feature_1": "85 pts SCA",
+        "feature_2": "100% Arábica · Obata",
+        "feature_3": "Ayacucho · 1,650 msnm",
+        "feature_4": "Notas: cereza, chocolate, manzana",
+        "net_content": "",
+        "container": "lata",
+        "warning_title": "CONSERVACIÓN",
+        "warning_text": "Mantener en lugar fresco, seco y sin luz directa. Cerrar bien después de abrir. Lata hermética reutilizable con válvula: rellénala con Kalpa Recarga.",
+        "nutrition_title": "FICHA TÉCNICA",
+        "nutrition_col_1": "Dato",
+        "nutrition_col_2": "Detalle",
+        "nutrition_show_content": false,
+        "cross_title": "QUE NO SE TE ACABE A MITAD DE SEMANA",
+        "faq_eyebrow": "PREGUNTAS FRECUENTES",
+        "faq_title": "ANTES DE COMPRAR",
+        "product_desc": "Cultivado a 1,650 msnm en Anco, La Mar, por la Asociación Matices de Altura. Lavado, de taza limpia y dulce, tostado en Ayacucho y entregado en grano para molerlo al momento.",
+        "specs_what": "Café premium tostado en grano entero. Muélelo al momento de preparar.",
+        "specs_ingredients": "Café tostado en grano 100% Obata.",
+        "howto_title": "CÓMO PREPARARLO",
+        "howto_1": "Muele al momento, según tu método",
+        "howto_2": "10 g de café por cada 180 ml de agua filtrada a 92–96 °C",
+        "howto_3": "Fina para espresso · media fina para V60 o Chemex · gruesa para prensa francesa o cold brew",
+        "nutrition": "Variedad: 100% Obata\nProceso: Lavado\nTueste: Medio oscuro\nOrigen: Anexo San Vicente, Anco, La Mar – Ayacucho\nProductor: Asociación Matices de Altura\nCosechado a: 1,650 msnm\nPuntaje: 85 pts SCA\nPresentación: Grano entero"
+      },
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Cómo lo muelo?",
+            "answer": "Muélelo justo antes de preparar: fino para espresso, medio fino para V60 o Chemex, y grueso para prensa francesa o cold brew.",
+            "open_by_default": true
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Puedo rellenar la lata?",
+            "answer": "Sí. La lata es hermética, reutilizable y tiene válvula. Rellénala con Kalpa Recarga."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Envían a provincia?",
+            "answer": "Sí. Despachamos a todas las ciudades y provincias del Perú a través de Olva Courier y Shalom, con empaque protector anti-impacto. El tiempo promedio de entrega en Lima es de 24 a 48 horas, y en provincias de 48 a 72 horas hábiles."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3"
+      ]
+    }
+  },
+  "order": [
+    "main_product"
+  ]
+}
