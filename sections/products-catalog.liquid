@@ -210,10 +210,10 @@
             assign grid_bg = ''
             if block.settings.image != blank
               assign grid_bg = block.settings.image | image_url: width: 900
-            elsif grid_product.featured_image != blank
-              assign grid_bg = grid_product.featured_image | image_url: width: 900
             elsif block.settings.default_bg_image != blank
               assign grid_bg = block.settings.default_bg_image | asset_url
+            elsif grid_product.featured_image != blank
+              assign grid_bg = grid_product.featured_image | image_url: width: 900
             endif
           -%}
           <article class="grid-card-product" data-category="{{ block.settings.category | default: 'cafe-molido' }}" {{ block.shopify_attributes }}>
