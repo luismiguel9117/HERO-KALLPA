@@ -208,6 +208,7 @@
               assign grid_product = all_products[grid_product_handle]
             endif
             assign grid_bg = ''
+            # La foto real del producto va antes que la imagen de respaldo del tema
             assign grid_bg_is_product = false
             if block.settings.image != blank
               assign grid_bg = block.settings.image | image_url: width: 900
