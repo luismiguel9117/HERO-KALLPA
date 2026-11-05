@@ -517,6 +517,7 @@ body.web-revealed .kalpa-navbar {
 }
 
 .intro-footer-tag {
+  margin-left: auto;
   display: flex;
   align-items: center;
   gap: 0.45rem;
