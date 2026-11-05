@@ -118,8 +118,8 @@
         }
       });
 
-      // 6. Botones "Conoce más", indicador de scroll o enlaces
-      const enterTargets = [this.btnEnter, this.scrollHint];
+      // 6. Indicador de scroll (el botón "Pruébala" es un enlace normal a la tienda)
+      const enterTargets = [this.scrollHint];
       enterTargets.forEach(el => {
         if (!el) return;
         el.addEventListener('click', (e) => {
