@@ -688,6 +688,27 @@
   background-position: right center;
 }
 
+/* En celular no hay espacio lateral: la foto va arriba y el texto debajo */
+@media (max-width: 768px) {
+  .grid-card-product:has(.grid-card__bg--product) {
+    display: block;
+    min-height: 0;
+  }
+  .grid-card-product:has(.grid-card__bg--product) .grid-card__bg {
+    position: relative;
+    height: 260px;
+    background-size: contain;
+    background-position: center;
+  }
+  .grid-card-product:has(.grid-card__bg--product) .grid-card__glass {
+    display: none;
+  }
+  .grid-card-product:has(.grid-card__bg--product) .grid-card__content {
+    max-width: none;
+    width: 100%;
+  }
+}
+
 .grid-card-product:hover .grid-card__bg {
   transform: scale(1.035);
 }
