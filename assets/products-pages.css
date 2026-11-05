@@ -682,6 +682,12 @@
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Foto real del producto (cuadrada): completa a la derecha, sin ocupar la zona del texto */
+.grid-card__bg--product {
+  background-size: auto 100%;
+  background-position: right center;
+}
+
 .grid-card-product:hover .grid-card__bg {
   transform: scale(1.035);
 }
