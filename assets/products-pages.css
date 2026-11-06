@@ -683,15 +683,28 @@
 /* Portada del producto: completa a la derecha, sin capas encima y sin invadir el texto */
 .grid-card__bg--product {
   inset: 0 0 0 auto;
-  width: 56%;
+  z-index: 2;
+  width: 60%;
   background-size: cover;
   background-position: center;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 16%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 16%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 26%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 26%);
 }
 
+/* Efecto vidrio: la misma foto, muy desenfocada, de fondo en toda la tarjeta */
 .grid-card-product:has(.grid-card__bg--product) .grid-card__glass {
-  display: none;
+  inset: -40px;
+  z-index: 1;
+  background: var(--card-img) center / cover no-repeat;
+  filter: blur(26px) saturate(1.35) brightness(0.72);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.grid-card-product:has(.grid-card__bg--product) .grid-card__content {
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
 }
 
 .grid-card-product:has(.grid-card__bg--product) .grid-card__content {
@@ -711,11 +724,8 @@
     height: 260px;
     background-size: cover;
     background-position: center;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-  .grid-card-product:has(.grid-card__bg--product) .grid-card__glass {
-    display: none;
+    -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
   }
   .grid-card-product:has(.grid-card__bg--product) .grid-card__content {
     max-width: none;

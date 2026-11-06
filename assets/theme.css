@@ -6932,3 +6932,143 @@ h1, h2, h3, h4, h5, h6 {
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+
+/* Menú en pantallas medianas: el centrado absoluto pisaba los iconos, así que
+   los enlaces pasan a ocupar el espacio libre entre el logo y las acciones */
+@media (min-width: 861px) and (max-width: 1320px) {
+  .kalpa-navbar__container {
+    gap: 1rem;
+  }
+  .kalpa-nav-menu {
+    position: static;
+    transform: none;
+    margin: 0 auto;
+    gap: clamp(0.85rem, 1.7vw, 1.6rem);
+  }
+  .kalpa-nav-item {
+    font-size: 0.86rem;
+    white-space: nowrap;
+  }
+  .kalpa-nav-actions {
+    flex-shrink: 0;
+    gap: 0.9rem;
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 861px) and (max-width: 1000px) {
+  .kalpa-nav-cta {
+    display: none;
+  }
+}
+
+/* Hero del inicio en celular: textos más grandes. "AYACUCHO" es la palabra más
+   larga y marca el tope del título en la primera diapositiva. */
+@media (max-width: 860px) {
+  .kalpa-hero__kicker {
+    font-size: 1.1rem;
+    margin-bottom: 0.55rem;
+  }
+  .kalpa-hero__giant-title {
+    font-size: clamp(2.9rem, 14.5vw, 4.6rem);
+    margin-bottom: 0.8rem;
+  }
+  .kalpa-hero__paragraph {
+    max-width: 34rem;
+    font-size: 1.02rem;
+    line-height: 1.45;
+    margin-bottom: 1.2rem;
+  }
+  .btn-pruebala {
+    padding: 0.9rem 2rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* El bloque de texto crece: el hero también, para que la lata siga debajo del botón */
+@media (max-width: 600px) {
+  .kalpa-hero-carousel {
+    min-height: 880px;
+    max-height: none;
+  }
+}
+
+/* Carrusel de productos: cada elemento dentro de su columna, para que las imágenes
+   no choquen con los sellos de la izquierda */
+@media (min-width: 1081px) {
+  .kalpa-sale__info .sale-features-row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .kalpa-sale__info .sale-feature-label {
+    overflow-wrap: anywhere;
+  }
+  .kalpa-sale__centerpiece {
+    min-width: 0;
+  }
+  .sale-can-stage--molido {
+    width: 100%;
+  }
+  .sale-stage__can--molido {
+    left: 0;
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    transform: scale(1.14);
+    transform-origin: center bottom;
+    object-fit: contain;
+    object-position: center bottom;
+  }
+  .sale-stage__rock {
+    width: 168%;
+    left: -34%;
+  }
+}
+
+@media (min-width: 1081px) and (max-width: 1320px) {
+  .sale-stage__rock {
+    width: 150%;
+    left: -25%;
+  }
+}
+
+/* Hero del inicio en escritorio: textos más grandes */
+@media (min-width: 861px) {
+  .kalpa-hero__giant-title {
+    font-size: clamp(3.6rem, 8.4vw, 7.6rem);
+  }
+  .kalpa-hero__paragraph {
+    max-width: 38rem;
+    font-size: clamp(1.08rem, 1.3vw, 1.35rem);
+    line-height: 1.55;
+  }
+  .btn-pruebala {
+    padding: 1rem 2.5rem;
+    font-size: clamp(0.95rem, 1vw, 1.05rem);
+  }
+}
+
+/* "AYACUCHO" es larga: en escritorio no agranda el dorado para no chocar con el hielo */
+@media (min-width: 861px) {
+  .kalpa-slide:first-child .kalpa-hero__giant-title .title-gold {
+    font-size: 1em;
+  }
+}
+
+/* Banner "Sé parte de Kalpa" en celular: texto y formulario arriba, lata abajo */
+@media (max-width: 768px) {
+  .kallpa-newsletter-container {
+    padding-bottom: 0;
+  }
+  .newsletter-banner__content-box {
+    order: 1;
+  }
+  .newsletter-banner__can-box {
+    order: 2;
+    margin-top: 0.5rem;
+    margin-bottom: -6px;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}

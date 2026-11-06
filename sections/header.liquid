@@ -49,7 +49,7 @@
       {%- endif -%}
     </nav>
 
-    <!-- Acciones Derecha (Búsqueda, Cuenta, Wishlist, Carrito, CTA, Hamburger) -->
+    <!-- Acciones Derecha (Cuenta, Wishlist, Carrito, CTA, Hamburger) -->
     <div class="kalpa-nav-actions">
       <!-- Cuenta de Usuario -->
       <a href="{{ routes.account_url }}" class="kalpa-nav-icon nav-icon--account" aria-label="Mi Cuenta">
@@ -58,14 +58,6 @@
           <circle cx="12" cy="7" r="4"></circle>
         </svg>
       </a>
-
-      <!-- Búsqueda -->
-      <button type="button" class="kalpa-nav-icon nav-icon--search" aria-label="Buscar productos" aria-controls="kallpa-search" aria-expanded="false" onclick="openKallpaSearch(this)">
-        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="7"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-      </button>
 
       <!-- Carrito Cápsula -->
       <button type="button" class="kalpa-cart-capsule" onclick="openKallpaCart()" aria-label="Abrir Carrito">
@@ -130,48 +122,6 @@
     </div>
   </div>
 </div>
-
-<!-- Buscador (abre desde la lupa del header) -->
-<div class="kallpa-search" id="kallpa-search" hidden>
-  <div class="kallpa-search__backdrop" onclick="closeKallpaSearch()"></div>
-  <form action="{{ routes.search_url }}" method="get" role="search" class="kallpa-search__form">
-    <input type="hidden" name="type" value="product">
-    <label for="kallpa-search-input" class="visually-hidden">Buscar productos</label>
-    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-    <input id="kallpa-search-input" type="search" name="q" placeholder="Buscar café, cold brew, packs…" autocomplete="off" value="{{ search.terms | escape }}">
-    <button type="submit" class="kallpa-search__submit">BUSCAR</button>
-    <button type="button" class="kallpa-search__close" onclick="closeKallpaSearch()" aria-label="Cerrar búsqueda">✕</button>
-  </form>
-</div>
-
-<style>
-  .kallpa-search { position: fixed; inset: 0; z-index: 1200; }
-  .kallpa-search[hidden] { display: none; }
-  .kallpa-search__backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); }
-  .kallpa-search__form { position: relative; display: flex; align-items: center; gap: 0.75rem; max-width: 760px; margin: clamp(5rem, 14vh, 9rem) auto 0; padding: 0.6rem 0.6rem 0.6rem 1.25rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 999px; background: #0d0f12; color: #fff; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5); width: calc(100% - 2rem); }
-  .kallpa-search__form > svg { flex-shrink: 0; color: #f5ba2c; }
-  .kallpa-search__form input[type="search"] { flex: 1; min-width: 0; border: 0; background: transparent; color: #fff; font: inherit; font-size: 1.05rem; outline: none; }
-  .kallpa-search__submit { padding: 0.75rem 1.4rem; border: 0; border-radius: 999px; background: #f5ba2c; color: #0b0908; font-family: var(--font-brand); font-weight: 900; letter-spacing: 0.06em; cursor: pointer; }
-  .kallpa-search__close { width: 40px; height: 40px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.08); color: #fff; cursor: pointer; }
-  @media (max-width: 520px) { .kallpa-search__submit { display: none; } }
-</style>
-
-<script>
-  function openKallpaSearch(btn) {
-    var box = document.getElementById('kallpa-search');
-    if (!box) return;
-    box.hidden = false;
-    if (btn) btn.setAttribute('aria-expanded', 'true');
-    var input = document.getElementById('kallpa-search-input');
-    if (input) setTimeout(function() { input.focus(); }, 30);
-  }
-  function closeKallpaSearch() {
-    var box = document.getElementById('kallpa-search');
-    if (box) box.hidden = true;
-    document.querySelectorAll('.nav-icon--search').forEach(function(b) { b.setAttribute('aria-expanded', 'false'); });
-  }
-  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeKallpaSearch(); });
-</script>
 
 {% schema %}
 {
