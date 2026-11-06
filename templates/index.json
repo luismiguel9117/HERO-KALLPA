@@ -191,10 +191,9 @@
     "clean_energy_1": {
       "type": "kallpa-clean-energy",
       "settings": {
-        "title_line1": "MÁS QUE CAFÉ,",
-        "title_line2": "ES ENERGÍA NATURAL",
-        "desc": "Granos de origen peruano, seleccionados en el VRAEM.<br>Sin aditivos, sin azúcares añadidos. Solo café frío,<br>con un sabor real y una energía que se siente.",
-        "compare_title": "CAFEÍNA DE LA TIERRA, NO DE LABORATORIO",
+        "title_line1": "CAFEÍNA DE LA TIERRA,",
+        "title_line2": "NO DE LABORATORIO",
+        "desc": "",
         "compare_head_brand": "KALPA",
         "compare_head_other": "OTRAS BEBIDAS ENERGÉTICAS",
         "compare_note": "*En sus versiones regulares; puede variar según la marca.",

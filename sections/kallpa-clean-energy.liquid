@@ -3,7 +3,7 @@
   Más que café, es energía natural (Filosofía KALPA VRAEM)
 {%- endcomment -%}
 
-<section class="kallpa-energy-natural-section" id="energy-natural-section" aria-label="Más que café, es energía natural">
+<section class="kallpa-energy-natural-section" id="energy-natural-section" aria-label="Cafeína de la tierra, no de laboratorio">
   <div class="energy-natural__bg-layer" aria-hidden="true"></div>
   <div class="energy-natural__container">
     
@@ -11,17 +11,16 @@
     <div class="energy-natural__content">
       <div class="energy-natural__accent-bar" aria-hidden="true"></div>
       <h2 class="energy-natural__title">
-        <span class="energy-title-line1">{{ section.settings.title_line1 | default: 'MÁS QUE CAFÉ,' }}</span>
-        <span class="energy-title-line2">{{ section.settings.title_line2 | default: 'ES ENERGÍA NATURAL' }}</span>
+        <span class="energy-title-line1">{{ section.settings.title_line1 | default: 'CAFEÍNA DE LA TIERRA,' }}</span>
+        <span class="energy-title-line2">{{ section.settings.title_line2 | default: 'NO DE LABORATORIO' }}</span>
       </h2>
-      <p class="energy-natural__text">
-        {{ section.settings.desc | default: 'Granos de origen peruano, seleccionados en el VRAEM.<br>Sin aditivos, sin azúcares añadidos. Solo café frío,<br>con un sabor real y una energía que se siente.' }}
-      </p>
+      {%- if section.settings.desc != blank -%}
+        <p class="energy-natural__text">{{ section.settings.desc }}</p>
+      {%- endif -%}
 
       {%- if section.blocks.size > 0 -%}
         <!-- Comparativa editable: cada fila es un bloque de la sección -->
         <div class="energy-compare">
-          <h3 class="energy-compare__title">{{ section.settings.compare_title }}</h3>
           <div class="energy-compare__scroll">
             <table class="energy-compare__table">
               <thead>
@@ -66,29 +65,22 @@
       "type": "text",
       "id": "title_line1",
       "label": "Título Línea 1",
-      "default": "MÁS QUE CAFÉ,"
+      "default": "CAFEÍNA DE LA TIERRA,"
     },
     {
       "type": "text",
       "id": "title_line2",
       "label": "Título Línea 2 (Dorado)",
-      "default": "ES ENERGÍA NATURAL"
+      "default": "NO DE LABORATORIO"
     },
     {
       "type": "textarea",
       "id": "desc",
-      "label": "Texto Filosofía",
-      "default": "Granos de origen peruano, seleccionados en el VRAEM.<br>Sin aditivos, sin azúcares añadidos. Solo café frío,<br>con un sabor real y una energía que se siente."
+      "label": "Texto Filosofía"
     },
     {
       "type": "header",
       "content": "Tabla comparativa"
-    },
-    {
-      "type": "text",
-      "id": "compare_title",
-      "label": "Título de la tabla",
-      "default": "CAFEÍNA DE LA TIERRA, NO DE LABORATORIO"
     },
     {
       "type": "text",
