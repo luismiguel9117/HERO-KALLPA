@@ -232,7 +232,7 @@
               assign grid_bg = block.settings.default_bg_image | asset_url
             endif
           -%}
-          <article class="grid-card-product" data-category="{{ block.settings.category | default: 'cafe-molido' }}" {{ block.shopify_attributes }}>
+          <article class="grid-card-product" data-category="{{ block.settings.category | default: 'cafe-molido' }}"{% if grid_bg_is_product %} style="--card-img: url('{{ grid_bg }}');"{% endif %} {{ block.shopify_attributes }}>
             <div class="grid-card__bg{% if grid_bg_is_product %} grid-card__bg--product{% endif %}" aria-hidden="true" style="{% if grid_bg != blank %}background-image: url('{{ grid_bg }}');{% endif %}"></div>
             <div class="grid-card__glass" aria-hidden="true"></div>
 

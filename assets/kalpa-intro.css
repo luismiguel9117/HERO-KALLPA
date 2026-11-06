@@ -689,3 +689,24 @@ body.web-revealed .kalpa-navbar {
     display: none; /* Simplificado para limpieza visual en mÃ³vil */
   }
 }
+
+/* Mismo ajuste que el menú principal: en pantallas medianas los enlaces dejan de
+   centrarse en absoluto para no pisar los iconos */
+@media (min-width: 861px) and (max-width: 1320px) {
+  .kalpa-intro-nav {
+    gap: 1rem;
+  }
+  .kalpa-intro-nav .kalpa-nav-menu,
+  .kalpa-intro-nav .intro-menu-links {
+    position: static;
+    transform: none;
+    margin: 0 auto;
+    gap: clamp(0.85rem, 1.7vw, 1.6rem);
+  }
+  .kalpa-intro-nav .kalpa-nav-actions,
+  .kalpa-intro-nav .intro-nav-right {
+    flex-shrink: 0;
+    gap: 0.9rem;
+    margin-left: 0;
+  }
+}

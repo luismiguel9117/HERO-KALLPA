@@ -85,7 +85,12 @@
 
       // 3. Detección de Scroll nativo de la ventana
       window.addEventListener('scroll', () => {
-        if (this.isTransitioning || this.isFinished) return;
+        if (this.isFinished) return;
+        if (this.isTransitioning) {
+          // La inercia del gesto no debe mover la web mientras se desvanece la intro
+          if (window.scrollY !== 0) window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+          return;
+        }
         if (window.scrollY > 5) {
           this.transitionToWeb();
         }
@@ -141,11 +146,14 @@
       if (this.isTransitioning || this.isFinished) return;
       this.isTransitioning = true;
       this.container.style.pointerEvents = 'none';
+      // Sin scroll durante la transición: al terminar la web queda arriba, con el navbar visible
+      document.documentElement.style.overflow = 'hidden';
 
       if (typeof gsap === 'undefined') {
         this.container.style.display = 'none';
         document.body.classList.add('web-revealed');
         this.isFinished = true;
+        this.landOnHeader();
         return;
       }
 
@@ -154,6 +162,7 @@
           this.container.style.display = 'none';
           document.body.classList.add('web-revealed');
           this.isFinished = true;
+          this.landOnHeader();
           if (this.rafId) cancelAnimationFrame(this.rafId);
           if (window.kallpaIntroCan && typeof window.kallpaIntroCan.pause === 'function') {
             window.kallpaIntroCan.pause();
@@ -212,6 +221,11 @@
           this.devControlPanel.classList.add('is-visible');
         }
       }, null, 0.45);
+    }
+
+    landOnHeader() {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.style.overflow = '';
     }
 
     startLoop() {
