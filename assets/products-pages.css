@@ -20,7 +20,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  background: url("productos-hero-bg.webp") center center / cover no-repeat #080c09;
+  background: url("productos-hero-bg.webp?v=20261106") center center / cover no-repeat #080c09;
   pointer-events: none;
   z-index: 1;
 }
@@ -239,7 +239,7 @@
   right: 0;
   bottom: 0;
   height: clamp(160px, 26vw, 420px);
-  background: url("catalog-leaves-bottom.webp") center bottom / 100% auto no-repeat;
+  background: url("catalog-leaves-bottom.webp?v=20261106") center bottom / 100% auto no-repeat;
   pointer-events: none;
   z-index: 0;
 }
@@ -266,7 +266,7 @@
 .featured-card__bg-pattern {
   position: absolute;
   inset: 0;
-  background: url("kalpa-hero-bg.webp") center center / cover no-repeat;
+  background: url("kalpa-hero-bg.webp?v=20261106") center center / cover no-repeat;
   opacity: 0.04;
   pointer-events: none;
 }
@@ -738,11 +738,11 @@
 }
 
 .grid-card--molido250 .grid-card__bg {
-  background-image: url("product-card-250g.webp");
+  background-image: url("product-card-250g.webp?v=20261106");
 }
 
 .grid-card--molido500 .grid-card__bg {
-  background-image: url("product-card-500g.webp");
+  background-image: url("product-card-500g.webp?v=20261106");
 }
 
 /* Efecto Glassmorphism con difuminado (blur + gradiente suave) en el lado izquierdo */
@@ -997,7 +997,7 @@
 .catalog-card__pattern {
   position: absolute;
   inset: 0;
-  background-image: url('kalpa-pattern.webp');
+  background-image: url("kalpa-pattern.webp?v=20261106");
   background-repeat: repeat;
   background-size: 260px;
   opacity: 0.16;
