@@ -15,10 +15,10 @@
           <span>{{ section.settings.eyebrow | default: 'COMUNIDAD KALPA' }}</span>
         </div>
         <h2 class="community-title">
-          {{ section.settings.title_part1 | default: 'ENERGÍA QUE' }} <span class="text-gold">{{ section.settings.title_part2 | default: 'SE COMPARTE' }}</span>
+          {{ section.settings.title_part1 | default: 'ENERGÍA REAL QUE' }} <span class="text-gold">{{ section.settings.title_part2 | default: 'SE COMPARTE' }}</span>
         </h2>
         <p class="community-desc">
-          {{ section.settings.desc | default: 'Historias reales de personas que viven la energía de los Andes.<br>Entrena, trabaja, explora. Kallpa te acompaña.' }}
+          {{ section.settings.desc | default: 'Mira dónde ha estado Kalpa y lo que dicen quienes ya la probaron.' }}
         </p>
       </div>
 
@@ -34,6 +34,13 @@
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </a>
+        {%- if section.settings.tiktok_url != blank -%}
+          <a href="{{ section.settings.tiktok_url }}" target="_blank" rel="noopener noreferrer" class="btn-community-instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.68 6.34 6.34 0 0 0 9.33 22a6.33 6.33 0 0 0 6.34-6.32V8.92a8.28 8.28 0 0 0 3.92 1V6.69z"></path></svg>
+            <span>SEGUIR EN TIKTOK</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+        {%- endif -%}
       </div>
     </div>
 
@@ -286,7 +293,7 @@
       "type": "text",
       "id": "title_part1",
       "label": "Título Parte 1",
-      "default": "ENERGÍA QUE"
+      "default": "ENERGÍA REAL QUE"
     },
     {
       "type": "text",
@@ -298,12 +305,17 @@
       "type": "textarea",
       "id": "desc",
       "label": "Descripción",
-      "default": "Historias reales de personas que viven la energía de los Andes.<br>Entrena, trabaja, explora. Kallpa te acompaña."
+      "default": "Mira dónde ha estado Kalpa y lo que dicen quienes ya la probaron."
     },
     {
       "type": "url",
       "id": "instagram_url",
       "label": "URL Perfil de Instagram"
+    },
+    {
+      "type": "url",
+      "id": "tiktok_url",
+      "label": "URL Perfil de TikTok"
     },
     {
       "type": "header",

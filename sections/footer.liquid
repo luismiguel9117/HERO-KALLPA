@@ -23,7 +23,7 @@
       <div class="newsletter-banner__content-box">
         <div class="newsletter-banner__header">
           <h3 class="newsletter-banner__title">{{ section.settings.newsletter_title | default: 'SÉ PARTE DE KALPA' }}</h3>
-          <p class="newsletter-banner__desc">{{ section.settings.newsletter_desc | default: 'Recibe promociones exclusivas, lanzamientos y más historias del VRAEM.' }}</p>
+          <p class="newsletter-banner__desc">{{ section.settings.newsletter_desc | default: 'Recibe descuentos exclusivos, promociones, lanzamientos y más.' }}</p>
         </div>
         {%- comment -%} Formulario de Shopify: cada correo queda como cliente con la etiqueta "newsletter" y aceptación de marketing {%- endcomment -%}
         {%- form 'customer', id: 'kallpa-newsletter', class: 'newsletter-banner__form' -%}
@@ -191,7 +191,7 @@
       "type": "text",
       "id": "newsletter_desc",
       "label": "Descripción del Newsletter",
-      "default": "Recibe promociones exclusivas, lanzamientos y más historias del VRAEM."
+      "default": "Recibe descuentos exclusivos, promociones, lanzamientos y más."
     },
     {
       "type": "header",
