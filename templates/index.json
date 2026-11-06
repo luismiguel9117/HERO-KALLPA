@@ -26,9 +26,10 @@
         "slide_1": {
           "type": "slide",
           "settings": {
+            "kicker": "ORIGEN",
             "lead_title": "CAFÉ DE",
-            "giant_title": "VRAEM",
-            "description": "Energía natural para tu día. Café cold brew listo para tomar, hecho con granos del VRAEM y con todo el sabor de los Andes.",
+            "giant_title": "AYACUCHO",
+            "description": "Café de especialidad de altura cultivado a 1650 msnm en el VRAEM. Cosechado y seleccionado a mano por productores peruanos.",
             "btn_text": "COMPRAR AHORA",
             "btn_url": "#products-section"
           }
@@ -36,9 +37,10 @@
         "slide_2": {
           "type": "slide",
           "settings": {
+            "kicker": "PROCESO",
             "lead_title": "COLD",
             "giant_title": "BREW",
-            "description": "Macerado lentamente en frío durante 24 horas continuas a 4°C. Preserva las notas más finas a cacao y elimina por completo la acidez punzante.",
+            "description": "Extraído en frío durante 16 horas. Más cuerpo, menos acidez, sin amargor. Pasteurizado y sin conservantes.",
             "btn_text": "COMPRAR AHORA",
             "btn_url": "#products-section"
           }
@@ -46,9 +48,10 @@
         "slide_3": {
           "type": "slide",
           "settings": {
+            "kicker": "BENEFICIO",
             "lead_title": "ENERGÍA",
             "giant_title": "LIMPIA",
-            "description": "280mg de cafeína natural de altura con antioxidantes botánicos. Rendimiento sostenido y enfoque mental prolongado para todo tu día.",
+            "description": "280 mg de cafeína natural. Sin azúcar, sin conservantes, sin trucos. De la tierra a la lata.",
             "btn_text": "COMPRAR AHORA",
             "btn_url": "#products-section"
           }
@@ -70,9 +73,7 @@
         "feat2_line1": "ENERGÍA",
         "feat2_line2": "NATURAL",
         "feat3_line1": "COLD BREW",
-        "feat3_line2": "24H",
-        "feat4_line1": "ENVÍOS A",
-        "feat4_line2": "TODO EL PERÚ"
+        "feat3_line2": "16H"
       }
     },
     "products_1": {
@@ -179,10 +180,10 @@
     "vraem_origin_1": {
       "type": "kallpa-vraem-origin",
       "settings": {
-        "title_line1": "UN ORIGEN",
-        "title_line2": "EXTRAORDINARIO",
-        "desc": "El VRAEM es más que un lugar, es el origen de una energía real.<br>Un café que conecta la fuerza de los Andes con tu día a día.",
-        "btn_text": "CONOCE EL VRAEM"
+        "title_line1": "DONDE NACE",
+        "title_line2": "KALPA",
+        "desc": "Ayacucho le da a este café su altura, su fuerza y su historia. Nosotros solo lo ponemos en una lata.",
+        "btn_text": "CONOCE NUESTRA HISTORIA"
       }
     },
     "clean_energy_1": {

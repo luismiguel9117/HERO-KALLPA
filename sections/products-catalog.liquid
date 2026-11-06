@@ -212,10 +212,23 @@
             assign grid_bg_is_product = false
             if block.settings.image != blank
               assign grid_bg = block.settings.image | image_url: width: 900
-            elsif grid_product.featured_image != blank
-              assign grid_bg = grid_product.featured_image | image_url: width: 900
+            else
+              # Misma portada que la ficha: primer metacampo ficha_N con imagen
+              for n in (1..4)
+                assign ficha_key = 'ficha_' | append: n
+                assign ficha_file = grid_product.metafields.custom[ficha_key].value
+                if ficha_file != blank and ficha_file.media_type == 'image'
+                  assign grid_bg = ficha_file | image_url: width: 1100
+                  assign grid_bg_is_product = true
+                  break
+                endif
+              endfor
+            endif
+            if grid_bg == blank and grid_product.featured_image != blank
+              assign grid_bg = grid_product.featured_image | image_url: width: 1100
               assign grid_bg_is_product = true
-            elsif block.settings.default_bg_image != blank
+            endif
+            if grid_bg == blank and block.settings.default_bg_image != blank
               assign grid_bg = block.settings.default_bg_image | asset_url
             endif
           -%}
