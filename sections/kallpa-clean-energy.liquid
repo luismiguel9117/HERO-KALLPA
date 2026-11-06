@@ -17,6 +17,42 @@
       <p class="energy-natural__text">
         {{ section.settings.desc | default: 'Granos de origen peruano, seleccionados en el VRAEM.<br>Sin aditivos, sin azúcares añadidos. Solo café frío,<br>con un sabor real y una energía que se siente.' }}
       </p>
+
+      {%- if section.blocks.size > 0 -%}
+        <!-- Comparativa editable: cada fila es un bloque de la sección -->
+        <div class="energy-compare">
+          <h3 class="energy-compare__title">{{ section.settings.compare_title }}</h3>
+          <div class="energy-compare__scroll">
+            <table class="energy-compare__table">
+              <thead>
+                <tr>
+                  <td></td>
+                  <th scope="col" class="energy-compare__brand">{{ section.settings.compare_head_brand }}</th>
+                  <th scope="col">{{ section.settings.compare_head_other }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%- for block in section.blocks -%}
+                  <tr {{ block.shopify_attributes }}>
+                    <th scope="row">{{ block.settings.label }}</th>
+                    <td class="energy-compare__brand">{{ block.settings.kalpa }}</td>
+                    <td>{{ block.settings.other }}</td>
+                  </tr>
+                {%- endfor -%}
+              </tbody>
+            </table>
+          </div>
+          {%- if section.settings.compare_note != blank -%}
+            <p class="energy-compare__note">{{ section.settings.compare_note }}</p>
+          {%- endif -%}
+          {%- if section.settings.compare_cta_text != blank -%}
+            <a href="{{ section.settings.compare_cta_url | default: routes.all_products_collection_url }}" class="energy-compare__cta">
+              <span>{{ section.settings.compare_cta_text }}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
     </div>
 
   </div>
@@ -43,6 +79,57 @@
       "id": "desc",
       "label": "Texto Filosofía",
       "default": "Granos de origen peruano, seleccionados en el VRAEM.<br>Sin aditivos, sin azúcares añadidos. Solo café frío,<br>con un sabor real y una energía que se siente."
+    },
+    {
+      "type": "header",
+      "content": "Tabla comparativa"
+    },
+    {
+      "type": "text",
+      "id": "compare_title",
+      "label": "Título de la tabla",
+      "default": "CAFEÍNA DE LA TIERRA, NO DE LABORATORIO"
+    },
+    {
+      "type": "text",
+      "id": "compare_head_brand",
+      "label": "Columna de la marca",
+      "default": "KALPA"
+    },
+    {
+      "type": "text",
+      "id": "compare_head_other",
+      "label": "Columna de comparación",
+      "default": "OTRAS BEBIDAS ENERGÉTICAS"
+    },
+    {
+      "type": "text",
+      "id": "compare_note",
+      "label": "Nota al pie",
+      "default": "*En sus versiones regulares; puede variar según la marca."
+    },
+    {
+      "type": "text",
+      "id": "compare_cta_text",
+      "label": "Texto del botón",
+      "default": "PRUÉBALA"
+    },
+    {
+      "type": "url",
+      "id": "compare_cta_url",
+      "label": "Enlace del botón",
+      "info": "Si lo dejas vacío, lleva a la tienda"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "compare_row",
+      "name": "Fila de la tabla",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Concepto", "default": "Cafeína" },
+        { "type": "text", "id": "kalpa", "label": "KALPA", "default": "Natural" },
+        { "type": "text", "id": "other", "label": "Otras bebidas", "default": "Sintética" }
+      ]
     }
   ],
   "presets": [
