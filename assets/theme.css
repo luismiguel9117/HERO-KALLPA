@@ -937,7 +937,7 @@ h1, h2, h3, h4, h5, h6 {
   background-image: url('kalpa-pattern.webp');
   background-repeat: repeat;
   background-size: 380px;
-  opacity: 0.08;
+  opacity: 0;
   mix-blend-mode: overlay;
   pointer-events: none;
   z-index: 1;
@@ -1241,17 +1241,17 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   gap: 0.55rem;
   font-family: var(--font-brand);
-  font-size: 0.78rem;
+  font-size: clamp(1.05rem, 1.5vw, 1.4rem);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.22em;
   color: rgba(255, 255, 255, 0.95);
-  margin-bottom: 0.65rem;
+  margin-bottom: 0.8rem;
 }
 
 .kalpa-hero__kicker .kicker-line {
   display: inline-block;
-  width: 20px;
+  width: 28px;
   height: 2px;
   background-color: #f7bf19;
   border-radius: 2px;
@@ -1558,7 +1558,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .kalpa-hero-features-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
   align-items: center;
   justify-items: center;
@@ -1638,7 +1638,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .kalpa-hero__kicker {
-    font-size: 0.72rem;
+    font-size: 0.95rem;
     letter-spacing: 0.20em;
     margin-bottom: 0.4rem;
   }
@@ -3305,19 +3305,17 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   inset: 0;
   background: 
-    linear-gradient(90deg, 
-      rgba(4, 6, 8, 0.92) 0%, 
-      rgba(4, 6, 8, 0.65) 28%, 
-      rgba(4, 6, 8, 0.15) 50%, 
-      rgba(4, 6, 8, 0.65) 72%, 
-      rgba(4, 6, 8, 0.92) 100%
+    linear-gradient(90deg,
+      rgba(4, 6, 8, 0.62) 0%,
+      rgba(4, 6, 8, 0.32) 30%,
+      transparent 50%,
+      rgba(4, 6, 8, 0.32) 72%,
+      rgba(4, 6, 8, 0.6) 100%
     ),
-    linear-gradient(180deg, 
-      #050608 0%, 
-      rgba(5, 6, 8, 0.96) 3%, 
-      transparent 18%, 
-      transparent 80%, 
-      rgba(5, 6, 8, 0.96) 97%, 
+    linear-gradient(180deg,
+      #050608 0%,
+      transparent 9%,
+      transparent 91%,
       #050608 100%
     );
   pointer-events: none;
@@ -3458,10 +3456,10 @@ h1, h2, h3, h4, h5, h6 {
     background-position: 65% center;
   }
   .vraem-panorama-overlay {
-    background: linear-gradient(180deg, 
-      rgba(4, 6, 8, 0.88) 0%, 
-      rgba(4, 6, 8, 0.65) 50%, 
-      rgba(4, 6, 8, 0.92) 100%
+    background: linear-gradient(180deg,
+      rgba(4, 6, 8, 0.6) 0%,
+      rgba(4, 6, 8, 0.38) 50%,
+      rgba(4, 6, 8, 0.65) 100%
     );
   }
 }
@@ -3775,7 +3773,7 @@ h1, h2, h3, h4, h5, h6 {
   background-image: url('kalpa-pattern.webp');
   background-repeat: repeat;
   background-size: 320px;
-  opacity: 0.16;
+  opacity: 0;
   mix-blend-mode: overlay;
   pointer-events: none;
   z-index: 1;
@@ -3785,7 +3783,7 @@ h1, h2, h3, h4, h5, h6 {
 .kallpa-newsletter-banner__vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 50%, rgba(140, 10, 18, 0.22) 0%, rgba(28, 2, 4, 0.6) 70%, rgba(8, 0, 2, 0.92) 100%);
+  background: radial-gradient(ellipse at 50% 50%, transparent 0%, rgba(28, 2, 4, 0.2) 70%, rgba(8, 0, 2, 0.5) 100%);
   pointer-events: none;
   z-index: 1;
 }
@@ -5607,7 +5605,7 @@ h1, h2, h3, h4, h5, h6 {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(3, 4, 6, 0.96) 0%, rgba(3, 4, 6, 0.88) 32%, rgba(3, 4, 6, 0.4) 55%, transparent 72%);
+  background: linear-gradient(90deg, rgba(3, 4, 6, 0.6) 0%, rgba(3, 4, 6, 0.32) 34%, transparent 58%);
   pointer-events: none;
 }
 
@@ -5616,7 +5614,7 @@ h1, h2, h3, h4, h5, h6 {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(3, 4, 6, 0.7) 0%, transparent 18%, transparent 82%, rgba(3, 4, 6, 0.7) 100%);
+  background: linear-gradient(180deg, rgba(3, 4, 6, 0.4) 0%, transparent 12%, transparent 88%, rgba(3, 4, 6, 0.4) 100%);
   pointer-events: none;
 }
 

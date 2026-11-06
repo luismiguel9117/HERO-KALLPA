@@ -63,13 +63,13 @@
           <div class="kalpa-hero__left-content">
             <div class="kalpa-hero__kicker">
               <span class="kicker-line"></span>
-              {{ block.settings.kicker | default: 'ENERGÍA DE LOS ANDES' }}
+              {{ block.settings.kicker | default: 'ORIGEN' }}
             </div>
             <h1 class="kalpa-hero__giant-title">
               <span class="title-white">{{ block.settings.lead_title | default: 'CAFÉ DE' }}</span>
-              <span class="title-gold">{{ block.settings.giant_title | default: 'VRAEM' }}</span>
+              <span class="title-gold">{{ block.settings.giant_title | default: 'AYACUCHO' }}</span>
             </h1>
-            <p class="kalpa-hero__paragraph">{{ block.settings.description | default: 'Energía natural para tu día. Café cold brew listo para tomar, hecho con granos del VRAEM y con todo el sabor de los Andes.' }}</p>
+            <p class="kalpa-hero__paragraph">{{ block.settings.description | default: 'Café de especialidad de altura cultivado a 1650 msnm en el VRAEM. Cosechado y seleccionado a mano por productores peruanos.' }}</p>
             
             <div class="kalpa-hero__actions">
               <a href="{{ block.settings.btn_url | default: '#products-section' }}" class="btn-pruebala">
@@ -199,6 +199,12 @@
       "settings": [
         {
           "type": "text",
+          "id": "kicker",
+          "label": "Antetítulo (ORIGEN, PROCESO...)",
+          "default": "ORIGEN"
+        },
+        {
+          "type": "text",
           "id": "lead_title",
           "label": "Título Superior (Blanco)",
           "default": "CAFÉ DE"
@@ -207,7 +213,7 @@
           "type": "text",
           "id": "giant_title",
           "label": "Título Principal (Amarillo Gigante)",
-          "default": "VRAEM"
+          "default": "AYACUCHO"
         },
         {
           "type": "textarea",
@@ -236,27 +242,30 @@
         {
           "type": "slide",
           "settings": {
+            "kicker": "ORIGEN",
             "lead_title": "CAFÉ DE",
-            "giant_title": "VRAEM",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.",
+            "giant_title": "AYACUCHO",
+            "description": "Café de especialidad de altura cultivado a 1650 msnm en el VRAEM. Cosechado y seleccionado a mano por productores peruanos.",
             "btn_text": "PRUEBALA AHORA"
           }
         },
         {
           "type": "slide",
           "settings": {
-            "lead_title": "EXTRACCIÓN",
-            "giant_title": "COLD BREW",
-            "description": "Macerado lentamente en frío durante 24 horas continuas a 4°C. Preserva las notas más finas a cacao y elimina por completo la acidez punzante.",
+            "kicker": "PROCESO",
+            "lead_title": "COLD",
+            "giant_title": "BREW",
+            "description": "Extraído en frío durante 16 horas. Más cuerpo, menos acidez, sin amargor. Pasteurizado y sin conservantes.",
             "btn_text": "DESCUBRIR MÁS"
           }
         },
         {
           "type": "slide",
           "settings": {
-            "lead_title": "ENERGÍA PURA",
-            "giant_title": "SIN CRASH",
-            "description": "180mg de cafeína natural de altura con antioxidantes botánicos. Rendimiento sostenido y enfoque mental prolongado para todo tu día.",
+            "kicker": "BENEFICIO",
+            "lead_title": "ENERGÍA",
+            "giant_title": "LIMPIA",
+            "description": "280 mg de cafeína natural. Sin azúcar, sin conservantes, sin trucos. De la tierra a la lata.",
             "btn_text": "COMPRAR PACK"
           }
         }
