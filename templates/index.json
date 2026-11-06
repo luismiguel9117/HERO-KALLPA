@@ -193,8 +193,53 @@
       "settings": {
         "title_line1": "MÁS QUE CAFÉ,",
         "title_line2": "ES ENERGÍA NATURAL",
-        "desc": "Granos de origen peruano, seleccionados en el VRAEM.<br>Sin aditivos, sin azúcares añadidos. Solo café frío,<br>con un sabor real y una energía que se siente."
-      }
+        "desc": "Granos de origen peruano, seleccionados en el VRAEM.<br>Sin aditivos, sin azúcares añadidos. Solo café frío,<br>con un sabor real y una energía que se siente.",
+        "compare_title": "CAFEÍNA DE LA TIERRA, NO DE LABORATORIO",
+        "compare_head_brand": "KALPA",
+        "compare_head_other": "OTRAS BEBIDAS ENERGÉTICAS",
+        "compare_note": "*En sus versiones regulares; puede variar según la marca.",
+        "compare_cta_text": "PRUÉBALA"
+      },
+      "blocks": {
+        "compare_1": {
+          "type": "compare_row",
+          "settings": {
+            "label": "Cafeína",
+            "kalpa": "Natural",
+            "other": "Sintética"
+          }
+        },
+        "compare_2": {
+          "type": "compare_row",
+          "settings": {
+            "label": "Azúcar",
+            "kalpa": "0 g",
+            "other": "Alto en azúcar*"
+          }
+        },
+        "compare_3": {
+          "type": "compare_row",
+          "settings": {
+            "label": "Saborizantes y conservantes",
+            "kalpa": "No",
+            "other": "Sí*"
+          }
+        },
+        "compare_4": {
+          "type": "compare_row",
+          "settings": {
+            "label": "Ingredientes",
+            "kalpa": "3 que conoces: agua, café y stevia",
+            "other": "Químicos raros que no conoces"
+          }
+        }
+      },
+      "block_order": [
+        "compare_1",
+        "compare_2",
+        "compare_3",
+        "compare_4"
+      ]
     },
     "reels_1": {
       "type": "kallpa-reels",
