@@ -50,9 +50,14 @@
       assign product_types = ''
       assign sizes = ''
       for p in shop_collection.products
-        if p.type != blank
-          assign type_key = p.type | handleize
-          assign type_entry = p.type | append: '|' | append: type_key
+        assign p_type = p.type
+        assign p_name = p.title | downcase
+        if p_name contains 'grano' or p_name contains 'entero'
+          assign p_type = 'Café en grano'
+        endif
+        if p_type != blank
+          assign type_key = p_type | handleize
+          assign type_entry = p_type | append: '|' | append: type_key
           unless product_types contains type_entry
             assign product_types = product_types | append: type_entry | append: ';;'
           endunless
@@ -116,10 +121,11 @@
             <span class="visually-hidden">Ordenar por</span>
             <select data-sort>
               <option value="featured">Ordenar por</option>
+              <option value="best-selling"{% if collection.sort_by == 'best-selling' %} selected{% endif %}>Más vendidos</option>
+              <option value="name">A - Z</option>
+              <option value="name-desc">Z - A</option>
               <option value="price-asc">Precio: menor a mayor</option>
               <option value="price-desc">Precio: mayor a menor</option>
-              <option value="discount">Mayor descuento</option>
-              <option value="name">Nombre: A - Z</option>
             </select>
             <svg class="kshop-select__caret" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </label>
@@ -146,6 +152,11 @@
           {%- for product in shop_collection.products -%}
             {%- liquid
               assign variant = product.selected_or_first_available_variant
+              assign card_type = product.type
+              assign card_name = product.title | downcase
+              if card_name contains 'grano' or card_name contains 'entero'
+                assign card_type = 'Café en grano'
+              endif
               assign discount_pct = 0
               if variant.compare_at_price > variant.price
                 assign discount_pct = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price
@@ -170,7 +181,7 @@
             <article class="kshop-card{% unless product.available %} is-soldout{% endunless %}"
                      data-card
                      data-index="{{ forloop.index0 }}"
-                     data-type="type-{{ product.type | handleize }}"
+                     data-type="type-{{ card_type | handleize }}"
                      data-size="size-{{ size_text | handleize }}"
                      data-on-sale="{% if product.compare_at_price > product.price %}true{% else %}false{% endif %}"
                      data-available="{{ product.available }}"
@@ -200,8 +211,8 @@
               </div>
 
               <div class="kshop-card__body">
-                {%- if product.type != blank -%}
-                  <span class="kshop-card__category">{{ product.type }}</span>
+                {%- if card_type != blank -%}
+                  <span class="kshop-card__category">{{ card_type }}</span>
                 {%- endif -%}
                 <h2 class="kshop-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h2>
                 {%- if short_desc != blank -%}
@@ -319,12 +330,20 @@
 
     document.querySelector('[data-sort]').addEventListener('change', e => {
       const criteria = e.target.value;
+      // Las ventas solo las conoce Shopify: se recarga la colección con ese orden
+      if (criteria === 'best-selling') {
+        const url = new URL(window.location.href);
+        url.pathname = url.pathname.includes('/collections/') ? url.pathname : '/collections/all';
+        url.searchParams.set('sort_by', 'best-selling');
+        window.location.href = url.toString();
+        return;
+      }
       const num = (card, key) => parseFloat(card.dataset[key]) || 0;
       const sorted = cards.slice().sort((a, b) => {
         if (criteria === 'price-asc') return num(a, 'price') - num(b, 'price');
         if (criteria === 'price-desc') return num(b, 'price') - num(a, 'price');
-        if (criteria === 'discount') return num(b, 'discount') - num(a, 'discount');
         if (criteria === 'name') return a.dataset.name.localeCompare(b.dataset.name, 'es');
+        if (criteria === 'name-desc') return b.dataset.name.localeCompare(a.dataset.name, 'es');
         return num(a, 'index') - num(b, 'index');
       });
       sorted.forEach(card => grid.appendChild(card));
@@ -408,7 +427,7 @@
       "type": "text",
       "id": "subtitle",
       "label": "Subtítulo",
-      "default": "Energía de los Andes, en cada formato."
+      "default": "Elige cómo quieres tu energía."
     },
     {
       "type": "collection",
