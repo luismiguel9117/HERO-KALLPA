@@ -75,7 +75,9 @@
         <p>Ayacucho no es solo de donde viene el café. Es el origen, la cultura y la razón de ser de lo que hacemos. Creemos que los insumos andinos merecen ser reconocidos, y empezamos por el café.</p>
         <div class="nos-marca">
           {%- if section.settings.marca_ayacucho_logo != blank -%}
-            <img src="{{ section.settings.marca_ayacucho_logo | image_url: width: 240 }}" alt="Marca Ayacucho" class="nos-marca__logo" width="96" height="96" loading="lazy">
+            <img src="{{ section.settings.marca_ayacucho_logo | image_url: width: 240 }}" alt="Marca Ayacucho, donde nace el Perú" class="nos-marca__logo" width="104" height="104" loading="lazy">
+          {%- else -%}
+            <img src="{{ 'marca-ayacucho.webp' | asset_url }}" alt="Marca Ayacucho, donde nace el Perú" class="nos-marca__logo" width="104" height="104" loading="lazy">
           {%- endif -%}
           <p>Por eso somos orgullosos embajadores de la Marca Ayacucho, que promueve la identidad cultural de nuestra región y la lleva al Perú y al mundo.</p>
         </div>
