@@ -113,10 +113,11 @@
         "slide_molido": {
           "type": "product_slide",
           "settings": {
+            "product": "cafe-molido-250-g-y-500-g",
             "theme_variant": "molido",
             "eyebrow": "NUESTRO PRODUCTO",
             "title_main": "KALPA",
-            "title_sub": "MOLIDO COLD BREW",
+            "title_sub": "MOLIDO GRUESO",
             "description": "Café tostado 100% Arábica · Variedad Obata, cultivado a 1,650 msnm en Anco, Ayacucho. Molienda gruesa especial para cold brew: macéralo en frío y obtén un concentrado.",
             "product_link": "/products/cafe-molido-250-g-y-500-g",
             "btn_link_text": "Ver ficha completa",
@@ -143,6 +144,7 @@
         "slide_molido_500": {
           "type": "product_slide",
           "settings": {
+            "product": "cafe-molido-500-g",
             "theme_variant": "molido",
             "eyebrow": "NUESTRO PRODUCTO",
             "title_main": "KALPA",

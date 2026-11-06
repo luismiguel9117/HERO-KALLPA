@@ -6,7 +6,7 @@
         "breadcrumb_text": "Productos",
         "kicker": "NUESTROS PRODUCTOS",
         "title_line1": "LA LÍNEA",
-        "title_line2": "KALLPA",
+        "title_line2": "KALPA",
         "description": "Distintas formas de disfrutar la energía real de los Andes."
       },
       "blocks": {
@@ -15,7 +15,7 @@
           "settings": {
             "category": "cold-brew",
             "kicker": "01 — COLD BREW",
-            "title_main": "KALLPA",
+            "title_main": "KALPA",
             "title_sub": "ORIGINAL",
             "description": "Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar.",
             "default_asset_image": "kalpa-can-original.webp",
@@ -40,10 +40,11 @@
         "card_molido_cold_brew": {
           "type": "grid_product",
           "settings": {
+            "product": "cafe-molido-250-g-y-500-g",
             "category": "cafe-molido",
-            "kicker": "02 — CAFÉ MOLIDO COLD BREW",
-            "title_main": "KALLPA",
-            "title_sub": "MOLIDO COLD BREW 250G",
+            "kicker": "02 — CAFÉ MOLIDO",
+            "title_main": "KALPA",
+            "title_sub": "MOLIDO GRUESO 250 G",
             "description": "Molienda gruesa especial para cold brew. Macera 100 g en 1 L de agua fría por 12–18 h y obtén un concentrado con notas a cereza, chocolate y manzana.",
             "default_bg_image": "product-card-250g.webp",
             "btn_text": "VER PRODUCTO",
@@ -53,9 +54,10 @@
         "card_molido_250": {
           "type": "grid_product",
           "settings": {
+            "product": "cafe-molido-fino-250g",
             "category": "cafe-molido",
             "kicker": "03 — CAFÉ MOLIDO",
-            "title_main": "KALLPA",
+            "title_main": "KALPA",
             "title_sub": "CAFÉ MOLIDO 250G",
             "description": "Molienda media fina para métodos de filtrado como V60 y AeroPress. Café lavado de taza limpia y dulce, 100% Obata de Anco, Ayacucho.",
             "default_bg_image": "product-card-250g.webp",
@@ -66,9 +68,10 @@
         "card_molido_500": {
           "type": "grid_product",
           "settings": {
+            "product": "cafe-media-fina",
             "category": "cafe-molido",
             "kicker": "04 — CAFÉ MOLIDO",
-            "title_main": "KALLPA",
+            "title_main": "KALPA",
             "title_sub": "CAFÉ MOLIDO 500G",
             "description": "La misma molienda media fina para filtrado, en lata de 500 g para quienes preparan café todos los días. Notas a cereza, chocolate y manzana.",
             "default_bg_image": "product-card-500g.webp",
@@ -79,9 +82,10 @@
         "card_grano_500": {
           "type": "grid_product",
           "settings": {
+            "product": "cafe-molido-500-g",
             "category": "cafe-molido",
             "kicker": "05 — CAFÉ EN GRANO",
-            "title_main": "KALLPA",
+            "title_main": "KALPA",
             "title_sub": "CAFÉ EN GRANO 500G",
             "description": "Grano entero de tueste medio oscuro. Muélelo al momento: fino para espresso, media fina para V60 o Chemex, gruesa para prensa francesa o cold brew.",
             "default_bg_image": "product-card-500g.webp",

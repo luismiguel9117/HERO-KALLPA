@@ -4149,21 +4149,6 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 6px 16px rgba(251, 209, 50, 0.25);
 }
 
-.footer-shipping-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  color: #ffffff;
-  font-size: 0.82rem;
-  font-weight: 600;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 0.55rem 0.85rem;
-  border-radius: 8px;
-  margin-bottom: 0.85rem;
-  width: fit-content;
-}
-
 .footer-shipping-icon {
   color: #fbd132;
   flex-shrink: 0;
@@ -4626,10 +4611,6 @@ h1, h2, h3, h4, h5, h6 {
   .footer-social-icons {
     justify-content: center;
     gap: 0.65rem;
-  }
-  .footer-shipping-badge {
-    justify-content: center;
-    font-size: 0.82rem;
   }
   .footer-bottom__legal-row {
     flex-direction: column;
@@ -5792,8 +5773,6 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   height: 100%;
   background: url("kalpa-molido-bg.webp") center center / cover no-repeat #070c09;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: high-quality;
   pointer-events: none;
   z-index: 1;
 }
@@ -7070,5 +7049,84 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: -6px;
     -webkit-mask-image: none;
     mask-image: none;
+  }
+}
+
+/* Mismo margen izquierdo que el menú y el resto de secciones (.page-width) */
+.energy-natural__container {
+  max-width: 1440px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .energy-natural__container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* Carrusel: alineado con la página si las flechas caben en el margen exterior;
+   en pantallas menores reserva sitio para que no pisen el texto */
+@media (min-width: 1560px) {
+  .kalpa-sale-container {
+    max-width: 1440px;
+    padding: 0 3rem;
+  }
+}
+
+@media (min-width: 1081px) and (max-width: 1559px) {
+  .kalpa-sale-container {
+    padding: 0 5.5rem;
+  }
+  .kalpa-sale-grid {
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
+  .sale-stage__rock {
+    width: 150%;
+    left: -25%;
+  }
+}
+
+@media (min-width: 1081px) and (max-width: 1340px) {
+  .sale-stage__rock {
+    width: 132%;
+    left: -16%;
+  }
+}
+
+/* Carrusel en escritorio: producto, pack e iconos con más presencia */
+@media (min-width: 1081px) {
+  .sale-stage__can--molido {
+    left: 50%;
+    width: 36vw;
+    max-width: 620px;
+    max-height: 400px;
+    transform: translateX(calc(-50% + 3.6vw));
+  }
+  .kalpa-sale__info .sale-features-row {
+    position: relative;
+    z-index: 7;
+  }
+  .kalpa-sale__info .sale-feature-circle {
+    width: 60px;
+    height: 60px;
+  }
+  .kalpa-sale__info .sale-feature-circle svg {
+    width: 28px;
+    height: 28px;
+  }
+  .kalpa-sale__info .sale-feature-label {
+    font-size: 0.72rem;
+  }
+  .sale-pack-cans-visual {
+    zoom: 1.15;
+  }
+  .kalpa-sale-grid {
+    grid-template-columns: minmax(290px, 330px) minmax(0, 1fr) minmax(340px, 480px);
+  }
+  .kalpa-sale__buy-box {
+    max-width: 480px;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   }
 }

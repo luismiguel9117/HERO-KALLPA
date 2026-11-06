@@ -28,7 +28,7 @@
     <!-- Título Gigante -->
     <h1 class="products-hero__title">
       <span class="title-line-white">{{ section.settings.title_line1 | default: 'LA LÍNEA' }}</span>
-      <span class="title-line-gold">{{ section.settings.title_line2 | default: 'KALLPA' }}</span>
+      <span class="title-line-gold">{{ section.settings.title_line2 | default: 'KALPA' }}</span>
     </h1>
 
     <!-- Párrafo Descriptivo -->
@@ -113,7 +113,10 @@
     {%- comment -%} Renderizado de Bloques de Productos Destacados {%- endcomment -%}
     {%- for block in section.blocks -%}
       {%- if block.type == 'featured_product' -%}
-        {%- assign featured_pdp = block.settings.product_link | default: block.settings.product.url | default: all_products['kalpa-cold-brew'].url | default: fallback_pdp -%}
+        {%- assign featured_product = block.settings.product -%}
+        {%- assign featured_pdp = featured_product.url | default: block.settings.product_link | default: all_products['kalpa-cold-brew'].url | default: fallback_pdp -%}
+        {%- assign featured_title_sub = featured_product.title | default: block.settings.title_sub -%}
+        {%- assign featured_desc = featured_product.description | strip_html | strip | truncatewords: 32 | default: block.settings.description -%}
         <article class="featured-product-card" data-category="{{ block.settings.category | default: 'cold-brew' }}" {{ block.shopify_attributes }}>
           <div class="featured-card__bg-pattern" aria-hidden="true"></div>
           
@@ -126,13 +129,13 @@
               
               <h2 class="featured-card__title">
                 <a href="{{ featured_pdp }}" style="color:inherit; text-decoration:none;">
-                  <span class="title-kallpa">{{ block.settings.title_main | default: 'KALLPA' }}</span>
-                  <span class="title-product">{{ block.settings.title_sub | default: 'ORIGINAL' }}</span>
+                  <span class="title-kallpa">{{ block.settings.title_main | default: 'KALPA' }}</span>
+                  <span class="title-product">{{ featured_title_sub | default: 'ORIGINAL' }}</span>
                 </a>
               </h2>
 
               <p class="featured-card__desc">
-                {{ block.settings.description | default: 'Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar.' }}
+                {{ featured_desc | default: 'Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar.' }}
               </p>
 
               <div class="featured-card__cta">
@@ -207,6 +210,9 @@
               assign grid_product_handle = block.settings.btn_link | split: '/products/' | last | split: '?' | first
               assign grid_product = all_products[grid_product_handle]
             endif
+            # Nombre y descripción salen del producto; el texto del bloque queda de respaldo
+            assign grid_title_sub = grid_product.title | default: block.settings.title_sub
+            assign grid_desc = grid_product.description | strip_html | strip | truncatewords: 32 | default: block.settings.description
             assign grid_bg = ''
             # La foto real del producto va antes que la imagen de respaldo del tema
             assign grid_bg_is_product = false
@@ -239,15 +245,15 @@
             <div class="grid-card__content">
               <span class="grid-card__kicker">{{ block.settings.kicker | default: 'CAFÉ MOLIDO' }}</span>
               <h3 class="grid-card__title">
-                <span class="title-kallpa">{{ block.settings.title_main | default: 'KALLPA' }}</span>
-                <span class="title-molido">{{ block.settings.title_sub | default: 'CAFÉ MOLIDO' }}</span>
+                <span class="title-kallpa">{{ block.settings.title_main | default: 'KALPA' }}</span>
+                <span class="title-molido">{{ grid_title_sub | default: 'CAFÉ MOLIDO' }}</span>
               </h3>
               <p class="grid-card__desc">
-                {{ block.settings.description }}
+                {{ grid_desc }}
               </p>
 
               <div class="grid-card__action">
-                {%- assign grid_pdp = block.settings.btn_link | default: block.settings.product.url -%}
+                {%- assign grid_pdp = grid_product.url | default: block.settings.btn_link -%}
                 {%- if grid_pdp contains '/products/' -%}
                   {%- assign grid_handle = grid_pdp | split: '/products/' | last | split: '?' | first -%}
                   {%- if all_products[grid_handle].url == blank -%}
@@ -332,7 +338,7 @@
       "type": "text",
       "id": "title_line2",
       "label": "Título Línea 2 (Dorado)",
-      "default": "KALLPA"
+      "default": "KALPA"
     },
     {
       "type": "textarea",
@@ -376,7 +382,7 @@
           "type": "text",
           "id": "title_main",
           "label": "Título Principal",
-          "default": "KALLPA"
+          "default": "KALPA"
         },
         {
           "type": "text",
@@ -389,6 +395,12 @@
           "id": "description",
           "label": "Descripción",
           "default": "Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar."
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Producto de Shopify",
+          "info": "Al elegirlo, el nombre, la descripción y el enlace se rellenan solos. Déjalo vacío para usar los textos de abajo."
         },
         {
           "type": "url",
@@ -928,7 +940,8 @@
         {
           "type": "product",
           "id": "product",
-          "label": "Vincular Producto de Shopify (opcional)"
+          "label": "Producto de Shopify",
+          "info": "Al elegirlo, el nombre, la descripción, la foto y el enlace se rellenan solos. Los campos de abajo solo se usan si el producto no tiene ese dato."
         },
         {
           "type": "select",
@@ -960,12 +973,12 @@
           "type": "text",
           "id": "title_main",
           "label": "Título Principal",
-          "default": "KALLPA"
+          "default": "KALPA"
         },
         {
           "type": "text",
           "id": "title_sub",
-          "label": "Subtítulo / Presentación",
+          "label": "Subtítulo (solo si no hay producto)",
           "default": "CAFÉ MOLIDO 250G"
         },
         {
@@ -1018,7 +1031,7 @@
           "type": "grid_product",
           "settings": {
             "kicker": "02 — CAFÉ MOLIDO",
-            "title_main": "KALLPA",
+            "title_main": "KALPA",
             "title_sub": "CAFÉ MOLIDO 250G",
             "default_bg_image": "product-card-250g.webp"
           }
@@ -1027,7 +1040,7 @@
           "type": "grid_product",
           "settings": {
             "kicker": "03 — CAFÉ MOLIDO",
-            "title_main": "KALLPA",
+            "title_main": "KALPA",
             "title_sub": "CAFÉ MOLIDO 500G",
             "default_bg_image": "product-card-500g.webp",
             "description": "La misma calidad, en una presentación más grande. Café de especialidad, ideal para quienes viven el café todos los días."

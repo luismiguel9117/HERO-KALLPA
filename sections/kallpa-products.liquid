@@ -96,6 +96,12 @@
                 assign pack_discount_pct = pack_old_cents | minus: pack_price_cents | times: 100 | divided_by: pack_old_cents
               endif
             endif
+            # Nombre y descripción del producto; Original conserva su título de campaña
+            assign slide_title_sub = block.settings.title_sub
+            if block.settings.product != blank or slide_product != blank and block.settings.theme_variant != 'original'
+              assign slide_title_sub = slide_product.title | default: block.settings.title_sub
+            endif
+            assign slide_desc = slide_product.description | strip_html | strip | truncatewords: 32 | default: block.settings.description
           -%}
           <div class="kalpa-product-slide {% if forloop.first %}active{% endif %} {% if block.type == 'product_molido' or block.settings.theme_variant == 'molido' %}kalpa-product-slide--molido{% else %}kalpa-product-slide--original{% endif %}" 
                id="product-slide-{{ forloop.index0 }}" 
@@ -110,10 +116,10 @@
                   <span class="sale-eyebrow">{{ block.settings.eyebrow | default: 'NUESTRO PRODUCTO' }}</span>
                   <h2 class="sale-giant-title">
                     <span class="sale-title-main">{{ block.settings.title_main | default: 'KALPA' }}</span>
-                    <span class="sale-title-sub">{{ block.settings.title_sub | default: 'ORIGINAL' }}</span>
+                    <span class="sale-title-sub">{{ slide_title_sub | default: 'ORIGINAL' }}</span>
                   </h2>
                   <p class="sale-description">
-                    {{ block.settings.description | default: 'Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar.' }}
+                    {{ slide_desc | default: 'Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar.' }}
                   </p>
                   
                   {%- if block.settings.product_link != blank or block.settings.btn_link_text != blank or slide_product != blank -%}
@@ -400,7 +406,7 @@
           "type": "product",
           "id": "product",
           "label": "Producto de Shopify",
-          "info": "Precios, stock y botón Agregar salen de este producto. Para el pack, crea una variante llamada \"Pack x 6\" (o x 12, según Unidades por pack)."
+          "info": "El nombre, la descripción, los precios, el stock y el botón Agregar salen de este producto. Para el pack, crea una variante llamada \"Pack x 6\" (o x 12, según Unidades por pack)."
         },
         {
           "type": "text",
