@@ -921,7 +921,7 @@ h1, h2, h3, h4, h5, h6 {
   min-height: calc(100vh - 110px);
   max-height: 850px;
   background-color: #5c0709;
-  background-image: url('kalpa-hero-bg.webp');
+  background-image: url("kalpa-hero-bg.webp?v=20261106");
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -934,7 +934,7 @@ h1, h2, h3, h4, h5, h6 {
 .kalpa-hero__pattern {
   position: absolute;
   inset: 0;
-  background-image: url('kalpa-pattern.webp');
+  background-image: url("kalpa-pattern.webp?v=20261106");
   background-repeat: repeat;
   background-size: 380px;
   opacity: 0;
@@ -3290,7 +3290,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   min-height: 520px;
   background-color: #050608;
-  background-image: url('vraem-landscape-bg.webp');
+  background-image: url("vraem-landscape-bg.webp?v=20261106");
   background-size: cover;
   background-position: center 45%;
   background-repeat: no-repeat;
@@ -3758,7 +3758,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   width: 100%;
   background-color: #52070a;
-  background-image: url('kalpa-hero-bg.webp');
+  background-image: url("kalpa-hero-bg.webp?v=20261106");
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -3770,7 +3770,7 @@ h1, h2, h3, h4, h5, h6 {
 .kallpa-newsletter-banner__pattern {
   position: absolute;
   inset: 0;
-  background-image: url('kalpa-pattern.webp');
+  background-image: url("kalpa-pattern.webp?v=20261106");
   background-repeat: repeat;
   background-size: 320px;
   opacity: 0;
@@ -5576,7 +5576,7 @@ h1, h2, h3, h4, h5, h6 {
   inset: 0;
   width: 100%;
   height: 100%;
-  background: url("energy-natural-composition.webp") right center / cover no-repeat;
+  background: url("energy-natural-composition.webp?v=20261106") right center / cover no-repeat;
   pointer-events: none;
   z-index: 1;
 }
@@ -5772,7 +5772,7 @@ h1, h2, h3, h4, h5, h6 {
   inset: 0;
   width: 100%;
   height: 100%;
-  background: url("kalpa-molido-bg.webp") center center / cover no-repeat #070c09;
+  background: url("kalpa-molido-bg.webp?v=20261106") center center / cover no-repeat #070c09;
   pointer-events: none;
   z-index: 1;
 }

@@ -22,7 +22,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  background: url("nosotros-hero-bg-hd.webp") center center / cover no-repeat;
+  background: url("nosotros-hero-bg-hd.webp?v=20261106") center center / cover no-repeat;
   pointer-events: none;
   z-index: 1;
 }
@@ -798,7 +798,7 @@
 }
 
 .nosotros-hero__bg {
-  background: url("nosotros-hero-bg.webp") center 60% / cover no-repeat;
+  background: url("nosotros-hero-bg.webp?v=20261106") center 60% / cover no-repeat;
   animation: nosotrosHeroBgIn 1.6s ease-out both;
 }
 
@@ -806,7 +806,7 @@
 .nosotros-hero__arch {
   position: absolute;
   inset: 0;
-  background: url("nosotros-hero-arch.webp") center 60% / cover no-repeat;
+  background: url("nosotros-hero-arch.webp?v=20261106") center 60% / cover no-repeat;
   opacity: 0;
   z-index: 2;
   pointer-events: none;
