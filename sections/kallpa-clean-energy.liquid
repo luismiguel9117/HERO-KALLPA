@@ -44,13 +44,13 @@
           {%- if section.settings.compare_note != blank -%}
             <p class="energy-compare__note">{{ section.settings.compare_note }}</p>
           {%- endif -%}
-          {%- if section.settings.compare_cta_text != blank -%}
-            <a href="{{ section.settings.compare_cta_url | default: routes.all_products_collection_url }}" class="energy-compare__cta">
-              <span>{{ section.settings.compare_cta_text }}</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </a>
-          {%- endif -%}
         </div>
+        {%- if section.settings.compare_cta_text != blank -%}
+          <a href="{{ section.settings.compare_cta_url | default: routes.all_products_collection_url }}" class="energy-compare__cta">
+            <span>{{ section.settings.compare_cta_text }}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        {%- endif -%}
       {%- endif -%}
     </div>
 
