@@ -7182,6 +7182,11 @@ h1, h2, h3, h4, h5, h6 {
   color: #ffffff;
 }
 
+.energy-compare__table thead th.energy-compare__brand {
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+}
+
 .energy-compare__table .energy-compare__brand {
   color: #f5ba2c;
   font-weight: 700;
