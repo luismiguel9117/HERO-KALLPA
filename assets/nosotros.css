@@ -1954,3 +1954,13 @@
   height: auto;
   object-fit: contain;
 }
+
+.nos-stats.nos-stats--2col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 749px) {
+  .nos-stats.nos-stats--2col {
+    grid-template-columns: 1fr;
+  }
+}
