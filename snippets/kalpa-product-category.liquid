@@ -1,0 +1,20 @@
+{%- comment -%}
+  Categoría de un producto, igual en Tienda y Productos.
+  Sale del campo "Tipo de producto" del admin de Shopify. Si está vacío,
+  se deduce del nombre (grano / molido / cold brew).
+  Uso: {%- capture cat -%}{% render 'kalpa-product-category', product: p %}{%- endcapture -%}
+{%- endcomment -%}
+{%- liquid
+  assign cat = product.type | strip
+  if cat == blank
+    assign cat_name = product.title | downcase
+    if cat_name contains 'grano' or cat_name contains 'entero'
+      assign cat = 'Café en grano'
+    elsif cat_name contains 'molido'
+      assign cat = 'Café Molido'
+    elsif cat_name contains 'cold brew'
+      assign cat = 'Cold Brew'
+    endif
+  endif
+  echo cat
+-%}

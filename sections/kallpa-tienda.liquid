@@ -50,11 +50,10 @@
       assign product_types = ''
       assign sizes = ''
       for p in shop_collection.products
-        assign p_type = p.type
-        assign p_name = p.title | downcase
-        if p_name contains 'grano' or p_name contains 'entero'
-          assign p_type = 'Café en grano'
-        endif
+        capture p_type
+          render 'kalpa-product-category', product: p
+        endcapture
+        assign p_type = p_type | strip
         if p_type != blank
           assign type_key = p_type | handleize
           assign type_entry = p_type | append: '|' | append: type_key
@@ -94,7 +93,6 @@
                 {%- endif -%}
               {%- endfor -%}
               <option value="on-sale">En oferta</option>
-              <option value="available">Solo disponibles</option>
             </select>
             <svg class="kshop-select__caret" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </label>
@@ -152,11 +150,10 @@
           {%- for product in shop_collection.products -%}
             {%- liquid
               assign variant = product.selected_or_first_available_variant
-              assign card_type = product.type
-              assign card_name = product.title | downcase
-              if card_name contains 'grano' or card_name contains 'entero'
-                assign card_type = 'Café en grano'
-              endif
+              capture card_type
+                render 'kalpa-product-category', product: product
+              endcapture
+              assign card_type = card_type | strip
               assign discount_pct = 0
               if variant.compare_at_price > variant.price
                 assign discount_pct = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price
@@ -314,7 +311,6 @@
         const matchesType =
           !type ||
           (type === 'on-sale' && card.dataset.onSale === 'true') ||
-          (type === 'available' && card.dataset.available === 'true') ||
           card.dataset.type === type;
         const matchesSize = !size || card.dataset.size === size;
         const show = matchesType && matchesSize;

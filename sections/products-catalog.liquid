@@ -54,31 +54,42 @@
         <span>Todos los productos</span>
       </button>
 
-      <button type="button" class="filter-pill" data-filter="cold-brew" onclick="filterProducts('cold-brew', this)">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      {%- comment -%} Las categorías salen del "Tipo de producto" en el admin de Shopify, igual que en la Tienda {%- endcomment -%}
+      {%- liquid
+        assign pill_cats = ''
+        for p in collections.all.products
+          capture p_cat
+            render 'kalpa-product-category', product: p
+          endcapture
+          assign p_cat = p_cat | strip
+          if p_cat != blank
+            assign p_entry = p_cat | append: '|'
+            unless pill_cats contains p_entry
+              assign pill_cats = pill_cats | append: p_entry | append: ';;'
+            endunless
+          endif
+        endfor
+        assign pill_cats = pill_cats | split: ';;'
+      -%}
+      {%- for entry in pill_cats -%}
+        {%- assign parts = entry | split: '|' -%}
+        {%- assign cat_key = parts[0] | handleize -%}
+        <button type="button" class="filter-pill" data-filter="{{ cat_key }}" onclick="filterProducts('{{ cat_key }}', this)">
+          {%- if cat_key contains 'cold-brew' -%}
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="6" y="4" width="12" height="16" rx="2"></rect>
           <line x1="6" y1="9" x2="18" y2="9"></line>
           <line x1="9" y1="2" x2="15" y2="2"></line>
         </svg>
-        <span>Cold Brew</span>
-      </button>
-
-      <button type="button" class="filter-pill" data-filter="cafe-molido" onclick="filterProducts('cafe-molido', this)">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          {%- else -%}
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="9"></circle>
           <path d="M12 3a9 9 0 0 0 0 18c2-2 3-5 3-9s-1-7-3-9z"></path>
         </svg>
-        <span>Café Molido</span>
-      </button>
-
-      <button type="button" class="filter-pill" data-filter="accesorios" onclick="filterProducts('accesorios', this)">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="9" cy="21" r="1"></circle>
-          <circle cx="20" cy="21" r="1"></circle>
-          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-        </svg>
-        <span>Accesorios</span>
-      </button>
+          {%- endif -%}
+          <span>{{ parts[0] }}</span>
+        </button>
+      {%- endfor -%}
     </div>
 
     <!-- Selector de Ordenamiento -->
@@ -140,7 +151,7 @@
           endif
         -%}
         {%- assign featured_desc = featured_product.description | strip_html | strip | truncatewords: 32 | default: block.settings.description -%}
-        <article class="featured-product-card" data-category="{{ block.settings.category | default: 'cold-brew' }}" {{ block.shopify_attributes }}>
+        <article class="featured-product-card" data-category="{% capture c %}{% render 'kalpa-product-category', product: featured_product %}{% endcapture %}{{ c | strip | handleize | default: block.settings.category | default: 'cold-brew' }}" {{ block.shopify_attributes }}>
           <div class="featured-card__bg-pattern" aria-hidden="true"></div>
           
           <div class="featured-card__container">
@@ -272,7 +283,7 @@
               assign grid_bg = block.settings.default_bg_image | asset_url
             endif
           -%}
-          <article class="grid-card-product" data-category="{{ block.settings.category | default: 'cafe-molido' }}"{% if grid_bg_is_product %} style="--card-img: url('{{ grid_bg }}');"{% endif %} {{ block.shopify_attributes }}>
+          <article class="grid-card-product" data-category="{% capture c %}{% render 'kalpa-product-category', product: grid_product %}{% endcapture %}{{ c | strip | handleize | default: block.settings.category | default: 'cafe-molido' }}"{% if grid_bg_is_product %} style="--card-img: url('{{ grid_bg }}');"{% endif %} {{ block.shopify_attributes }}>
             <div class="grid-card__bg{% if grid_bg_is_product %} grid-card__bg--product{% endif %}" aria-hidden="true" style="{% if grid_bg != blank %}background-image: url('{{ grid_bg }}');{% endif %}"></div>
             <div class="grid-card__glass" aria-hidden="true"></div>
 
@@ -317,26 +328,11 @@
 
 
   function filterProducts(category, btn) {
-    var pills = document.querySelectorAll('.filter-pill');
-    pills.forEach(function(p) { p.classList.remove('is-active'); });
+    document.querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('is-active'); });
     if (btn) btn.classList.add('is-active');
-
-    var featured = document.querySelectorAll('.featured-product-card');
-    var duoCards = document.querySelectorAll('.grid-card-product');
-
-    if (category === 'all') {
-      featured.forEach(function(f) { f.style.display = ''; });
-      duoCards.forEach(function(c) { c.style.display = ''; });
-    } else if (category === 'cold-brew') {
-      featured.forEach(function(f) { f.style.display = ''; });
-      duoCards.forEach(function(c) { c.style.display = 'none'; });
-    } else if (category === 'cafe-molido') {
-      featured.forEach(function(f) { f.style.display = 'none'; });
-      duoCards.forEach(function(c) { c.style.display = ''; });
-    } else {
-      featured.forEach(function(f) { f.style.display = 'none'; });
-      duoCards.forEach(function(c) { c.style.display = 'none'; });
-    }
+    document.querySelectorAll('.featured-product-card, .grid-card-product').forEach(function(card) {
+      card.style.display = (category === 'all' || card.dataset.category === category) ? '' : 'none';
+    });
   }
 
   function sortProducts(val) {
