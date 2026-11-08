@@ -29,7 +29,7 @@
             "kicker": "ORIGEN",
             "lead_title": "CAFÉ DE",
             "giant_title": "AYACUCHO",
-            "description": "Café de especialidad de altura cultivado a 1650 msnm en el VRAEM. Cosechado y seleccionado a mano por productores peruanos.",
+            "description": "Café de especialidad de altura cultivado a 1650 msnm en Ayacucho. Cosechado y seleccionado a mano por productores peruanos.",
             "btn_text": "COMPRAR AHORA",
             "btn_url": "#products-section"
           }
@@ -69,7 +69,7 @@
       "settings": {
         "show_features_bar": true,
         "feat1_line1": "GRANOS",
-        "feat1_line2": "DEL VRAEM",
+        "feat1_line2": "DE AYACUCHO",
         "feat2_line1": "ENERGÍA",
         "feat2_line2": "NATURAL",
         "feat3_line1": "COLD BREW",
@@ -87,7 +87,7 @@
             "eyebrow": "NUESTRO PRODUCTO",
             "title_main": "KALPA",
             "title_sub": "ORIGINAL",
-            "description": "Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar.",
+            "description": "Café cold brew de origen peruano, hecho con granos de Ayacucho. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar.",
             "product_link": "/products/kalpa-cold-brew",
             "btn_link_text": "Ver ficha completa",
             "feat_1": "0<br>CALORÍAS",
@@ -212,14 +212,14 @@
           "type": "compare_row",
           "settings": {
             "label": "Azúcar",
-            "kalpa": "0 g",
+            "kalpa": "Sin azúcar añadida",
             "other": "Alto en azúcar*"
           }
         },
         "compare_3": {
           "type": "compare_row",
           "settings": {
-            "label": "Saborizantes y conservantes",
+            "label": "Saborizantes",
             "kalpa": "No",
             "other": "Sí*"
           }
@@ -227,9 +227,9 @@
         "compare_4": {
           "type": "compare_row",
           "settings": {
-            "label": "Ingredientes",
-            "kalpa": "3 que conoces: agua, café y stevia",
-            "other": "Químicos raros que no conoces"
+            "label": "Conservantes",
+            "kalpa": "No",
+            "other": "Sí*"
           }
         }
       },
