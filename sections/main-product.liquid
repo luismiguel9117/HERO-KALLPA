@@ -36,6 +36,7 @@
     assign tx_howto_title = ''
     assign tx_howto = ''
     assign tx_nutrition = ''
+    assign tx_desc = 'Café de especialidad de altura, cultivado en Ayacucho, Perú.'
   else
     assign tx_category = ss.category_tag
     assign tx_badge = ss.badge_text
@@ -49,6 +50,7 @@
     assign tx_howto_title = ss.howto_title
     assign tx_howto = ss.howto_1 | append: '|' | append: ss.howto_2 | append: '|' | append: ss.howto_3 | split: '|'
     assign tx_nutrition = ss.nutrition
+    assign tx_desc = ss.product_desc
   endif
   assign title_display = product.title | default: ss.product_title
   # El título se parte en dos líneas: primera palabra en blanco, el resto en dorado
@@ -57,7 +59,7 @@
   assign title_line_2 = title_display | remove_first: title_line_1 | strip
 
   # Cada texto: metacampo del producto o, si no tiene, el ajuste de la plantilla
-  assign desc_display = product.description | strip_html | strip | default: ss.product_desc | default: 'Café de especialidad de altura, cultivado en Ayacucho, Perú.'
+  assign desc_display = product.description | strip_html | strip | default: tx_desc
   assign cat_display = mf.categoria.value | default: tx_category | default: product.type
   assign badge_display = mf.sello.value | default: tx_badge
   # Contenido neto: metacampo, el que dice el nombre ("Café Molido 500 g" → 500 g) o el de la plantilla
@@ -603,7 +605,7 @@
       "id": "product_desc",
       "label": "Descripción de reemplazo",
       "info": "Se muestra solo si el producto no tiene descripción en el admin de Shopify.",
-      "default": "Café de especialidad de altura, cultivado en Ayacucho, Perú."
+      "default": "Café cold brew de origen peruano, hecho con granos de Ayacucho. 280 mg de cafeína natural por lata. Listo para tomar, en cualquier momento y lugar."
     },
     {
       "type": "text",

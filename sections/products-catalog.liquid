@@ -121,8 +121,16 @@
           endif
         -%}
         {%- assign featured_pdp = featured_product.url | default: block.settings.product_link | default: all_products['kalpa-cold-brew'].url | default: fallback_pdp -%}
-        {%- assign featured_title_sub = featured_product.title | default: block.settings.title_sub -%}
-        {%- assign featured_desc = featured_product.description | strip_html | strip | truncatewords: 32 | default: section.settings.desc_placeholder | default: 'Café de especialidad de altura, cultivado en Ayacucho, Perú.' -%}
+        {%- liquid
+          assign featured_title_main = block.settings.title_main
+          assign featured_title_sub = block.settings.title_sub
+          if featured_product != blank
+            # Título directo del nombre del producto: primera palabra arriba, el resto abajo
+            assign featured_title_main = featured_product.title | split: ' ' | first
+            assign featured_title_sub = featured_product.title | remove_first: featured_title_main | strip
+          endif
+        -%}
+        {%- assign featured_desc = featured_product.description | strip_html | strip | truncatewords: 32 | default: block.settings.description -%}
         <article class="featured-product-card" data-category="{{ block.settings.category | default: 'cold-brew' }}" {{ block.shopify_attributes }}>
           <div class="featured-card__bg-pattern" aria-hidden="true"></div>
           
@@ -135,13 +143,13 @@
               
               <h2 class="featured-card__title">
                 <a href="{{ featured_pdp }}" style="color:inherit; text-decoration:none;">
-                  <span class="title-kallpa">{{ block.settings.title_main | default: 'KALPA' }}</span>
+                  <span class="title-kallpa">{{ featured_title_main | default: 'KALPA' }}</span>
                   <span class="title-product">{{ featured_title_sub | default: 'ORIGINAL' }}</span>
                 </a>
               </h2>
 
               <p class="featured-card__desc">
-                {{ featured_desc }}
+                {{ featured_desc | default: 'Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar.' }}
               </p>
 
               <div class="featured-card__cta">
@@ -217,8 +225,14 @@
               assign grid_product = all_products[grid_product_handle]
             endif
             # Nombre y descripción salen del producto; el texto del bloque queda de respaldo
-            assign grid_title_sub = grid_product.title | default: block.settings.title_sub
-            assign grid_desc = grid_product.description | strip_html | strip | truncatewords: 32 | default: section.settings.desc_placeholder | default: 'Café de especialidad de altura, cultivado en Ayacucho, Perú.'
+            assign grid_title_main = block.settings.title_main
+            assign grid_title_sub = block.settings.title_sub
+            if grid_product != blank
+              # Título directo del nombre del producto: primera palabra arriba, el resto abajo
+              assign grid_title_main = grid_product.title | split: ' ' | first
+              assign grid_title_sub = grid_product.title | remove_first: grid_title_main | strip
+            endif
+            assign grid_desc = grid_product.description | strip_html | strip | truncatewords: 32 | default: block.settings.description
             assign grid_bg = ''
             # La foto real del producto va antes que la imagen de respaldo del tema
             assign grid_bg_is_product = false
@@ -251,7 +265,7 @@
             <div class="grid-card__content">
               <span class="grid-card__kicker">{{ block.settings.kicker | default: 'CAFÉ MOLIDO' }}</span>
               <h3 class="grid-card__title">
-                <span class="title-kallpa">{{ block.settings.title_main | default: 'KALPA' }}</span>
+                <span class="title-kallpa">{{ grid_title_main | default: 'KALPA' }}</span>
                 <span class="title-molido">{{ grid_title_sub | default: 'CAFÉ MOLIDO' }}</span>
               </h3>
               <p class="grid-card__desc">
@@ -322,7 +336,6 @@
 {
   "name": "Catálogo de Productos",
   "settings": [
-    {"type": "textarea", "id": "desc_placeholder", "label": "Descripción de reemplazo", "info": "Se muestra solo si el producto no tiene descripción en el admin de Shopify.", "default": "Café de especialidad de altura, cultivado en Ayacucho, Perú."},
     {
       "type": "text",
       "id": "breadcrumb_text",
@@ -400,8 +413,8 @@
         {
           "type": "textarea",
           "id": "description",
-          "label": "Descripción (ya no se usa)",
-          "info": "La descripción sale del producto en el admin de Shopify.",
+          "label": "Descripción",
+          "info": "Se usa si el producto no tiene descripción en el admin de Shopify.",
           "default": "Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar."
         },
         {
@@ -992,8 +1005,8 @@
         {
           "type": "textarea",
           "id": "description",
-          "label": "Descripción (ya no se usa)",
-          "info": "La descripción sale del producto en el admin de Shopify.",
+          "label": "Descripción",
+          "info": "Se usa si el producto no tiene descripción en el admin de Shopify.",
           "default": "Café tostado y molido de especialidad, con notas de cereza, chocolate y manzana. Cultivado en los Andes peruanos para tu día a día."
         },
         {

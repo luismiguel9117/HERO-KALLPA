@@ -96,12 +96,14 @@
                 assign pack_discount_pct = pack_old_cents | minus: pack_price_cents | times: 100 | divided_by: pack_old_cents
               endif
             endif
-            # Nombre y descripción del producto; Original conserva su título de campaña
+            assign slide_title_main = block.settings.title_main
             assign slide_title_sub = block.settings.title_sub
-            if block.settings.product != blank or slide_product != blank and block.settings.theme_variant != 'original'
-              assign slide_title_sub = slide_product.title | default: block.settings.title_sub
+            if slide_product != blank
+              # Título directo del nombre del producto: primera palabra arriba, el resto abajo
+              assign slide_title_main = slide_product.title | split: ' ' | first
+              assign slide_title_sub = slide_product.title | remove_first: slide_title_main | strip
             endif
-            assign slide_desc = slide_product.description | strip_html | strip | truncatewords: 32 | default: section.settings.desc_placeholder | default: 'Café de especialidad de altura, cultivado en Ayacucho, Perú.'
+            assign slide_desc = slide_product.description | strip_html | strip | truncatewords: 32 | default: block.settings.description
           -%}
           <div class="kalpa-product-slide {% if forloop.first %}active{% endif %} {% if block.type == 'product_molido' or block.settings.theme_variant == 'molido' %}kalpa-product-slide--molido{% else %}kalpa-product-slide--original{% endif %}" 
                id="product-slide-{{ forloop.index0 }}" 
@@ -115,11 +117,11 @@
                   <span class="sale-top-line"></span>
                   <span class="sale-eyebrow">{{ block.settings.eyebrow | default: 'NUESTRO PRODUCTO' }}</span>
                   <h2 class="sale-giant-title">
-                    <span class="sale-title-main">{{ block.settings.title_main | default: 'KALPA' }}</span>
+                    <span class="sale-title-main">{{ slide_title_main | default: 'KALPA' }}</span>
                     <span class="sale-title-sub">{{ slide_title_sub | default: 'ORIGINAL' }}</span>
                   </h2>
                   <p class="sale-description">
-                    {{ slide_desc }}
+                    {{ slide_desc | default: 'Café cold brew de origen peruano, hecho con granos de Ayacucho. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar.' }}
                   </p>
                   
                   {%- if block.settings.product_link != blank or block.settings.btn_link_text != blank or slide_product != blank -%}
@@ -348,8 +350,7 @@
 {% schema %}
 {
   "name": "Productos en Venta",
-  "settings": [
-    {"type": "textarea", "id": "desc_placeholder", "label": "Descripción de reemplazo", "info": "Se muestra solo si el producto no tiene descripción en el admin de Shopify.", "default": "Café de especialidad de altura, cultivado en Ayacucho, Perú."}],
+  "settings": [],
   "blocks": [
     {
       "type": "product_slide",
@@ -400,8 +401,8 @@
         {
           "type": "textarea",
           "id": "description",
-          "label": "Descripción (ya no se usa)",
-          "info": "La descripción sale del producto en el admin de Shopify.",
+          "label": "Descripción",
+          "info": "Se usa si el producto no tiene descripción en el admin de Shopify.",
           "default": "Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar."
         },
         {
