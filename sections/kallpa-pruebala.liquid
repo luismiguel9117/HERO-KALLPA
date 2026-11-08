@@ -1,5 +1,5 @@
 {%- comment -%} Bloque «Pruébala bien helada» (antes en Nosotros); usa los estilos de nosotros.css {%- endcomment -%}
-<div class="nos-story">
+<div class="nos-story kallpa-pruebala-section">
     <section class="nos-block nos-pruebala" id="cta-helada">
     <img src="{% if section.settings.leaf != blank %}{{ section.settings.leaf | image_url: width: 600 }}{% else %}{{ 'nos-cerezas-rama.webp' | asset_url }}{% endif %}" alt="" class="nos-deco nos-pruebala__cherries" loading="lazy" aria-hidden="true">
     <div class="nos-block__inner">
@@ -16,6 +16,11 @@
     </div>
   </section>
 </div>
+
+<style>
+  /* Mismo fondo que la Tienda (kallpa-shop.css: --kshop-bg) */
+  .kallpa-pruebala-section { background: #f7f6f3; }
+</style>
 
 {% schema %}
 {
