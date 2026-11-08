@@ -17,6 +17,39 @@
 {%- liquid
   assign mf = product.metafields.custom
   assign ss = section.settings
+  # Los textos de esta plantilla pueden pertenecer a un solo producto ("Producto de estos textos").
+  # Otro producto que use la plantilla sin metacampos propios ve textos genéricos, no los de ese producto.
+  assign generic_texts = false
+  if ss.texts_product != blank and ss.texts_product.id != product.id
+    assign generic_texts = true
+  endif
+  if generic_texts
+    assign tx_category = ''
+    assign tx_badge = ''
+    assign tx_net_content = ''
+    assign tx_container = 'unidad'
+    assign tx_features = 'Café de especialidad|Origen Ayacucho, Perú' | split: '|'
+    assign tx_specs_what = 'Pronto agregaremos la información de este producto.'
+    assign tx_ingredients = ''
+    assign tx_warning_title = ''
+    assign tx_warning = ''
+    assign tx_howto_title = ''
+    assign tx_howto = ''
+    assign tx_nutrition = ''
+  else
+    assign tx_category = ss.category_tag
+    assign tx_badge = ss.badge_text
+    assign tx_net_content = ss.net_content
+    assign tx_container = ss.container
+    assign tx_features = ss.feature_1 | append: '|' | append: ss.feature_2 | append: '|' | append: ss.feature_3 | append: '|' | append: ss.feature_4 | split: '|'
+    assign tx_specs_what = ss.specs_what
+    assign tx_ingredients = ss.specs_ingredients
+    assign tx_warning_title = ss.warning_title
+    assign tx_warning = ss.warning_text
+    assign tx_howto_title = ss.howto_title
+    assign tx_howto = ss.howto_1 | append: '|' | append: ss.howto_2 | append: '|' | append: ss.howto_3 | split: '|'
+    assign tx_nutrition = ss.nutrition
+  endif
   assign title_display = product.title | default: ss.product_title
   # El título se parte en dos líneas: primera palabra en blanco, el resto en dorado
   assign title_words = title_display | split: ' '
@@ -25,8 +58,8 @@
 
   # Cada texto: metacampo del producto o, si no tiene, el ajuste de la plantilla
   assign desc_display = product.description | strip_html | strip | default: ss.product_desc | default: 'Café de especialidad de altura, cultivado en Ayacucho, Perú.'
-  assign cat_display = mf.categoria.value | default: ss.category_tag | default: product.type
-  assign badge_display = mf.sello.value | default: ss.badge_text
+  assign cat_display = mf.categoria.value | default: tx_category | default: product.type
+  assign badge_display = mf.sello.value | default: tx_badge
   # Contenido neto: metacampo, el que dice el nombre ("Café Molido 500 g" → 500 g) o el de la plantilla
   assign net_content = mf.contenido.value
   if net_content == blank
@@ -47,9 +80,9 @@
     endfor
   endif
   if net_content == blank
-    assign net_content = ss.net_content
+    assign net_content = tx_net_content
   endif
-  assign container_name = mf.envase.value | default: ss.container | downcase
+  assign container_name = mf.envase.value | default: tx_container | downcase
   assign container_plural = container_name | append: 's'
 
   # Variante inicial: la primera que no es pack y tiene stock; si no, la primera
@@ -159,7 +192,7 @@
       {%- liquid
         assign features = mf.caracteristicas.value
         if features == blank
-          assign features = ss.feature_1 | append: '|' | append: ss.feature_2 | append: '|' | append: ss.feature_3 | append: '|' | append: ss.feature_4 | split: '|'
+          assign features = tx_features
         endif
       -%}
       {%- if features != blank -%}
@@ -277,19 +310,19 @@
   </div>
 
   {%- liquid
-    assign spec_what = mf.que_lleva.value | default: ss.specs_what
-    assign spec_ingredients = mf.ingredientes.value | default: ss.specs_ingredients
-    assign spec_warning_title = mf.advertencia_titulo.value | default: ss.warning_title
-    assign spec_warning = mf.advertencia.value | default: ss.warning_text
-    assign spec_prep_title = mf.titulo_preparacion.value | default: ss.howto_title | default: 'CÓMO TOMARLA'
+    assign spec_what = mf.que_lleva.value | default: tx_specs_what
+    assign spec_ingredients = mf.ingredientes.value | default: tx_ingredients
+    assign spec_warning_title = mf.advertencia_titulo.value | default: tx_warning_title
+    assign spec_warning = mf.advertencia.value | default: tx_warning
+    assign spec_prep_title = mf.titulo_preparacion.value | default: tx_howto_title | default: 'CÓMO TOMARLA'
     assign spec_prep = mf.preparacion.value
 
     assign spec_howto = mf.como_tomarla.value
     if spec_howto == blank and spec_prep == blank
-      assign spec_howto = ss.howto_1 | append: '|' | append: ss.howto_2 | append: '|' | append: ss.howto_3 | split: '|'
+      assign spec_howto = tx_howto
     endif
 
-    assign nutrition_source = mf.nutricion.value | default: ss.nutrition
+    assign nutrition_source = mf.nutricion.value | default: tx_nutrition
     assign nutrition_rows = nutrition_source | newline_to_br | split: '<br />'
 
     assign spec_cols = 0
@@ -417,8 +450,13 @@
     endif
   endfor
   assign show_faq = has_product_faq
-  if section.blocks.size > 0
-    assign show_faq = true
+  for block in section.blocks
+    if block.type == 'faq_item'
+      if generic_texts == false or block.settings.only_texts_product != true
+        assign show_faq = true
+      endif
+    endif
+  endfor
   endif
 -%}
 {%- if show_faq -%}
@@ -446,6 +484,7 @@
       {%- else -%}
         {%- for block in section.blocks -%}
           {%- if block.type == 'faq_item' -%}
+            {%- if generic_texts and block.settings.only_texts_product -%}{%- continue -%}{%- endif -%}
             <div class="faq-item{% if block.settings.open_by_default %} is-open{% endif %}" {{ block.shopify_attributes }}>
               <button type="button" class="faq-header" onclick="toggleFaq(this)">
                 <span>{{ block.settings.question }}</span>
@@ -533,6 +572,12 @@
 {
   "name": "Detalle de Producto",
   "settings": [
+    {
+      "type": "product",
+      "id": "texts_product",
+      "label": "Producto de estos textos",
+      "info": "Si eliges un producto, los textos de esta plantilla solo se usan para él. Otros productos sin metacampos propios muestran textos genéricos. Déjalo vacío para usarlos en todos los productos con esta plantilla."
+    },
     {
       "type": "paragraph",
       "content": "Mismo diseño para todos los productos (estándar: Kalpa Cold Brew). Edita aquí los textos de esta plantilla. Si un producto tiene metacampos propios (custom.*), esos reemplazan estos textos."
@@ -1493,6 +1538,12 @@
           "type": "checkbox",
           "id": "open_by_default",
           "label": "Abierto por defecto",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "only_texts_product",
+          "label": "Solo para el producto de estos textos",
           "default": false
         }
       ]
