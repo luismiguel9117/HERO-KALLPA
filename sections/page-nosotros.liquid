@@ -5,13 +5,13 @@
 
 <!-- 1. HERO NOSOTROS: EL ARCO ANDINO -->
 <section class="nosotros-hero" aria-label="Hero Nosotros">
-  <div class="nosotros-hero__bg" aria-hidden="true"></div>
-  <div class="nosotros-hero__arch" aria-hidden="true"></div>
+  <div class="nosotros-hero__bg" aria-hidden="true"{% if section.settings.hero_bg != blank %} style="background-image: url({{ section.settings.hero_bg | image_url: width: 2400 }});"{% endif %}></div>
+  <div class="nosotros-hero__arch" aria-hidden="true"{% if section.settings.hero_arch != blank %} style="background-image: url({{ section.settings.hero_arch | image_url: width: 2400 }});"{% endif %}></div>
   <div class="nosotros-hero__vignette" aria-hidden="true"></div>
 
   <!-- Lata flotando recta sobre la roca, dentro del arco de luz -->
   <div class="nosotros-hero__can-wrap" aria-hidden="true">
-    <img src="{{ 'kalpa-can-original.webp' | asset_url }}" alt="" class="nosotros-hero__can" width="440" height="960" draggable="false">
+    <img src="{% if section.settings.hero_can != blank %}{{ section.settings.hero_can | image_url: width: 900 }}{% else %}{{ 'kalpa-can-original.webp' | asset_url }}{% endif %}" alt="" class="nosotros-hero__can" width="440" height="960" draggable="false">
     <span class="nosotros-hero__can-shadow"></span>
   </div>
 
@@ -66,7 +66,7 @@
 
   <!-- 03 · LA RAÍZ DE KALLPA -->
   <section class="nos-block nos-raiz" id="origen-ayacucho">
-    <img src="{{ 'nos-hoja-1.webp' | asset_url }}" alt="" class="nos-deco nos-raiz__leaf" loading="lazy" aria-hidden="true">
+    <img src="{% if section.settings.raiz_leaf != blank %}{{ section.settings.raiz_leaf | image_url: width: 600 }}{% else %}{{ 'nos-hoja-1.webp' | asset_url }}{% endif %}" alt="" class="nos-deco nos-raiz__leaf" loading="lazy" aria-hidden="true">
     <div class="nos-block__inner">
       <div class="nos-block__text">
         <span class="nos-eyebrow">NUESTRO<br>ORIGEN</span>
@@ -83,7 +83,7 @@
         <a href="#como-lo-hacemos" class="nos-btn nos-btn--outline">CÓMO LO HACEMOS <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg></a>
       </div>
       <figure class="nos-raiz__visual">
-        <img src="{{ 'nos-raiz-collage.webp' | asset_url }}" alt="Ayacucho entre montañas y cafetales" loading="lazy" width="1672" height="941">
+        <img src="{% if section.settings.raiz_image != blank %}{{ section.settings.raiz_image | image_url: width: 1800 }}{% else %}{{ 'nos-raiz-collage.webp' | asset_url }}{% endif %}" alt="Ayacucho entre montañas y cafetales" loading="lazy" width="1672" height="941">
         <figcaption class="nos-raiz__tag">Ayacucho<br>Perú</figcaption>
       </figure>
     </div>
@@ -91,10 +91,10 @@
 
   <!-- 04 · CÓMO LO HACEMOS -->
   <section class="nos-block nos-como" id="como-lo-hacemos">
-    <img src="{{ 'nos-hoja-3.webp' | asset_url }}" alt="" class="nos-deco nos-como__leaf" loading="lazy" aria-hidden="true">
+    <img src="{% if section.settings.como_leaf != blank %}{{ section.settings.como_leaf | image_url: width: 600 }}{% else %}{{ 'nos-hoja-3.webp' | asset_url }}{% endif %}" alt="" class="nos-deco nos-como__leaf" loading="lazy" aria-hidden="true">
     <div class="nos-block__inner nos-block__inner--reverse">
       <figure class="nos-como__visual">
-        <img src="{{ 'nos-manos-cerezas.webp' | asset_url }}" alt="Manos de productor con cerezas de café recién cosechadas" loading="lazy" width="1536" height="1024">
+        <img src="{% if section.settings.como_image != blank %}{{ section.settings.como_image | image_url: width: 1600 }}{% else %}{{ 'nos-manos-cerezas.webp' | asset_url }}{% endif %}" alt="Manos de productor con cerezas de café recién cosechadas" loading="lazy" width="1536" height="1024">
       </figure>
       <div class="nos-block__text">
         <span class="nos-eyebrow">CÓMO LO HACEMOS</span>
@@ -123,14 +123,14 @@
         <p>Creemos en un mundo donde no tengas que elegir entre rendir ahora y cuidarte después. Tu cuerpo merece algo mejor.</p>
       </div>
       <figure class="nos-porque__visual">
-        <img src="{{ 'nos-porque-nevado.webp' | asset_url }}" alt="Joven tomando KALPA Cold Brew frente a un nevado andino" loading="lazy" width="1672" height="941">
+        <img src="{% if section.settings.porque_image != blank %}{{ section.settings.porque_image | image_url: width: 1800 }}{% else %}{{ 'nos-porque-nevado.webp' | asset_url }}{% endif %}" alt="Joven tomando KALPA Cold Brew frente a un nevado andino" loading="lazy" width="1672" height="941">
       </figure>
     </div>
   </section>
 
   <!-- 06 · LA GENTE DETRÁS DEL CAFÉ -->
   <section class="nos-block nos-gente" id="la-gente">
-    <img src="{{ 'nos-hojas-grupo.webp' | asset_url }}" alt="" class="nos-deco nos-gente__leaf" loading="lazy" aria-hidden="true">
+    <img src="{% if section.settings.gente_leaf != blank %}{{ section.settings.gente_leaf | image_url: width: 600 }}{% else %}{{ 'nos-hojas-grupo.webp' | asset_url }}{% endif %}" alt="" class="nos-deco nos-gente__leaf" loading="lazy" aria-hidden="true">
     <div class="nos-block__inner">
       <div class="nos-block__text">
         <span class="nos-eyebrow">QUIÉNES SOMOS</span>
@@ -140,15 +140,15 @@
       </div>
       <div class="nos-gente__cards">
         <figure class="nos-card">
-          <img src="{{ 'vraem-harvest.webp' | asset_url }}" alt="Productores de café de Ayacucho con cerezas recién cosechadas" loading="lazy">
+          <img src="{% if section.settings.gente_card_1 != blank %}{{ section.settings.gente_card_1 | image_url: width: 800 }}{% else %}{{ 'vraem-harvest.webp' | asset_url }}{% endif %}" alt="Productores de café de Ayacucho con cerezas recién cosechadas" loading="lazy">
           <figcaption>Nuestros<br>productores</figcaption>
         </figure>
         <figure class="nos-card">
-          <img src="{{ 'reel-ig-3.webp' | asset_url }}" alt="Integrante del equipo Kalpa sirviendo cold brew" loading="lazy">
+          <img src="{% if section.settings.gente_card_2 != blank %}{{ section.settings.gente_card_2 | image_url: width: 800 }}{% else %}{{ 'reel-ig-3.webp' | asset_url }}{% endif %}" alt="Integrante del equipo Kalpa sirviendo cold brew" loading="lazy">
           <figcaption>Equipo<br>Kalpa</figcaption>
         </figure>
         <figure class="nos-card">
-          <img src="{{ 'reel-1.webp' | asset_url }}" alt="Miembro de la comunidad Kalpa bebiendo en los Andes" loading="lazy">
+          <img src="{% if section.settings.gente_card_3 != blank %}{{ section.settings.gente_card_3 | image_url: width: 800 }}{% else %}{{ 'reel-1.webp' | asset_url }}{% endif %}" alt="Miembro de la comunidad Kalpa bebiendo en los Andes" loading="lazy">
           <figcaption>Nuestra<br>comunidad</figcaption>
         </figure>
       </div>
@@ -157,7 +157,7 @@
 
   <!-- 07 · PRUÉBALA BIEN HELADA -->
   <section class="nos-block nos-pruebala" id="cta-helada">
-    <img src="{{ 'nos-cerezas-rama.webp' | asset_url }}" alt="" class="nos-deco nos-pruebala__cherries" loading="lazy" aria-hidden="true">
+    <img src="{% if section.settings.pruebala_leaf != blank %}{{ section.settings.pruebala_leaf | image_url: width: 600 }}{% else %}{{ 'nos-cerezas-rama.webp' | asset_url }}{% endif %}" alt="" class="nos-deco nos-pruebala__cherries" loading="lazy" aria-hidden="true">
     <div class="nos-block__inner">
       <div class="nos-block__text">
         <span class="nos-eyebrow">NUESTRO CAFÉ</span>
@@ -167,7 +167,7 @@
       </div>
       <figure class="nos-pruebala__visual">
         <span class="nos-pruebala__tag">Energía<br>Natural</span>
-        <img src="{{ 'nos-pruebala-splash.webp' | asset_url }}" alt="Lata KALPA Cold Brew con hielo y granos de café" loading="lazy" width="1672" height="941">
+        <img src="{% if section.settings.pruebala_image != blank %}{{ section.settings.pruebala_image | image_url: width: 1800 }}{% else %}{{ 'nos-pruebala-splash.webp' | asset_url }}{% endif %}" alt="Lata KALPA Cold Brew con hielo y granos de café" loading="lazy" width="1672" height="941">
       </figure>
     </div>
   </section>
@@ -178,6 +178,22 @@
 {
   "name": "Historia & Manifiesto",
   "settings": [
+    {"type": "header", "content": "Imágenes de la página"},
+    {"type": "paragraph", "content": "Si dejas una imagen vacía, se usa la imagen actual del tema."},
+    {"type": "image_picker", "id": "hero_bg", "label": "Portada: fondo"},
+    {"type": "image_picker", "id": "hero_arch", "label": "Portada: capa del arco iluminado", "info": "Imagen del arco con el exterior oscurecido; aparece sobre el fondo."},
+    {"type": "image_picker", "id": "hero_can", "label": "Portada: lata"},
+    {"type": "image_picker", "id": "raiz_leaf", "label": "Origen: hoja decorativa"},
+    {"type": "image_picker", "id": "raiz_image", "label": "Origen: imagen principal"},
+    {"type": "image_picker", "id": "como_leaf", "label": "Cómo lo hacemos: hoja decorativa"},
+    {"type": "image_picker", "id": "como_image", "label": "Cómo lo hacemos: imagen principal"},
+    {"type": "image_picker", "id": "porque_image", "label": "Por qué existimos: imagen principal"},
+    {"type": "image_picker", "id": "gente_leaf", "label": "Quiénes somos: hojas decorativas"},
+    {"type": "image_picker", "id": "gente_card_1", "label": "Quiénes somos: foto Nuestros productores"},
+    {"type": "image_picker", "id": "gente_card_2", "label": "Quiénes somos: foto Equipo Kalpa"},
+    {"type": "image_picker", "id": "gente_card_3", "label": "Quiénes somos: foto Nuestra comunidad"},
+    {"type": "image_picker", "id": "pruebala_leaf", "label": "Pruébala: cerezas decorativas"},
+    {"type": "image_picker", "id": "pruebala_image", "label": "Pruébala: imagen principal"},
     {
       "type": "image_picker",
       "id": "marca_ayacucho_logo",
