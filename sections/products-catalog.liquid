@@ -113,10 +113,16 @@
     {%- comment -%} Renderizado de Bloques de Productos Destacados {%- endcomment -%}
     {%- for block in section.blocks -%}
       {%- if block.type == 'featured_product' -%}
-        {%- assign featured_product = block.settings.product -%}
+        {%- liquid
+          assign featured_product = block.settings.product
+          if featured_product == blank and block.settings.product_link contains '/products/'
+            assign featured_handle = block.settings.product_link | split: '/products/' | last | split: '?' | first
+            assign featured_product = all_products[featured_handle]
+          endif
+        -%}
         {%- assign featured_pdp = featured_product.url | default: block.settings.product_link | default: all_products['kalpa-cold-brew'].url | default: fallback_pdp -%}
         {%- assign featured_title_sub = featured_product.title | default: block.settings.title_sub -%}
-        {%- assign featured_desc = featured_product.description | strip_html | strip | truncatewords: 32 | default: block.settings.description -%}
+        {%- assign featured_desc = featured_product.description | strip_html | strip | truncatewords: 32 | default: section.settings.desc_placeholder | default: 'Café de especialidad de altura, cultivado en Ayacucho, Perú.' -%}
         <article class="featured-product-card" data-category="{{ block.settings.category | default: 'cold-brew' }}" {{ block.shopify_attributes }}>
           <div class="featured-card__bg-pattern" aria-hidden="true"></div>
           
@@ -135,7 +141,7 @@
               </h2>
 
               <p class="featured-card__desc">
-                {{ featured_desc | default: 'Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar.' }}
+                {{ featured_desc }}
               </p>
 
               <div class="featured-card__cta">
@@ -212,7 +218,7 @@
             endif
             # Nombre y descripción salen del producto; el texto del bloque queda de respaldo
             assign grid_title_sub = grid_product.title | default: block.settings.title_sub
-            assign grid_desc = grid_product.description | strip_html | strip | truncatewords: 32 | default: block.settings.description
+            assign grid_desc = grid_product.description | strip_html | strip | truncatewords: 32 | default: section.settings.desc_placeholder | default: 'Café de especialidad de altura, cultivado en Ayacucho, Perú.'
             assign grid_bg = ''
             # La foto real del producto va antes que la imagen de respaldo del tema
             assign grid_bg_is_product = false
@@ -316,6 +322,7 @@
 {
   "name": "Catálogo de Productos",
   "settings": [
+    {"type": "textarea", "id": "desc_placeholder", "label": "Descripción de reemplazo", "info": "Se muestra solo si el producto no tiene descripción en el admin de Shopify.", "default": "Café de especialidad de altura, cultivado en Ayacucho, Perú."},
     {
       "type": "text",
       "id": "breadcrumb_text",
@@ -393,7 +400,8 @@
         {
           "type": "textarea",
           "id": "description",
-          "label": "Descripción",
+          "label": "Descripción (ya no se usa)",
+          "info": "La descripción sale del producto en el admin de Shopify.",
           "default": "Café cold brew de origen peruano, con toda la energía de los Andes. Listo para tomar, en cualquier momento y lugar."
         },
         {
@@ -984,7 +992,8 @@
         {
           "type": "textarea",
           "id": "description",
-          "label": "Descripción",
+          "label": "Descripción (ya no se usa)",
+          "info": "La descripción sale del producto en el admin de Shopify.",
           "default": "Café tostado y molido de especialidad, con notas de cereza, chocolate y manzana. Cultivado en los Andes peruanos para tu día a día."
         },
         {

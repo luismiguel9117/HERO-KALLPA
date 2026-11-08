@@ -24,7 +24,7 @@
   assign title_line_2 = title_display | remove_first: title_line_1 | strip
 
   # Cada texto: metacampo del producto o, si no tiene, el ajuste de la plantilla
-  assign desc_display = product.description | strip_html | strip | default: ss.product_desc
+  assign desc_display = product.description | strip_html | strip | default: ss.product_desc | default: 'Café de especialidad de altura, cultivado en Ayacucho, Perú.'
   assign cat_display = mf.categoria.value | default: ss.category_tag | default: product.type
   assign badge_display = mf.sello.value | default: ss.badge_text
   # Contenido neto: metacampo, el que dice el nombre ("Café Molido 500 g" → 500 g) o el de la plantilla
@@ -556,8 +556,9 @@
     {
       "type": "textarea",
       "id": "product_desc",
-      "label": "Descripción (si el producto no tiene descripción en el admin)",
-      "default": "Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural por lata. Listo para tomar, en cualquier momento y lugar."
+      "label": "Descripción de reemplazo",
+      "info": "Se muestra solo si el producto no tiene descripción en el admin de Shopify.",
+      "default": "Café de especialidad de altura, cultivado en Ayacucho, Perú."
     },
     {
       "type": "text",

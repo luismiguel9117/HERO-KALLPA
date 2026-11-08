@@ -101,7 +101,7 @@
             if block.settings.product != blank or slide_product != blank and block.settings.theme_variant != 'original'
               assign slide_title_sub = slide_product.title | default: block.settings.title_sub
             endif
-            assign slide_desc = slide_product.description | strip_html | strip | truncatewords: 32 | default: block.settings.description
+            assign slide_desc = slide_product.description | strip_html | strip | truncatewords: 32 | default: section.settings.desc_placeholder | default: 'Café de especialidad de altura, cultivado en Ayacucho, Perú.'
           -%}
           <div class="kalpa-product-slide {% if forloop.first %}active{% endif %} {% if block.type == 'product_molido' or block.settings.theme_variant == 'molido' %}kalpa-product-slide--molido{% else %}kalpa-product-slide--original{% endif %}" 
                id="product-slide-{{ forloop.index0 }}" 
@@ -119,7 +119,7 @@
                     <span class="sale-title-sub">{{ slide_title_sub | default: 'ORIGINAL' }}</span>
                   </h2>
                   <p class="sale-description">
-                    {{ slide_desc | default: 'Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar.' }}
+                    {{ slide_desc }}
                   </p>
                   
                   {%- if block.settings.product_link != blank or block.settings.btn_link_text != blank or slide_product != blank -%}
@@ -348,7 +348,8 @@
 {% schema %}
 {
   "name": "Productos en Venta",
-  "settings": [],
+  "settings": [
+    {"type": "textarea", "id": "desc_placeholder", "label": "Descripción de reemplazo", "info": "Se muestra solo si el producto no tiene descripción en el admin de Shopify.", "default": "Café de especialidad de altura, cultivado en Ayacucho, Perú."}],
   "blocks": [
     {
       "type": "product_slide",
@@ -399,7 +400,8 @@
         {
           "type": "textarea",
           "id": "description",
-          "label": "Descripción",
+          "label": "Descripción (ya no se usa)",
+          "info": "La descripción sale del producto en el admin de Shopify.",
           "default": "Café cold brew de origen peruano, hecho con granos del VRAEM. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar."
         },
         {
