@@ -1,0 +1,85 @@
+{%- comment -%} Bloque «Pruébala bien helada» (antes en Nosotros); usa los estilos de nosotros.css {%- endcomment -%}
+<div class="nos-story">
+    <section class="nos-block nos-pruebala" id="cta-helada">
+    <img src="{% if section.settings.leaf != blank %}{{ section.settings.leaf | image_url: width: 600 }}{% else %}{{ 'nos-cerezas-rama.webp' | asset_url }}{% endif %}" alt="" class="nos-deco nos-pruebala__cherries" loading="lazy" aria-hidden="true">
+    <div class="nos-block__inner">
+      <div class="nos-block__text">
+        <span class="nos-eyebrow">{{ section.settings.eyebrow }}</span>
+        <h2 class="nos-title">{{ section.settings.title_1 }}<br><em>{{ section.settings.title_2 }}</em></h2>
+        <div class="nos-pruebala__copy">{{ section.settings.text }}</div>
+        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="nos-btn nos-btn--gold">{{ section.settings.button_text }} <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+      </div>
+      <figure class="nos-pruebala__visual">
+        <span class="nos-pruebala__tag">{{ section.settings.tag }}</span>
+        <img src="{% if section.settings.image != blank %}{{ section.settings.image | image_url: width: 1800 }}{% else %}{{ 'nos-pruebala-splash.webp' | asset_url }}{% endif %}" alt="Lata KALPA Cold Brew con hielo y granos de café" loading="lazy" width="1672" height="941">
+      </figure>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "Pruébala bien helada",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etiqueta superior",
+      "default": "NUESTRO CAFÉ"
+    },
+    {
+      "type": "text",
+      "id": "title_1",
+      "label": "Título (línea 1)",
+      "default": "PRUÉBALA"
+    },
+    {
+      "type": "text",
+      "id": "title_2",
+      "label": "Título (línea 2, dorado)",
+      "default": "BIEN HELADA"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texto",
+      "default": "<p>Siente la energía de los Andes en cada lata.<br>Un café potente, limpio y natural, hecho para acompañarte en cada reto.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto del botón",
+      "default": "ELEGIR MI PACK"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace del botón",
+      "info": "Si lo dejas vacío, lleva a la tienda"
+    },
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Texto lateral",
+      "default": "Energía<br>Natural"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen principal",
+      "info": "Si la dejas vacía, se usa la lata con salpicadura del tema."
+    },
+    {
+      "type": "image_picker",
+      "id": "leaf",
+      "label": "Cerezas decorativas"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pruébala bien helada"
+    }
+  ]
+}
+{% endschema %}

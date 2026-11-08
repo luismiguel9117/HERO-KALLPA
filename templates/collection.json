@@ -7,9 +7,14 @@
         "title_gold": "KALPA",
         "subtitle": "Elige cómo quieres tu energía."
       }
+    },
+    "pruebala": {
+      "type": "kallpa-pruebala",
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "pruebala"
   ]
 }
