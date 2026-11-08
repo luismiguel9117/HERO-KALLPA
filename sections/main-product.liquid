@@ -57,6 +57,11 @@
   assign title_words = title_display | split: ' '
   assign title_line_1 = title_words | first
   assign title_line_2 = title_display | remove_first: title_line_1 | strip
+  # La unidad (g, ml, kg) no se separa del número: "500 g" siempre en la misma línea
+  assign unit_word = title_line_2 | split: ' ' | last
+  if unit_word.size <= 3 and title_line_2 contains ' '
+    assign title_line_2 = title_line_2 | remove_last: unit_word | strip | append: '&nbsp;' | append: unit_word
+  endif
 
   # Cada texto: metacampo del producto o, si no tiene, el ajuste de la plantilla
   assign desc_display = product.description | strip_html | strip | default: tx_desc

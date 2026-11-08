@@ -102,6 +102,11 @@
               # Título directo del nombre del producto: primera palabra arriba, el resto abajo
               assign slide_title_main = slide_product.title | split: ' ' | first
               assign slide_title_sub = slide_product.title | remove_first: slide_title_main | strip
+              # La unidad (g, ml, kg) no se separa del número: "500 g" siempre en la misma línea
+              assign unit_word = slide_title_sub | split: ' ' | last
+              if unit_word.size <= 3 and slide_title_sub contains ' '
+                assign slide_title_sub = slide_title_sub | remove_last: unit_word | strip | append: '&nbsp;' | append: unit_word
+              endif
             endif
             assign slide_desc = slide_product.description | strip_html | strip | truncatewords: 32 | default: block.settings.description
           -%}

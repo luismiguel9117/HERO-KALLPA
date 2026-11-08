@@ -132,6 +132,11 @@
             # Título directo del nombre del producto: primera palabra arriba, el resto abajo
             assign featured_title_main = featured_product.title | split: ' ' | first
             assign featured_title_sub = featured_product.title | remove_first: featured_title_main | strip
+            # La unidad (g, ml, kg) no se separa del número: "500 g" siempre en la misma línea
+            assign unit_word = featured_title_sub | split: ' ' | last
+            if unit_word.size <= 3 and featured_title_sub contains ' '
+              assign featured_title_sub = featured_title_sub | remove_last: unit_word | strip | append: '&nbsp;' | append: unit_word
+            endif
           endif
         -%}
         {%- assign featured_desc = featured_product.description | strip_html | strip | truncatewords: 32 | default: block.settings.description -%}
@@ -235,6 +240,11 @@
               # Título directo del nombre del producto: primera palabra arriba, el resto abajo
               assign grid_title_main = grid_product.title | split: ' ' | first
               assign grid_title_sub = grid_product.title | remove_first: grid_title_main | strip
+              # La unidad (g, ml, kg) no se separa del número: "500 g" siempre en la misma línea
+              assign unit_word = grid_title_sub | split: ' ' | last
+              if unit_word.size <= 3 and grid_title_sub contains ' '
+                assign grid_title_sub = grid_title_sub | remove_last: unit_word | strip | append: '&nbsp;' | append: unit_word
+              endif
             endif
             assign grid_desc = grid_product.description | strip_html | strip | truncatewords: 32 | default: block.settings.description
             assign grid_bg = ''
