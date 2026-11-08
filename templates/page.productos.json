@@ -31,7 +31,7 @@
             "spec_1_icon": "lightning",
             "spec_1": "280 mg<br>de cafeína",
             "spec_2_icon": "check",
-            "spec_2": "Café de origen<br>VRAEM",
+            "spec_2": "Café de origen<br>Ayacucho",
             "spec_3_icon": "check",
             "spec_3": "Sin azúcares<br>añadidos",
             "spec_4_icon": "coffee_can",
@@ -43,7 +43,8 @@
             "pack_discount": "-15%",
             "pack_old_price": "S/ 47.40",
             "pack_price": "S/ 39.90",
-            "pack_volume": "6 latas de 355 ml"
+            "pack_volume": "6 latas de 355 ml",
+            "product": "kalpa-cold-brew"
           }
         },
         "card_molido_cold_brew": {

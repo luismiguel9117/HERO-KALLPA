@@ -119,6 +119,10 @@
             assign featured_handle = block.settings.product_link | split: '/products/' | last | split: '?' | first
             assign featured_product = all_products[featured_handle]
           endif
+          # Sin producto elegido, el destacado es la bebida Kalpa Cold Brew
+          if featured_product == blank
+            assign featured_product = all_products['kalpa-cold-brew']
+          endif
         -%}
         {%- assign featured_pdp = featured_product.url | default: block.settings.product_link | default: all_products['kalpa-cold-brew'].url | default: fallback_pdp -%}
         {%- liquid
