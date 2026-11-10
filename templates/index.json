@@ -13,11 +13,12 @@
       "type": "kalpa-intro",
       "settings": {
         "title_line1": "ENERGÍA",
-        "title_line2": "DE LOS ANDES",
-        "title_line3": "",
+        "title_line2": "DE LOS",
+        "title_line3": "ANDES",
         "subtitle": "Café de altura extraído en frío. 280 mg de cafeína real para entrenar, trabajar y estudiar.",
         "btn_cta_text": "Pruébala",
-        "btn_shop_text": "COMPRAR AHORA"
+        "btn_shop_text": "COMPRAR AHORA",
+        "btn_shop_url": ""
       }
     },
     "hero_3d": {
@@ -78,7 +79,6 @@
     },
     "products_1": {
       "type": "kallpa-products",
-      "settings": {},
       "blocks": {
         "slide_original": {
           "type": "product_slide",
@@ -88,11 +88,18 @@
             "title_main": "KALPA",
             "title_sub": "ORIGINAL",
             "description": "Café cold brew de origen peruano, hecho con granos de Ayacucho. 280 mg de cafeína natural. Listo para tomar, en cualquier momento y lugar.",
+            "product": "",
+            "variant_match": "",
+            "pack_size": 6,
             "product_link": "/products/kalpa-cold-brew",
             "btn_link_text": "Ver ficha completa",
+            "feat_1_icon": "drop_zero",
             "feat_1": "0<br>CALORÍAS",
+            "feat_2_icon": "check",
             "feat_2": "SIN AZÚCARES<br>AÑADIDOS",
+            "feat_3_icon": "coffee_can",
             "feat_3": "LISTO<br>PARA TOMAR",
+            "feat_4_icon": "snowflake",
             "feat_4": "COLD BREW<br>REFRESCANTE",
             "default_asset_image": "kalpa-can-original.webp",
             "unit_label": "Unidad",
@@ -103,27 +110,29 @@
             "pack_old_price": "S/ 47.40",
             "pack_price": "S/ 39.90",
             "pack_volume": "6 latas de 355 ml",
-            "pack_mini_image": "kalpa-can-original.webp",
-            "feat_1_icon": "drop_zero",
-            "feat_2_icon": "check",
-            "feat_3_icon": "coffee_can",
-            "feat_4_icon": "snowflake"
+            "pack_mini_image": "kalpa-can-original.webp"
           }
         },
         "slide_molido": {
           "type": "product_slide",
           "settings": {
-            "product": "cafe-molido-250-g-y-500-g",
             "theme_variant": "molido",
             "eyebrow": "NUESTRO PRODUCTO",
             "title_main": "KALPA",
             "title_sub": "MOLIDO GRUESO",
             "description": "Café tostado 100% Arábica · Variedad Obata, cultivado a 1,650 msnm en Anco, Ayacucho. Molienda gruesa especial para cold brew: macéralo en frío y obtén un concentrado.",
+            "product": "cafe-molido-250-g-y-500-g",
+            "variant_match": "",
+            "pack_size": 6,
             "product_link": "/products/cafe-molido-250-g-y-500-g",
             "btn_link_text": "Ver ficha completa",
+            "feat_1_icon": "leaf",
             "feat_1": "100%<br>ARÁBICA",
+            "feat_2_icon": "mountain",
             "feat_2": "ORIGEN<br>AYACUCHO",
+            "feat_3_icon": "filter",
             "feat_3": "MOLIENDA<br>GRUESA",
+            "feat_4_icon": "flavor",
             "feat_4": "NOTAS: CEREZA<br>· CHOCOLATE · MANZANA",
             "default_asset_image": "kalpa-molido-product.webp",
             "unit_label": "Unidad",
@@ -134,27 +143,29 @@
             "pack_old_price": "S/ 209.40",
             "pack_price": "S/ 177.90",
             "pack_volume": "6 latas de 250 g",
-            "pack_mini_image": "kalpa-molido-can-solo.webp",
-            "feat_1_icon": "leaf",
-            "feat_2_icon": "mountain",
-            "feat_3_icon": "filter",
-            "feat_4_icon": "flavor"
+            "pack_mini_image": "kalpa-molido-can-solo.webp"
           }
         },
         "slide_molido_500": {
           "type": "product_slide",
           "settings": {
-            "product": "cafe-molido-500-g",
             "theme_variant": "molido",
             "eyebrow": "NUESTRO PRODUCTO",
             "title_main": "KALPA",
             "title_sub": "CAFÉ EN GRANO 500G",
             "description": "Café tostado en grano entero, 100% Arábica · Variedad Obata, cultivado a 1,650 msnm en Ayacucho. Muélelo al momento según tu método de preparación.",
+            "product": "cafe-molido-500-g",
+            "variant_match": "",
+            "pack_size": 6,
             "product_link": "/products/cafe-molido-500-g",
             "btn_link_text": "Ver ficha completa",
+            "feat_1_icon": "leaf",
             "feat_1": "100%<br>ARÁBICA",
+            "feat_2_icon": "mountain",
             "feat_2": "ORIGEN<br>AYACUCHO",
+            "feat_3_icon": "bean",
             "feat_3": "GRANO<br>ENTERO",
+            "feat_4_icon": "flavor",
             "feat_4": "NOTAS: CEREZA<br>· CHOCOLATE · MANZANA",
             "default_asset_image": "kalpa-molido-500-product.webp",
             "unit_label": "Unidad",
@@ -165,11 +176,7 @@
             "pack_old_price": "S/ 389.40",
             "pack_price": "S/ 330.90",
             "pack_volume": "6 latas de 500 g",
-            "pack_mini_image": "kalpa-molido-can-solo.webp",
-            "feat_1_icon": "leaf",
-            "feat_2_icon": "mountain",
-            "feat_3_icon": "bean",
-            "feat_4_icon": "flavor"
+            "pack_mini_image": "kalpa-molido-can-solo.webp"
           }
         }
       },
@@ -177,7 +184,8 @@
         "slide_original",
         "slide_molido",
         "slide_molido_500"
-      ]
+      ],
+      "settings": {}
     },
     "vraem_origin_1": {
       "type": "kallpa-vraem-origin",
@@ -185,20 +193,12 @@
         "title_line1": "DONDE NACE",
         "title_line2": "KALPA",
         "desc": "Ayacucho le da a este café su altura, su fuerza y su historia. Nosotros solo lo ponemos en una lata.",
-        "btn_text": "CONOCE NUESTRA HISTORIA"
+        "btn_text": "CONOCE NUESTRA HISTORIA",
+        "btn_url": ""
       }
     },
     "clean_energy_1": {
       "type": "kallpa-clean-energy",
-      "settings": {
-        "title_line1": "CAFEÍNA DE LA TIERRA,",
-        "title_line2": "NO DE LABORATORIO",
-        "desc": "",
-        "compare_head_brand": "KALPA",
-        "compare_head_other": "OTRAS BEBIDAS ENERGÉTICAS",
-        "compare_note": "*En sus versiones regulares; puede variar según la marca.",
-        "compare_cta_text": "PRUÉBALA"
-      },
       "blocks": {
         "compare_1": {
           "type": "compare_row",
@@ -238,19 +238,20 @@
         "compare_2",
         "compare_3",
         "compare_4"
-      ]
+      ],
+      "settings": {
+        "title_line1": "CAFEÍNA DE LA TIERRA,",
+        "title_line2": "NO DE LABORATORIO",
+        "desc": "",
+        "compare_head_brand": "KALPA",
+        "compare_head_other": "OTRAS BEBIDAS ENERGÉTICAS",
+        "compare_note": "*En sus versiones regulares; puede variar según la marca.",
+        "compare_cta_text": "PRUÉBALA",
+        "compare_cta_url": ""
+      }
     },
     "reels_1": {
       "type": "kallpa-reels",
-      "settings": {
-        "eyebrow": "COMUNIDAD KALPA",
-        "title_part1": "ENERGÍA REAL QUE",
-        "title_part2": "SE COMPARTE",
-        "desc": "Mira dónde ha estado Kalpa y lo que dicen quienes ya la probaron.",
-        "instagram_url": "https://www.instagram.com/kalpacoldbrew/",
-        "tiktok_url": "https://www.tiktok.com/@kalpacoldbrew",
-        "google_reviews_url": "https://www.google.com/maps/place/Kalpa+Origins/@-12.111788,-76.9813791,17z/data=!3m1!4b1!4m6!3m5!1s0x9105c79b759b4205:0x29bae9b07484f6e1!8m2!3d-12.111788!4d-76.9788042!16s%2Fg%2F11z_xp3gcg?hl=es-PE"
-      },
       "blocks": {
         "reel_1": {
           "type": "reel",
@@ -258,7 +259,9 @@
             "title": "Atleta Mujer",
             "default_image": "reel-ig-1.webp",
             "views": "2795",
-            "reel_url": "https://www.instagram.com/reel/Db4TrF8iLq0/"
+            "reel_url": "https://www.instagram.com/reel/Db4TrF8iLq0/",
+            "video_url": "",
+            "inline_video": ""
           }
         },
         "reel_2": {
@@ -267,7 +270,9 @@
             "title": "Runner Hombre",
             "default_image": "reel-ig-2.webp",
             "views": "1195",
-            "reel_url": "https://www.instagram.com/reel/DbowFyXTNxp/"
+            "reel_url": "https://www.instagram.com/reel/DbowFyXTNxp/",
+            "video_url": "",
+            "inline_video": ""
           }
         },
         "reel_3": {
@@ -276,7 +281,9 @@
             "title": "Lata KALPA",
             "default_image": "reel-ig-3.webp",
             "views": "4401",
-            "reel_url": "https://www.instagram.com/reel/DbHT96LCtn7/"
+            "reel_url": "https://www.instagram.com/reel/DbHT96LCtn7/",
+            "video_url": "",
+            "inline_video": ""
           }
         },
         "reel_4": {
@@ -285,7 +292,9 @@
             "title": "Reel KALPA 4",
             "default_image": "reel-ig-4.webp",
             "views": "3753",
-            "reel_url": "https://www.instagram.com/reel/DajN4LvNS5M/"
+            "reel_url": "https://www.instagram.com/reel/DajN4LvNS5M/",
+            "video_url": "",
+            "inline_video": ""
           }
         },
         "reel_5": {
@@ -294,7 +303,9 @@
             "title": "Reel KALPA 5",
             "default_image": "reel-ig-5.webp",
             "views": "3253",
-            "reel_url": "https://www.instagram.com/reel/DY0dAFiJCIR/"
+            "reel_url": "https://www.instagram.com/reel/DY0dAFiJCIR/",
+            "video_url": "",
+            "inline_video": ""
           }
         }
       },
@@ -304,7 +315,18 @@
         "reel_3",
         "reel_4",
         "reel_5"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "COMUNIDAD KALPA",
+        "title_part1": "ENERGÍA REAL QUE",
+        "title_part2": "SE COMPARTE",
+        "desc": "Mira dónde ha estado Kalpa y lo que dicen quienes ya la probaron.",
+        "instagram_url": "https://www.instagram.com/kalpacoldbrew/",
+        "tiktok_url": "https://www.tiktok.com/@kalpacoldbrew",
+        "review_badge": "COMUNIDAD KALPA",
+        "google_reviews_url": "https://www.google.com/maps/place/Kalpa+Origins/@-12.111788,-76.9813791,17z/data=!3m1!4b1!4m6!3m5!1s0x9105c79b759b4205:0x29bae9b07484f6e1!8m2!3d-12.111788!4d-76.9788042!16s%2Fg%2F11z_xp3gcg?hl=es-PE",
+        "google_write_url": ""
+      }
     }
   },
   "order": [
