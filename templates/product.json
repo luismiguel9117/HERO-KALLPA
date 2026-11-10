@@ -17,8 +17,7 @@
           "settings": {
             "question": "¿Cuánta cafeína tiene?",
             "answer": "Cada lata de 355 ml contiene 280 mg de cafeína natural pura, extraída lentamente en frío durante 16 horas continuas a 4°C. Equivale a aproximadamente 3 espressos pero con liberación prolongada gracias a los polifenoles del café.",
-            "open_by_default": true,
-            "only_texts_product": true
+            "open_by_default": true
           }
         },
         "faq_2": {
@@ -26,14 +25,15 @@
           "settings": {
             "question": "¿Quién no debería tomarla?",
             "answer": "Debido a su alta concentración de cafeína natural, no está recomendada para niños, personas gestantes o en período de lactancia, ni personas con alta sensibilidad a los estimulantes o afecciones cardíacas.",
-            "only_texts_product": true
+            "open_by_default": false
           }
         },
         "faq_3": {
           "type": "faq_item",
           "settings": {
             "question": "¿Envían a provincia?",
-            "answer": "Sí. Despachamos a todas las ciudades y provincias del Perú a través de Olva Courier y Shalom, con empaque protector anti-impacto. El tiempo promedio de entrega en Lima es de 24 a 48 horas, y en provincias de 48 a 72 horas hábiles."
+            "answer": "Sí. Despachamos a todas las ciudades y provincias del Perú a través de Olva Courier y Shalom, con empaque protector anti-impacto. El tiempo promedio de entrega en Lima es de 24 a 48 horas, y en provincias de 48 a 72 horas hábiles.",
+            "open_by_default": false
           }
         }
       },
@@ -43,7 +43,39 @@
         "faq_3"
       ],
       "settings": {
-        "texts_product": "kalpa-cold-brew"
+        "category_tag": "BEBIDA FUNCIONAL A BASE DE CAFÉ",
+        "product_title": "KALPA COLD BREW",
+        "product_desc": "Café de especialidad de altura, cultivado en Ayacucho, Perú.",
+        "badge_text": "",
+        "feature_1": "Energía natural",
+        "feature_1_icon": "lightning",
+        "feature_2": "Sin azúcar",
+        "feature_2_icon": "check",
+        "feature_3": "Café de Altura",
+        "feature_3_icon": "mountain",
+        "feature_4": "0 Saborizantes",
+        "feature_4_icon": "box",
+        "net_content": "355 mL",
+        "container": "lata",
+        "specs_what": "Café cold brew listo para tomar, macerado en frío durante 16 horas.",
+        "specs_ingredients": "agua tratada, café de especialidad de Ayacucho y stevia natural.",
+        "warning_title": "ALTO EN CAFEÍNA",
+        "warning_text": "No recomendado para niños, mujeres embarazadas o personas con extrema sensibilidad a la cafeína.",
+        "howto_title": "CÓMO TOMARLA",
+        "howto_1": "Tómala bien helada",
+        "howto_1_icon": "snowflake",
+        "howto_2": "Sola o con hielo",
+        "howto_2_icon": "glass",
+        "howto_3": "En cualquier momento del día",
+        "howto_3_icon": "sun",
+        "nutrition_title": "INFORMACIÓN NUTRICIONAL",
+        "nutrition_col_1": "Nutriente",
+        "nutrition_col_2": "Por porción",
+        "nutrition_show_content": true,
+        "nutrition": "Energía: 0 kcal / 0 kJ\nGrasas totales: 0 g\nCarbohidratos totales: 0 g\nAzúcares añadidos: 0 g\nProteína: 0 g\nCafeína: 280 mg",
+        "cross_title": "QUE NO SE TE ACABE A MITAD DE SEMANA",
+        "faq_eyebrow": "PREGUNTAS FRECUENTES",
+        "faq_title": "ANTES DE COMPRAR"
       }
     }
   },
