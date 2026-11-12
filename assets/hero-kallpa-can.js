@@ -428,12 +428,13 @@ const createRng = (seed) => {
 };
 
 export class CanElectricArc {
-  constructor(slotId, startDelay = 0) {
+  constructor(slotId, startDelay = 0, engine = null, zone = slotId % 6) {
     this.slotId = slotId;
+    this.engine = engine;
     this.t0 = performance.now() + startDelay;
     this.duration = 1350 + Math.random() * 450;
     this.seed = Math.floor(Math.random() * 100000);
-    this.zone = slotId % 6;
+    this.zone = zone;
     this.buildPath();
   }
 
@@ -519,8 +520,8 @@ export class CanElectricArc {
         if (i > 0 && s === 0) continue;
         const t = s / segs;
         const env = Math.sin(t * Math.PI);
-        const harmonic = Math.sin(t * Math.PI * 6 + r() * 6) * 0.05 * env;
-        const sharpJitter = (r() - 0.5) * 0.11 * env;
+        const harmonic = Math.sin(t * Math.PI * 4 + r() * 6) * 0.035 * env;
+        const sharpJitter = (r() - 0.5) * 0.08 * env;
         const jitterAmp = harmonic + sharpJitter;
 
         const u = p1.u + dx * t + nx * jitterAmp;
@@ -533,7 +534,7 @@ export class CanElectricArc {
 
     // Sub-ramas de alta tensión
     this.branches = [];
-    const numBranches = r() > 0.4 ? (r() > 0.7 ? 2 : 1) : 0;
+    const numBranches = r() > 0.65 ? 1 : 0;
     for (let b = 0; b < numBranches; b++) {
       const forkIdx = Math.floor(pts.length * (0.28 + r() * 0.42));
       const forkPt = pts[forkIdx];
@@ -564,7 +565,8 @@ export class CanElectricArc {
     if (elapsed < 0) return;
     const prog = elapsed / this.duration;
     if (prog >= 1.0) {
-      this.reset(now + Math.random() * 120);
+      const nextZone = this.engine ? this.engine.pickZone(this) : null;
+      this.reset(now + 120 + Math.random() * 220, nextZone);
       return;
     }
 
@@ -639,8 +641,8 @@ export class CanElectricArc {
     ctx.beginPath();
     ctx.moveTo(path[0].x, path[0].y);
     for (let i = 1; i < path.length; i++) ctx.lineTo(path[i].x, path[i].y);
-    ctx.strokeStyle = `rgba(255, 213, 0, ${(0.26 * alpha).toFixed(3)})`;
-    ctx.lineWidth = 6.0 * scaleWidth;
+    ctx.strokeStyle = `rgba(255, 213, 0, ${(0.18 * alpha).toFixed(3)})`;
+    ctx.lineWidth = 3.2 * scaleWidth;
     ctx.stroke();
 
     // 2. Trazo Dorado de Alta Energía (#FFD500)
@@ -648,7 +650,7 @@ export class CanElectricArc {
     ctx.moveTo(path[0].x, path[0].y);
     for (let i = 1; i < path.length; i++) ctx.lineTo(path[i].x, path[i].y);
     ctx.strokeStyle = `rgba(255, 213, 0, ${(0.94 * alpha).toFixed(3)})`;
-    ctx.lineWidth = 2.2 * scaleWidth;
+    ctx.lineWidth = 1.2 * scaleWidth;
     ctx.stroke();
 
     // 3. Núcleo Blanco Puro Incandescente
@@ -656,7 +658,7 @@ export class CanElectricArc {
     ctx.moveTo(path[0].x, path[0].y);
     for (let i = 1; i < path.length; i++) ctx.lineTo(path[i].x, path[i].y);
     ctx.strokeStyle = `rgba(255, 255, 255, ${(0.96 * alpha).toFixed(3)})`;
-    ctx.lineWidth = 1.1 * scaleWidth;
+    ctx.lineWidth = 0.55 * scaleWidth;
     ctx.stroke();
 
     ctx.restore();
@@ -665,12 +667,29 @@ export class CanElectricArc {
 
 export class CanElectricEngine {
   constructor() {
+    // 3 rayos (antes 4), cada uno en una zona distinta: nunca dos en la misma dirección
     this.arcs = [
-      new CanElectricArc(0, 0),
-      new CanElectricArc(1, 380),
-      new CanElectricArc(2, 760),
-      new CanElectricArc(3, 1140)
+      new CanElectricArc(0, 0, this, 2),
+      new CanElectricArc(1, 520, this, 0),
+      new CanElectricArc(2, 1040, this, 5)
     ];
+  }
+
+  // Zona libre para un rayo que se reinicia: distinta de las que usan los demás rayos
+  // y de la suya anterior, sin zonas que vayan en la misma dirección.
+  pickZone(arc) {
+    // Zonas que salen en la misma dirección: diagonal ascendente (3) y corona superior (0)
+    // terminan hacia arriba; diagonal descendente (2) y descarga basal (1) hacia abajo.
+    const CONFLICTS = { 0: [3], 1: [2], 2: [1, 3], 3: [0, 2], 4: [], 5: [] };
+    const busy = new Set();
+    for (const other of this.arcs) {
+      if (other === arc) continue;
+      busy.add(other.zone);
+      for (const z of CONFLICTS[other.zone]) busy.add(z);
+    }
+    const free = [0, 1, 2, 3, 4, 5].filter(z => !busy.has(z) && z !== arc.zone);
+    const pool = free.length ? free : [0, 1, 2, 3, 4, 5].filter(z => !busy.has(z));
+    return pool.length ? pool[Math.floor(Math.random() * pool.length)] : arc.zone;
   }
 
   render(ctx, targetLayer, now, cx, cy, canW, canH) {
