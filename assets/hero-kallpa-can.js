@@ -641,8 +641,8 @@ export class CanElectricArc {
     ctx.beginPath();
     ctx.moveTo(path[0].x, path[0].y);
     for (let i = 1; i < path.length; i++) ctx.lineTo(path[i].x, path[i].y);
-    ctx.strokeStyle = `rgba(255, 213, 0, ${(0.18 * alpha).toFixed(3)})`;
-    ctx.lineWidth = 3.2 * scaleWidth;
+    ctx.strokeStyle = `rgba(255, 213, 0, ${(0.22 * alpha).toFixed(3)})`;
+    ctx.lineWidth = 4.6 * scaleWidth;
     ctx.stroke();
 
     // 2. Trazo Dorado de Alta Energía (#FFD500)
@@ -650,7 +650,7 @@ export class CanElectricArc {
     ctx.moveTo(path[0].x, path[0].y);
     for (let i = 1; i < path.length; i++) ctx.lineTo(path[i].x, path[i].y);
     ctx.strokeStyle = `rgba(255, 213, 0, ${(0.94 * alpha).toFixed(3)})`;
-    ctx.lineWidth = 1.2 * scaleWidth;
+    ctx.lineWidth = 1.7 * scaleWidth;
     ctx.stroke();
 
     // 3. Núcleo Blanco Puro Incandescente
@@ -658,7 +658,7 @@ export class CanElectricArc {
     ctx.moveTo(path[0].x, path[0].y);
     for (let i = 1; i < path.length; i++) ctx.lineTo(path[i].x, path[i].y);
     ctx.strokeStyle = `rgba(255, 255, 255, ${(0.96 * alpha).toFixed(3)})`;
-    ctx.lineWidth = 0.55 * scaleWidth;
+    ctx.lineWidth = 0.8 * scaleWidth;
     ctx.stroke();
 
     ctx.restore();
